@@ -36,6 +36,9 @@
 (defn rotations [a-seq]
   :-)
 
+(defn frequencies-helper [freqs collection]
+  :-)
+
 (defn my-frequencies [a-seq]
   :-)
 
