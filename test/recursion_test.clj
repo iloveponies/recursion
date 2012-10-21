@@ -9,6 +9,12 @@
   (product [0 1 2])   => 0
   (product #{2 3 4})  => 24)
 
+(facts "singleton?"
+       (singleton? [1])     => true
+       (singleton? #{2})    => true
+       (singleton? [])      => false
+       (singleton? [1 2 3]) => false)
+
 (facts "last-element"
   (last-element [])      => nil
   (last-element [1 2 3]) => 3

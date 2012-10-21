@@ -3,6 +3,9 @@
 (defn product [coll]
   :-)
 
+(defn singleton? [coll]
+  :-)
+
 (defn last-element [coll]
   :-)
 
