@@ -9,11 +9,23 @@
 (defn my-last [coll]
   :-)
 
+(defn seq-max [a-seq]
+  :-)
+
+(defn longest-sequence [a-seq]
+  [:-])
+
 (defn my-filter [f a-seq]
   [:-])
 
 (defn sequence-contains? [elem a-seq]
   :-)
+
+(defn my-take-while [pred? a-seq]
+  [:-])
+
+(defn my-drop-while [pred? a-seq]
+  [:-])
 
 (defn seq= [a-seq b-seq]
   :-)

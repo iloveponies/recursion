@@ -20,6 +20,16 @@
   (my-last [1 2 3]) => 3
   (my-last [2 5])   => 5)
 
+(facts "seq-max"
+       (seq-max [2 4 1 4]) => 4
+       (seq-max [2])       => 2
+       (seq-max [])        => nil)
+
+(facts "longest-sequence"
+       (longest-sequence [[1 2] [] [1 2 3]]) => [1 2 3]
+       (longest-sequence [[1 2]])            => [1 2]
+       (longest-sequence [])                 => nil)
+
 (facts "my-filter"
        (my-filter odd? [1 2 3 4]) => '(1 3)
        (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) => '(9001)
@@ -29,6 +39,18 @@
   (sequence-contains? 3 [1 2 3]) => true
   (sequence-contains? 3 [4 7 9]) => false
   (sequence-contains? :pony [])  => false)
+
+(facts "my-take-while"
+       (my-take-while odd? [1 2 3 4])  => '(1)
+       (my-take-while odd? [1 3 4 5])  => '(1 3)
+       (my-take-while even? [1 3 4 5]) => '()
+       (my-take-while odd? [])         => '())
+
+(facts "my-drop-while"
+       (my-drop-while odd? [1 2 3 4])  => '(2 3 4)
+       (my-drop-while odd? [1 3 4 5])  => '(4 5)
+       (my-drop-while even? [1 3 4 5]) => '(1 3 4 5)
+       (my-drop-while odd? [])         => '())
 
 (facts "seq="
   (seq= [1 2 4] '(1 2 4))  => true
