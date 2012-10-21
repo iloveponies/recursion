@@ -15,10 +15,10 @@
        (singleton? [])      => false
        (singleton? [1 2 3]) => false)
 
-(facts "last-element"
-  (last-element [])      => nil
-  (last-element [1 2 3]) => 3
-  (last-element [2 5])   => 5)
+(facts "my-last"
+  (my-last [])      => nil
+  (my-last [1 2 3]) => 3
+  (my-last [2 5])   => 5)
 
 (facts "my-filter"
        (my-filter odd? [1 2 3 4]) => '(1 3)

@@ -6,7 +6,7 @@
 (defn singleton? [coll]
   :-)
 
-(defn last-element [coll]
+(defn my-last [coll]
   :-)
 
 (defn my-filter [f a-seq]
