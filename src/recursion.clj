@@ -9,13 +9,16 @@
 (defn my-last [coll]
   :-)
 
-(defn seq-max [a-seq]
+(defn max-element [a-seq]
   :-)
+
+(defn seq-max [seq-1 seq-2]
+  [:-])
 
 (defn longest-sequence [a-seq]
   [:-])
 
-(defn my-filter [f a-seq]
+(defn my-filter [pred? a-seq]
   [:-])
 
 (defn sequence-contains? [elem a-seq]
@@ -33,14 +36,13 @@
 (defn my-map [f seq-1 seq-2]
   [:-])
 
-(defn power [a b]
+(defn power [n k]
   :-)
 
 (defn fib [n]
   :-)
 
-(defn my-repeat [how-many-times
-                 what-to-repeat]
+(defn my-repeat [how-many-times what-to-repeat]
   [:-])
 
 (defn my-range [up-to]
@@ -52,14 +54,14 @@
 (defn inits [a-seq]
   [:-])
 
-(defn split-into-monotonics [a-seq]
-  [:-])
-
 (defn rotations [a-seq]
   [:-])
 
+(defn my-frequencies-helper [freqs a-seq]
+  [:-])
+
 (defn my-frequencies [a-seq]
-  :-)
+  [:-])
 
 (defn un-frequencies [a-map]
   [:-])
@@ -79,9 +81,12 @@
 (defn merge-sort [a-seq]
   [:-])
 
-(defn permutations [a-seq]
+(defn split-into-monotonics [a-seq]
   [:-])
 
-(defn powerset [a-seq]
+(defn permutations [a-set]
+  [:-])
+
+(defn powerset [a-set]
   [:-])
 

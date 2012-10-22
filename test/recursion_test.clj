@@ -20,10 +20,14 @@
   (my-last [1 2 3]) => 3
   (my-last [2 5])   => 5)
 
+(facts "max-element"
+       (max-element [2 4 1 4]) => 4
+       (max-element [2])       => 2
+       (max-element [])        => nil)
+
 (facts "seq-max"
-       (seq-max [2 4 1 4]) => 4
-       (seq-max [2])       => 2
-       (seq-max [])        => nil)
+       (seq-max [1] [1 2]) => [1 2]
+       (seq-max [1 2] [3 4]) => [3 4])
 
 (facts "longest-sequence"
        (longest-sequence [[1 2] [] [1 2 3]]) => [1 2 3]
@@ -85,26 +89,22 @@
 
 (facts "my-range"
   (my-range 0)  => '()
-  (my-range 1)  => [0]
-  (my-range 2)  => [1 0]
-  (my-range 3)  => [2 1 0])
+  (my-range 1)  => '(0)
+  (my-range 2)  => '(1 0)
+  (my-range 3)  => '(2 1 0))
 
 (facts "tails"
   (tails [1 2 3 4])   => (just [[1 2 3 4] [2 3 4] [3 4] [4] []] :in-any-order)
-  (tails [])          => [[]]
+  (tails [])          => (just [[]])
   (tails [1])         => (just [[1] []] :in-any-order))
 
 (facts "inits"
   (inits [1 2 3 4])   => (just [[] [1] [1 2] [1 2 3] [1 2 3 4]] :in-any-order)
-  (inits [])          => [[]]
+  (inits [])          => (just [[]])
   (inits [1])         => (just [[] [1]] :in-any-order))
 
-(facts "split-into-monotonics"
-  (split-into-monotonics [0 1 2 1 0])   => '((0 1 2) (1 0))
-  (split-into-monotonics [0 5 4 7 1 3]) => '((0 5) (4 7) (1 3)))
-
 (facts "rotations"
-  (rotations [])      => []
+  (rotations [])      => '(())
   (rotations [1 2 3]) => (just [[1 2 3] [2 3 1] [3 1 2]] :in-any-order)
   (rotations [:a :b]) => (just [[:a :b] [:b :a]] :in-any-order)
   (rotations [1 5 9 2]) => (just '(1 5 9 2) '(2 1 5 9)
@@ -148,13 +148,16 @@
   (merge-sort [1 2 3])            => '(1 2 3)
   (merge-sort [5 3 4 17 2 100 1]) => '(1 2 3 4 5 17 100))
 
+(facts "split-into-monotonics"
+  (split-into-monotonics [0 1 2 1 0])   => '((0 1 2) (1 0))
+  (split-into-monotonics [0 5 4 7 1 3]) => '((0 5) (4 7) (1 3)))
+
 (facts "permutations"
-  (permutations []) => []
+  (permutations []) => '(())
   (permutations [1 5 3])
   => (just [[1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1]]
            :in-any-order))
 
 (facts "powerset"
-  (powerset [])      => '(())
-  (powerset [1 2 4]) => (just [[] [4] [2] [2 4] [1] [1 4] [1 2] [1 2 4]]
-                              :in-any-order))
+  (powerset [])      => #{#{}}
+  (powerset [1 2 4]) => #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}})
