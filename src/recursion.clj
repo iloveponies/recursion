@@ -185,7 +185,13 @@
                   (! (my-drop i original) (cons (my-take i original) finished))))) a-seq '())))
 
 (defn permutations [a-set]
-  [:-])
+  (cond
+    (empty? a-set) (cons '() '())
+    (singleton? a-set) (list (seq a-set))
+    :else (let [current (first a-set)]
+            (apply concat (map rotations
+                               (map #(cons current %)
+                                    (permutations (rest a-set))))))))
 
 (defn powerset [a-set]
   [:-])
