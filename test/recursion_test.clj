@@ -164,7 +164,7 @@
            :in-any-order))
 
 (facts "powerset"
-  (powerset [])      => (just empty?)
+  (powerset [])      => (some-checker (just empty?) #{#{}}
   (powerset [1 2 4]) => (some-checker
                           (just empty?
                                 (just 4 :in-any-order)
