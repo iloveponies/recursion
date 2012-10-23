@@ -151,7 +151,10 @@
       (concat (my-repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll)
+          (<= n 0))
+    '()
+    (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
   [:-])
