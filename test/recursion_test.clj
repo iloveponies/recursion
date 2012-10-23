@@ -165,12 +165,14 @@
 
 (facts "powerset"
   (powerset [])      => (just empty?)
-  (powerset [1 2 4]) => (just empty?
-                              (just 4 :in-any-order)
-                              (just 2 :in-any-order)
-                              (just 2 4 :in-any-order)
-                              (just 1 :in-any-order)
-                              (just 1 4 :in-any-order)
-                              (just 1 2 :in-any-order)
-                              (just 1 2 4 :in-any-order) :in-any-order)
+  (powerset [1 2 4]) => (some-checker
+                          (just empty?
+                                (just 4 :in-any-order)
+                                (just 2 :in-any-order)
+                                (just 2 4 :in-any-order)
+                                (just 1 :in-any-order)
+                                (just 1 4 :in-any-order)
+                                (just 1 2 :in-any-order)
+                                (just 1 2 4 :in-any-order) :in-any-order)
+                          (just #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}))
   (count (powerset (range 10))) => 1024)
