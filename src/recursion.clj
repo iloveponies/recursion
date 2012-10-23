@@ -167,7 +167,7 @@
     (cons (my-take split a-seq) (cons (my-drop split a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (sort (concat a-seq b-seq)))
 
 (defn merge-sort [a-seq]
   [:-])
