@@ -132,10 +132,15 @@
     (rotations_ (rotate a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (if (empty? a-seq)
+      freqs
+      (my-frequencies-helper (assoc freqs current (if (contains? freqs current)
+                                                    (+ 1 (freqs current))
+                                                    1)) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
