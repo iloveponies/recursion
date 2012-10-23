@@ -2,6 +2,10 @@
   (:use recursion
         midje.sweet))
 
+(defn empty? [x]
+  (and (seq? x)
+       (clojure.core/empty? x)))
+
 (facts "product"
   (product [])        => 1
   (product [1 2 3])   => 6
@@ -37,7 +41,7 @@
 (facts "my-filter"
        (my-filter odd? [1 2 3 4]) => '(1 3)
        (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) => '(9001)
-       (my-filter even? [1 3 5 7]) => '())
+       (my-filter even? [1 3 5 7]) => empty?)
 
 (facts "sequence-contains?"
   (sequence-contains? 3 [1 2 3]) => true
@@ -47,14 +51,14 @@
 (facts "my-take-while"
        (my-take-while odd? [1 2 3 4])  => '(1)
        (my-take-while odd? [1 3 4 5])  => '(1 3)
-       (my-take-while even? [1 3 4 5]) => '()
-       (my-take-while odd? [])         => '())
+       (my-take-while even? [1 3 4 5]) => empty?
+       (my-take-while odd? [])         => empty?)
 
 (facts "my-drop-while"
        (my-drop-while odd? [1 2 3 4])  => '(2 3 4)
        (my-drop-while odd? [1 3 4 5])  => '(4 5)
        (my-drop-while even? [1 3 4 5]) => '(1 3 4 5)
-       (my-drop-while odd? [])         => '())
+       (my-drop-while odd? [])         => empty?)
 
 (facts "seq="
   (seq= [1 2 4] '(1 2 4))  => true
@@ -64,7 +68,7 @@
 (facts "my-map"
        (my-map + [1 2 3] [4 4 4]) => '(5 6 7)
        (my-map + [1 2 3 4] [0 0 0]) => '(1 2 3)
-       (my-map + [1 2 3] []) => '())
+       (my-map + [1 2 3] []) => empty?)
 
 (facts "power"
   (power 2 2)  => 4
@@ -85,10 +89,10 @@
 (facts "my-repeat"
        (my-repeat 2 :a)    => '(:a :a)
        (my-repeat 3 "lol") => '("lol" "lol" "lol")
-       (my-repeat -1 :a)   => '())
+       (my-repeat -1 :a)   => empty?)
 
 (facts "my-range"
-  (my-range 0)  => '()
+  (my-range 0)  => empty?
   (my-range 1)  => '(0)
   (my-range 2)  => '(1 0)
   (my-range 3)  => '(2 1 0))
@@ -132,19 +136,19 @@
 
 (facts "my-drop"
        (my-drop 2 [1 2 3 4]) => '(3 4)
-       (my-drop 4 [:a :b]) => '())
+       (my-drop 4 [:a :b]) => empty?)
 
 (facts "halve"
        (halve [1 2 3 4])   => ['(1 2) '(3 4)]
        (halve [1 2 3 4 5]) => ['(1 2) '(3 4 5)]
-       (halve [1])         => ['() '(1)])
+       (halve [1])         => [empty? '(1)])
 
 (facts "seq-merge"
   (seq-merge [4] [1 2 6 7])        => '(1 2 4 6 7)
   (seq-merge [1 5 7 9] [2 2 8 10]) => '(1 2 2 5 7 8 9 10))
 
 (facts "merge-sort"
-  (merge-sort [])                 => '()
+  (merge-sort [])                 => empty?
   (merge-sort [1 2 3])            => '(1 2 3)
   (merge-sort [5 3 4 17 2 100 1]) => '(1 2 3 4 5 17 100))
 
@@ -153,11 +157,19 @@
   (split-into-monotonics [0 5 4 7 1 3]) => '((0 5) (4 7) (1 3)))
 
 (facts "permutations"
-  (permutations []) => '(())
+  (permutations []) => [[]]
+  (count (permutations (range 5))) => 120
   (permutations [1 5 3])
   => (just [[1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1]]
            :in-any-order))
 
 (facts "powerset"
-  (powerset [])      => #{#{}}
-  (powerset [1 2 4]) => #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}})
+  (powerset [])      => [[]]
+  (powerset [1 2 4]) => (just empty?
+                              (just 4 :in-any-order)
+                              (just 2 :in-any-order)
+                              (just 2 4 :in-any-order)
+                              (just 1 :in-any-order)
+                              (just 1 4 :in-any-order)
+                              (just 1 2 :in-any-order)
+                              (just 1 2 4 :in-any-order) :in-any-order))
