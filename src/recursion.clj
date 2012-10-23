@@ -100,7 +100,10 @@
     (fib_ n 0 1)))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    '()
+    (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
+
 
 (defn my-range [up-to]
   [:-])
