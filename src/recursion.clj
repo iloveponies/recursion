@@ -163,7 +163,8 @@
     :else (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [split (int (/ (count a-seq) 2))]
+    (cons (my-take split a-seq) (cons (my-drop split a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
