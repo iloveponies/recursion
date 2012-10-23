@@ -141,7 +141,7 @@
 (facts "halve"
        (halve [1 2 3 4])   => ['(1 2) '(3 4)]
        (halve [1 2 3 4 5]) => ['(1 2) '(3 4 5)]
-       (halve [1])         => [empty? '(1)])
+       (halve [1])         => (just empty? '(1)))
 
 (facts "seq-merge"
   (seq-merge [4] [1 2 6 7])        => '(1 2 4 6 7)
@@ -157,14 +157,14 @@
   (split-into-monotonics [0 5 4 7 1 3]) => '((0 5) (4 7) (1 3)))
 
 (facts "permutations"
-  (permutations []) => [empty?]
+  (permutations []) => (just empty?)
   (count (permutations (range 5))) => 120
   (permutations [1 5 3])
   => (just [1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1]
            :in-any-order))
 
 (facts "powerset"
-  (powerset [])      => [empty?]
+  (powerset [])      => (just empty?)
   (powerset [1 2 4]) => (just empty?
                               (just 4 :in-any-order)
                               (just 2 :in-any-order)
@@ -172,4 +172,5 @@
                               (just 1 :in-any-order)
                               (just 1 4 :in-any-order)
                               (just 1 2 :in-any-order)
-                              (just 1 2 4 :in-any-order) :in-any-order))
+                              (just 1 2 4 :in-any-order) :in-any-order)
+  (count (powerset (range 10))) => 1024)
