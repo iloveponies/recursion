@@ -120,7 +120,16 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [rotate (fn [some-seq]
+                 (if (empty? some-seq)
+                   '()
+                   (concat (rest some-seq) (cons (first some-seq) '()))))
+        rotations_ (fn ! [b-seq]
+                     (let [new-seq (cons b-seq '())]
+                       (if (seq= (seq a-seq) b-seq)
+                         new-seq
+                         (concat new-seq (! (rotate b-seq))))))]
+    (rotations_ (rotate a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
