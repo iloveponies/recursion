@@ -157,10 +157,10 @@
   (split-into-monotonics [0 5 4 7 1 3]) => '((0 5) (4 7) (1 3)))
 
 (facts "permutations"
-  (permutations []) => [[]]
+  (permutations []) => [empty?]
   (count (permutations (range 5))) => 120
   (permutations [1 5 3])
-  => (just [[1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1]]
+  => (just [1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1]
            :in-any-order))
 
 (facts "powerset"
