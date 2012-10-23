@@ -194,5 +194,8 @@
                                     (permutations (rest a-set))))))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    '(())
+    (let [powersets-without-current (powerset (rest a-set))]
+      (concat powersets-without-current
+              (map #(conj % (first a-set)) powersets-without-current)))))
