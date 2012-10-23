@@ -36,7 +36,13 @@
       seq-2)))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (if (singleton? a-seq)
+      current
+      (if (empty? a-seq)
+        nil
+        (seq-max current
+                 (longest-sequence (rest a-seq)))))))
 
 (defn my-filter [pred? a-seq]
   [:-])
