@@ -112,7 +112,9 @@
       (cons current (my-range current)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons '() '())
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   [:-])
