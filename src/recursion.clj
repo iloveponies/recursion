@@ -106,7 +106,7 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    (cons '() '())
+    '(())
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
@@ -186,7 +186,7 @@
 
 (defn permutations [a-set]
   (cond
-    (empty? a-set) (cons '() '())
+    (empty? a-set) '(())
     (singleton? a-set) (list (seq a-set))
     :else (let [current (first a-set)]
             (apply concat (map rotations
