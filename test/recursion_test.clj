@@ -3,7 +3,7 @@
         midje.sweet))
 
 (defn empty? [x]
-  (and (seq? x)
+  (and (sequential? x)
        (clojure.core/empty? x)))
 
 (facts "product"
