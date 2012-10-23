@@ -1,6 +1,7 @@
 (ns recursion-test
   (:use recursion
-        midje.sweet))
+        midje.sweet)
+  (:refer-clojure :exclude [empty?]))
 
 (defn empty? [x]
   (and (sequential? x)
