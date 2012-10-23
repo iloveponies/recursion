@@ -20,18 +20,6 @@
     0
     (max (first a-seq) (max-element (rest a-seq)))))
 
-(defn my-last-non-recursive [coll]
-  (first(reverse coll)))
-
-(defn max-element [a-seq]
-  :-)
-
-(defn my-last-non-recursive [coll]
-  (first(reverse coll)))
-
-(defn max-element [a-seq]
-  :-)
-
 (defn seq-max [seq-1 seq-2]
   [:-])
 
