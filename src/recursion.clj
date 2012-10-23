@@ -176,7 +176,14 @@
     :else (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [s] (or (empty? s) (apply < s) (apply > s)))
+        lol (fn ! [original finished]
+              (if (empty? original)
+                finished
+                (let [ monitonic-parts (filter monotonic? (inits original))
+                      i (apply max (map count monitonic-parts))]
+                  (! (my-drop i original) (cons (my-take i original) finished)))))]
+    (reverse (lol a-seq '()))))
 
 (defn permutations [a-set]
   [:-])
