@@ -170,7 +170,10 @@
   (sort (concat a-seq b-seq)))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) '()
+    (singleton? a-seq) a-seq
+    :else (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
