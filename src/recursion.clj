@@ -87,7 +87,9 @@
     (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (<= k 0)
+    1
+    (* n (power n (- k 1)))))
 
 (defn fib [n]
   :-)
