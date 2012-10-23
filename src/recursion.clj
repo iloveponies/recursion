@@ -106,7 +106,10 @@
 
 
 (defn my-range [up-to]
-  [:-])
+  (let [current (- up-to 1)]
+    (if (<= up-to 0)
+      '()
+      (cons current (my-range current)))))
 
 (defn tails [a-seq]
   [:-])
