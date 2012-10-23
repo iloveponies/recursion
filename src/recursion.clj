@@ -11,46 +11,38 @@
        (empty? (rest coll))))
 
 (defn my-last [coll]
-  (if (singleton? coll)
-    (first coll)
-    (if (empty? coll)
-      nil
-      (my-last (rest coll)))))
+  (cond
+    (singleton? coll) (first coll)
+    (empty? coll) nil
+    :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
   (let [current (first a-seq)]
-    (if (singleton? a-seq)
-      current
-      (if (empty? a-seq)
-        nil
-        (max current
-             (max-element (rest a-seq)))))))
+    (cond
+      (singleton? a-seq) current
+      (empty? a-seq) nil
+      :else (max current
+                 (max-element (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  (let [seq-size (fn ! [my-seq]
-                   (if (empty? my-seq)
-                     0
-                     (+ 1 (! (rest my-seq)))))]
-    (if (> (seq-size seq-1) (seq-size seq-2))
-      seq-1
-      seq-2)))
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
   (let [current (first a-seq)]
-    (if (singleton? a-seq)
-      current
-      (if (empty? a-seq)
-        nil
-        (seq-max current
-                 (longest-sequence (rest a-seq)))))))
+    (cond
+      (singleton? a-seq) current
+      (empty? a-seq) nil
+      :else (seq-max current
+                     (longest-sequence (rest a-seq))))))
 
 (defn my-filter [pred? a-seq]
   (let [current (first a-seq)]
-    (if (empty? a-seq)
-      a-seq
-      (if (pred? current)
-        (cons current (my-filter pred? (rest a-seq)))
-        (my-filter pred? (rest a-seq))))))
+    (cond
+      (empty? a-seq) a-seq
+      (pred? current) (cons current (my-filter pred? (rest a-seq)))
+      :else (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
   (cond
@@ -84,7 +76,8 @@
   (if (or (empty? seq-1)
           (empty? seq-2))
     '()
-    (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
+    (cons (f (first seq-1) (first seq-2))
+          (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
   (if (<= k 0)
@@ -106,9 +99,9 @@
 
 
 (defn my-range [up-to]
-  (let [current (- up-to 1)]
-    (if (<= up-to 0)
-      '()
+  (if (<= up-to 0)
+    '()
+    (let [current (- up-to 1)]
       (cons current (my-range current)))))
 
 (defn tails [a-seq]
@@ -132,12 +125,13 @@
     (rotations_ (rotate a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  (let [current (first a-seq)]
-    (if (empty? a-seq)
-      freqs
-      (my-frequencies-helper (assoc freqs current (if (contains? freqs current)
-                                                    (+ 1 (freqs current))
-                                                    1)) (rest a-seq)))))
+  (if (empty? a-seq)
+    freqs
+    (let [current (first a-seq)
+          freq-count (if (contains? freqs current)
+                       (+ 1 (freqs current))
+                       1)]
+      (my-frequencies-helper (assoc freqs current freq-count) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
@@ -148,13 +142,15 @@
     (let [current (first a-map)
           k (get current 0)
           v (get current 1)]
-      (concat (my-repeat v k) (un-frequencies (rest a-map))))))
+      (concat (my-repeat v k)
+              (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   (if (or (empty? coll)
           (<= n 0))
     '()
-    (cons (first coll) (my-take (- n 1) (rest coll)))))
+    (cons (first coll)
+          (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
   (cond
@@ -164,7 +160,8 @@
 
 (defn halve [a-seq]
   (let [split (int (/ (count a-seq) 2))]
-    (cons (my-take split a-seq) (cons (my-drop split a-seq) '()))))
+    (cons (my-take split a-seq)
+          (cons (my-drop split a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
   (sort (concat a-seq b-seq)))
@@ -176,14 +173,16 @@
     :else (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  (let [monotonic? (fn [s] (or (empty? s) (apply < s) (apply > s)))
-        lol (fn ! [original finished]
+  (reverse ((fn ! [original finished]
               (if (empty? original)
                 finished
-                (let [ monitonic-parts (filter monotonic? (inits original))
-                      i (apply max (map count monitonic-parts))]
-                  (! (my-drop i original) (cons (my-take i original) finished)))))]
-    (reverse (lol a-seq '()))))
+                (let [i (apply max (map count
+                                        (filter (fn [s]
+                                                  (or (empty? s)
+                                                      (apply < s)
+                                                      (apply > s)))
+                                                (inits original))))]
+                  (! (my-drop i original) (cons (my-take i original) finished))))) a-seq '())))
 
 (defn permutations [a-set]
   [:-])
