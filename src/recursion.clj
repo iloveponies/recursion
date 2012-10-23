@@ -45,7 +45,12 @@
                  (longest-sequence (rest a-seq)))))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (if (empty? a-seq)
+      a-seq
+      (if (pred? current)
+        (cons current (my-filter pred? (rest a-seq)))
+        (my-filter pred? (rest a-seq))))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
