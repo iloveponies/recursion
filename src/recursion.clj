@@ -98,31 +98,67 @@
       (* n (power n (- k 1)))))
 
 (defn fib [n]
-  :-)
+  (cond
+   	(or (== 0 n) (== 1 n))
+   	  n
+    :else
+      (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+   	(<= how-many-times 0)
+	  '()
+    :else
+      (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+   	(<= up-to 0)
+	  '()
+    :else
+      (cons (- up-to 1)(my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+      ['()]
+    :else
+   (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+ (map reverse (tails (reverse a-seq))))
+
+(defn rotate [a-seq] 
+  (if (empty? a-seq)
+    '()
+    (concat (rest a-seq) (cons (first a-seq) '()))))
 
 (defn rotations [a-seq]
-  [:-])
+ (let [rotations-helper (fn go-trough [x]
+                          (if (= a-seq x)
+                            (cons x '())
+                            (concat (cons x '()) (go-trough (rotate x)))))]
+   (rotations-helper (rotate a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) 
+      freqs
+    (contains? freqs (first a-seq)) 
+      (my-frequencies-helper (assoc-in freqs [(first a-seq)] (inc (get-in freqs [(first a-seq)]))) (rest a-seq))
+    :else 
+      (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [elem (first a-map)
+        first-key (first elem)
+        first-val (second elem)]
+    (if(empty? a-map) 
+      []
+      (concat (repeat first-val first-key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
