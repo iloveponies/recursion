@@ -17,35 +17,85 @@
 
 (defn max-element [a-seq]
   (if(empty? a-seq)
-    0
-    (max (first a-seq) (max-element (rest a-seq)))))
+    nil
+    (if(singleton? a-seq)
+	  (first a-seq)
+      (max (first a-seq) (max-element (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let[check? (fn check? [s1 s2] (if(or (empty? s1) (empty? s1))
+      						(if(empty? s1)
+        					  true
+        					  false)
+      						(check? (rest s1)(rest s2))))]
+
+	(if(check? seq-1 seq-2)
+      seq-2
+      seq-1)))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? (rest a-seq))
+    (first a-seq)
+    (seq-max (first a-seq)(longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if(empty? a-seq)
+	a-seq
+    (if(pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+    (empty? a-seq)
+      false
+    (= elem (first a-seq))
+	  true
+    :else
+	  (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+	  a-seq
+    (pred? (first a-seq))
+      (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+    :else
+	  ()))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+	  a-seq
+    (pred? (first a-seq))
+      (my-drop-while pred? (rest a-seq))
+    :else
+	  a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+    (and (empty? a-seq) (empty? b-seq))
+   	  true
+    (= (first a-seq)(first b-seq))
+      (seq= (rest a-seq)(rest b-seq))
+    :else
+   	  false))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond
+    (or (empty? seq-1) (empty? seq-2))
+	  ()
+    :else
+      (cons(f (first seq-1)(first seq-2)) (my-map f (rest seq-1)(rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (cond
+   	(== 0 k)
+   	  1
+    (== 1 k)
+      n
+    :else
+      (* n (power n (- k 1)))))
 
 (defn fib [n]
   :-)
