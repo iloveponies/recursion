@@ -98,8 +98,11 @@
     ['()]
     (cons (seq a-seq) (tails (rest a-seq)))))
 
+(defn is-monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
+
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations-help [rot-so-far inits tail ln]
   (if (empty? inits)
@@ -183,10 +186,30 @@
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [non-empty-inits (filter (fn [s] (not (empty? s))) (inits a-seq))
+          longest-mono (last (take-while is-monotonic? non-empty-inits))
+          length-of-mono (count longest-mono)
+          n-seq (drop length-of-mono a-seq)]
+      (cons longest-mono (split-into-monotonics n-seq)))))
+
+(defn notin? [a-seq]
+  (fn [x] (not (contains? (set a-seq) x))))
+
+(defn permutations-h [a-set a-seq]
+  (let [remaining (filter (notin? a-seq) a-set)]
+    (if (empty? remaining)
+      a-seq
+      (let [cont-func (fn [c] (permutations-h a-set (conj a-seq c)))]
+         (concat (map cont-func remaining))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+  (let [sequences (map (fn [x] [x]) a-set)
+        cont-func (fn [sequ] (permutations-h a-set sequ))]
+  (apply concat (apply concat (map cont-func sequences))))))
 
 (defn powerset [a-set]
   [:-])
