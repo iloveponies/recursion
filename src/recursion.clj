@@ -97,37 +97,66 @@
    :else (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
- ; (cond
-  ; (empty? a-seq) ['()]
-   ;:else (cons (seq a-seq) (tails (reverse (rest (reverse a-seq)))))))
-  [:-])
+ (map reverse (tails (reverse a-seq))))
+
+
+
+(defn rotate [a-seq] 
+  (if (empty? a-seq)
+    '()
+    (concat (rest a-seq) (cons (first a-seq) '()))))
 
 (defn rotations [a-seq]
-  [:-])
+ (let [rotations-helper (fn ! [b-seq]
+                          (if (= a-seq b-seq)
+                            (cons b-seq '())
+                            (concat (cons b-seq '()) (! (rotate b-seq)))))]
+   (rotations-helper (rotate a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) freqs
+   (contains? freqs (first a-seq)) (my-frequencies-helper (assoc-in freqs [(first a-seq)] (inc (get-in freqs [(first a-seq)]))) (rest a-seq))
+   :else (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [elem (first a-map)
+        first-key (first elem)
+        first-val (second elem)]
+    (cond
+      (empty? a-map) []
+      :else (concat (repeat first-val first-key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (zero? n) []
+   (>= n (count coll)) (cons (first coll) (my-take (dec (count coll)) (rest coll)))
+   :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (or (empty? coll) (zero? n)) coll
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else (cons (first b-seq) (seq-merge a-seq  (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (< (count a-seq) 2) a-seq
+   :else (let [[first-half second-half] (halve a-seq)]
+           (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
