@@ -204,16 +204,9 @@
                          (permutations (rest x))))]
            (apply concat (map pe (rotations a-set))))))
 
-(defn powerset-helper [a-set]
-    (cond
-    (empty? a-set) (cons (cons a-set '()) '())
-    :else (let [pe (fn [x]
-                    (map (fn [s]
-                          (cons x s))
-                         (powerset-helper (rest x))))]
-            (apply concat (map pe (rotations a-set))))))
-
 (defn powerset [a-set]
-  (clojure.core/set
-   (map clojure.core/set (apply clojure.set/union 
-                                (map clojure.core/set (powerset-helper a-set))))))
+  (if (empty? a-set)
+    #{#{}}
+    (let [as (set a-set)
+          sub (fn [s] (disj as s))]
+       (clojure.set/union #{as} (apply clojure.set/union (map powerset (map sub as)))))))
