@@ -225,5 +225,18 @@
   (let [whole-list (map (perm-continuation a-set []) a-set)]
    (set (apply concat whole-list)))))
 
+(defn powerset-h [set-so-far set-of-elements-left]
+  (let [cont-f (fn [e] (powerset-h (conj set-so-far e) (disj set-of-elements-left e)))]
+    (if (= (count set-of-elements-left) 1)
+      #{set-so-far (clojure.set/union set-so-far set-of-elements-left)}
+      (conj (apply clojure.set/union (map cont-f set-of-elements-left)) set-so-far))))
+
+(defn cont-build-powersets [set-so-far set-of-elements-left]
+  (fn [e] (powerset-h (conj set-so-far e) (disj set-of-elements-left e))))
+
 (defn powerset [a-set]
-  [])
+  (let [empty-s #{}
+        set-to-work-on (set a-set)]
+    (if (empty? a-set)
+      #{empty-s}
+     (conj (apply clojure.set/union (map (cont-build-powersets #{} set-to-work-on) set-to-work-on)) empty-s))))
