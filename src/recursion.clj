@@ -197,19 +197,33 @@
 (defn notin? [a-seq]
   (fn [x] (not (contains? (set a-seq) x))))
 
+(defn not-in? [a-seq]
+  (fn [c] (not (contains? (set a-seq) c))))
+
+(defn find-and-remove [element a-seq]
+  (if (empty? a-seq)
+    a-seq
+    (if (= (first a-seq) element)
+      (rest a-seq)
+      (cons (first a-seq) (find-and-remove element (rest a-seq))))))
+
 (defn permutations-h [a-set a-seq]
-  (let [remaining (filter (notin? a-seq) a-set)]
+  (let [remaining a-set]
     (if (empty? remaining)
       a-seq
-      (let [cont-func (fn [c] (permutations-h a-set (conj a-seq c)))]
-         (concat (map cont-func remaining))))))
+      (let [continuation (map (fn [c] (permutations-h (find-and-remove c a-set) (conj a-seq c))) remaining)]
+      (if (singleton? remaining)
+        (concat continuation)
+        (apply concat continuation))))))
 
-(defn permutations [a-set]
+(defn perm-continuation [a-set a-seq]
+  (fn [c] (permutations-h (find-and-remove c a-set) (conj a-seq c))))
+
+ (defn permutations [a-set]
   (if (empty? a-set)
     '(())
-  (let [sequences (map (fn [x] [x]) a-set)
-        cont-func (fn [sequ] (permutations-h a-set sequ))]
-  (apply concat (apply concat (map cont-func sequences))))))
+  (let [whole-list (map (perm-continuation a-set []) a-set)]
+   (set (apply concat whole-list)))))
 
 (defn powerset [a-set]
-  [:-])
+  [])
