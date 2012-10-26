@@ -96,7 +96,7 @@
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (let [rotate (fn rotate [seq] (if (empty? seq)
@@ -157,10 +157,39 @@
       (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
-  :-)
+  (let [h (fn [init] (or (apply <= init) (apply >= init)))]
+    (loop
+      [taken []
+       seq a-seq]
+      (let [new (count (take-while h (rest (inits seq))))]
+        (if (empty? seq)
+          taken
+          (recur (conj taken (take new seq)) (drop new seq)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [rotate (fn rotate [seq] (if (empty? seq)
+                                  []
+                                  (concat (rest seq) [(first seq)])))
+        rotate-n (fn [seq n]
+                   (loop 
+                     [acc [[seq]]
+                      i n
+                      s seq]
+                     (if (<= i 0)
+                       acc
+                       (recur (cons (rotate s) acc) (dec i) (rotate s)))))
+        permute-h (fn permute-h [seq n] 
+                          (let [s seq]
+                            (if (empty? s)
+                              []
+                              (concat (rotate-n (first s) n)
+                                      (permute-h (rest s) n)))))
+        permute (fn [seq] (permute-h seq (count seq)))]
+    (cond
+     (empty? a-set) [[]]
+     (singleton? a-set) [[(first a-set)]]
+      :else (permute (map (fn [x] (cons (first a-set) x)) 
+                          (permutations (rest a-set)))))))
 
 (defn powerset [a-set]
   [:-])
