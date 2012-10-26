@@ -49,7 +49,19 @@
         seq-2))))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  ;empty seq
+  (if(empty? a-seq)
+    nil
+    ;singleton seq
+    (if (singleton? a-seq)
+      (first a-seq)
+      ;two items seq
+      (if (singleton? (rest a-seq))
+        (seq-max (first a-seq) (second a-seq))
+        ;multi-item seq
+        (seq-max
+          (seq-max (first a-seq) (second a-seq))
+          (longest-sequence (rest a-seq)))))))
 
 (defn my-filter [pred? a-seq]
   [:-])
