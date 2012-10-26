@@ -125,13 +125,21 @@
   (let [half (int (/ (count a-seq) 2))
         start (my-take half a-seq)
         end (my-drop half a-seq)]
-    (vec(cons start end))))
+    (vector start end)))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else (cond
+          (< (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+          :else (cons (first b-seq) (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (or (empty? a-seq) (singleton? a-seq)) a-seq
+   :else (let [halved (halve a-seq)]
+           (seq-merge (merge-sort (first halved)) (merge-sort (second halved))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
