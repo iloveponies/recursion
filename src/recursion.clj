@@ -20,9 +20,21 @@
    (empty? (rest (rest a-seq))) (max (first a-seq) (second a-seq))
    :else (max-element (cons (max (first a-seq) (second a-seq)) (rest (rest a-seq))))))
 
-(defn seq-max [seq-1 seq-2])
+(defn first-longer? [seq-1 seq-2]
+  (cond
+   (empty? seq-1) false
+   (empty? seq-2) true
+   :else (first-longer? (rest seq-1) (rest seq-2))))
 
-(defn longest-sequence [a-seq])
+(defn seq-max [seq-1 seq-2]
+  (if (first-longer? seq-1 seq-2) seq-1 seq-2))
+
+(defn longest-sequence [a-seq]
+  (cond
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   (first-longer? (first a-seq) (second a-seq)) (longest-sequence (cons (first a-seq) (rest (rest a-seq))))
+   :else (longest-sequence (rest a-seq))))
 
 (defn my-filter [pred? a-seq]
   (if (empty? a-seq) a-seq
@@ -73,22 +85,35 @@
 (defn my-range [up-to]
   (if (== 0 up-to) [] (cons (- up-to 1) (my-range (- up-to 1)))))
 
-(defn tails [a-seq])
+(defn tails [a-seq]
+  (cond
+   (empty? a-seq) [[]]
+   :else (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq) (list ())
+  (let [allRotations (take (- (* 2 (count a-seq)) 1) (cycle a-seq))]
+    (partition (count a-seq) 1 allRotations))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq) freqs
+  (let [keyWord (first a-seq)
+        newVal (if (contains? freqs keyWord) (+ 1 (get freqs keyWord)) 1)
+        newFreqs (assoc freqs keyWord newVal)]
+    (my-frequencies-helper newFreqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+ (cond
+  (empty? a-map) ()
+  :else (let [what (first (keys a-map))
+              times (first (vals a-map))]
+          (concat(cons (take times (repeat what)) (un-frequencies (rest a-map)))))))
 
 (defn my-take [n coll]
   (if (or (== 0 n) (empty? coll)) [] (cons (first coll) (my-take (- n 1) (rest coll)))))
