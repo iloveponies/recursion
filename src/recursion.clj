@@ -109,7 +109,13 @@
   (cons a-seq (inits (reverse (rest (reverse a-seq))))) ))
 
 (defn rotations [a-seq]
-  [:-])
+ (rotations-helper a-seq (count 1)))
+
+(defn rotations-helper [a-seq depth]
+  (if (> depth (count (first a-seq)))
+    a-seq 
+   (rotations-helper (concat (rest a-seq) (first a-seq)) ) ))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
