@@ -106,7 +106,7 @@
 (defn inits [a-seq]
   (if (empty? a-seq)
   [[]]
-  (cons a-seq (map reverse (inits (rest a-seq))) ) ))
+  (cons a-seq (inits (reverse (rest (reverse a-seq))))) ))
 
 (defn rotations [a-seq]
   [:-])
