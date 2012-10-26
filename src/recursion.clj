@@ -61,9 +61,11 @@
      a-seq)))
 
 (defn seq= [a-seq b-seq]
- (if (or (empty? a-seq) (empty? b-seq))
-  false
-  (if (= (first a-seq) (first b-seq)) 
+ (cond 
+  (and (empty? a-seq) (empty? b-seq)) true
+  (or (and (empty? a-seq) (not (empty? b-seq))) 
+      (and (empty? b-seq) (not (empty? a-seq)))) false
+   :else (if (= (first a-seq) (first b-seq)) 
    (seq= (rest a-seq) (rest b-seq))
    false)))
 
@@ -102,7 +104,9 @@
   (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (reverse (tails a-seq)))
+  (if (empty? a-seq)
+  [[]]
+  (cons a-seq (map reverse (inits (rest a-seq))) ) ))
 
 (defn rotations [a-seq]
   [:-])
