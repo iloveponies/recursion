@@ -15,7 +15,10 @@
    :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  (my-last (sort a-seq)))
+  (cond 
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   :else (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2)) seq-1 seq-2))
@@ -101,7 +104,8 @@
   (if (== n length)
     []
     (cons a-seq
-          (rotation-helper (inc n) length (cons (my-last a-seq) (butlast a-seq))))))
+          (rotation-helper
+           (inc n) length (cons (my-last a-seq) (butlast a-seq))))))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
