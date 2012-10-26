@@ -11,9 +11,9 @@
 
 (defn max-element [a-seq]
   (let [rst (rest (rest a-seq))]
-    (if (singleton? a-seq) (first a-seq) 
-      (if (empty? a-seq) nil 
-        (max-element (cons (max (first a-seq) (first (rest a-seq))) rst )))))) 
+    (if (singleton? a-seq) (first a-seq)
+      (if (empty? a-seq) nil
+        (max-element (cons (max (first a-seq) (first (rest a-seq))) rst ))))))
 
 (defn seq-max [seq-1 seq-2]
   (let [fun (fn ! [x y] (if (empty? x) false
@@ -22,21 +22,21 @@
 
 (defn longest-sequence [a-seq]
   (let [rst (rest (rest a-seq))]
-    (if (singleton? a-seq) (first a-seq) 
-      (if (empty? a-seq) nil 
-        (longest-sequence (cons (seq-max (first a-seq) (first (rest a-seq))) rst )))))) 
+    (if (singleton? a-seq) (first a-seq)
+      (if (empty? a-seq) nil
+        (longest-sequence (cons (seq-max (first a-seq) (first (rest a-seq))) rst ))))))
 
 (defn my-filter [pred? a-seq]
   (let [rst (rest a-seq)
-        [a] a-seq] 
-    (if (singleton? a-seq) 
-      (if (pred? a) [a] []) 
+        [a] a-seq]
+    (if (singleton? a-seq)
+      (if (pred? a) [a] [])
       (if (pred? a) (cons a (my-filter pred? rst)) (my-filter pred? rst)))))
 
 (defn sequence-contains? [elem a-seq]
   (let [rst (rest a-seq)
         [a] a-seq]
-    (if (empty? a-seq) false 
+    (if (empty? a-seq) false
       (if (== elem a) true (sequence-contains? elem rst)))))
 
 (defn my-take-while [pred? a-seq]
@@ -48,7 +48,7 @@
 (defn my-drop-while [pred? a-seq]
   (let [rst (rest a-seq)
         [a] a-seq]
-    (if (empty? a-seq) [] 
+    (if (empty? a-seq) []
       (if (pred? a) (my-drop-while pred? rst) a-seq))))
 
 (defn seq= [a-seq b-seq]
@@ -74,7 +74,7 @@
 
 (defn power [n k]
   (if (zero? k) 1
-    (if (== k 1) n 
+    (if (== k 1) n
       (* n (power n (- k 1))))))
 
 (defn fib [n]
@@ -91,16 +91,17 @@
     (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) [[]]
+  (if (empty? a-seq) '(())
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  (let [f (fn a [x y] (if (zero? y) []
-                       (cons x (a (#(concat (rest %) [(first %)]) x) (- y 1)))))]
-    (f a-seq (count a-seq))))
+  (if (empty? a-seq) '(())
+    (let [f (fn a [x y] (if (zero? y) []
+                          (cons x (a (#(concat (rest %) [(first %)]) x) (- y 1)))))]
+      (f a-seq (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq) {}
