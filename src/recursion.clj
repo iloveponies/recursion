@@ -21,27 +21,48 @@
       (first a-seq)
       (max (max-element (rest a-seq)) (first a-seq)))))
 
+(defn seq-help [seq-1 seq-2]
+    (if (and ((complement empty?) seq-1) ((complement empty?) seq-2))
+        (seq-help (rest seq-1) (rest seq-2))
+        (empty? seq-1)))
+
 (defn seq-max [seq-1 seq-2]
-  (if (and ((complement empty?) seq-1) ((complement empty?) seq-2))
-       (seq-max (rest seq-1) (rest seq-2))
-       (if (empty? seq-1)
-         (str seq-2)
-         (str seq-1))))
+  (if (seq-help seq-1 seq-2)
+    seq-2
+    seq-1))
 
 (defn longest-sequence [a-seq]
-  )
+   (if (empty? (rest a-seq))
+     (first a-seq)
+     (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+    (if (empty? a-seq)
+     false
+      (if (= (first a-seq) elem)
+        true
+        (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+ (if (empty? a-seq)
+    a-seq
+   (if (pred? (first a-seq))
+     (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+      '())))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+   (if (empty? a-seq)
+    a-seq
+   (if (pred? (first a-seq))
+     (my-drop-while pred? (rest a-seq))
+      a-seq)))
 
 (defn seq= [a-seq b-seq]
   :-)
