@@ -86,23 +86,23 @@
 
 
 (defn my-repeat [how-many-times what-to-repeat]
-  (if (== how-many-times 1)
-    [what-to-repeat]
-    (vector what-to-repeat
+  (if (<= how-many-times 0)
+    []
+    (cons what-to-repeat
           (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  (if (== 1 up-to)
-    [0]
+  (if (== 0 up-to)
+    []
     (cons (- up-to 1) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-  []
-  (vector a-seq (tails (rest a-seq)))))
+  [[]]
+  (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (reverse (tails a-seq)))
 
 (defn rotations [a-seq]
   [:-])
