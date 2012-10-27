@@ -160,8 +160,13 @@
        a-seq 
        (concat [monotonic] (split-into-monotonics (drop (count monotonic) a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn permutations [a-seq]
+  (let [a-set (set a-seq)]
+    (cond (empty? a-set) [[]]
+          (empty? (rest a-set)) a-set
+          :else (for [elem a-set
+                      perms (permutations (clojure.set/difference a-set #{elem}))] 
+                  (cons elem (if (coll? perms) perms [perms]))))))
 
 (defn powerset [a-set]
   [:-])
