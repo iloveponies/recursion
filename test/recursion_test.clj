@@ -36,7 +36,7 @@
 (facts "longest-sequence"
        (longest-sequence [[1 2] [] [1 2 3]]) => [1 2 3]
        (longest-sequence [[1 2]])            => [1 2]
-       (longest-sequence [])                 => nil)
+           (longest-sequence [])                 => nil)
 
 (facts "my-filter"
        (my-filter odd? [1 2 3 4]) => '(1 3)
