@@ -149,46 +149,83 @@
 
 (defn rotations [a-seq]
 
-  (cond
-   (empty? a-seq) (cons () a-seq)
-   :else (cons a-seq (rotate (count a-seq) a-seq)))
+
+   (rotate (count a-seq) a-seq)
 
 
   )
 
-(defn rotate [count a-seq]
+(defn rotate [i a-seq]
 
-  (let  [kaannetty (cons (rest a-seq) (first a-seq))]
-  ;(cond
-   ;(= 1 count) kaannetty
-   ;:else (cons kaannetty (rotate (dec count) kaannetty) ))
+(def kaannetty (concat (rest a-seq) (cons (first a-seq) ())))
+  (cond
+   (empty? a-seq) (cons a-seq ())
+   (= 0 i) nil
+   :else (cons kaannetty (rotate (dec i) kaannetty ))
+   ))
+
+(defn my-frequencies-helper [freqs a-seq]
+
+  (cond
+   (empty? a-seq) freqs
+   (nil? (get freqs (first a-seq))) (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq))
+   :else (my-frequencies-helper 
+                              (assoc freqs (first a-seq) (inc (get freqs (first a-seq))))
+                              (rest a-seq)))
+  )
+
+(defn my-frequencies [a-seq]
+   (my-frequencies-helper {} a-seq))
+
+(defn un-frequencies [a-map]
+
+  (let [[[toistettava kertoja]][(first a-map)]]
+
+    (cond
+     (empty? a-map) ()
+     :else(concat (repeat kertoja toistettava) (un-frequencies (rest a-map))))
 
 
   ))
 
-(defn my-frequencies-helper [freqs a-seq]
-  [:-])
-
-(defn my-frequencies [a-seq]
-  [:-])
-
-(defn un-frequencies [a-map]
-  [:-])
-
 (defn my-take [n coll]
-  [:-])
+
+  (cond 
+   (or (= n 0)(empty? coll)) ()
+   :else (concat (cons (first coll) ())  (my-take (dec n) (rest coll))))
+
+  )
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (= n 0) coll
+   :else (my-drop (dec n) (rest coll))
+
+   ))
 
 (defn halve [a-seq]
-  [:-])
+  (def keskikohta (int(/ (count a-seq) 2)))
+  (cons (my-take keskikohta a-seq) (cons (my-drop keskikohta a-seq) ())))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (< (first a-seq) (first b-seq)) (concat (cons (first a-seq) ())(seq-merge (rest a-seq) b-seq))
+   :else (concat (cons (first b-seq) ()) (seq-merge a-seq (rest b-seq))))
+
+
+  )
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond 
+   (empty? a-seq) ()
+   (empty? (rest a-seq)) (cons a-seq ())
+    :else (let [[eka-puoli toka-puoli] (halve a-seq)]
+            (seq-merge (merge-sort eka-puoli) (merge-sort toka-puoli))
+            ))
+
+  )
 
 (defn split-into-monotonics [a-seq]
   [:-])
