@@ -163,10 +163,13 @@
 (defn permutations [a-seq]
   (let [a-set (set a-seq)]
     (cond (empty? a-set) [[]]
-          (empty? (rest a-set)) a-set
+          (empty? (rest a-set)) [a-set]
           :else (for [elem a-set
                       perms (permutations (clojure.set/difference a-set #{elem}))] 
-                  (cons elem (if (coll? perms) perms [perms]))))))
+                  (cons elem perms)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) #{#{}}
+    (for [elem [(set [(first a-set)]) #{}]
+          more (powerset (rest a-set))]
+      (clojure.set/union elem more))))
