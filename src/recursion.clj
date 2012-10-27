@@ -158,13 +158,33 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]         
+   [(my-take half a-seq) (my-drop half a-seq)]))
+
+(defn seq-merge-helper [a-seq b-seq new-seq]
+  (cond
+    (and (empty? a-seq) (empty? b-seq)) new-seq
+    (empty? a-seq) (concat new-seq b-seq)
+    (empty? b-seq) (concat new-seq a-seq)
+    :else (cond
+      (== (first a-seq) (first b-seq)) 
+	(seq-merge-helper (rest a-seq) (rest b-seq)
+	  (concat new-seq [(first a-seq)] [(first b-seq)]))
+      (> (first a-seq) (first b-seq)) 
+	(seq-merge-helper a-seq (rest b-seq) 
+	  (concat new-seq [(first b-seq)]))
+      (< (first a-seq) (first b-seq))
+	(seq-merge-helper (rest a-seq) b-seq 
+	  (concat new-seq [(first a-seq)])))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper a-seq b-seq ()))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (== 1 (count a-seq))) 
+    a-seq
+    (let [halves (halve a-seq)]
+    (seq-merge (merge-sort (get halves 0) ) (merge-sort (get halves 1)) )) ))
 
 (defn split-into-monotonics [a-seq]
   [:-])
