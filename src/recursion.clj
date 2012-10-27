@@ -108,20 +108,31 @@
   [[]]
   (cons a-seq (inits (reverse (rest (reverse a-seq))))) ))
 
-(defn rotations [a-seq]
- (rotations-helper a-seq (count 1)))
-
 (defn rotations-helper [a-seq depth]
-  (if (> depth (count (first a-seq)))
-    a-seq 
-   (rotations-helper (concat (rest a-seq) (first a-seq)) ) ))
+  (if (<= depth 1)
+   [a-seq] 
+   (concat [a-seq] 
+               (rotations-helper 
+                 (concat (rest a-seq) [(first a-seq)]) (dec depth)))))
+
+(defn rotations [a-seq]
+ (rotations-helper a-seq (count a-seq)))
 
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) freqs
+    (contains? freqs (first a-seq)) 
+      (my-frequencies-helper 
+        (assoc freqs 
+           (first a-seq) 
+           (inc (get freqs (first a-seq)))) 
+        (rest a-seq))
+    :else (my-frequencies-helper 
+               (assoc freqs (first a-seq) 1) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+ (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
