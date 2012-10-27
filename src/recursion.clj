@@ -199,7 +199,15 @@
       (cons longest-monotonic-init (split-into-monotonics tail)))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond 
+    (empty? a-set) '(())
+    (singleton? a-set) a-set
+    (= (count a-set) 2) (rotations a-set)
+    :else (let [permutations-first-elem-fixed
+                (fn [b-set] (map (fn [b-subset] (cons (first b-set) b-subset))
+                                 (permutations (rest b-set))))]
+            (apply concat (map permutations-first-elem-fixed (rotations a-set))))))
+    
 
 (defn powerset [a-set]
   [:-])
