@@ -106,7 +106,8 @@
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq) {}
     (let [a (first a-seq)]
-      (merge (my-frequencies-helper {} (my-filter #(not (= a %)) a-seq)) {a (count (my-filter #(= a %) a-seq))}))))
+      (merge (my-frequencies-helper {} (my-filter #(not (= a %)) a-seq))
+             {a (count (my-filter #(= a %) a-seq))}))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
@@ -118,13 +119,14 @@
       (concat (repeat (val a) (key a)) (un-frequencies rst)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n)) [] (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n)) coll (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
