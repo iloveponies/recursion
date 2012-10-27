@@ -26,12 +26,10 @@
       (if (empty? a-seq) nil
         (longest-sequence (cons (seq-max (first a-seq) (first (rest a-seq))) rst ))))))
 
-(defn my-filter [pred? a-seq]
-  (let [rst (rest a-seq)
-        [a] a-seq]
+(defn my-filter [pred? [a & rst :as a-seq]]
     (if (singleton? a-seq)
       (if (pred? a) [a] [])
-      (if (pred? a) (cons a (my-filter pred? rst)) (my-filter pred? rst)))))
+      (if (pred? a) (cons a (my-filter pred? rst)) (my-filter pred? rst))))
 
 (defn sequence-contains? [elem a-seq]
   (let [rst (rest a-seq)
