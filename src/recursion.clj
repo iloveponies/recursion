@@ -178,31 +178,73 @@
     coll
     (my-drop (dec n) (vec (rest coll)))))
 
-(defn rec-rec-halve [a-seq]
-  (if (empty? a-seq)
-    []
-    (cons (first a-seq)
-          (rec-rec-halve (rest a-seq)))))
-
 (defn rec-halve [a-seq n]
   (if (< n 1)
-    (vector (rec-rec-halve a-seq))
-    (cons (first a-seq)
-          (rec-halve (rest a-seq)
-                     (dec n)))))
+    [[a-seq]]
+    (conj (rec-halve (rest a-seq)
+                      (dec n))
+          (first a-seq))))
 
 (defn halve [a-seq]
-  (rec-halve a-seq
-             (int (/ (count a-seq) 2))))
+  (let [recced (rec-halve a-seq
+             (int (/ (count a-seq) 2)))]
+    (cons (reverse (rest recced)) (first recced))))
+
+(defn rec-seq-merge [a-seq b-seq]
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else (if (< (first a-seq)
+                (first b-seq))
+           (cons (first a-seq)
+                 (rec-seq-merge (rest a-seq) b-seq))
+           (cons (first b-seq)
+                 (rec-seq-merge a-seq (rest b-seq))))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else (if (< (first a-seq)
+                (first b-seq))
+           (cons (first a-seq)
+                 (rec-seq-merge (rest a-seq) b-seq))
+           (cons (first b-seq)
+                 (rec-seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq)
+          (singleton? a-seq))
+    a-seq
+    (let [halved (halve a-seq)]
+      (seq-merge (merge-sort (first halved))
+                 (merge-sort (last halved))))))
+
+(defn rec-split [a-seq dir last1]
+  (if (empty? a-seq)
+    []
+    (let [this1 (first a-seq)]
+        (if (< last1 this1)
+          (if dir
+            (cons this1 (rec-split (rest a-seq) true this1))
+            [a-seq])
+          (if dir
+            [a-seq]
+            (cons this1 (rec-split (rest a-seq) false this1)))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (let [first1 (first a-seq)
+          mono (cons first1
+                     (rec-split (rest a-seq)
+                                (< first1 (second a-seq))
+                                first1))
+          last-mono (last mono)
+          butt-last (butlast mono)]
+      (if (seq? last-mono)
+        (cons (butlast mono) (split-into-monotonics last-mono))
+        (merge (my-filter seq? mono) (my-filter (complement seq?) mono))))))
 
 (defn permutations [a-set]
   [:-])
