@@ -1,10 +1,10 @@
 (ns recursion)
 
-(defn product [[a & rst :as coll]]
+(defn product [coll]
   (if (empty? coll) 1 (* (first coll) (product (rest coll)))))
 
-(defn singleton? [[_ & rst :as coll]]
-  (and (not (empty? coll)) (empty? rst)))
+(defn singleton? [coll]
+  (and (not (empty? coll)) (empty? (rest coll))))
 
 (defn my-last [[a & rst :as coll]]
   (if (singleton? coll) a
@@ -13,7 +13,7 @@
 (defn max-element [[a b & rst :as a-seq]]
   (if (singleton? a-seq) a
     (if (empty? a-seq) nil
-      (max-element (cons (max a b)) rst ))))
+      (max-element (cons (max a b) rst )))))
 
 (defn seq-max [seq-1 seq-2]
   (let [fun (fn ! [x y] (if (empty? x) false
@@ -23,7 +23,7 @@
 (defn longest-sequence [[a b & rst :as a-seq]]
   (if (singleton? a-seq) a
     (if (empty? a-seq) nil
-      (longest-sequence (cons (seq-max a b)) rst ))))
+      (longest-sequence (cons (seq-max a b) rst )))))
 
 (defn my-filter [pred? [a & rst :as a-seq]]
   (if (singleton? a-seq)
@@ -111,17 +111,47 @@
   (let [half (int (/ (count a-seq) 2))]
     [(my-take half a-seq) (my-drop half a-seq)]))
 
-(defn seq-merge [a-seq b-seq]
-  [:-])
+(defn seq-merge
+  ([[a & rsta :as a-seq] [b & rstb :as b-seq]]
+    (if (and (empty? a-seq) (empty? b-seq)) []
+      (if (empty? a-seq)
+        (cons b (seq-merge [] rstb))
+        (if (empty? b-seq)
+          (cons a (seq-merge [] rsta))
+          (if (<= a b)
+            (cons a (seq-merge rsta b-seq))
+            (cons b (seq-merge rstb a-seq))))))))
 
-(defn merge-sort [a-seq]
-  [:-])
+(defn merge-sort [[a & rst :as a-seq]]
+  (if (empty? a-seq) []
+    (if (empty? rst) [a]
+      (let [[a-s b-s] (halve a-seq)]
+        (seq-merge (merge-sort a-s) (merge-sort b-s))))))
+
+(defn take-longest [pred [a b & rst :as a-seq]]
+  (if (empty? a-seq) []
+    (if (empty? (rest a-seq)) a
+      (if (not(apply pred b)) a (take-longest pred (rest a-seq))))))
+
+(defn get-monotonics [a-seq]
+  (if (empty? a-seq) []
+    (let [got (take-longest <= (rest (inits a-seq)))
+          gotb (take-longest >= (rest (inits a-seq)))
+          longest (seq-max got gotb)
+          drp (drop (count longest) a-seq)]
+      (cons longest (get-monotonics drp)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (get-monotonics a-seq))
 
 (defn permutations [a-set]
-  [:-])
+  (if (<= (count a-set) 2) (rotations a-set)
+    (let [sets (rotations a-set)
+          all (apply concat (map  #(map (fn [x] (concat [(first %)] x)) (permutations (rest %))) sets))]
+      all)))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) '#{#{}}
+    (if (== 1 (count a-set)) (clojure.set/union '#{#{}} #{a-set}) 
+      (let [sets (map set (map #(rest %) (rotations a-set)))]
+        (clojure.set/union (apply clojure.set/union (map powerset sets)) sets #{(set a-set)})))))
