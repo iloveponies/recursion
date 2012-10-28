@@ -136,10 +136,16 @@
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+  (= n 0) ()
+  (= (count coll) 0) ()
+  :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+  (= n 0) coll
+  (= (count coll) 0) ()
+  :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
