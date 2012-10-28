@@ -63,6 +63,43 @@
           (seq-max (first a-seq) (second a-seq))
           (longest-sequence (rest a-seq)))))))
 
+(defn my-last [coll]
+  ;empty collection?
+  (if (empty? coll)
+    nil
+    ;singleton collection?
+    (if (singleton? coll)
+      (first coll)
+      ;collection with > 1 items
+      (my-last (rest coll)))))
+
+(defn max-element [a-seq]
+  ;empty sequence
+  (if (empty? a-seq)
+    nil
+    ;singleton sequence
+    (if (singleton? a-seq)
+      (first a-seq)
+      ;sequence with > 1 items
+      (max (first a-seq) (max-element (rest a-seq))))))
+
+(defn seq-max [seq-1 seq-2]
+  (let [s1empty (empty? seq-1)
+        s2empty (empty? seq-2)]
+    ;if both sequences are empty
+    (if (and s1empty s2empty)
+      nil
+      (if s1empty
+        seq-1
+        seq-2))))
+
+(defn longest-sequence [a-seq]
+  (if (empty? a-seq)
+    nil
+      (if (empty? (rest a-seq))
+        (first a-seq)
+        (seq-max [1 666 666 2 4] (first a-seq)))))
+
 (defn my-filter [pred? a-seq]
   [:-])
 
