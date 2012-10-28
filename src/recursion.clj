@@ -73,7 +73,7 @@
 (defn power [n k]
   (if (zero? k)
     1
-    (* n (power n (- k 1)))))
+    (* n (power n (dec k)))))
 
 (defn fib [n]
   (cond
@@ -85,12 +85,12 @@
 (defn my-repeat [how-many-times what-to-repeat]
   (if (not (pos? how-many-times))
     ()
-    (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
   (if (not (pos? up-to))
     ()
-    (let [n (- up-to 1)]
+    (let [n (dec up-to)]
       (cons n (my-range n)))))
 
 (defn tails [a-seq]
@@ -115,7 +115,7 @@
           v (if (contains? freqs k)
               (get freqs k)
               0)]
-      (my-frequencies-helper (assoc freqs k (+ v 1)) (rest a-seq)))))
+      (my-frequencies-helper (assoc freqs k (inc v)) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
@@ -126,13 +126,13 @@
 (defn my-take [n coll]
   (if (or (empty? coll) (zero? n))
     ()
-    (cons (first coll) (my-take (- n 1) (rest coll)))))
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
   (cond
     (empty? coll) ()
     (zero? n)     coll
-    :else         (my-drop (- n 1) (rest coll))))
+    :else         (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   (let [n (int (/ (count a-seq) 2))]
@@ -162,9 +162,33 @@
           xs (drop (count x) a-seq)]
       (cons x (split-into-monotonics xs)))))
 
-(defn permutations [a-set]
-  :-)
 
+;         "bar"
+;       /   |   \
+;      /    |    \
+;     /     |     \
+;    b      a      r
+;   / \    / \    / \
+;  a   r  b   r  b   a
+;  |   |  |   |  |   |
+;  r   a  r   b  a   b
+;  |   |  |   |  |   |
+; ( ) ( )( ) ( )( ) ( )
+
+(defn permutations [a-seq]
+  (if (empty? a-seq)
+    [()]
+    (let [drop-nth (fn [n]
+                     (concat (take n a-seq)
+                             (drop (inc n) a-seq)))
+          nth-to-head (fn [n]
+                        (cons (first (drop n a-seq))
+                              (drop-nth n)))
+          seq' (map nth-to-head (range (count a-seq)))]
+      (apply concat (map (fn [x]
+                           (map #(cons (first x) %)
+                                (permutations (rest x))))
+                         seq')))))
 
 (defn powerset [a-set]
   [:-])
