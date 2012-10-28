@@ -11,7 +11,8 @@
 
 (defn singleton? [coll]
 
-   (and ((complement nil?) (first coll)) (empty? (rest coll)))
+   (and ((complement nil?) (first coll)) 
+        (empty? (rest coll)))
 
   )
 
@@ -80,8 +81,8 @@
 (defn my-take-while [pred? a-seq]
   (cond
     (empty? a-seq) a-seq
-    (pred? first(a-seq)) (cons (first a-seq) my-take-while((rest a-seq)))
-    :else nil)
+    (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+    :else ())
   )
 
 (defn my-drop-while [pred? a-seq]
@@ -147,14 +148,6 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
-(defn rotations [a-seq]
-
-
-   (rotate (count a-seq) a-seq)
-
-
-  )
-
 (defn rotate [i a-seq]
 
 (def kaannetty (concat (rest a-seq) (cons (first a-seq) ())))
@@ -163,6 +156,14 @@
    (= 0 i) nil
    :else (cons kaannetty (rotate (dec i) kaannetty ))
    ))
+
+(defn rotations [a-seq]
+
+
+   (rotate (count a-seq) a-seq)
+
+
+  )
 
 (defn my-frequencies-helper [freqs a-seq]
 
@@ -220,7 +221,7 @@
 (defn merge-sort [a-seq]
   (cond 
    (empty? a-seq) ()
-   (empty? (rest a-seq)) (cons a-seq ())
+   (empty? (rest a-seq)) (concat () a-seq )
     :else (let [[eka-puoli toka-puoli] (halve a-seq)]
             (seq-merge (merge-sort eka-puoli) (merge-sort toka-puoli))
             ))
