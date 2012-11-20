@@ -1,19 +1,63 @@
 (ns recursion)
 
-(defn product [coll]
-  :-)
+; Harjoitus 1
+; OK, tosin en ole varma onko toi mun ratkaisu se mitä haettiin
+; mutta ainakin se tekee sen mitä pyydettiin ja tehtävässä ei
+; käsketty käyttää mitään tiettyä menetelmää
+(defn product
+        [coll]
+        (if (empty? coll)
+                1
+                (apply * coll)
+        )
+)
 
-(defn singleton? [coll]
-  :-)
+; Harjoitus 2
+; OK
+; Funktio product tsekkaa ensin onko kokoelma tyhjä. Jos on,
+; niin se palauttaa arvon 1. Muussa tapauksessa se laskee tuloksen kertomalla
+; kokoelman luvut keskenään ja palauttaa niiden tuloksen.
 
-(defn my-last [coll]
-  :-)
+; Harjoitus 3
+; OK
+(defn singleton?
+        [coll]
+        (if (and (empty? (rest coll))
+                (not (empty? coll))
+                )
+                true
+                false
+        )
+)
 
-(defn max-element [a-seq]
-  :-)
+; Harjoitus 4
+; OK? Käytin last-funktiota
+(defn my-last
+        [coll]
+        (last coll)
+)
 
-(defn seq-max [seq-1 seq-2]
-  [:-])
+; Harjoitus 5
+; OK
+(defn max-element
+        [a-seq]
+        (if (empty? a-seq)
+                nil
+                (apply max a-seq)
+        )
+)
+
+; Harjoitus 6
+; OK
+(defn seq-max
+        [seq-1 seq-2]
+        (if (> (count seq-1) (count seq-2))
+                seq-1
+                seq-2
+        )
+)
+
+
 
 (defn longest-sequence [a-seq]
   [:-])
