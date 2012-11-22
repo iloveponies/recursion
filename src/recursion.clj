@@ -51,7 +51,7 @@
 (defn sequence-contains? [elem a-seq]
   (if (empty? a-seq)
     false
-    (if (contains? (first a-seq) elem)
+    (if (= (first a-seq) elem)
 	true
 	(sequence-contains? elem (rest a-seq)))))
 
