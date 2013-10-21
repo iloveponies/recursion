@@ -103,7 +103,7 @@
     (cons () '())
     (cons (seq a-seq) (tails (rest a-seq)))))
 
-(tails [1 2 3 4])
+
 
 
 (defn inits [a-seq]
@@ -111,16 +111,11 @@
     (cons () '())
     (cons (seq a-seq) (inits (reverse (rest (reverse a-seq)))))))
 
+(defn rotations [a-seq]
+  (if (empty? a-seq)
+    (cons () '())
+    (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
-
-
-(defn rotations [x]
-  (if (seq x)
-  (map
-    (fn [n _]
-      (lazy-cat (drop n x) (take n x)))
-    (iterate inc 0) x)
-   (list ())))
 
 ; ei pysty voida kyetä
 
@@ -183,8 +178,18 @@
      (merge-sort (get (halve a-seq) 0))
      (merge-sort (get (halve a-seq) 1)))))
 
+
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
+
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [monotonics (last (take-while monotonic? (rest (reverse (inits a-seq)))))]
+      (cons monotonics (split-into-monotonics (drop (count monotonics) a-seq))))))
+
+
 
 (defn permutations [a-set]
   [:-])
