@@ -1,19 +1,39 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (and (not (empty? coll))
+       (empty? (rest coll))))
 
+;; TODO fiksaa rekursio
 (defn my-last [coll]
-  :-)
+  (cond
+    (empty? coll) nil
+    (singleton? coll) (coll 0)
+    :else (my-last (rest coll))))
+  ;; (if (empty? coll)
+  ;;   nil
+  ;;   (if (singleton? coll)
+  ;;     (coll 0)
+  ;;     (my-last (rest coll)))))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (apply max a-seq)))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [len1 (count seq-1)
+        len2 (count seq-2)]
+    (cond
+      (== len1 len2) seq-2
+      (< len1 len2) seq-2
+      :else seq-1)))
 
 (defn longest-sequence [a-seq]
   [:-])
@@ -40,7 +60,9 @@
   :-)
 
 (defn fib [n]
-  :-)
+  (cond
+    (<= 2 n) 1
+    :else (+ (fib (- n 2)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
