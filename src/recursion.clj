@@ -1,16 +1,39 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
+
+;Ex. 2 - Write something here?
+;Product:
+;--------
+;coll: [1, 2, 4]
+; --> 1 * product [2, 4]
+; --> 2 * product [4]
+; --> 4 * product []
+; --> 1
+; --> 1 * 4 = 4
+; --> 2 * 4 = 8
+; --> return 1 * 8 = 8.
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (if (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? (rest a-seq))
+    (if(nil? (first a-seq))
+      nil
+      (first a-seq))
+    (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
   [:-])
@@ -90,3 +113,8 @@
 (defn powerset [a-set]
   [:-])
 
+
+
+
+
+
