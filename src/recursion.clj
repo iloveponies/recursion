@@ -105,10 +105,15 @@
     (rotate-helper a-seq (count a-seq) '())))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [current (first a-seq)
+        frequency-of (fn [k] (if (contains? freqs k) (get freqs k) 0))
+        increased-frequency-of (fn [k] (assoc freqs k (inc (frequency-of k))))]
+  (if (empty? a-seq)
+    freqs
+    (my-frequencies-helper (increased-frequency-of current) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
