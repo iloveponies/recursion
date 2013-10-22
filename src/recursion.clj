@@ -38,7 +38,7 @@
 ;; TODO: get rid of sort-by
 (defn longest-sequence [s]
   (let [len (count s)]
-    (cond 
+    (cond
       (== 0 len) nil
       (== 1 len) (first s)
       :else (last (sort-by count s)))))
@@ -72,35 +72,49 @@
   (let [a (count a-seq)
         b (count b-seq)]
     (cond
+      (not (== a b)) false
       (and (== 0 a) (== 0 b)) true
       (== 1 a b) (= (first a-seq) (first b-seq))
-      (not (== (first a-seq) (first b-seq))) false
+      (not (= (first a-seq) (first b-seq))) false
       :else (seq= (rest a-seq) (rest b-seq)))))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond
+    (or (empty? seq-1) (empty? seq-2)) ()
+    :else (cons (f (first seq-1) (first seq-2))
+                (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (cond
+    (== 0 n k) nil ;; not defined
+    (zero? n) 0
+    (and (pos? n) (zero? k)) 1
+    (and (neg? n) (zero? k)) -1
+    :else (* n (power n (dec k)))))
 
 (defn fib [n]
-  ;; (cond
-  ;;   (== 0) 0
-  ;;   (< 0 n 3) 1
-  ;;   :else (+ (fib (- n 2)) (fib (- n 2)))))
-  :-)
+  (cond
+    (== n 0) 0
+    (< 0 n 3) 1
+    :else (+ (fib (- n 2)) (fib (- n 1)))))
 
-(defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+(defn my-repeat [times e]
+  (cond
+     (<= times 0) ()
+     :else (cons e (my-repeat (dec times) e))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+    (<= up-to 0) ()
+    :else (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+   (cond
+     (empty? a-seq) (conj a-seq ())
+     :else (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   [:-])
