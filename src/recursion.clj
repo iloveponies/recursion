@@ -26,6 +26,7 @@
     (max (first a-seq)
        (max-element (rest a-seq)))))
 
+; ei toimi
 (defn seq-max [seq-1 seq-2]
   (cond
      (empty? seq-1) seq-2
@@ -35,8 +36,18 @@
 (defn longest-sequence [a-seq]
   [:-])
 
+;; (defn my-map [f a-seq]
+;;   (if (empty? a-seq)
+;;     a-seq
+;;     (cons (f (first a-seq))
+;;           (my-map f (rest a-seq)))))
+
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if(pred? (first a-seq))
+      (cons (first a-seq) (my-filter (rest a-seq)))
+      (cons (my-filter (rest a-seq))))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
@@ -107,5 +118,7 @@
 (defn powerset [a-set]
   [:-])
 (seq-max [1] [1 2])   ;=> [1 2]
+
+
 
 
