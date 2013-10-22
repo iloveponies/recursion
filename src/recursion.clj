@@ -74,19 +74,35 @@
         :else (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (> how-many-times 0)
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
+    '()))
 
 (defn my-range [up-to]
-  [:-])
+  (if (> up-to 0)
+    (cons (dec up-to) (my-range (dec up-to)))
+    '()))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons [] a-seq)
+  (cons a-seq (tails (vec (rest a-seq))))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons [] a-seq)
+    (cons (vec a-seq) (inits (drop-last a-seq)))))
+
+(defn rotate-helper [a-seq times-to-rotate rotated]
+  (let [rotated-left-by-one (fn [s] (take (count s) (next (cycle s))))]
+  (if (> times-to-rotate 0)
+    (rotate-helper (rotated-left-by-one a-seq) (dec times-to-rotate) (conj rotated (vec a-seq)))
+    rotated)))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (rotate-helper a-seq (count a-seq) '())))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
