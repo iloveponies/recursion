@@ -35,23 +35,47 @@
       (< len1 len2) seq-2
       :else seq-1)))
 
-(defn longest-sequence [a-seq]
-  [:-])
+;; TODO: get rid of sort-by
+(defn longest-sequence [s]
+  (let [len (count s)]
+    (cond 
+      (== 0 len) nil
+      (== 1 len) (first s)
+      :else (last (sort-by count s)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  ;; if the pred? meets the conditions add the elem to return value
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
+    :else (my-filter pred? (rest a-seq))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+    (empty? a-seq) false
+    (== elem (first a-seq)) true
+    :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (not (pred? (first a-seq))) ()
+    :else (cons (first a-seq) (my-take-while pred? (rest a-seq)))))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (not (pred? (first a-seq))) a-seq
+    :else (my-drop-while pred? (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (let [a (count a-seq)
+        b (count b-seq)]
+    (cond
+      (and (== 0 a) (== 0 b)) true
+      (== 1 a b) (= (first a-seq) (first b-seq))
+      (not (== (first a-seq) (first b-seq))) false
+      :else (seq= (rest a-seq) (rest b-seq)))))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
@@ -60,9 +84,11 @@
   :-)
 
 (defn fib [n]
-  (cond
-    (<= 2 n) 1
-    :else (+ (fib (- n 2)) (fib (- n 2)))))
+  ;; (cond
+  ;;   (== 0) 0
+  ;;   (< 0 n 3) 1
+  ;;   :else (+ (fib (- n 2)) (fib (- n 2)))))
+  :-)
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
