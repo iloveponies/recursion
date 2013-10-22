@@ -165,8 +165,23 @@
     (let [[a, b] (halve a-seq)]
       (seq-merge (merge-sort a) (merge-sort b)))))
 
+(defn my-take-while [pred a-seq]
+  (cond
+   (empty? a-seq)       ()
+   (pred (first a-seq)) (cons (first a-seq) (my-take-while pred (rest a-seq)))
+   :else                ()))
+
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    true
+    (or (apply <= a-seq) (apply >= a-seq))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq)     ()
+   (singleton? a-seq) a-seq
+   :else              (let [m (last (my-take-while monotonic? (reverse (inits a-seq))))]
+                        (cons m (split-into-monotonics (my-drop (count m) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
