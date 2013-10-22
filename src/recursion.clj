@@ -191,12 +191,34 @@
     (let [[f s] (halve a-seq)]
       (seq-merge (merge-sort f) (merge-sort s)))))
 
+(defn monotonic? [a-seq]
+  (or (apply >= a-seq) (apply <= a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (let [s (first (filter monotonic? (inits a-seq)))]
+      (cons s (split-into-monotonics (drop (count s) a-seq))))))
+
+(defn permutations-helper [cur a-set]
+  (if (empty? a-set)
+    (seq [cur])
+    (apply concat (for [e a-set]
+      (permutations-helper (cons e cur) (disj a-set e))))))
 
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper () (set a-set)))
+
+(defn flatten-tree [a-set]
+  (clojure.set/union (first a-set) (second a-set)))
+
+(defn powerset-helper [sets a-set]
+  (if (empty? a-set)
+    (cons sets nil)
+    (clojure.set/union
+      (powerset-helper sets (rest a-set))
+      (powerset-helper (conj sets (first a-set)) (rest a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (powerset-helper #{} a-set))
 
