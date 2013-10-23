@@ -167,13 +167,46 @@
       (seq-merge (halves 0) (halves 1))
       (seq-merge (merge-sort (halves 0)) (merge-sort (halves 1))))))
 
+(defn split-into-monotonics-helper [parts part a-seq]
+  (let [inc-to-last (fn [elem coll] (reverse (cons elem (reverse coll))))]
+    (cond
+     (empty? a-seq) ;just include part to parts
+       (inc-to-last part parts)
+     (singleton? part) ;include the next elem to part automatically
+       (split-into-monotonics-helper parts (inc-to-last (first a-seq) part)
+                                     (rest a-seq))
+     (< (first part) (last part)) ; are we going up or down?
+       (if (> (last part) (first a-seq))
+         (split-into-monotonics-helper (inc-to-last part parts)
+                                       (cons (first a-seq) '()) (rest a-seq))
+         (split-into-monotonics-helper parts (inc-to-last (first a-seq) part)
+                                       (rest a-seq)))
+     :else
+       (if (< (last part) (first a-seq))
+         (split-into-monotonics-helper (inc-to-last part parts)
+                                       (cons (first a-seq) '()) (rest a-seq))
+         (split-into-monotonics-helper parts (inc-to-last (first a-seq) part)
+                                       (rest a-seq))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  ; call our helper function to do the work for us:
+  ; parameters: parts (empty), part (inc. first elem), rest of the sequence
+  (split-into-monotonics-helper '() (cons (first a-seq) '()) (rest a-seq)))
+
+(defn num-of-perms [n]
+  (if (> n 1) (* n (num-of-perms (dec n))) n))
+
+(defn permutations-helper [result-seq n a-seq]
+  (if (< 1 n)
+    (let [tmp (a-seq (dec n))
+          new-seq (assoc (assoc a-seq (dec n) (a-seq (- n 2))) (- n 2) tmp)]
+      (permutations-helper (concat (rotations new-seq) result-seq) (dec n) a-seq))
+    result-seq))
 
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper '() (count a-set) (into [] a-set)))
 
 (defn powerset [a-set]
   [:-])
 
-; O____o
+;O____o
