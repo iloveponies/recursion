@@ -116,7 +116,11 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [what-to-repeat (first (first a-map))
+        times-to-repeat (second (first a-map))]
+  (if (empty? a-map)
+    []
+    (vec (concat (repeat times-to-repeat what-to-repeat) (un-frequencies (rest a-map)))))))
 
 (defn my-take [n coll]
   [:-])
@@ -141,5 +145,7 @@
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
