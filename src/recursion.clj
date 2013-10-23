@@ -183,8 +183,20 @@
    :else              (let [m (last (my-take-while monotonic? (reverse (inits a-seq))))]
                         (cons m (split-into-monotonics (my-drop (count m) a-seq))))))
 
+(defn idx-exclude [a-set r]
+  (vec (concat (take r a-set) (drop (inc r) a-set))))
+
+(defn permutations-helper [acc-set a-set]
+  (if (clojure.core/empty? a-set)
+    acc-set
+    (loop [n (dec (count a-set))
+           ps ()]
+      (if (neg? n)
+        ps
+        (recur (dec n) (concat ps (permutations-helper (conj acc-set (get a-set n)) (idx-exclude a-set n))))))))
+
 (defn permutations [a-set]
-  [:-])
+  (partition (count a-set) (permutations-helper () a-set)))
 
 (defn powerset [a-set]
   [:-])
