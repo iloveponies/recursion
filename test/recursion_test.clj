@@ -1,6 +1,6 @@
 (ns recursion-test
-  (:use recursion
-        midje.sweet))
+  (:use midje.sweet
+        recursion))
 
 (defn empty? [x]
   (and (sequential? x)
