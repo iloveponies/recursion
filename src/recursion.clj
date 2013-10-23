@@ -196,7 +196,9 @@
         (recur (dec n) (concat ps (permutations-helper (conj acc-set (get a-set n)) (idx-exclude a-set n))))))))
 
 (defn permutations [a-set]
-  (partition (count a-set) (permutations-helper () a-set)))
+  (if (empty? a-set)
+    '([])
+    (partition (count a-set) (permutations-helper () a-set))))
 
 (defn powerset-helper [powerset a-set]
   (if (empty? a-set)
