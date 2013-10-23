@@ -5,6 +5,15 @@
     1
     (* (first coll) (product (rest coll)))))
   ;The better solution: (apply * coll))
+;(product [1 2 4])
+;(product (cons 1 (cons 2 (cons 4 ()'))))
+;(* 1 (product (cons 2 (cons 4 ()'))))
+;(* 1 (* 2 (product (cons 4 ()'))))
+;(* 1 (* 2 (* 4 (product ()'))))
+;(* 1 (* 2 (* 4 1)))
+;(* 1 (* 2 4))
+;(* 1 8)
+; => 8
 
 (defn singleton? [coll]
   (if (empty? coll)
@@ -123,19 +132,31 @@
     (vec (concat (repeat times-to-repeat what-to-repeat) (un-frequencies (rest a-map)))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (and (> n 0) (not (empty? coll)))
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    '()))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (> n 0)
+    (my-drop (dec n) (rest coll))
+    coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    (vector (my-take half a-seq) (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)]
+    (cond (empty? a-seq) b-seq
+          (empty? b-seq) a-seq
+          (< a b) (cons a (seq-merge (rest a-seq) b-seq))
+          :else (cons b (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (last (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
