@@ -147,7 +147,7 @@
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+ )
 
 (defn powerset [a-set]
   [:-])
