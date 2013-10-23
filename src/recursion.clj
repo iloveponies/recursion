@@ -1,13 +1,23 @@
 (ns recursion)
 
+; Begins inspecting coll. If coll is empty, return (multiply by) 1
+; Else multiply the first element of coll recursively with the rest
+; of coll.
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+    (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (if (singleton? coll)
+    coll
+    ))
 
 (defn max-element [a-seq]
   :-)
