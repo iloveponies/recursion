@@ -118,7 +118,7 @@
   ;(seq= [1 3 5] [])        ;=> false
 
 (defn my-map [f seq-1 seq-2]
-  (comp
+  (cond
    (or (empty? seq-1) (empty? seq-2)) '()
    :else (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
@@ -128,16 +128,52 @@
 
 
 (defn power [n k]
-  :-)
+  (if(zero? k)
+    1
+    (* n (power n (dec k)))))
+
+;(power 2 2)  ;=> 4
+;(power 5 3)  ;=> 125
+;(power 7 0)  ;=> 1
+;(power 0 10) ;=> 0
 
 (defn fib [n]
-  :-)
+  (cond
+   (= n 0) 0
+   (= n 1) 1
+   :else
+          (+ (fib (- n 1))
+             (fib (- n 2)) ))
+   )
+
+;(fib 0) ;=> 0
+;(fib 1) ;=> 1
+;(fib 2) ;=> 1
+; (fib 3) ;=> 2
+; (fib 4) ;=> 3
+; (fib 5) ;=> 5
+; (fib 6) ;=> 8
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+   (<= how-many-times 0) '()
+   :else (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
+    ))
+
+;(my-repeat 2 :a)    ;=> (:a :a)
+;(my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
+;(my-repeat -1 :a)   ;=> ()
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+   (== up-to 0) '()
+   :else (cons (- up-to 1) (my-range (dec up-to)))
+    ))
+
+;(my-range 0)  ;=> ()
+;(my-range 1)  ;=> (0)
+;(my-range 2)  ;=> (1 0)
+;(my-range 3)  ;=> (2 1 0)
 
 (defn tails [a-seq]
   [:-])
