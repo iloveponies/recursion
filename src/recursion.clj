@@ -150,21 +150,10 @@
       (seq-merge (merge-sort as)
                  (merge-sort bs)))))
 
-(defn sign [x]
-  (cond (< x 0) -1 (> x 0) 1 :else 0))
-
 (defn split-into-monotonics [a-seq]
-  (let [diffsign (fn [a b] (sign (- a b)))]
-    (cond (empty? a-seq) ()
-          (empty? (rest a-seq)) [a-seq]
-          :else
-          (let [ds (diffsign (first a-seq) (second a-seq))]
-            ((fn [acc head tail]
-               (let [acc (conj acc head)]
-                 (if (or (empty? tail) (not (= ds (diffsign head (first tail)))))
-                   (cons acc (split-into-monotonics tail))
-                   (recur acc (first tail) (rest tail)))))
-             [] (first a-seq) (rest a-seq))))))
+  (if-let [mono (last (take-while (fn [init] (some #(apply % init) [<= >=]))
+                                  (rest (inits a-seq))))]
+    (cons mono (split-into-monotonics (drop (count mono) a-seq)))))
 
 (defn permutations [a-set]
   (let [a-vec (vec a-set)]
