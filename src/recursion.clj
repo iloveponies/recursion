@@ -120,25 +120,64 @@
   [:-])
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq) freqs
+    (let [k (first a-seq)
+          v (get freqs k 0)]
+      (my-frequencies-helper (assoc freqs k (inc v)) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map) ()
+    (let [e (first (first a-map))
+          n (second (first a-map))]
+      (concat (repeat n e) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (< n 1) ()
+    (nil? (first coll)) ()
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (< n 1) (concat coll)
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [middle (int (/ (count a-seq) 2))]
+    (vector (take middle a-seq) (drop middle a-seq))))
+
+(defn smaller [a b]
+  (cond
+    (and (not (number? a)) (not (number? b))) nil
+    (not (number? a)) b
+    (not (number? b)) a
+    :else (min a b)))
+
+;; (defn seq-merge [a-seq b-seq]
+;;   (if (and (empty? a-seq) (empty? b-seq)) ()
+;;     (let [a (first a-seq)
+;;           b (first b-seq)
+;;           m (smaller a b)]
+;;       (cond
+;;         (nil? a) [b]
+;;         (nil? b) [a]
+;;         (<= a b) (concat [a] (seq-merge (rest a-seq) b-seq))
+;;         :else (concat [b] (seq-merge a-seq (rest b-seq)))))))
+    ;; :else (concat a-seq b-seq)))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (if (and (empty? a-seq) (empty? b-seq)) ()
+    (let [a (first a-seq)
+          b (first b-seq)]
+      (cond
+        (and (nil? a) (nil? b)) ()
+        (nil? a) [b]
+        (nil? b) [a]
+        (<= a b) (concat [a] (seq-merge (rest a-seq) b-seq))
+        (<= b a) (concat [b] (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
   [:-])
