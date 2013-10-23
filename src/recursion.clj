@@ -198,6 +198,20 @@
 (defn permutations [a-set]
   (partition (count a-set) (permutations-helper () a-set)))
 
-(defn powerset [a-set]
-  [:-])
+(defn powerset-helper [powerset a-set]
+  (if (empty? a-set)
+    (conj powerset #{})
+    (loop [n 0
+           head []
+           powerset powerset]
+      (if (= n (count a-set))
+        (loop [n 1
+               powerset powerset]
+          (if (= n (count a-set))
+            (powerset-helper powerset (vec (rest a-set)))
+            (recur (inc n) (powerset-helper powerset (idx-exclude a-set n)))))
+        (let [headd (conj head (get a-set n))]
+          (recur (inc n) headd (conj powerset (set headd))))))))
 
+(defn powerset [a-set]
+  (powerset-helper #{} a-set))
