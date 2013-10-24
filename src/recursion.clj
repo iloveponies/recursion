@@ -224,7 +224,5 @@
               (map (partial cons (first rot))
                    (permutations (rest rot)))))))
 
-(permutations [5 3 1])
-
 (defn powerset [a-set]
   [:-])
