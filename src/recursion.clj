@@ -144,19 +144,31 @@
     [(my-take take-lenght a-seq) (my-drop take-lenght a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let[a-frst (first a-seq)
+       b-frst (first b-seq)]
+    (cond
+     (empty? a-seq) b-seq
+     (empty? b-seq) a-seq
+     (<= a-frst b-frst) (cons a-frst (seq-merge (rest a-seq) b-seq))
+     :else              (cons b-frst (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[half-1 half-2] (halve a-seq)]
+    (cond
+     (empty? a-seq) a-seq
+     (singleton? a-seq) a-seq
+     :else (seq-merge (merge-sort half-1) (merge-sort half-2)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  )
 
 (defn permutations [a-set]
   [:-])
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
 
