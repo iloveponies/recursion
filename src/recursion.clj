@@ -100,22 +100,41 @@
    :else (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond 
+   (empty? a-seq) [()]
+   :else (cons a-seq             
+               (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (cond 
+   (empty? a-seq) [()]
+   :else (cons a-seq             
+               (inits (butlast a-seq)))))
 
+(defn rotations-helper [iteration a-seq]
+  (let [cnt (count a-seq)]
+    (if
+     (== cnt iteration) '()
+     (cons (concat (take-last (- cnt iteration) a-seq) (take iteration a-seq))
+                 (rotations-helper (+ iteration 1) a-seq)))))
+         
 (defn rotations [a-seq]
-  [:-])
+  (if 
+      (empty? a-seq) '(())
+      (rotations-helper 0 a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if
+      (empty? a-seq) freqs
+      (my-frequencies-helper 
+       (assoc freqs (first a-seq) (+ (or (get freqs (first a-seq)) 0) 1)) 
+       (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (mapcat (fn [key] (repeat (get a-map key) key)) (keys a-map)))
 
 (defn my-take [n coll]
   [:-])
