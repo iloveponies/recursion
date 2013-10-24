@@ -217,13 +217,12 @@
           (split-into-monotonics (drop (count (first-monotone-chunk a-seq)) a-seq)))))
 
 (defn permutations [a-set]
-  (let [perms-of-a-rot
-        (fn [rot] (map (partial cons (first rot))
-                       (permutations (rest rot))))]
-  (if (or (empty? a-set)
-          (empty? (rest a-set)))
-    a-set
-    (perms-of-a-rot [5 3 1]))))
+  (if (empty? a-set)
+    '(())
+    (reduce concat
+            (for [rot (rotations a-set)]
+              (map (partial cons (first rot))
+                   (permutations (rest rot)))))))
 
 (permutations [5 3 1])
 
