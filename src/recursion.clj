@@ -185,13 +185,10 @@
 (defn permutations [a-set]
   (permutations-helper () 0 (seq a-set)))
 
-(defn powerset-helper [a-set n]
-  (if (or (empty? a-set) (= n (count a-set)))
-    ()
-    (let [next-set (set (concat (take n a-set) (drop (inc n) a-set)))]
-      (into (conj (powerset-helper next-set 0) next-set)
-            (powerset-helper a-set (inc n))))))
-
 (defn powerset [a-set]
-  (conj (set (powerset-helper a-set 0)) (set a-set)))
+  (if (empty? a-set)
+    #{#{}}
+    (let [power (powerset (rest a-set))]
+      (clojure.set/union power
+                         (for [set power] (conj set (first a-set)))))))
 
