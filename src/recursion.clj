@@ -200,7 +200,12 @@
            (vector (my-drop (mid a-seq) a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+(cond
+ (and (empty? a-seq) (empty? b-seq)) a-seq
+ (or (empty? a-seq)
+     (< (first b-seq)
+        (first a-seq))) (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+ :else (cons (first a-seq) (seq-merge (rest a-seq) b-seq))))
 
 (defn merge-sort [a-seq]
   [:-])
