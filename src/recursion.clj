@@ -1,16 +1,28 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if
+    (empty? coll)
+    1
+    (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if
+    (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (if
+    (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (if
+    (empty? a-seq)
+    nil
+    ()))
 
 (defn seq-max [seq-1 seq-2]
   [:-])
