@@ -33,7 +33,7 @@
     (if (pred? (first a-seq))
     (cons (first a-seq) (my-filter pred? (rest a-seq)))
     (my-filter pred? (rest a-seq)))))
-; I am over here now!
+; I am over here now! Auuuh!
 
 (defn sequence-contains? [elem a-seq]
     (if (empty? a-seq) false
