@@ -119,15 +119,12 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    (cons '() '())
+    '(())
     (cons (seq a-seq)
           (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (if (empty? a-seq)
-    (cons '() '())
-    (cons (seq a-seq)
-          (inits (butlast a-seq)))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (letfn [(rotations-helper [a-seq b-seq]
@@ -192,18 +189,36 @@
                  (merge-sort last-half)))))
 
 (defn monotonic? [a-seq]
-  (or (apply <= a-seq)
+  (or (empty? a-seq)
+      (apply <= a-seq)
       (apply >= a-seq)))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [longest-monotonic (last (my-take-while monotonic? (inits a-seq)))]
+      (cons longest-monotonic
+            (split-into-monotonics (drop (count longest-monotonic) a-seq))))))
+
+(defn permutations-helper [a-set a-seq]
+  (if (empty? a-set)
+    a-seq
+    (map (fn [elem] (permutations-helper (clojure.set/difference a-set [elem])
+                                         (cons elem a-seq)))
+         a-set)))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (partition (count a-set) (flatten (permutations-helper (set a-set) [])))))
 
 (defn powerset [a-set]
-  [:-])
-
-
-
+  (let [the-set (set a-set)]
+    (if (empty? the-set)
+      #{#{}}
+      (apply
+        clojure.set/union #{the-set}
+        (map (fn [elem]
+             (powerset (clojure.set/difference the-set [elem])))
+             the-set)))))
 
