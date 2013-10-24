@@ -193,18 +193,8 @@
   ; parameters: parts (empty), part (inc. first elem), rest of the sequence
   (split-into-monotonics-helper '() (cons (first a-seq) '()) (rest a-seq)))
 
-(defn num-of-perms [n]
-  (if (> n 1) (* n (num-of-perms (dec n))) n))
-
-(defn permutations-helper [result-seq n a-seq]
-  (if (< 1 n)
-    (let [tmp (a-seq (dec n))
-          new-seq (assoc (assoc a-seq (dec n) (a-seq (- n 2))) (- n 2) tmp)]
-      (permutations-helper (concat (rotations new-seq) result-seq) (dec n) a-seq))
-    result-seq))
-
 (defn permutations [a-set]
-  (permutations-helper '() (count a-set) (into [] a-set)))
+  [:-])
 
 (defn powerset [a-set]
   [:-])
