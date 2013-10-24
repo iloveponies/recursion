@@ -103,10 +103,6 @@
     (empty? a-seq)
     [()]
     (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
-
-(defn rotations [a-seq]
-  (if (empty? a-seq) '(()) (rotations-helper 0 a-seq)))
-
 (defn rotations-helper [n a-seq]
   (if
     (== n (count a-seq))
@@ -116,6 +112,9 @@
      (rotations-helper
       (inc n)
       (concat (rest a-seq) [(first a-seq)])))))
+
+(defn rotations [a-seq]
+  (if (empty? a-seq) '(()) (rotations-helper 0 a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if
