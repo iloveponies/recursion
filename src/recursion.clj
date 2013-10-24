@@ -1,10 +1,10 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll) 0 (* (first coll ) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll) false (empty? (rest coll))))
 
 (defn my-last [coll]
   :-)
@@ -90,3 +90,4 @@
 (defn powerset [a-set]
   [:-])
 
+
