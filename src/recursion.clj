@@ -126,7 +126,7 @@
           (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations-helper [head tail]
   (let [new-head (rest head)
@@ -200,11 +200,32 @@
     a-seq
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
+(defn monotonic? [a-seq]
+  (or (empty? a-seq)
+      (apply <= a-seq)
+      (apply >= a-seq)))
+
+(defn first-monotone-chunk [a-seq]
+  (first
+   (reverse
+    (take-while monotonic? (inits a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (cons (first-monotone-chunk a-seq)
+          (split-into-monotonics (drop (count (first-monotone-chunk a-seq)) a-seq)))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [perms-of-a-rot
+        (fn [rot] (map (partial cons (first rot))
+                       (permutations (rest rot))))]
+  (if (or (empty? a-set)
+          (empty? (rest a-set)))
+    a-set
+    (perms-of-a-rot [5 3 1]))))
+
+(permutations [5 3 1])
 
 (defn powerset [a-set]
   [:-])
