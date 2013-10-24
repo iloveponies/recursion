@@ -286,7 +286,6 @@
      :else (seq-merge (merge-sort (allthosehalves 0))(merge-sort (allthosehalves 1)))
      )))
 
-;(merge-sort [])                 ;=> ()
 ;(merge-sort [1 2 3])            ;=> (1 2 3)
 ;(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
 
