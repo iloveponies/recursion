@@ -159,7 +159,14 @@
     (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (last (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [reversed-inits (reverse (inits a-seq))
+        monotonic? (fn [s] (if (empty? s)
+                             false
+                             (or (apply <= s) (apply >= s))))
+        longest-monotonic (last (filter monotonic? reversed-inits))]
+    (if (empty? a-seq)
+      '()
+    (cons longest-monotonic (split-into-monotonics (drop (count longest-monotonic) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
