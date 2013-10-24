@@ -36,9 +36,9 @@
 ; I am over here now! Auuuh!
 
 (defn sequence-contains? [elem a-seq]
-    (if (empty? a-seq) false
-    (if (= (first a-seq) elem true
-           (sequence-contains? elem (rest a-seq))))))
+  (cond (empty? a-seq) false
+       (not (= elem elem (first a-seq))) (sequence-contains? elem (rest a-seq))
+        :else true))
 
 (defn my-take-while [pred? a-seq]
   (if (or (empty? a-seq) (not (pred? (first a-seq))))
@@ -109,5 +109,7 @@
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
