@@ -225,4 +225,8 @@
                    (permutations (rest rot)))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [next-rec (powerset (rest a-set))]
+      (concat next-rec
+              (map #(conj % (first a-set)) next-rec)))))
