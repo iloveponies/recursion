@@ -162,9 +162,39 @@
 (defn split-into-monotonics [a-seq]
   (monotonics-helper '() 0 a-seq))
 
+(defn permutations-helper [start a-set]
+  (if (empty? a-set) start
+    (flatten (for [number a-set]
+      (let [others (remove (fn [x] (= x number)) a-set)]
+        (permutations-helper (conj start number) others))))))
+
 (defn permutations [a-set]
-  )
+  (if (empty? a-set) '(())
+    (partition (count a-set) (permutations-helper '() a-set))))
+    ; Nice flatten -> partition hack to get rid of inner sequences, not proud of it, but it works. :D
+
+(defn subset-helper [a-set current-set target]
+  (if (= (count current-set) target) [current-set]
+    (let [remaining (clojure.set/difference a-set current-set)]
+      (for [elem remaining
+            solution (subset-helper a-set (conj current-set elem) target)]
+        solution))))
+
+(defn subsets [a-set size]
+  (set (subset-helper a-set #{} size)))
 
 (defn powerset [a-set]
-  [:-])
+  (set (apply concat (for [i (range 0 (inc (count a-set)))]
+    (subsets (set a-set) i)))))
+
+;(powerset #{})      ;=> #{#{}}
+;(powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+;(count (powerset (range 10))) ;=> 1024
+
+
+
+
+
+
+
 
