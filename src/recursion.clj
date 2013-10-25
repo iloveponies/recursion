@@ -1,13 +1,20 @@
+
 (ns recursion)
 
 (defn product [coll]
   (if (empty? coll)
-    0
+    1
     (* (first coll)
        (product (rest coll)))))
 
 ; The if acts as our base case, otherwise the function
 ; will recursively call itself.
+
+;(product [])        ;=> 1  ; special case
+;(product [1 2 3])   ;=> 6
+;(product [1 2 3 4]) ;=> 24
+;(product [0 1 2])   ;=> 0
+;(product #{2 3 4})  ;=> 24 ; works for sets too!
 
 (defn singleton? [coll]
   (if (not (nil? (first coll))) (nil? (first (rest coll))) false) )
@@ -102,11 +109,19 @@
 
 (defn seq= [a-seq b-seq]
   (cond
-    (and (empty? a-seq) (empty? b-seq)) true
+   (and (empty? a-seq) (empty? a-seq)) (= (first a-seq) (first b-seq))
+   (or (empty? a-seq) (empty? b-seq)) false
+   (and (empty? (rest a-seq)) (empty? (rest b-seq)) ) (= (first a-seq) (first b-seq))
     (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
     :else false))
 
 ;(seq= [1 2 4] '(1 2 4))  ;=> true
+;(seq= [1 2 3] [1 2 3 4]) ;=> false
+;(seq= [1 3 5] [])        ;=> false
+;(seq= [1 2 4] '(1 2 4))  ;=> true
+;(seq= [] [])             ;=> true
+;(seq= [1 2 nil] [1 2])   ;=> false
+;(seq= [1 4 2] [1 2 4])   ;=> false
 ;(seq= [1 2 3] [1 2 3 4]) ;=> false
 ;(seq= [1 3 5] [])        ;=> false
 
@@ -174,7 +189,7 @@
   (let [ b-seq (reverse a-seq)]
   (map reverse (tails b-seq))))
 
-(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+;(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
 
 (defn rotations [a-seq]
   ;(cond
@@ -194,19 +209,31 @@
 
 
 
-(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
+;(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 
 (defn un-frequencies [a-map]
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n)) '() (cons (first coll) (my-take (dec n)(rest coll))) ))
+
+;(my-take 2 [1 2 3 4]) ;=> (1 2)
+;(my-take 4 [:a :b])   ;=> (:a :b)
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (empty? coll) (> 1 n)) coll (my-drop (dec n) (rest coll)) ))
+
+;(my-drop 2 [1 2 3 4]) ;=> (3 4)
+;(my-drop 4 [:a :b])   ;=> ()
 
 (defn halve [a-seq]
-  [:-])
+ (vector (my-take (int (/ (count a-seq) 2)) a-seq) (my-drop (/ (count a-seq) 2) a-seq)))
+
+;(halve [1 2 3 4])   ;=> [(1 2) (3 4)]
+;(halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
+;(halve [1])         ;=> [() (1)]
+
+;(concat [1 2 3] [4])
 
 (defn seq-merge [a-seq b-seq]
   [:-])
@@ -222,6 +249,8 @@
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
 
