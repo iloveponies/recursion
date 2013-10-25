@@ -62,28 +62,45 @@
    :else false))
 
 (defn my-map [f seq-1 seq-2]
-  )
+  (if (or (empty? seq-1)(empty? seq-2)) '()
+    (cons (f (first seq-1) (first seq-2))
+          (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k) 1
+  (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (if (= n 0) 0
+    (if (= n 1) 1
+  (+ (fib (- n 1)) (fib (- n 2))))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0) '()
+      (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (= up-to 0) '()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq) '(())
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails(reverse a-seq))))
+
+(defn rotations-helper [a-seq tmp-seq]
+  (if (empty? a-seq) a-seq
+    (let [new-seq-1 (rest a-seq)
+          new-seq-2 (cons (first a-seq) tmp-seq)]
+      (cons (concat new-seq-1 (reverse new-seq-2)) (rotations-helper new-seq-1 new-seq-2)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq) '(()) (rotations-helper a-seq []))
+  )
+
+(rotations [])
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
@@ -113,7 +130,7 @@
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  )
 
 (defn powerset [a-set]
   [:-])
