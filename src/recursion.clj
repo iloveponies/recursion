@@ -199,23 +199,41 @@
       (nsubs (count a-set) res))))
 
 (defn apply-n [f a-seq n]
-  (if (== n 0)
-    a-seq
-    (apply-n f (apply f a-seq) (- n 1))))
+  (let [helper (fn [subseq x]
+                 (if (zero? x)
+                   subseq
+                   (recur (apply f subseq) (dec x))))]
+    (helper a-seq n)))
 
-(defn pwrset-helper [curseq a-vec n]
-  (if (== (count curseq) (count a-vec))
-    curseq
-    (map
-     (fn [n] (pwrset-helper
-              (cons (get a-vec n) curseq) a-vec 0)) (range (count a-vec)))))
+;  (if (== n 0)
+;    a-seq
+;    (apply-n f (apply f a-seq) (- n 1))))
 
-;WARNING extremely inefficient. may take years with large inputs
-;use with caution
+
+(defn gener-ncomb ;result is set of sets
+;  ([a-set 0] #{})
+;  ([a-set 1]
+;     (reduce (fn [iset elem] (conj iset #{elem})) #{} a-set))
+;  ([a-set 2]
+;     (set
+;      (for [elem1 a-set
+;            elem2 a-set]
+;        #{elem1 elem2})))
+  [a-set n]
+  (loop [x 0
+         cursets #{#{}}]
+    (if (== x n)
+      (filter (fn [st] (== (count st) n)) cursets)
+      (recur (inc x)
+             (set (for [elems a-set
+                        newsets cursets]
+                    (conj newsets elems)))))))
+
+
+
+
 
 (defn powerset [a-set]
-  (if (empty? a-set)
-    #{#{}}
-    (clojure.set/union #{#{}} (set (map set (apply-n concat
-                        (pwrset-helper '() (vec a-set) 0)
-                        (- (count a-set) 1)))))))
+  (reduce (fn [pset n]
+            (clojure.set/union pset (gener-ncomb a-set n)))
+          #{(set a-set)} (range (count a-set))))
