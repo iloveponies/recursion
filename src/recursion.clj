@@ -141,16 +141,28 @@
  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (cond
+   (empty? a-map) '()
+   :else (let [kvp (first a-map)
+         key (first kvp)
+         value (second kvp)]
+     (concat (my-repeat value key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (= 0 n) '()
+   (empty? coll) '()
+   :else (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (= 0 n) coll
+   (empty? coll) '()
+   :else (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [num (count a-seq)]
+    (vector (my-take (int (/ num 2)) a-seq) (my-drop (int (/ num 2)) a-seq))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
