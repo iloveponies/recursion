@@ -145,7 +145,6 @@
   )
 )
 
-(tails [1 2])
 
 (defn inits [a-seq]
   (cond
@@ -154,18 +153,12 @@
   )
 )
 
-
-
-
-
-
-
 (defn rotation-helper [ n a-seq]
   (let [ rot (fn [seq-1] (reverse(rest(reverse(cons(last a-seq) a-seq)))))]
     (cond
-      (== n (count a-seq))     a-seq
-      ; (== n 0)                 (cons (rotation-helper (inc n) (rot a-seq)) () )
-      :else                    (cons (rot a-seq) (rotation-helper (inc n) (rot a-seq)))
+      (empty? a-seq)               (cons () ())
+      (== (inc n) (count a-seq))   (cons (rot a-seq) ())
+      :else                         (cons (rot a-seq) (rotation-helper (inc n) (rot a-seq)))
     )
   )
 )
@@ -174,39 +167,113 @@
   (rotation-helper 0 a-seq)
 )
 
-
-
-
-
-
-
-
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [is? (fn [x] (fn [y] (= x y)))]
+    (cond
+      (empty? a-seq)      freqs
+      :else               (assoc (my-frequencies-helper freqs (filter (complement (is? (first a-seq))) a-seq))
+                                 (first a-seq)
+                                 (count(filter (is? (first a-seq)) a-seq))
+                          )
+    )
+  )
+)
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq)
+)
 
 (defn un-frequencies [a-map]
-  [:-])
+  (cond
+    (empty? a-map)     []
+    :else              (concat (repeat (val(first a-map)) (key(first a-map)))
+                               (un-frequencies(rest a-map)))
+  )
+)
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (empty? coll)    coll
+    (< 0 n)          (cons (first coll) (my-take (dec n) (rest coll)))
+    :else            ()
+
+  )
+)
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (< 0 n)           (my-drop (dec n) (rest coll))
+    :else             coll
+  )
+)
 
 (defn halve [a-seq]
-  [:-])
+
+  (vec(cons (my-take (int (/ (count a-seq) 2)) a-seq)
+      (cons (my-drop (int (/ (count a-seq) 2)) a-seq) [])))
+)
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq)           b-seq
+   (empty? b-seq)           a-seq
+   (<= (first a-seq) (first b-seq))
+                            (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else                    (cons (first b-seq) (seq-merge (rest b-seq) a-seq))
+  )
+)
+
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (< (count a-seq) 2)  a-seq
+    :else                (seq-merge(merge-sort(halve a-seq)) (merge-sort(halve a-seq)))
+  )
+)
+
+(defn merge-sort [a-seq]
+  (cond
+    ;(empty? a-seq)       ()
+    (< (count a-seq) 2)  a-seq
+    :else                (seq-merge(merge-sort(first(halve a-seq))) (merge-sort(last(halve a-seq))))
+  )
+)
+
+(defn monotonic? [a-seq]
+  (if (or (apply <= a-seq)
+          (apply >= a-seq)
+       )
+    true
+    false
+  )
+)
+
+(defn -last [a-seq]
+  (rest(reverse(rest(reverse(cons(last a-seq) a-seq)))))
+)
+
+(defn index-of-first-monotonic [a-seq]
+  (cond
+    (monotonic? (get(vec(inits a-seq)) (count a-seq)))   (count a-seq)
+    :else                              (index-of-first-monotonic (-last a-seq))
+  )
+)
+
+(defn cut [a-seq n]
+  (if (= 0 n)
+    a-seq
+    (cut (rest a-seq) (dec n))
+  )
+)
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (cond
+    (monotonic? a-seq)     (cons (seq a-seq) ())
+    :else                  (cons (get (vec(inits a-seq)) (index-of-first-monotonic a-seq))
+                                 (split-into-monotonics(cut a-seq (index-of-first-monotonic a-seq))))
+  )
+)
 
 (defn permutations [a-set]
   [:-])
