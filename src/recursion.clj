@@ -47,6 +47,10 @@
       (pred? (first a-seq))
       (first a-seq)
       nil)
+    (if
+      (pred? (first a-seq))
+      cons (first a-seq) (my-filter pred? (rest a-seq))
+      (my-filter pred? (rest a-seq)))))
 
 
 (defn sequence-contains? [elem a-seq]
