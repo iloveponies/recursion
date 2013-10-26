@@ -275,9 +275,73 @@
   )
 )
 
+
+(declare const-size-permu)
+
+
+(defn add-to-sequence [x]
+  (fn [a-seq] (cons x a-seq))
+)
+
+ ; ROTATE FUNCTIONS
+ ;----------------------------
+(defn rotate-> [ a-seq n]
+  (if (= 0 n)
+      a-seq
+      (rotate-> (cons (last a-seq) (-last a-seq)) (dec n))
+  )
+)
+(defn rotate<- [a-seq n]
+  (rotate-> a-seq (- (count a-seq) n))
+)
+; -----------------------------
+
+(defn remove-index [n a-seq]
+  (rotate<-(-last(rotate-> a-seq(-(count a-seq) n 1)))(-(count a-seq) n 1))
+)
+
+(defn permutationss [a-set]
+  (cond
+    (empty? a-set)                (cons () ())
+    (= (count a-set) 1)           (cons (seq a-set) ())
+    (= (count a-set) 2)           (cons (reverse(seq a-set)) (cons (seq a-set) ()))
+    ;:else                         (map (add-to-sequence (first a-set)) (permutations (rest a-set)))
+     :else                         (const-size-permu a-set 0)
+  )
+)
+(defn const-size-permu [a-seq n]
+  (cond
+    (>= n (count a-seq))           ()                                                   ;{ok}
+    :else                          (concat (map (add-to-sequence (get a-seq n))        (permutationss(vec(remove-index n a-seq))))
+                                           (const-size-permu a-seq (inc n) ))
+                                           ;(map (add-to-sequence (get a-seq (inc n))   (permutations(remove-index (inc n)))))
+  )
+
+)
+
 (defn permutations [a-set]
-  [:-])
+  (permutationss(vec a-set))
+)
+
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+  )
+)
+
+
+(defn powerset [a-set]
+
+)
+
+
+
+
+
+
+
+
+
 
