@@ -139,11 +139,11 @@
 (defn rotations [a-seq]
   (cond
     (empty? a-seq)
-    '()
+     (cons '() [])
     (singleton? a-seq)
-    (seq a-seq)
+     (seq a-seq)
     :else
-    (rotation-helper 0 a-seq)))
+     (rotation-helper 0 a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -201,7 +201,7 @@
     (seq-merge (merge-sort (get (halve a-seq) 1)) (merge-sort (get (halve a-seq) 0)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  )
 
 (defn permutations [a-set]
   [:-])
@@ -211,6 +211,8 @@
 
 
 ; ^_____^
+
+
 
 
 
