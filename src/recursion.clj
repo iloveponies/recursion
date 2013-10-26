@@ -236,7 +236,7 @@
 ;(concat [1 2 3] [4])
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  )
 
 (defn merge-sort [a-seq]
   [:-])
