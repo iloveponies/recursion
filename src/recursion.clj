@@ -168,12 +168,42 @@
       '()
     (cons longest-monotonic (split-into-monotonics (drop (count longest-monotonic) a-seq))))))
 
+(defn find-k [a-set]
+  (loop [index 0
+         current-k nil
+         a-seq a-set]
+    (let [[current-element next-element] a-seq]
+      (cond (nil? next-element) current-k
+            (>= current-element next-element) (recur (inc index) current-k (rest a-seq))
+            :else (recur (inc index) index (rest a-seq))))))
+
+(defn find-l [k a-set]
+  (loop [index 0
+         l nil]
+    (let [current-element (get a-set index)
+          kth-element (get a-set k)]
+      (cond (nil? current-element) l
+            (<= kth-element current-element) (recur (inc index) index)
+            :else (recur (inc index) l)))))
+
+(defn permutation-of [a-set]
+  (let [k (find-k a-set)
+        l (find-l k a-set)
+        swap (fn [s index1 index2]
+               (assoc (vec s) index1 (get s index2) index2 (get s index1)))
+        reverse-tail-from-index (fn [from-index s] (concat (take (+ from-index 1) s) (reverse (nthrest s (+ from-index 1)))))]
+       (reverse-tail-from-index k (swap a-set k l))))
+
 (defn permutations [a-set]
-  [:-])
+  (let [last-permutation? (fn [p] (nil? (find-k p)))
+        initial-permutation (vec (sort a-set))]
+  (loop [perms [initial-permutation]
+         current-permutation initial-permutation]
+      (if (last-permutation? current-permutation)
+        perms
+        (recur (conj perms (vec (permutation-of current-permutation))) (vec (permutation-of current-permutation)))))))
 
 (defn powerset [a-set]
   [:-])
-
-
 
 
