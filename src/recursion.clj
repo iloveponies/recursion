@@ -22,16 +22,32 @@
   (if
     (empty? a-seq)
     nil
-    ()))
+    (if (singleton? a-seq)
+      (first a-seq)
+      (max (first a-seq) (max-element (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if
+    (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if
+    (empty? a-seq)
+    nil
+    (if (singleton? a-seq)
+      (first a-seq)
+      (seq-max (first a-seq) (longest-sequence(rest a-seq))))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if
+    (empty? (rest a-seq))
+    (if
+      (pred? (first a-seq))
+      (first a-seq)
+      nil)
+
 
 (defn sequence-contains? [elem a-seq]
   :-)
