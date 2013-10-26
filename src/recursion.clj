@@ -19,10 +19,8 @@
 (defn max-element [a-seq]
   (if (empty? a-seq)
     nil
-    (if (singleton? a-seq)
-      (first a-seq)
-      (max (first a-seq)
-         (max-element (rest a-seq))))))
+    (max (first a-seq)
+       (or (max-element (rest a-seq)) 0))))
 
 (defn length [seq-x]
   (if (empty? seq-x)
@@ -99,12 +97,12 @@
 (defn power [n k]
   (if (zero? k)
     1
-    (and (* n (power n (dec k))))))
+    (* n (power n (dec k)))))
 
 (defn fib [n]
-  (if (zero? n)
-    0
-    (+ (dec n))))
+  (if (< n 2)
+    n
+    (+ (fib (dec (dec n))) (fib (dec n)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   (if (< how-many-times 1)
@@ -120,15 +118,17 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    ()
+    (cons () ())
     (cons a-seq
-          (tails (disj a-seq (first a-seq))))))
+          (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  ())
+  (map reverse (reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  ())
+  (if (empty? a-seq)
+    ()
+    (conj (rotations (rest a-seq)) (first a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
