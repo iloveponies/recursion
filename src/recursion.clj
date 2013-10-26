@@ -186,27 +186,56 @@
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
-(defn un-frequencies-helper [a-map]
-  (if (empty? (rest a-map))
-    (repeat (get a-map (first (first a-map))) (first (keys a-map)))
-    (concat (repeat (get a-map (first (first a-map))) (first (keys a-map)))
-            (un-frequencies-helper (rest a-map)))))
+
+(defn un-frequencies [a-map]
+(if (empty? a-map)
+  ()
+  (concat (repeat (val (first a-map)) (key (first a-map)))
+          (un-frequencies (rest a-map)))))
 
 
 (defn my-take [n coll]
-  [:-])
+  "Cons first and the rest of the values until n reaches zero or coll becomes empty"
+  (if (or (<= n 0) (empty? coll))
+    '()
+    (cons (first coll)
+          (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  "If n > 0, drop the first item.
+   If n<=0, cons the first item with the rest of the items."
+  (cond
+   (empty? coll) '()
+   (> n 0) (my-drop (dec n) (rest coll))
+   :else (cons (first coll)
+               (my-drop n (rest coll)))))
 
 (defn halve [a-seq]
-  [:-])
+  "Conjoin my-take and my-drop, n = length/2"
+  (let [n (int (/ (count a-seq) 2))]
+    (conj '[] (my-take n a-seq) (my-drop n a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  "Start cons with the min(a-seq, b-seq),
+  and continue with the rest of the mins"
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) '()
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (<= (first a-seq)
+      (first b-seq)) (cons (first a-seq)
+                           (seq-merge (rest a-seq) b-seq))
+   :else (cons (first b-seq)
+               (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (empty? (rest a-seq))
+    a-seq
+    (let [halfs (halve a-seq)
+        [x] halfs
+        [_ y] halfs]
+      (seq-merge (merge-sort x)
+                 (merge-sort y)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])

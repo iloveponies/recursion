@@ -121,7 +121,7 @@
 
 (facts {:exercise 18
         :points 1}
-  (facts "tails" 
+  (facts "tails"
     (tails [1 2 3 4])   => (just [[1 2 3 4] [2 3 4] [3 4] [4] []] :in-any-order)
     (tails [])          => (just [[]])
     (tails [1])         => (just [[1] []] :in-any-order))
