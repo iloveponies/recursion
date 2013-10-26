@@ -1,3 +1,4 @@
+
 (ns recursion)
 
 (defn product [coll]
@@ -54,20 +55,30 @@
       (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  (if (pred? (first a-seq))
-    (cons (first a-seq)
-          (my-take-while pred? (rest a-seq)))
-    []))
+  (cond
+   (empty? a-seq) []
+   (not (number? (first a-seq))) []
+   (not (pred? (first a-seq))) []
+   :else (cons (first a-seq)
+               (my-take-while pred? (rest a-seq)))))
 
 (defn my-drop-while [pred? a-seq]
-  (if (not (pred? (first a-seq)))
+  (cond
+   (empty? a-seq)
     a-seq
-    (my-drop-while pred? (rest a-seq))))
+   (not (number? (first a-seq)))
+    a-seq
+   (not (pred? (first a-seq)))
+    a-seq
+   :else (my-drop-while pred? (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
   (cond
    (and (empty? a-seq) (empty? b-seq)) true
-   (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+   (and (empty? a-seq) (not (empty? b-seq))) false
+   (and (not (empty? a-seq)) (empty? b-seq)) false
+   (= (first a-seq) (first b-seq))
+    (seq= (rest a-seq) (rest b-seq))
    :else false))
 
 (defn my-map [f v w]
@@ -81,49 +92,117 @@
 (defn power [n k]
   (cond
    (= k 0) 1
-   :else (* n (power (dec k)))))
+   :else (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (if (< n 2)
+    n
+    (+ (fib (- n 1))
+       (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+   (< how-many-times 1) ()
+   :else (cons what-to-repeat
+               (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+   (< up-to 1) ()
+   :else (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) [[]]
+   (empty? (rest a-seq)) (cons (vec a-seq) [[]])
+   :else (cons (vec a-seq)
+               (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+ (map vec (reverse (map reverse (tails (vec (reverse a-seq)))))))
 
 (defn rotations [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) [[]]
+   :else (reverse (rest (reverse
+                  (my-map concat (tails a-seq)
+                                 (inits a-seq)))))))
 
-(defn my-frequencies-helper [freqs a-seq]
-  [:-])
+(defn my-frequencies-helper [freq a-seq]
+  (cond
+   (empty? (rest a-seq)) freq
+   :else (let [elem (first a-seq)
+               next-elem (first (rest a-seq))
+
+               new-freq
+               (if (= elem next-elem)
+                 (inc freq)
+                 freq)]
+
+           (my-frequencies-helper new-freq
+                                   (cons elem (rest (rest a-seq)))))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq)
+     {}
+   :else (let [elem (first a-seq)
+               elem-filter (fn [x] (not (= x elem)))]
+
+           (assoc (my-frequencies (my-filter elem-filter (rest a-seq)))
+                  (first a-seq)
+                  (my-frequencies-helper 1 a-seq)))))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (cond
+   (empty? a-map) []
+   :else (let [[key number] (first a-map)]
+           (concat (my-repeat number key)
+                   (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (< n 1) []
+   (empty? coll) []
+   :else (cons (first coll)
+                 (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (< n 1) coll
+   (empty? coll) coll
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [i (int (/ (count a-seq) 2))
+        a (my-take i a-seq)
+        b (my-drop i a-seq)]
+    [a b]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)]
+    (cond
+     (and (nil? a) (nil? b))
+       []
+     (and (not (nil? a)) (nil? b))
+       (cons a (seq-merge (vec (rest a-seq))
+                          (vec (rest b-seq))))
+     (and (nil? a) (not (nil? b)))
+       (cons b (seq-merge (vec (rest a-seq))
+                          (vec (rest b-seq))))
+     :else (cond
+            (< a b)
+              (cons a (seq-merge (vec (rest a-seq)) b-seq))
+            :else
+              (cons b (seq-merge a-seq (vec (rest b-seq))))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+   (if (empty? (rest a-seq))
+    a-seq
+
+    (concat (seq-merge (merge-sort (vec (first (halve a-seq))))
+                     (merge-sort (vec (second (halve a-seq))))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
@@ -134,3 +213,10 @@
 (defn powerset [a-set]
   [:-])
 
+
+
+
+
+
+
+
