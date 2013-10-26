@@ -130,10 +130,15 @@
 
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) {}
+   :else (if
+           (not (boolean (some #{(first a-seq)} freqs)))
+           (assoc (my-frequencies-helper freqs (rest a-seq)) (first a-seq) (count-elem (first a-seq) a-seq))
+           (my-frequencies-helper freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+ (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
