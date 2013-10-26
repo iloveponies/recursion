@@ -137,26 +137,57 @@
   (mapcat (fn [key] (repeat (get a-map key) key)) (keys a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (if
+   (or (empty? coll) (== n 0)) '()
+   (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
-
+  (if
+   (or (empty? coll) (== n 0)) coll
+   (my-drop (- n 1) (rest coll))))
+ 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [first-a (first a-seq)
+        first-b (first b-seq)]
+    (cond
+     (and (empty? a-seq) (empty? b-seq)) '()
+     (or (empty? b-seq) (and (not (empty? a-seq)) (< first-a first-b))) (cons first-a (seq-merge (rest a-seq) b-seq))
+     :else (cons first-b (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[h1 h2] (halve a-seq) ]
+    (cond
+     (or (empty? a-seq) (singleton? a-seq)) a-seq
+     :else (seq-merge (merge-sort h1) (merge-sort h2)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [seq] 
+                      (cond
+                       (empty? seq) false
+                       :else (or (apply <= seq) (apply >= seq))))
+        monos (first (filter monotonic? (inits a-seq)))]
+    (if
+        (empty? a-seq) '()
+        (cons monos
+              (split-into-monotonics (drop (count monos) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond 
+   (empty? a-set) '(()) 
+   (singleton? a-set) (list a-set)
+   :else (let [s (set a-set)]
+           (for [head s
+                 tail (permutations (disj s head))]
+             (cons head tail)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) '(())
+      (let [prev (powerset (rest a-set))]
+        (concat 
+         (map (fn [elt] (cons (first a-set) elt)) prev) 
+         prev))))
 
