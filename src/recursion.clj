@@ -175,16 +175,35 @@
       (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
-  (if (empty? a-seq) ()
-    (let [c (count a-seq)]
-      (if
-       (== (mod c 2) 0)
-        (cons [(first a-seq) (second a-seq)] (split-into-monotonics (rest (rest a-seq))))
-        (let [[a b c] a-seq] (cons [a b c] (split-into-monotonics (rest (rest (rest a-seq))))))))))
+  (let [monotonic? (fn [a-set]
+                     (or
+                      (empty? a-set)
+                      (apply >= a-set)
+                      (apply <= a-set)))]
+    (loop [m [] c [] l a-seq]
+      (cond
+       (empty? l) (conj m c)
+       (monotonic? (conj c (first l))) (recur m (conj c (first l)) (rest l))
+       :else (recur (conj m c) [(first l)] (rest l))))))
+
+(defn permutations-helper [a-set alku left]
+  (if (zero? left) alku
+    (for [r (rotations a-set)]
+      (permutations-helper (rest r) (conj alku (first r)) (dec left)))))
+
+(defn concat-helper [a-set c]
+  (if (zero? c) a-set (concat-helper (apply concat a-set) (dec c))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set) '(()) (concat-helper (permutations-helper a-set '() (count a-set)) (dec (count a-set)))))
+
+(defn powerer [cur a-set]
+  (if (empty? a-set)
+    [cur]
+    (let [r (rest a-set)]
+      (concat
+       (powerer cur r)
+     (powerer (conj cur (first a-set)) r)))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (powerer #{} a-set))
