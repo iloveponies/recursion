@@ -77,7 +77,7 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) (conj () ())
+  (if (empty? a-seq) (cons () a-seq)
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
@@ -122,11 +122,18 @@
   (if (< (count a-seq) 2) a-seq
     (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (second (halve a-seq))))))
 
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq) a-seq
+    (cons (last (take-while monotonic? (rest (inits a-seq))))
+          (split-into-monotonics (drop (count (last (take-while monotonic? (rest (inits a-seq))))) a-seq)))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (< (count a-set) 3) (rotations a-set)
+    (apply concat (map rotations (map (fn [x] (cons (first a-set) x)) (permutations (rest a-set)))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) #{#{}}
+    (clojure.set/union (powerset (rest a-set)) (set (map (fn [x] (conj x (first a-set))) (powerset (rest a-set)))))))
