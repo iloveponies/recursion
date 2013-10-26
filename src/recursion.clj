@@ -207,8 +207,6 @@
   ;(my-frequencies-helper a-seq))
 )
 
-
-
 ;(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 
 (defn un-frequencies [a-map]
@@ -229,17 +227,33 @@
 (defn halve [a-seq]
  (vector (my-take (int (/ (count a-seq) 2)) a-seq) (my-drop (/ (count a-seq) 2) a-seq)))
 
-;(halve [1 2 3 4])   ;=> [(1 2) (3 4)]
+;(halve [1 2 3])   ;=> [(1 2) (3 4)]
 ;(halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
 ;(halve [1])         ;=> [() (1)]
 
 ;(concat [1 2 3] [4])
 
 (defn seq-merge [a-seq b-seq]
-  )
+  (if (empty? a-seq) b-seq
+    (if (< (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+      (cons (first b-seq) (seq-merge a-seq (rest b-seq))))
+    ))
+
+;(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+;(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+;(seq-merge [1  3] [100 4])
 
 (defn merge-sort [a-seq]
-  [:-])
+   (if (empty? a-seq)
+     '()
+     (if (singleton? a-seq)
+       a-seq
+       (let [[a b] (halve a-seq)]
+         (seq-merge (merge-sort a)(merge-sort b))))))
+
+;(merge-sort [])                 ;=> ()
+;(merge-sort [1 2 3])            ;=> (1 2 3)
+;(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
 
 (defn split-into-monotonics [a-seq]
   [:-])
@@ -249,6 +263,8 @@
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
 
