@@ -16,16 +16,19 @@
 
 (facts "singleton?" {:exercise 3
                      :points 1}
-  (singleton? [1])     => true
-  (singleton? #{2})    => true
-  (singleton? [])      => false
-  (singleton? [1 2 3]) => false)
+  (singleton? [1])       => true
+  (singleton? ["abc"])   => true
+  (singleton? #{2})      => true
+  (singleton? [])        => false
+  (singleton? [1 2 3])   => false
+  (singleton? ["a" "b"]) => false)
 
 (facts "my-last" {:exercise 4
                   :points 1}
-  (my-last [])      => nil
-  (my-last [1 2 3]) => 3
-  (my-last [2 5])   => 5)
+  (my-last [])                 => nil
+  (my-last [1 2 3])            => 3
+  (my-last [1 2 3 4 5 6 ":)"]) => ":)"
+  (my-last [2 5])              => 5)
 
 (facts "max-element" {:exercise 5
                       :points 1}
@@ -37,7 +40,8 @@
                   :points 1}
   (seq-max [1] [1 2])       => [1 2]
   (seq-max [1 2 3] [:a :b]) => [1 2 3]
-  (seq-max [1 2] [3 4])     => [3 4])
+  (seq-max [1 2] [:a :b])   => (some-checker [1 2] [:a :b])
+  (seq-max [1 2] [3 4 :c])  => [3 4 :c])
 
 (facts "longest-sequence" {:exercise 7
                            :points 1}
