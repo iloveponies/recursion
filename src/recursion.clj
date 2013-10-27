@@ -116,8 +116,15 @@
 (defn rotations [a-seq]
   [:-])
 
+
 (defn my-frequencies-helper [freqs a-seq]
-  -)
+  (let [f (first a-seq) r (rest a-seq)] 
+    (cond
+      (empty? a-seq) freqs
+      (nil? (get freqs f)) (my-frequencies-helper (assoc freqs f 1) r)
+      :else (my-frequencies-helper (assoc freqs f (inc (get freqs f))) r))))
+
+
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
@@ -126,14 +133,18 @@
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (= 0 n) (empty? coll)) 
+    []
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (= 0 n) (empty? coll)) 
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
-
+  (let [mid (int (/ (count a-seq) 2))]
+    [(my-take mid a-seq) (my-drop mid a-seq)]))
 (defn seq-merge [a-seq b-seq]
   [:-])
 
