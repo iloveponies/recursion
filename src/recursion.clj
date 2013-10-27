@@ -8,7 +8,14 @@
 )
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+    (if (not (empty? (rest coll)))
+      false
+      true
+    )
+  )
+)
 
 (defn my-last [coll]
   :-)
