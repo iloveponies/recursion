@@ -178,6 +178,7 @@
                (concat acc (map (fn [x-set] (cons (first loop-set) x-set))
                     (permutations (disj (set a-set) (first loop-set))))))))))
 
+
 (defn powerset [a-set]
   (if (empty? a-set) [#{}]
     (concat (powerset (rest a-set))
