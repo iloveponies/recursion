@@ -143,12 +143,44 @@
     a-seq
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
+(defn is-monotonic? [a-seq]
+  (let [is? (fn [f-seq func] (loop [elem (first f-seq)
+                                rest-seq (rest f-seq)]
+                           (if (empty? rest-seq) true
+                               (if (func elem (first rest-seq))
+                                 (recur (first rest-seq) (rest rest-seq))
+                                 false))))]
+    (or (is? a-seq <=) (is? a-seq >=))))
+
+(defn rev-inits [a-seq]
+  (reverse (inits a-seq)))
+
+(defn last-mon [x] (last (take-while is-monotonic? x)))
+
+(defn remove-inits [x-seq]
+  (for [f-seq (drop-while is-monotonic? x-seq)]
+   (subvec (vec f-seq) (count (last-mon x-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+    (loop [inits-seq (rev-inits a-seq)
+         acc []]
+      (if (empty? inits-seq) acc
+        (recur (remove-inits inits-seq)
+               (conj acc (last-mon inits-seq))))))
+
 
 (defn permutations [a-set]
-  [:-])
+  (if (>= 1 (count a-set)) [a-set]
+    (loop [loop-set a-set
+           acc []]
+      (if (empty? loop-set) acc
+        (recur (rest loop-set)
+               (concat acc (map (fn [x-set] (cons (first loop-set) x-set))
+                    (permutations (disj (set a-set) (first loop-set))))))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) [#{}]
+    (concat (powerset (rest a-set))
+            (map (fn [x-set] (conj x-set (first a-set)))
+                 (powerset (rest a-set))))))
 
