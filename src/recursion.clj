@@ -131,7 +131,7 @@
               (reverse (rest (reverse a-seq))))]
     (cond
      (empty? a-seq) '(())
-     (not (zero? n)) (rotate (dec n) rotated (concat vec (vector rotated)))
+     (not (zero? n)) (rotate-helper (dec n) rotated (concat vec (vector rotated)))
      :else vec)))
 
 (defn rotations [a-seq]
