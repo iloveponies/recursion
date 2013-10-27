@@ -1,13 +1,30 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
+
+;Exercise 2.
+;coll: [1, 2, 4]
+; --> 1 * product [2, 4]
+; --> 2 * product [4]
+; --> 4 * product []
+; --> 1
+; --> 1 * 4 = 4
+; --> 2 * 4 = 8
+; --> return 1 * 8 = 8.
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (if (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
   :-)
