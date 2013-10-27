@@ -130,19 +130,38 @@
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (empty? coll) ()
+   (< 1 n ) (cons (first coll) (my-take (dec n) (rest coll)))
+   (= 1 n ) (cons (first coll) ())
+    ))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (< 0 n)
+    (my-drop (dec n) (rest coll))
+    coll
+    ))
 
 (defn halve [a-seq]
-  [:-])
+  (if (= 1 (count a-seq))
+    (vector () a-seq)
+    (vector (my-take (int (/ (count a-seq) 2)) a-seq ) (my-drop (int (/ (count a-seq) 2)) a-seq )))
+  )
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   ))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[l r] (halve a-seq)]
+    (if (> 2 (count a-seq))
+     a-seq
+    (seq-merge (merge-sort l) (merge-sort r))
+    )))
 
 (defn split-into-monotonics [a-seq]
   [:-])
