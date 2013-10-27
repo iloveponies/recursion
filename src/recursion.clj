@@ -10,17 +10,10 @@
   (and (not (empty? coll))
        (empty? (rest coll))))
 
-;; TODO fiksaa rekursio
 (defn my-last [coll]
   (cond
-    (empty? coll) nil
-    (singleton? coll) (coll 0)
-    :else (my-last (rest coll))))
-  ;; (if (empty? coll)
-  ;;   nil
-  ;;   (if (singleton? coll)
-  ;;     (coll 0)
-  ;;     (my-last (rest coll)))))
+    (not (empty? (rest coll))) (my-last (rest coll))
+    :else (first coll)))
 
 (defn max-element [a-seq]
   (if (empty? a-seq)
@@ -44,7 +37,6 @@
       :else (last (sort-by count s)))))
 
 (defn my-filter [pred? a-seq]
-  ;; if the pred? meets the conditions add the elem to return value
   (cond
     (empty? a-seq) a-seq
     (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
@@ -116,8 +108,16 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
+(defn rot-helper [a-seq n]
+  "A rotation is the first element removed and appended to the rest of the seq"
+  (let [rot (concat (rest a-seq) [(first a-seq)])]
+    (cond
+      (== n 0) ()
+      :else (cons rot (rot-helper rot (dec n))))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq) '(())
+    (rot-helper a-seq (count a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq) freqs
@@ -142,7 +142,7 @@
 
 (defn my-drop [n coll]
   (cond
-    (< n 1) (concat coll)
+    (< n 1) coll
     :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
@@ -156,31 +156,21 @@
     (not (number? b)) a
     :else (min a b)))
 
-;; (defn seq-merge [a-seq b-seq]
-;;   (if (and (empty? a-seq) (empty? b-seq)) ()
-;;     (let [a (first a-seq)
-;;           b (first b-seq)
-;;           m (smaller a b)]
-;;       (cond
-;;         (nil? a) [b]
-;;         (nil? b) [a]
-;;         (<= a b) (concat [a] (seq-merge (rest a-seq) b-seq))
-;;         :else (concat [b] (seq-merge a-seq (rest b-seq)))))))
-    ;; :else (concat a-seq b-seq)))
-
 (defn seq-merge [a-seq b-seq]
-  (if (and (empty? a-seq) (empty? b-seq)) ()
-    (let [a (first a-seq)
-          b (first b-seq)]
-      (cond
-        (and (nil? a) (nil? b)) ()
-        (nil? a) [b]
-        (nil? b) [a]
-        (<= a b) (concat [a] (seq-merge (rest a-seq) b-seq))
-        (<= b a) (concat [b] (seq-merge a-seq (rest b-seq)))))))
+  (let [a (first a-seq) b (first b-seq)]
+    (cond
+      (and (nil? a) (nil? b)) ()
+      (nil? a) (cons b (seq-merge a-seq (rest b-seq)))
+      (nil? b) (cons a (seq-merge (rest a-seq) b-seq))
+      (<= a b) (cons a (seq-merge (rest a-seq) b-seq))
+      :else (cons b (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1) a-seq
+    (let [puoli (halve a-seq)]
+      (seq-merge
+        (merge-sort (first puoli))
+        (merge-sort (second puoli))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
