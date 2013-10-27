@@ -14,7 +14,7 @@
 (defn my-last [coll]
  (if (empty? coll)
     nil
-    (if (== 1 (count coll))
+    (if (singleton? coll)
       (first coll)
       (my-last (rest coll)))))
 
