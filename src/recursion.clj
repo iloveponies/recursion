@@ -100,12 +100,12 @@
       (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
     (tails a-seq)
-    (map concat (rest (tails a-seq)) (rest (reverse (inits a-seq))))))
+    (map concat (rest (tails a-seq)) (rest (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -153,11 +153,34 @@
     (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [x] (if (empty? x) false
+                             (or (apply <= x)
+                                 (apply >= x))))
+        longest-m (last (filter monotonic? (inits a-seq)))]
+    (if (empty? a-seq)
+      []
+      (cons longest-m (split-into-monotonics (drop (count longest-m) a-seq))))))
+
+(defn rotate-a-rotation [a-seq]
+  (if (> 3 (count a-seq))
+    (rotations a-seq)
+  (let [rota1 (first (rotations a-seq))
+        half1 (first (halve rota1))
+        half2 (first (rotations (last (halve rota1))))]
+    (conj '()
+          rota1
+          (concat half1 half2)))))
+
+(defn permutations-for-set-size-under-4-huoh [a-set]
+  (if (> 3 (count a-set))
+    (rotations a-set)
+    (apply concat (map rotate-a-rotation (rotations a-set)))))
 
 (defn permutations [a-set]
-  [:-])
+(if (< (count a-set) 3)
+  (rotations a-set)
+  (apply concat (map rotations (map (fn [x] (cons (first a-set) x)) (permutations (rest a-set)))))))
 
 (defn powerset [a-set]
-  [:-])
+  :-)
 
