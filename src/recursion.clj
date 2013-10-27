@@ -120,37 +120,73 @@
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
-
-(defn un-frequencies [a-map]
-  [:-])
+ (defn un-frequencies [a-map]
+  (if (empty? a-map)
+    '()
+    (let [[elem freq] (first a-map)]
+      (concat (repeat freq elem) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+   (cond
+    (or (<= n 0) (empty? coll)) '()
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (> n 0) (my-drop (dec n) (rest coll))
+   :else coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+   [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and (empty? a-seq) (empty? b-seq)) a-seq
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    (< (first a-seq) (first b-seq))
+      (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+    :else
+      (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [half (halve a-seq)]
+       (seq-merge (merge-sort (first half)) (merge-sort (second half))))))
+
+(defn monotonic? [a-seq]
+  (or (apply >= a-seq) (apply <= a-seq)))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+   ()
+    (let [s (first (filter monotonic? (inits a-seq)))]
+      (cons s (split-into-monotonics (drop (count s) a-seq))))))
+
+(defn permutations-helper [right left]
+  (if (empty? left)
+    (list right)
+    (apply concat
+           (map (fn [x] (permutations-helper
+                         (cons x right)
+                         (disj left x)))
+                left))))
 
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper '() (into #{} a-set)))
+
+(defn powerset-helper [right left]
+  (if (empty? left)
+    (list right)
+    (concat (powerset-helper right (rest left))
+            (powerset-helper (conj right (first left)) (rest left)))))
 
 (defn powerset [a-set]
-  [:-])
-
-
-
-
-
-
-
+  (powerset-helper #{} a-set))
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    '()
+    (let [[elem freq] (first a-map)]
+      (concat (repeat freq elem) (un-frequencies (rest a-map))))))
