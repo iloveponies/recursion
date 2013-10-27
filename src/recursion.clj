@@ -22,20 +22,48 @@
       (first a-seq)
       (max (first a-seq) (max-element (rest a-seq))))))
 
-(defn seq-max [seq-1 seq-2]
-  [:-])
+(defn seq-max-apu [seq-1 seq-2]
+  (if (empty? seq-1)
+    2
+    (if (empty? seq-2)
+      1
+      (seq-max-apu (rest seq-1) (rest seq-2)))))
 
-(defn longest-sequence [a-seq]
-  [:-])
+(defn seq-max [seq-1 seq-2]
+  (if (= 1 (seq-max-apu seq-1 seq-2))
+    seq-1
+    seq-2))
+
+(defn longest-sequence [seq-seq]
+  (if (empty? seq-seq)
+    nil
+    (if (singleton? seq-seq)
+      (first seq-seq)
+      (seq-max (first seq-seq) (longest-sequence (rest seq-seq))))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq))
+      (cons (first a-seq)
+            (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (if (empty? a-seq)
+    false
+    (if (= elem (first a-seq))
+      true
+      (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (if (not (pred? (first a-seq)))
+      []
+      (if (pred? (first a-seq))
+        (cons (first a-seq)
+              (my-take-while pred? (rest a-seq)))))))
 
 (defn my-drop-while [pred? a-seq]
   [:-])
