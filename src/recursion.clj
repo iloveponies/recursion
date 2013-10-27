@@ -28,10 +28,27 @@
 )
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (if (singleton? a-seq)
+      (first a-seq)
+      (max (first a-seq) (max-element (rest a-seq)))
+    )
+  )
+)
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (cond
+   (empty? (rest seq-1)) seq-2
+   (empty? (rest seq-2)) seq-1
+   :else (let [seq (seq-max (rest seq-1) (rest seq-2))]
+           (if (= (rest seq-1) seq)
+             (cons (first seq-1) seq)
+             (cons (first seq-2) seq)
+           )
+         )
+  )
+)
 
 (defn longest-sequence [a-seq]
   [:-])
