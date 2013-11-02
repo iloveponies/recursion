@@ -17,10 +17,21 @@
               x)
             coll)))
 
+(comment
+  (defn max-element
+    [a-seq]
+    (when (seq a-seq)
+      (apply max a-seq)))
+  )
+
 (defn max-element
   [a-seq]
-  (when (seq a-seq)
-    (apply max a-seq)))
+  (letfn [(max-element* [acc coll]
+            (if-let [s (seq coll)]
+              (let [[x & xs] s]
+                (recur (max acc x) xs))
+              acc))]
+    (max-element* (first a-seq) (rest a-seq))))
 
 (defn seq-max
   [seq-1 seq-2]
