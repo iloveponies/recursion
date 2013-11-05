@@ -19,16 +19,16 @@
 (defn singleton? [coll]
   (if (empty? coll)
     false
-    (if (second coll)
-      false
-      true)))
+     (if (empty? (rest coll))
+       true
+       false)))
 
 (defn my-last [coll]
   (if (empty? coll)
     nil
-     (if (second coll)
-       (my-last (rest coll))
-       (first coll))))
+     (if (singleton? coll)
+       (first coll)
+       (my-last (rest coll)))))
 
 (defn max-element [a-seq]
   (cond
