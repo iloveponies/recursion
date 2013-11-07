@@ -18,6 +18,8 @@
                      :points 1}
   (singleton? [1])     => true
   (singleton? #{2})    => true
+  (singleton? [nil])   => true
+  (singleton? [1 nil]) => false
   (singleton? [])      => false
   (singleton? [1 2 3]) => false)
 
