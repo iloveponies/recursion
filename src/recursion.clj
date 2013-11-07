@@ -84,19 +84,26 @@
    :else false))
 
 
-
-(defn my-map [f seq-1 seq-2]
-    (cond
+(defn my-map-helper [f seq-1 seq-2 current-map]
+  (cond
      (or
       (nil? (first seq-1))
       (nil? (first seq-2)))
-     ()
+     current-map
+   :else
+   (my-map-helper f
+                  (rest seq-1)
+                  (rest seq-2)
+                  (conj current-map
+                        (f (first seq-1)
+                           (first seq-2))))))
 
-     :else (sort (concat
-            (my-map f
-                    (rest seq-1)
-                    (rest seq-2))
-            (list (f (first seq-1) (first seq-2)))))))
+
+(defn my-map [f seq-1 seq-2]
+  (my-map-helper f seq-1 seq-2 []))
+
+
+
 
 
 
@@ -278,6 +285,8 @@
 
 (defn powerset [a-set]
   [:-])
+
+
 
 
 
