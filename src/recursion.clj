@@ -77,7 +77,9 @@
     (+ (fib (dec n)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  (take how-many-times (repeat what-to-repeat)))
+  (if (<= how-many-times 0)
+    '()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
   (if (== up-to 0)
