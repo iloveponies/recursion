@@ -27,12 +27,12 @@
   (magic seq-max a-seq))
 
 (defn my-filter [pred? a-seq]
-  (let [x (first a-seq)
-        xs (rest a-seq)]
-  (if (empty? xs)
-    (if (pred? x) '(x) '())
-    (let [fxs (my-filter pred? xs)]
-      (if (pred? x) (cons x fxs) fxs)))))
+  (if (empty? a-seq)
+    []
+    (let [x (first a-seq)
+          xs (rest a-seq)
+          fxs (my-filter pred? xs)]
+      (if (pred? x) (cons x fxs) fxs))))
 
 (defn sequence-contains? [elem a-seq]
   (cond
