@@ -7,7 +7,6 @@
 (defn singleton? [coll]
   (and (not (empty? coll)) (empty? (rest coll))))
 
-
 (defn my-last [coll]
   (if (empty? (rest coll)) (first coll) (my-last (rest coll))))
 
@@ -15,7 +14,9 @@
 (defn magic [f a-seq]
   (let [x (first a-seq)
         xs (rest a-seq)]
-  (if (empty? xs) x (f x (magic f xs)))))
+  (if (empty? xs)
+    x
+    (f x (magic f xs)))))
 
 (defn max-element [a-seq]
   (magic max a-seq))
@@ -64,7 +65,6 @@
     :else false))
 
 (defn my-map [f seq-1 seq-2]
-
   (cond
     (empty? seq-1) '()
     (empty? seq-2) '()
@@ -98,7 +98,6 @@
 
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
-
 
 (defn rotation-helper [seq res n]
   (let [rotate (fn [seq] (concat (rest seq) [(first seq)]))
@@ -135,13 +134,11 @@
     (empty? coll) ()
     :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
-
 (defn my-drop [n coll]
   (cond
     (zero? n) coll
     (empty? coll) ()
     :else (my-drop (dec n) (rest coll))))
-
 
 (defn halve [a-seq]
   (let [n (int (/ (count a-seq) 2))
@@ -169,9 +166,7 @@
            (seq-merge (merge-sort seq1)
                       (merge-sort seq2)))))
 
-
 ; split-into-monotonics
-
 
 (defn eat-monotone-rev [op a-seq current]
   (let [a (first a-seq)
@@ -203,11 +198,24 @@
 (defn split-into-monotonics [a-seq]
   (split-into-monotonics-helper a-seq []))
 
-; ----
+; permutations
 
 (defn permutations [a-set]
   [:-])
 
-(defn powerset [a-set]
-  [:-])
+; powerset
 
+; taken from the course material
+(defn indexed [a-seq]
+  (let [indexes (range 0 (count a-seq))]
+    (map vector indexes a-seq)))
+
+(defn int-to-subset [k iset]
+  (map second
+       (filter (fn [x] (bit-test k (first x))) iset)))
+
+(defn powerset [a-set]
+  (let [i-set (indexed a-set)
+        n (count a-set)
+        indices (range 0 (power 2 n))]
+    (map (fn [x] (int-to-subset x i-set)) indices)))
