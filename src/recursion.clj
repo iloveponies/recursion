@@ -169,8 +169,41 @@
            (seq-merge (merge-sort seq1)
                       (merge-sort seq2)))))
 
+
+; split-into-monotonics
+
+
+(defn eat-monotone-rev [op a-seq current]
+  (let [a (first a-seq)
+        as (rest a-seq)]
+    (cond
+     (empty? a-seq) current
+     (op (first current) a) (eat-monotone-rev op as (cons a current))
+     :else current)))
+
+(defn eat-monotone [op a-seq]
+  "Read a subsequence of 'a-seq' that is monotonic under 'op'"
+  (reverse (eat-monotone-rev op (rest a-seq) [(first a-seq)])))
+
+(defn next-monotone [a-seq]
+  "Greedily get the next monotone integer sequence"
+  (let [inc-res (eat-monotone <= a-seq)
+        dec-res (eat-monotone >= a-seq)]
+        (if (< (count inc-res) (count dec-res))
+          dec-res
+          inc-res)))
+
+(defn split-into-monotonics-helper [a-seq results]
+  (if (empty? a-seq)
+    results
+    (let [res (next-monotone a-seq)
+          new-seq (drop (count res) a-seq)]
+      (split-into-monotonics-helper new-seq (concat results [res])))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (split-into-monotonics-helper a-seq []))
+
+; ----
 
 (defn permutations [a-set]
   [:-])
