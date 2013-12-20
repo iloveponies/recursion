@@ -230,6 +230,15 @@
     '(())
     (custom-flatten (count a-set) (permutations3 (vec a-set) 0))))
 
+(defn powerset-helper [a-seq a-set]
+  (concat a-seq (for [x a-seq]
+    (cons (first a-set) x))))
+
+(defn powerset-r [a-seq a-set]
+  (if (empty? a-set)
+    a-seq
+    (powerset-r (powerset-helper a-seq a-set) (rest a-set))))
+
 (defn powerset [a-set]
-  [:-])
+  (set (map set (powerset-r '(()) (sequence a-set)))))
 
