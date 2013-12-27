@@ -75,9 +75,11 @@
   (cond
    (and (empty? a-seq) (empty? b-seq))
      true
+   (not= (empty? a-seq) (empty? b-seq))
+     false
    (= (first a-seq) (first b-seq))
      (seq= (rest a-seq) (rest b-seq))
-   :else false))
+  :else false))
 
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2))
@@ -107,13 +109,20 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (map concat
+         (rest (tails a-seq))
+         (rest (inits a-seq)))))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
