@@ -219,17 +219,13 @@
                        (permutations (rest rot))))
                     rots))))))
 
-(defn join [a-set b-set]
-  (distinct (concat a-set b-set)))
-
-; unefficient, runs out of memory with bigger than 8 elements
-(defn pwset [a-set]
-  (if (or (empty? a-set) (empty? (rest a-set)))
-        #{a-set}
-        (let [one-less-rots (map set (map rest (rotations a-set)))
-              one-less-pws (apply concat (map pwset one-less-rots))
-              ]
-          (cons (apply hash-set a-set) (distinct (concat (join one-less-rots one-less-pws) #{#{}}))))))
+(defn powerset-helper [current leftovers]
+  (if (empty? leftovers)
+    (apply hash-set current)
+    (let [elem (first leftovers)]
+      (powerset-helper (concat current
+                             (map (fn [x] (conj x elem)) current))
+                     (rest leftovers)))))
 
 (defn powerset [a-set]
-  (pwset a-set))
+  (powerset-helper #{#{}} a-set))
