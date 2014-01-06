@@ -221,7 +221,7 @@
 
 (defn powerset-helper [current leftovers]
   (if (empty? leftovers)
-    (apply hash-set current)
+    (set current)
     (let [elem (first leftovers)]
       (powerset-helper (concat current
                              (map (fn [x] (conj x elem)) current))
