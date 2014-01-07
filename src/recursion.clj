@@ -106,7 +106,7 @@
 
 (defn inits [a-seq]
   (let [reverse-inits (tails (reverse a-seq))]
-    (map reverse reverse-inits)))
+    (reverse (map reverse reverse-inits))))
 
 (defn rotation [n a-seq]
   (if (zero? n)
@@ -177,12 +177,51 @@
     (let [[first-half second-half] (halve a-seq)]
         (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
+(defn monotonic? [a-seq]
+  (or
+    (apply <= a-seq)
+    (apply >= a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (let [monotonics (take-while monotonic? (rest (inits a-seq)))
+          longest-monotonic (first (reverse monotonics))]
+        (cons longest-monotonic (split-into-monotonics (drop (count longest-monotonic) a-seq))))))
+
+;(defn permutation-helper [permutations set-vector])
+
+(defn permute-pair
+  "Gives back a vector or permutations for a sequence of two items.
+   E.G. #{:ver :len} => [[:vers :len][:len :vers]]."
+  [pair]
+  (let [a (first pair)
+        b (second pair)]
+    [[a b] [b a]]))
+
+(defn permutations-helper [a-set]
+  (cond
+    (empty? a-set) [[]]
+    (singleton? a-set) [[(first a-set)]]
+    (= (count a-set) 2) (permute-pair a-set)
+    :else (let [sub-permutations (fn [element]
+                                   (map
+                                     (fn [subset] (cons element subset))
+                                     (permutations-helper (disj a-set element))))]
+            (apply concat (map sub-permutations a-set)))))
 
 (defn permutations [a-set]
-  [:-])
+  ;let's make sure we have a set
+  (permutations-helper (set a-set)))
+
+(defn powerset-helper [a-set]
+  (if (empty? a-set)
+    #{#{}}
+    (let [subsets (map (fn [element] (disj a-set element)) a-set)
+          sub-powersets (apply clojure.set/union (map powerset-helper subsets))]
+      (conj sub-powersets a-set))))
 
 (defn powerset [a-set]
-  [:-])
-
+  ;Since we're using set union later on, we have to make sure we have a set.
+  ;(The test suite is calling powerset with a vector.)
+  (powerset-helper (set a-set)))
