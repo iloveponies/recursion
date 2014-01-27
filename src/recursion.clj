@@ -173,14 +173,49 @@
 (defn inits [a-seq]
   (map-range take a-seq))
 
+(comment
+  ;; The rotate function uses split-at.  Map rotate over range.
+  (defn rotations [a-seq]
+    (let [rotate (fn [n]
+                   (let [[a b] (split-at n a-seq)]
+                     (concat b a)))]
+      (if (empty? a-seq)
+        [[]]
+        (map rotate (range (count a-seq)))))))
+
+
+;; Tail-recursive version; longer
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    [[]]
+    (let [rotate (fn [[x & xs]]
+                   (concat xs [x]))]
+      (loop [n (count a-seq)
+             a-seq a-seq
+             rots []]
+        (if (= n 0)
+          rots
+          (recur (dec n) (rotate a-seq) (conj rots a-seq)))))))
+
+(comment
+  ;; This version uses iterate; this is my favorite version
+  (defn rotations [a-seq]
+    (let [rotate (fn [[x & xs]]
+                   (concat xs [x]))]
+      (if (empty? a-seq)
+        [[]]
+        (take (count a-seq) (iterate rotate a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [k (first a-seq)
+          value (inc (freqs k 0))
+          new-freqs (assoc freqs k value)]
+      (recur new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
