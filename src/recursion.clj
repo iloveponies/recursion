@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (:use clojure.set))
 
 (defn product [coll]
   (if (empty? coll)
@@ -156,12 +157,55 @@
     (let [halves (halve a-seq)] 
       (seq-merge (merge-sort (first halves)) (merge-sort (get halves 1))))))
 
+(defn- monotonic-here? [f prev-elem a-seq]
+  (if (empty? a-seq)
+    false
+    (or (nil? prev-elem) (f (first a-seq) prev-elem))))
+
+(defn- length-of-monotonic-part [f length-so-far prev-elem a-seq]
+  (if (monotonic-here? f prev-elem a-seq)
+    (length-of-monotonic-part f (inc length-so-far) (first a-seq) (rest a-seq))
+    length-so-far))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [increasing-part-length (length-of-monotonic-part >= 0 nil a-seq)
+          decreasing-part-length (length-of-monotonic-part <= 0 nil a-seq)
+          longest-part (max increasing-part-length decreasing-part-length)]
+      (cons (take longest-part a-seq) 
+            (split-into-monotonics (drop longest-part a-seq))))))
+
+(defn- next-level-of-permutation-tree [current-level]
+  (let [being-built (first current-level)
+        remaining-items (last current-level)]
+    (if (empty? remaining-items) 
+      [[being-built remaining-items]]
+      (for [x remaining-items]
+        [(cons x being-built) (disj remaining-items x)]))))
+
+(defn- permutations-helper [permutation-tree-leaves level-index end-level-index]
+  (if (= level-index end-level-index)
+    permutation-tree-leaves
+    (permutations-helper 
+      (mapcat next-level-of-permutation-tree permutation-tree-leaves) 
+      (inc level-index) end-level-index)))
 
 (defn permutations [a-set]
-  [:-])
+  (map first (permutations-helper [[[] (set a-set)]] 0 (count a-set))))
+
+(defn- next-level-of-subsets [a-set]
+  (set (for [x a-set]
+    (disj a-set x))))
+
+(defn- powerset-helper [powerset-tree-leaves level-index end-level-index]
+  (let [leave-set (set powerset-tree-leaves)]
+    (if (>= level-index end-level-index)
+      leave-set
+      (clojure.set/union leave-set (powerset-helper 
+                                     (mapcat next-level-of-subsets leave-set) 
+                                     (inc level-index) 
+                                     end-level-index)))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (powerset-helper #{(set a-set)} 0 (count a-set)))
