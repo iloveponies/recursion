@@ -355,15 +355,40 @@
       (reduce mono-step [[a-val b-val] []] (rest (rest a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  (loop [a-seq a-seq monos []]
+  (loop [monos [] a-seq a-seq]
     (if (empty? a-seq)
       monos
       (let [[b-seq c-seq] (mono-chop a-seq)]
-        (recur c-seq (conj monos b-seq))))))
+        (recur (conj monos b-seq) c-seq)))))
+
+;; permutations helper function
+;; Generates new permutations from sequence perm by inserting item at
+;; each position in perm
+(defn gen-perms [item perm]
+  (let [num-positions (+ 1 (count perm))
+        make-seq (fn [i]
+                   (let [[start end] (split-at i perm)]
+                     (concat start [item] end)))]
+    (map make-seq (range num-positions))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    [[]]
+    (let [perms (permutations (rest a-set))
+          gen-perms-1 (partial gen-perms (first a-set))]
+      (mapcat gen-perms-1 perms))))
 
+(defn gen-sets-with-e [e a-set]
+  (set (map #(conj % e) a-set)))
+
+;; Power set algorithm form Wikipedia
+;; http://en.wikipedia.org/wiki/Power_set
 (defn powerset [a-set]
-  [:-])
-
+  (let [a-set (set a-set)]
+    (if (empty? a-set)
+      #{#{}}
+      (let [e (first a-set)
+            T (disj a-set e)
+            power-set-of-T (powerset T)
+            power-set-of-T-with-e (gen-sets-with-e e power-set-of-T)]
+        (clojure.set/union power-set-of-T power-set-of-T-with-e)))))
