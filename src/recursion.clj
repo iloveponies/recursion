@@ -142,14 +142,23 @@
     (map reverse (cons (reverse a-seq)
                        (tails (rest (reverse a-seq)))))))
 
+(defn rotations-helper [counted a-seq]
+  (cond
+    (empty? a-seq) '(())
+    (== 0 counted) nil
+    :else
+    (let [new-seq (concat (rest a-seq) (vector (first a-seq)))]
+      (cons new-seq
+            (rotations-helper (dec counted) new-seq)))))
+
 (defn rotations [a-seq]
-  [:-])
+  (rotations-helper (count a-seq) a-seq))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
