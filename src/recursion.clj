@@ -154,8 +154,25 @@
 (defn rotations [a-seq]
   (rotations-helper (count a-seq) a-seq))
 
+(defn count-elem-helper [n elem coll]
+  (if (empty? coll)
+    n
+    (let [new-count (if (= elem (first coll))
+                      (inc n)
+                      n)]
+      (count-elem-helper new-count
+                         elem
+                         (rest coll)))))
+
+(defn count-elem [elem coll]
+  (count-elem-helper 0 elem coll))
+
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (apply merge (map
+                   (fn [x] {x (count-elem x a-seq)})
+                   (set a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
