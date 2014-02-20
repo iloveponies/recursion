@@ -183,14 +183,30 @@
     (concat (repeat (second (first a-map)) (first (first a-map)))
           (un-frequencies (rest a-map)))))
 
+(defn my-take-helper [n current-count coll]
+  (cond
+    (empty? coll) '()
+    (< current-count n) (cons (first coll)
+                              (my-take-helper n (inc current-count) (rest coll)))
+    :else
+      '()))
+
 (defn my-take [n coll]
-  [:-])
+  (my-take-helper n 0 coll))
+
+(defn my-drop-helper [n current-count coll]
+  (cond
+    (empty? coll) '()
+    (< current-count n) (my-drop-helper n (inc current-count) (rest coll))
+    :else
+    coll))
 
 (defn my-drop [n coll]
-  [:-])
+  (my-drop-helper n 0 coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [first-halve-count (int (/ (count a-seq) 2))]
+    [(my-take first-halve-count a-seq) (my-drop first-halve-count a-seq)] ))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
