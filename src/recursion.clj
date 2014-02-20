@@ -208,8 +208,19 @@
   (let [first-halve-count (int (/ (count a-seq) 2))]
     [(my-take first-halve-count a-seq) (my-drop first-halve-count a-seq)] ))
 
+(defn seq-merge-helper [element-from-a-seq b-seq position]
+  (cond
+    (> (first b-seq) element-from-a-seq) position
+    :else
+      (seq-merge-helper element-from-a-seq (rest b-seq) (inc position))))
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    :else
+      (let [position (seq-merge-helper (first a-seq) b-seq 0)
+            new-b-seq (concat (my-take position b-seq) (vector (first a-seq)) (my-drop position b-seq))]
+        (seq-merge (rest a-seq) new-b-seq))))
 
 (defn merge-sort [a-seq]
   [:-])
