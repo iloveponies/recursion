@@ -210,6 +210,7 @@
 
 (defn seq-merge-helper [element-from-a-seq b-seq position]
   (cond
+    (empty? b-seq) position
     (> (first b-seq) element-from-a-seq) position
     :else
       (seq-merge-helper element-from-a-seq (rest b-seq) (inc position))))
@@ -223,7 +224,14 @@
         (seq-merge (rest a-seq) new-b-seq))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (== 1 (count a-seq)) a-seq
+    :else
+    (let [half-vectors (halve a-seq)
+          left-side (first half-vectors)
+          right-side (second half-vectors)]
+      (seq-merge (merge-sort left-side) (merge-sort right-side)))))
 
 ; Encore Stuff - later
 
