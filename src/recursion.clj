@@ -6,23 +6,6 @@
     (* (first coll)
        (product (rest coll)))))
 
-;(product [1 2 4])
-;(product '(1 2 3 4))
-; starts with oh not empty so gets to first coll and rest with *
-; then again sees not empty
-;=   (product (cons 1 (cons 2 (cons 3 (cons 4 '())))))
-;=> (* 1 (product (cons 2 (cons 3 (cons 4 '())))))
-;=> (* 1 (* 2 (product (cons 3 (cons 4 '())))))
-;=> (* 1 (* 2 (* 3 (product (cons 4 '())))))
-;=> (* 1 (* 2 (* 3 (* 4 (product '())))))
-; finally sees oh empty then returns 1
-;=> (* 1 (* 2 (* 3 (* 4 1))))        ; (empty? '()) is true, so (product '()) ;=> 1
-; once reaches base then the expression evaluation starts
-;=> (* 1 (* 2 (* 3 4)))
-;=> (* 1 (* 2 12))
-;=> (* 1 24)
-;=> 24
-
 (defn singleton? [coll]
   (boolean (and (seq coll)
                 (or (first (seq coll))
