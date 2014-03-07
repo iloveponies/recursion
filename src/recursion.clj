@@ -112,10 +112,16 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
+(defn rot-helper [aseq n]
+  (cond 
+    (= n 0) ['()]
+    (= n 1) [aseq]
+    :else 
+    (cons aseq (rot-helper (concat (rest aseq) [(first aseq)]) (dec n)))))
+
+;needed help
 (defn rotations [a-seq]
-  (if (empty? a-seq)
-    '() 
-    ()))
+    (rot-helper a-seq (count a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -129,34 +135,49 @@
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
+;needed help
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (concat (repeat (val (first a-map)) (key (first a-map))) (un-frequencies (rest a-map)))))
+  ;concat repeat
 
 (defn my-take [n coll]
   (if (or (empty? coll)
           (= 0 n))
-    nil 
+    '() 
     (cons (first coll) (my-take (dec n) (rest coll)))))
 
-(defn my-drop-helper [seq n coll]
-  (if (empty? coll)
-    seq
-    (let [seq (if (< n (count coll))
-                (cons (first coll) seq)
-                seq)]
-     (my-drop-helper seq n (rest coll)))))
+(defn my-drop-helper [n coll]
+  (if (or (empty? coll)
+          (= 0 n))
+    coll
+   (my-drop-helper (dec n) (rest coll))))
 
 (defn my-drop [n coll]
-    (my-drop-helper '() n (reverse coll)))
+    (my-drop-helper n coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [split (int (/ (count a-seq) 2 ))]
+    [(my-take split a-seq) (my-drop split a-seq)] ))
 
+;needed help
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [fa (first a-seq)
+        fb (first b-seq)]
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+  :else 
+    (if (< fa fb)
+    (cons fa (seq-merge (rest a-seq) b-seq))
+    (cons fb (seq-merge (rest b-seq) a-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq))
+    a-seq
+    (let [[a b] (halve a-seq)]
+     (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
