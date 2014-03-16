@@ -113,28 +113,61 @@
       :default (map my-rot rotrng))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [fst (first a-seq)
+          rst (rest a-seq)
+          counter (if (contains? freqs fst) (inc (get freqs fst)) 1)]
+      (my-frequencies-helper (assoc freqs fst counter) rst))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (flatten (concat (map (fn [[key num]] (repeat num key)) a-map))))
 
 (defn my-take [n coll]
-  [:-])
+  (let [len (count coll)]
+    (cond
+      (>= n len) coll
+      (empty? coll) coll
+      :default (my-take n (drop-last 1 coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (< n 1)
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [len (count a-seq)
+        half (int (/ len 2))]
+    (if (empty? a-seq)
+      a-seq
+      (vector (my-take half a-seq) (my-drop half a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a-fst (first a-seq)
+        b-fst (first b-seq)
+        a-rst (rest a-seq)
+        a-smaller (fn [x] (< x b-fst))
+        b-smaller (fn [x] (< x a-fst))]
+    (cond
+      (empty? a-seq) b-seq
+      (empty? b-seq) a-seq
+      (< a-fst b-fst) (seq-merge (my-drop-while a-smaller a-seq) (cons a-fst b-seq))
+      :default (seq-merge
+                 a-rst
+                 (concat
+                   (my-take-while b-smaller b-seq)
+                   (cons a-fst (my-drop-while b-smaller b-seq)))))))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [[first-half second-half] (halve a-seq)]
+      (seq-merge (merge-sort first-half) (merge-sort second-half)))))
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
