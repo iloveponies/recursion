@@ -127,7 +127,7 @@
   (tails-recur [] a-seq))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotate [n a-seq]
   (let [c (count a-seq)]
@@ -193,12 +193,58 @@
     (let [[seq1 seq2] (halve a-seq)]
       (seq-merge (merge-sort seq1) (merge-sort seq2)))))
 
+(defn split-into-monotonics-helper [res a-seq]
+  (let [monotonic? (fn  [a-seq]
+                     (or (apply <= a-seq)
+                         (apply >= a-seq)))]
+    (if (empty? a-seq)
+      res
+      (let [next-seq (last (take-while monotonic? (drop 1 (inits a-seq))))
+            next-a-seq (drop (count next-seq) a-seq)]
+        (split-into-monotonics-helper (conj res next-seq) next-a-seq)))))
+  
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (split-into-monotonics-helper [] a-seq))
 
-(defn permutations [a-set]
-  [:-])
+(defn remove-at [n xs]
+  (let [[front after] (split-at (inc  n) xs)
+        before (first (split-at (dec (count front)) front))]
+     (concat before after)))
+
+(defn permutations-n [n xs]
+  (cond
+   (= 0 n) (list (list))
+   (= 1 n) (map list xs)
+   :else (reduce (fn [collector i]
+                   (let [elem (list (first (last (split-at i xs))))
+                         sans-elem (remove-at i xs)
+                         sub-perms (permutations-n (count sans-elem) sans-elem)]
+                     (concat collector (map (fn [sub-perm] (concat elem sub-perm)) sub-perms))))
+                 '() (range 0 (count xs)))
+    ))
+
+(defn permutations [xs]
+  (permutations-n (count xs) xs))
 
 (defn powerset [a-set]
-  [:-])
+  (println "a-set" a-set)
+  (if (empty? a-set)
+    #{#{}}
+    (let [elements (map identity a-set)
+          subsets-with-one-missing-element (map (fn [e] (disj a-set e)) elements)
+         
+          _ (println "elements" elements)
+          _ (println "subsets" subsets-with-one-missing-element)
+          next-level (reduce (fn [collector sub]
+                               (let [_ (println "collector" collector "sub" sub)]
+                                 (if (empty? sub)
+                                   collector
+                                   (let [sub-powerset (powerset sub)                                                                    
+                                     _ (println "sub-powerset" sub-powerset)]
+                                     (concat collector sub-powerset)))))
+                             #{}
+                             subsets-with-one-missing-element)
+          _ (println "next-level" next-level)]
+      (set (conj next-level a-set)))
+    ))
 
