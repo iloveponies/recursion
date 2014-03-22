@@ -226,25 +226,17 @@
 (defn permutations [xs]
   (permutations-n (count xs) xs))
 
-(defn powerset [a-set]
-  (println "a-set" a-set)
-  (if (empty? a-set)
-    #{#{}}
-    (let [elements (map identity a-set)
-          subsets-with-one-missing-element (map (fn [e] (disj a-set e)) elements)
-         
-          _ (println "elements" elements)
-          _ (println "subsets" subsets-with-one-missing-element)
-          next-level (reduce (fn [collector sub]
-                               (let [_ (println "collector" collector "sub" sub)]
-                                 (if (empty? sub)
-                                   collector
-                                   (let [sub-powerset (powerset sub)                                                                    
-                                     _ (println "sub-powerset" sub-powerset)]
-                                     (concat collector sub-powerset)))))
-                             #{}
-                             subsets-with-one-missing-element)
-          _ (println "next-level" next-level)]
-      (set (conj next-level a-set)))
-    ))
+(defn powerset [a-seq]
+  (let [a-set (set a-seq)]
+    (if (empty? a-set)
+      #{#{}}
+      (let [elements (map identity a-set)
+            subsets-with-one-missing-element (map (fn [e] (disj a-set e)) elements)
+            next-level (reduce (fn [collector sub]
+                                 (let [sub-powerset (powerset sub)]
+                                   (concat collector sub-powerset)))
+                               #{}
+                               subsets-with-one-missing-element)]
+        (set (conj next-level a-set)))
+      )))
 
