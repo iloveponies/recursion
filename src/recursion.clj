@@ -171,8 +171,33 @@
       a-seq
       (seq-merge (merge-sort a-s) (merge-sort b-s)))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn index-of-change [f start a-seq]
+  (loop [strt start
+         rst a-seq
+         ind 0]
+    (cond
+      (empty? rst) -1
+      (not (f strt (first rst))) ind
+      :else (recur (first rst) (rest rst) (inc ind)))))
+
+(defn split-into-monotonics [a-seq]  
+  (loop [s a-seq ; s = fst : snd : rst
+         result []]
+    (let [fst (first s)
+          snd (second s)
+          rst (rest (rest s))
+          order (if (or (nil? fst) (nil? snd))
+                  nil ;(fn [x] false)
+                  (if (<= fst snd) <= >=)) ; <= >= ?
+          index-of-change (index-of-change order snd rst)]
+      (cond
+        (nil? fst) result
+        (nil? snd) (concat result [[fst]])
+        (empty? rst) (concat result [[fst snd]])
+        (= index-of-change -1) (concat result s)
+        :else (recur
+                (drop index-of-change rst)
+                (conj result (concat [fst snd] (take index-of-change rst))))))))
 
 (defn without [s i]
   (concat (take i s) (drop (+ i 1) s)))
