@@ -190,4 +190,11 @@
       :else (reduce concat (map func indices)))))
 
 (defn powerset [a-set]
-  [:-])
+  (let [setto (set a-set)
+        indices (range (count setto))]    
+    (set
+      (if (empty? setto)
+          (vector setto)
+          (cons
+            setto
+            (reduce concat (map (fn [x] (powerset (disj setto x))) setto)))))))
