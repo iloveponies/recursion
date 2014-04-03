@@ -85,11 +85,6 @@
         )
   )
 
-(my-drop-while odd? [1 2 3 4])  ;=> (2 3 4)
-(my-drop-while odd? [1 3 4 5])  ;=> (4 5)
-(my-drop-while even? [1 3 4 5]) ;=> (1 3 4 5)
-(my-drop-while odd? [])         ;=> ()
-
 (defn seq= [a-seq b-seq]
   (cond (not (= (count a-seq) (count b-seq)))
           false
@@ -139,13 +134,34 @@
   )
 
 (defn my-range [up-to]
-  [:-])
+  (cond (zero? up-to)
+          ()
+        :else
+          (cons (dec up-to) (my-range (dec up-to)))
+        )
+  )
 
 (defn tails [a-seq]
-  [:-])
+  (cond (empty? a-seq)
+          '()
+        :else
+          (cons (seq a-seq) (tails (rest a-seq)))
+        )
+  )
 
 (defn inits [a-seq]
-  [:-])
+  (cond (empty? a-seq)
+          '()
+        :else
+          (reverse (cons (seq a-seq) (inits (rest a-seq))))
+        )
+  )
+
+(tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
+(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+; You can output the tails and inits in any order you like.
+(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+
 
 (defn rotations [a-seq]
   [:-])
