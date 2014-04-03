@@ -45,27 +45,70 @@
     )
   )
 
-(longest-sequence [[1 2 3] [1 2] []]) ;=> [1 2 3]
-(longest-sequence [[1 2]])            ;=> [1 2]
-(longest-sequence [])                 ;=> nil
-
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq))
+      )
+    )
+  )
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond (empty? a-seq)
+          false
+        (= elem (first a-seq))
+          true
+        :else
+          (sequence-contains? elem (rest a-seq))
+        )
+  )
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond (empty? a-seq)
+          '()
+        (pred? (first a-seq))
+          (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+        :else
+          '()
+        )
+  )
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond (empty? a-seq)
+          '()
+        (pred? (first a-seq))
+          (my-drop-while pred? (rest a-seq))
+        :else
+          a-seq
+        )
+  )
+
+(my-drop-while odd? [1 2 3 4])  ;=> (2 3 4)
+(my-drop-while odd? [1 3 4 5])  ;=> (4 5)
+(my-drop-while even? [1 3 4 5]) ;=> (1 3 4 5)
+(my-drop-while odd? [])         ;=> ()
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond (not (= (count a-seq) (count b-seq)))
+          false
+        (and (empty? a-seq) (empty? b-seq))
+          true
+        (= (first a-seq) (first b-seq))
+          (seq= (rest a-seq) (rest b-seq))
+        :else
+          false
+        )
+  )
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond (or (empty? seq-1) (empty? seq-2))
+        '()
+        :else
+          (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))
+        )
+  )
 
 (defn power [n k]
   :-)
@@ -120,4 +163,3 @@
 
 (defn powerset [a-set]
   [:-])
-
