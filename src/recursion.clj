@@ -111,13 +111,32 @@
   )
 
 (defn power [n k]
-  :-)
+  (cond (zero? k)
+          1
+        (zero? n)
+          0
+        :else
+          (* n (power n (dec k)))
+        )
+  )
 
 (defn fib [n]
-  :-)
+  (cond (zero? n)
+          0
+        (= 1 n)
+          1
+        :else
+          (+ (fib (dec n)) (fib (dec (dec n))))
+        )
+  )
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond (pos? how-many-times)
+          (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
+        :else
+          ()
+        )
+  )
 
 (defn my-range [up-to]
   [:-])
