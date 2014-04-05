@@ -185,14 +185,23 @@
           left (my-drop (count sq) a-seq)]
           (cons sq (split-into-monotonics left)))))
 
+(declare permutations)
+
+(defn perm-hlpr [a-set b-set]
+  (let [item (first a-set)
+        m-rest (rest a-set)
+        m-add (fn [x] (cons item x ))
+        m-pred? (fn [x] (not (= item x)))]
+    (if (empty? m-rest)
+      (if (empty? (rest b-set))
+         (list b-set)
+         (map m-add (permutations (clojure.set/select m-pred? b-set))))
+      (concat
+          (map m-add (permutations (clojure.set/select m-pred? b-set)))
+          (perm-hlpr m-rest b-set)))))
 
 (defn permutations [a-set]
-  (if(empty? a-set)
-    '(())
-    (if (= (count a-set) 2)
-        (seq [(first a-set ) (second a-set)])
-        (loop [i (count a-set) res '()]
-          ()))))
+     (perm-hlpr a-set a-set))
 
 
 
