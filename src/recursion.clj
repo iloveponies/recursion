@@ -210,12 +210,12 @@
   (if (empty? x)
       tmp
       (let [fst (first x)
-            mcons (fn [x] (cons fst x))
+            mcons (fn [x] (set (cons fst x)))
             fce (fn [x] (map mcons x))]
           (ps-helper (concat tmp (fce tmp)) (rest x)))))
 
 (defn powerset [a-set]
-  (set (map set (ps-helper '(()) a-set))))
+  (set (ps-helper #{#{}} a-set)))
 
 
 
