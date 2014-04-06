@@ -201,12 +201,23 @@
           (perm-hlpr m-rest b-set)))))
 
 (defn permutations [a-set]
-     (perm-hlpr a-set a-set))
+  (if (empty? a-set)
+    '(())
+    (perm-hlpr (into #{} a-set) (into #{} a-set ))))
 
 
+(defn ps-helper [tmp x]
+  (if (empty? x)
+      tmp
+      (let [fst (first x)
+            mcons (fn [x] (cons fst x))
+            fce (fn [x] (map mcons x))]
+          (ps-helper (concat tmp (fce tmp)) (rest x)))))
 
 (defn powerset [a-set]
-  [:-])
+  (set (map set (ps-helper '(()) a-set))))
+
+
 
 
 
