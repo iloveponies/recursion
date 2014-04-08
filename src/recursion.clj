@@ -11,7 +11,8 @@
     (empty? (rest coll))))
 
 (defn singleton-or-empty? [coll]
-  (empty? (rest coll)))
+  (defn singleton-or-empty? [coll]
+  (empty? (rest coll))))
 
 (defn my-last [coll]
   (if (singleton-or-empty? coll)
@@ -171,20 +172,25 @@
     (let [halves (halve a-seq)]
       (seq-merge (merge-sort (first halves)) (merge-sort (second halves))))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn monotonic? [a-seq]
+  (or (empty? a-seq) (apply <= a-seq) (apply >= a-seq)))
 
+(defn split-into-monotonics [a-seq]
+  (if (empty? a-seq)
+    a-seq
+    (let [monotonics (take-while monotonic? (inits a-seq))]
+      (cons (last monotonics) (split-into-monotonics (drop (dec (count monotonics)) a-seq))))))
 
 (defn permutations [a-seq]
-  (let [helper (fn [a-seq head]
-                 (cons head (permutations (remove #(= head %) a-seq))))]
-    (if (singleton-or-empty? a-seq)
-      a-seq
-      (map #(helper a-seq %) a-seq))))
-
-(permutations [1 2 3])
-
+  (if (singleton-or-empty? a-seq)
+    (list a-seq)
+    (for [head a-seq
+          tail (permutations (disj (set a-seq) head))]
+      (do
+        (cons head tail)))))
 
 (defn powerset [a-set]
-  [:-])
+  (let [helper (fn [coll value]
+                 (set (concat coll (map #(set (concat % #{value})) coll))))]
+    (reduce helper #{#{}} a-set)))
 
