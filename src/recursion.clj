@@ -216,10 +216,17 @@
           right-side (second half-vectors)]
       (seq-merge (merge-sort left-side) (merge-sort right-side)))))
 
-; Encore Stuff - later
+; Encore Stuff
+
+(defn monotonics [a-seq]
+  (cond
+    (> (count a-seq) 3) (cons (drop (- (count a-seq) 2) a-seq) (monotonics (take (- (count a-seq) 2) a-seq)))
+    :else
+    (vector a-seq)))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (reverse (monotonics a-seq)))
+
 
 (defn permutations [a-set]
   [:-])
