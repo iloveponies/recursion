@@ -292,11 +292,16 @@
   )
 
 (defn permutations [a-set]
-  (cond (< 1 (count a-set))
-          ()
-        :else
-          ()
-        )
+   (cond (empty? a-set)
+           '(())
+         (singleton? a-set)
+           (list a-set)
+         :else
+           (for [head a-set
+                  tail (permutations (disj (set a-set) head))]
+              (do (cons head tail))
+             )
+         )
   )
 
 (defn powerset [a-set]
