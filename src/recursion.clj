@@ -227,9 +227,23 @@
 (defn split-into-monotonics [a-seq]
   (reverse (monotonics a-seq)))
 
+(defn permutaions-rotations-helper [range-for-fixed-elements current-combinations]
+  (let [final-elements-returned (map (fn [current-combination]
+                                       (let [fixed-elements (take range-for-fixed-elements current-combination)
+                                             rotation-elements (drop range-for-fixed-elements current-combination)
+                                             fixed-mixed-with-rotated (map (fn [x] (concat fixed-elements x)) (rotations rotation-elements))]
+                                         fixed-mixed-with-rotated)) current-combinations)]
+    final-elements-returned))
+
+(defn permutaions-helper [range-for-fixed-elements combination-length current-combinations]
+  (if (<= (- combination-length range-for-fixed-elements) 1)
+    current-combinations
+    (let [create-combinations (partition combination-length (flatten (permutaions-rotations-helper range-for-fixed-elements current-combinations)))]
+      (permutaions-helper (inc range-for-fixed-elements) combination-length create-combinations))))
 
 (defn permutations [a-set]
-  [:-])
+  (permutaions-helper 0 (count a-set) [a-set]))
+
 
 (defn powerset [a-set]
   [:-])
