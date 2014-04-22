@@ -245,6 +245,17 @@
   (permutaions-helper 0 (count a-set) [a-set]))
 
 
+
+(defn powerset-union-map-helper [taken-out-element passed-set]
+  (map (fn [x] (clojure.set/union taken-out-element x)) passed-set))
+
+(defn powerset-helper [current-set-constructed a-set]
+  (if (empty? a-set)
+    current-set-constructed
+    (let [p-set (powerset-union-map-helper #{(first a-set)} current-set-constructed)
+          current-set (clojure.set/union current-set-constructed p-set)]
+      (powerset-helper current-set (rest a-set)))))
+
 (defn powerset [a-set]
-  [:-])
+  (powerset-helper  #{#{}} a-set))
 
