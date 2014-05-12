@@ -94,7 +94,51 @@
 (my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 (un-frequencies {:a 3, "moi" 3, 1 1})
 
+(my-take 2 [1 2 3 4]) ;=> (1 2)
+(my-take 4 [:a :b])   ;=> (:a :b)
 
+(my-drop 2 [1 2 3 4]) ;=> (3 4)
+(my-drop 4 [:a :b])   ;=> ()
+
+(halve [1 2 3 4])   ;=> [(1 2) (3 4)]
+(halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
+(halve [1])         ;=> [() (1)]
+
+(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+(seq-merge [1 3] [2 4 5 ])
+(seq-merge [] [1])
+(seq-merge [1] [])
+(seq-merge [] [])
+(seq-merge [nil] [])
+(seq-merge [] [nil])
+(seq-merge [nil] [nil])
+
+(merge-sort [4 2 3 1])
+(merge-sort [1])
+(merge-sort [])
+(merge-sort [9 4 1])
+(merge-sort [1 1 1])
+(merge-sort [nil nil])
+(merge-sort [1 nil])
+(merge-sort [nil nil false])
+(merge-sort [true false])
+(merge-sort [])                 ;=> ()
+(merge-sort [1 2 3])            ;=> (1 2 3)
+(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
+
+(guess-direction [1 2])
+(guess-direction [2 1])
+(guess-direction [2 2])
+(guess-direction [2])
+(guess-direction [])
+(monotonic-elems 1 1 [1 2])
+(monotonic-elems 1 1 [])
+
+(split-into-monotonics [1 2 3 4 2 3 4])
+(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
+(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+(split-into-monotonics [])
 
 
 

@@ -122,7 +122,7 @@
     (map reverse-list (tails (reverse a-seq)))))
 
 (defn first-n [a-seq n]
-  (if (= n 0)
+  (if (or (<= n 0) (empty? a-seq))
     '()
     (cons (first a-seq) (first-n (rest a-seq) (dec n)))))
 
@@ -154,22 +154,69 @@
       (concat (repeat (get first-item 1) (get first-item 0)) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (first-n coll n))
 
 (defn my-drop [n coll]
-  [:-])
+  (rest-n coll n))
 
 (defn halve [a-seq]
-  [:-])
+  (let [firsthalf (int (/ (count a-seq) 2))]
+    [(my-take firsthalf a-seq) (my-drop firsthalf a-seq)]))
+
+(defn old-seq-merge [a-seq b-seq]
+  (cond
+   (and (empty? a-seq) (empty? b-seq))
+     a-seq
+   (or (empty? a-seq) (and (nil? (first b-seq)) (seq b-seq)))
+     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   (empty? b-seq)
+     (cons (first a-seq) (seq-merge b-seq (rest a-seq)))
+   (or (nil? (first a-seq)) (< (first a-seq) (first b-seq)))
+     (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else
+     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   ))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (and (empty? a-seq) (empty? b-seq))
+     a-seq
+   (and (seq a-seq)
+        (or (empty? b-seq)
+            (<= (compare (first a-seq) (first b-seq)) 0)))
+     (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else
+     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   ))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [halves (halve a-seq)]
+      (seq-merge (merge-sort (get halves 0)) (merge-sort (get halves 1))))))
+
+(defn guess-direction [a-seq]
+  (let [a (first a-seq)
+        b (first (rest a-seq))]
+    (if (or (nil? a) (nil? b))
+      1
+      (if (<= (- a b) 0) 1 -1))))
+
+(defn monotonic-elems [direction numb a-seq]
+  (let [cmp-func (fn [x y] (<= (* (compare x y) direction) 0))]
+    (if (and (seq (rest a-seq))
+             (cmp-func (first a-seq) (first (rest a-seq))))
+      (monotonic-elems direction (inc numb) (rest a-seq))
+      numb)))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [wanted-elems (monotonic-elems (guess-direction a-seq) 1 a-seq)
+        first-elems (take wanted-elems a-seq)
+        rest-elems (drop wanted-elems a-seq)]
+    (if (seq a-seq)
+      (cons (seq first-elems) (split-into-monotonics rest-elems))
+      '())))
 
 (defn permutations [a-set]
   [:-])
