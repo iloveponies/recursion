@@ -69,10 +69,15 @@
    :else
      a-seq))
 
+;(defn seq= [a-seq b-seq]
+;  {"aseq" a-seq "bseq" b-seq})
+
 (defn seq= [a-seq b-seq]
   (cond
    (and (empty? a-seq) (empty? b-seq))
      true
+   (or (empty? a-seq) (empty? b-seq))
+     false
    (= (first a-seq) (first b-seq))
      (seq= (rest a-seq) (rest b-seq))
    :else
@@ -132,8 +137,10 @@
     (rest-n (rest a-seq) (dec n))))
 
 (defn rotations [a-seq]
-  (let [rotate-seq (fn [n] (concat (rest-n a-seq n) (first-n a-seq n) ))]
-    (map rotate-seq (range (count a-seq)))))
+  (if (empty? a-seq)
+    '(())
+    (let [rotate-seq (fn [n] (concat (rest-n a-seq n) (first-n a-seq n) ))]
+      (map rotate-seq (range (count a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -163,19 +170,19 @@
   (let [firsthalf (int (/ (count a-seq) 2))]
     [(my-take firsthalf a-seq) (my-drop firsthalf a-seq)]))
 
-(defn old-seq-merge [a-seq b-seq]
-  (cond
-   (and (empty? a-seq) (empty? b-seq))
-     a-seq
-   (or (empty? a-seq) (and (nil? (first b-seq)) (seq b-seq)))
-     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
-   (empty? b-seq)
-     (cons (first a-seq) (seq-merge b-seq (rest a-seq)))
-   (or (nil? (first a-seq)) (< (first a-seq) (first b-seq)))
-     (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
-   :else
-     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
-   ))
+;(defn seq-merge [a-seq b-seq]
+;  (cond
+;   (and (empty? a-seq) (empty? b-seq))
+;     a-seq
+;   (or (empty? a-seq) (and (nil? (first b-seq)) (seq b-seq)))
+;     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+;   (empty? b-seq)
+;     (cons (first a-seq) (seq-merge b-seq (rest a-seq)))
+;   (or (nil? (first a-seq)) (< (first a-seq) (first b-seq)))
+;     (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+;   :else
+;     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+;   ))
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -218,9 +225,31 @@
       (cons (seq first-elems) (split-into-monotonics rest-elems))
       '())))
 
+(defn insert-at [elem pos a-seq]
+  (concat (take pos a-seq) (vector elem) (drop pos a-seq)))
+
+(defn do-permutation [n elem perms]
+  (if (empty? perms)
+    '()
+    (concat (map (fn [i] (insert-at elem i (first perms))) (range 0 n)) (do-permutation n elem (rest perms)))))
+
 (defn permutations [a-set]
-  [:-])
+  (cond
+   (empty? a-set)
+     '(())
+;   (empty? (rest a-set))   ; koska do-permutation ei selviä yhden alkion tapauksesta
+;     (list (list (first a-set)))
+   :else
+     (do-permutation (count a-set) (first a-set) (permutations (rest a-set)))))
+
+(defn combine [elem a-set]
+  (cond
+   (empty? a-set)
+     (set elem)
+   :else
+     (map )
+   ))
 
 (defn powerset [a-set]
-  [:-])
+  (conj a-set (map)))
 

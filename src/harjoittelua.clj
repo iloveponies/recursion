@@ -49,6 +49,9 @@
 (seq= [1 2 4] '(1 2 4))  ;=> true
 (seq= [1 2 3] [1 2 3 4]) ;=> false
 (seq= [1 3 5] [])        ;=> false
+(seq= '() '())
+(seq= '(:c :b :a) '(:c :b :a))
+(seq= '(1 2 nil) '(1 2))    ; false
 
 (my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
 (my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
@@ -140,6 +143,16 @@
 (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
 (split-into-monotonics [])
 
-
-
+(insert-at :pointti 4 [0 1 2 3])
+(do-permutation 1 :c '())
+(do-permutation 2 :b '[[:c]])
+(do-permutation 3 :a '((:b :c) (:c :b)))
+(permutations #{})
+(permutations #{:ainoa})
+(permutations #{:a :b})
+(permutations #{:a :b :c})
+(permutations #{})
+;=> (())
+(permutations #{1 5 3})
+;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 
