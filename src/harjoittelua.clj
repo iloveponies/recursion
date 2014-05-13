@@ -156,3 +156,15 @@
 (permutations #{1 5 3})
 ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 
+(make-set :a)
+(make-set nil)
+(combine :a '())
+(combine :b '(#{:a} #{:c}))
+(powerset #{})
+(powerset #{:a})
+(powerset #{:a :b})
+(powerset #{:a :b :c})
+(powerset #{:a :b :c :d})
+
+
+

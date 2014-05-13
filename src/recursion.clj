@@ -234,22 +234,23 @@
     (concat (map (fn [i] (insert-at elem i (first perms))) (range 0 n)) (do-permutation n elem (rest perms)))))
 
 (defn permutations [a-set]
-  (cond
-   (empty? a-set)
-     '(())
-;   (empty? (rest a-set))   ; koska do-permutation ei selviä yhden alkion tapauksesta
-;     (list (list (first a-set)))
-   :else
-     (do-permutation (count a-set) (first a-set) (permutations (rest a-set)))))
+  (if (empty? a-set)
+    '(())
+    (do-permutation (count a-set) (first a-set) (permutations (rest a-set)))))
+
+(defn make-set [elem]
+  (conj #{} elem))
 
 (defn combine [elem a-set]
   (cond
    (empty? a-set)
-     (set elem)
+     (conj (make-set elem) #{})
    :else
-     (map )
+     (concat (map (fn [x] (conj x elem)) a-set) a-set)
    ))
 
 (defn powerset [a-set]
-  (conj a-set (map)))
+  (if (empty? a-set)
+    #{#{}}
+    (combine (first a-set) (powerset (rest a-set)))))
 
