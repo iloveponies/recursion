@@ -492,7 +492,9 @@
 ;;
 ;; Using infinite sequence
 (defn tails [a-seq]
-  (take-while (complement empty?) (iterate rest a-seq)))
+  (concat (take-while (complement empty?) (iterate rest a-seq))
+          ;; need to add an empty one at the end
+          '(())))
 ;;
 (tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
 ;;
@@ -578,7 +580,8 @@
 ;; Exercise 22
 ;; Implement (my-take n coll) that returns n first items of coll.
 (defn my-take [n coll]
-  (if (empty? coll)
+  (if (or (zero? n) (empty? coll))
+    ;; stop if there is no more to take in n or coll
     '()
     (cons (first coll) (my-take (dec n) (rest coll)))))
 ;;
