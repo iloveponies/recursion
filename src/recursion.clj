@@ -213,8 +213,34 @@
 ;; (my-filter even? [1 3 5 7]) ;=> ()
 
 
+;; Stopping before the end
+;; Sometimes you can find the answer before hitting the base case. For example, the following function checks if a sequence contains only numbers. If we find something that isn’t a number on the way through, we can immediately stop and return false.
+;;
+;; (defn only-numbers? [coll]
+;;   (cond
+;;    (empty? coll) true                                 ; the empty sequence contains only numbers
+;;    (number? (first coll)) (only-numbers? (rest coll)) ; we got a number, let's check the rest
+;;    :else false))                                      ; it wasn't a number so we have our answer
+;; Two stop rules by using cond instead of if
+
+
+;; Exercise 9
+;; Write the function (sequence-contains? elem a-seq) that returns true if the given sequence contains the given value, otherwise false.
+;; Hint: remember to stop searching when you find it.
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+   ;; Two stop coditions
+   ;; Stop at the end
+   (empty? a-seq) false
+   ;; Stop by findign a match
+   (= elem (first a-seq)) true
+   ;; If not found and non empty, recur
+   :else (recur elem (rest a-seq))))
+;;
+;; (sequence-contains? 3 [1 2 3]) ;=> true
+;; (sequence-contains? 3 [4 7 9]) ;=> false
+;; (sequence-contains? :pony [])  ;=> false
+
 
 (defn my-take-while [pred? a-seq]
   [:-])
