@@ -574,17 +574,75 @@
 
 
 
+;; Exercise 22
+;; Implement (my-take n coll) that returns n first items of coll.
 (defn my-take [n coll]
-  [:-])
+  (if (empty? coll)
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
+;;
+;; (my-take 2 [1 2 3 4]) ;=> (1 2)
+;; (my-take 4 [:a :b])   ;=> (:a :b)
 
+
+
+;; Exercise 23
+;; Implement (my-drop n coll) that returns all but the n first items of coll.
 (defn my-drop [n coll]
-  [:-])
+  (if (zero? n)
+    coll
+    (recur (dec n) (rest coll))))
+;;
+;; (my-drop 2 [1 2 3 4]) ;=> (3 4)
+;; (my-drop 4 [:a :b])   ;=> ()
 
+
+;; Exercise 24
+;; Implement the function (halve a-seq) that takes a sequence and returns one vector with two elements. The first element is the first half of a-seq and the second element is the second half of a-seq.
+;; To turn a result of division into an integer use int.
+;;
 (defn halve [a-seq]
-  [:-])
+  (let [n (quot (count a-seq) 2)]
+    [(take n a-seq) (drop n a-seq)]))
+;;
+;; (int (/ 7 2)) ;=> 3
+;; (halve [1 2 3 4])   ;=> [(1 2) (3 4)]
+;; (halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
+;; (halve [1])         ;=> [() (1)]
 
+
+
+;; Exercise 25
+;; Write the function (seq-merge a-seq b-seq) that takes two (low to high) sorted number sequences and combines them into one sorted sequence. Don’t use sort (nor implement it yourself, yet).
+;;
+;; two seq -> one seq
+;; loop over the second seq, insert values from the first seq
+;; naive version (tail call optimized)
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (if (empty? a-seq)
+    b-seq
+    (recur (rest a-seq) (concat
+                         (filter #(< % (first a-seq)) b-seq)
+                         (list (first a-seq))
+                         (filter #(>= % (first a-seq)) b-seq)))))
+;;
+;; loop version (not more efficient)
+;; (defn seq-merge [a-seq b-seq]
+;;   (loop [as a-seq
+;;          bs b-seq]
+;;     ;;
+;;     (if (empty? as)
+;;       ;; if as is empty, return the merged list
+;;       bs
+;;       ;; otherwise recur
+;;       (recur (rest as) (concat
+;;                         (filter #(< % (first as)) bs)
+;;                         (list (first as))
+;;                         (filter #(>= % (first as)) bs))))))
+;;
+(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+
 
 (defn merge-sort [a-seq]
   [:-])
