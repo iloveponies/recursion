@@ -242,8 +242,29 @@
 ;; (sequence-contains? :pony [])  ;=> false
 
 
+
+;; Exercise 10
+;; Write the function (my-take-while pred? a-seq) that returns the longest prefix of a-seq where pred? returns true for every element.
+;;
+;; coll -> coll
+;; stop if empty or first false
+;;
+;; loop macro version
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (loop [asq a-seq
+         acc []]
+    (cond
+     ;; two stop conditions
+     (empty? a-seq)             acc
+     (not (pred? (first asq)))  acc
+     :else (recur (rest asq) (conj acc (first asq))))))
+;;
+(my-take-while odd? [1 2 3 4])  ;=> (1)
+(my-take-while odd? [1 3 4 5])  ;=> (1 3)
+(my-take-while even? [1 3 4 5]) ;=> ()
+(my-take-while odd? [])         ;=> ()
+
+
 
 (defn my-drop-while [pred? a-seq]
   [:-])
