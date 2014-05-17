@@ -476,23 +476,103 @@
 (my-range 2)  ;=> (1 0)
 (my-range 3)  ;=> (2 1 0)
 
+
+;; Exercise 18
+;; Write the functions tails and inits that return all the suffixes and prefixes of a sequence, respectively.
+;; Hint: You can use reverse and map.
+;; (reverse [1 2 3]) ;=> (3 2 1)
+;; (reverse [2 3 1]) ;=> (1 3 2)
+;;
+;; naive
 (defn tails [a-seq]
-  [:-])
-
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons a-seq (tails (rest a-seq)))))
+;;
+;; Using infinite sequence
+(defn tails [a-seq]
+  (take-while (complement empty?) (iterate rest a-seq)))
+;;
+(tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
+;;
+;;
 (defn inits [a-seq]
-  [:-])
+  (reverse (map reverse (tails (reverse a-seq)))))
+;;
+(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+; You can output the tails and inits in any order you like.
+(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
 
+
+
+;; Exercise 19
+;; Write the function (rotations a-seq) that, when given a sequence, returns all the rotations of that sequence.
+;;
+;; iterate version
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (take (count a-seq) (iterate (fn [x] (conj (vec (rest x)) (first x))) a-seq))))
+;;
+;; loop version. not complete
+;; (defn rotations [a-seq]
+;;   (loop [i   0
+;;          acc '()]
+;;     (if (= i (count a-seq))
+;;       acc
+;;       (recur (inc i) (conj acc (concat (drop i a-seq) (take i a-seq)))))))
+;;
+(rotations [])        ;=> (())
+(rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
+(rotations [:a :b])   ;=> ((:a :b) (:b :a))
+; The order of rotations does not matter.
+(rotations [:a :b])   ;=> ((:b :a) (:a :b))
+(rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
+(count (rotations [6 5 8 9 2])) ;=> 5
+;; Keep in mind the function concat.
+(concat [1 2 3] [:a :b :c]) ;=> (1 2 3 :a :b :c)
+(concat [1 2] [3 4 5 6])    ;=> (1 2 3 4 5 6)
 
+
+
+;; Exercise 20
+;; Write the function (my-frequencies a-seq) that computes a map of how many times each element occurs in a sequence. E.g.
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
+;; :
+;; You’ll want to structure your code like this:
+(defn my-frequencies-helper [freqs a-seq]
+  (if (empty? a-seq)
+    freqs
+    (recur
+     (merge-with + freqs (zipmap [(first a-seq)] [1]))
+     (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
+;; Where my-frequencies-helper is a recursive helper function.
+;; (my-frequencies []) ;=> {}
+;; (my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 
+
+;; Exercise 21
+;; Write the function (un-frequencies a-map) which takes a map produced by my-frequencies and generates a sequence with the corresponding numbers of different elements.
+;; The order of elements in the output sequence doesn’t matter.
+;; Hint 1: Remember that you can use first and rest on a map too!
+;; (first {:a 1 :b 2}) ;=> [:a 1]
+;; (rest {:a 1 :b 2 :c 3}) ;=> ([:b 2] [:c 3])
+;; Hint 2: There are multiple ways to implement this, but consider using concat and repeat.
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (let [map-first-elt (first a-map)]
+        (concat (repeat (second map-first-elt) (first map-first-elt)) (un-frequencies (rest a-map))))))
+;;
+;; (un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
+;; (un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+;; (my-frequencies (un-frequencies {:a 100 :b 10})) ;=> {:a 100 :b 10}
+
+
 
 (defn my-take [n coll]
   [:-])
