@@ -644,8 +644,39 @@
 (seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
 
 
+;; Exercise 26
+;; Write the function (merge-sort a-seq) that implements merge sort.
+;; The idea of merge sort is to divide the input into subsequences using halve, sort the subsequences recursively and use the seq-merge function to merge the sorted subsequences back together.
+;; Conceptually:
+;; If the sequence is 0 or 1 elements long, it is already sorted.
+;; Otherwise, divide the sequence into two subsequences.
+;; Sort each subsequence recursively.
+;; Merge the two subsequences back into one sorted sequence.
+;;     (merge-sort [4 2 3 1])
+;; ;=> (seq-merge (merge-sort (4 2))
+;; ;              (merge-sort (3 1)))
+;; ;=> (seq-merge (seq-merge (merge-sort (4))
+;; ;                         (merge-sort (2)))
+;; ;              (seq-merge (merge-sort (3))
+;; ;                         (merge-sort (1))))
+;; ;=> (seq-merge (seq-merge (4) (2))
+;; ;              (seq-merge (3) (1)))
+;; ;=> (seq-merge (2 4) (1 3))
+;; ;=> (1 2 3 4)
+;;
+;; seq -> seq
+;; sort numbers
+;; algorithm: divid into two
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (apply seq-merge (map merge-sort (halve a-seq)))))
+;;
+(merge-sort [])                 ;=> ()
+(merge-sort [1 2 3])            ;=> (1 2 3)
+(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
+
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
