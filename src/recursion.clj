@@ -448,13 +448,33 @@
       acc
       (recur (dec n) (conj acc what)))))
 ;;
-(my-repeat 2 :a)    ;=> (:a :a)
-(my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
-(my-repeat -1 :a)   ;=> ()
+;; (my-repeat 2 :a)    ;=> (:a :a)
+;; (my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
+;; (my-repeat -1 :a)   ;=> ()
 
 
+;; Exercise 17
+;; Write the function (my-range up-to) that works like this:
+;;
+;; naive
 (defn my-range [up-to]
-  [:-])
+  (let [dec-up-to (dec up-to)]
+    (if (<= up-to 0)
+      '()
+      (cons dec-up-to (my-range dec-up-to)))))
+;;
+;; Loop version by incrementing
+(defn my-range [up-to]
+  (loop [i    0
+         acc '()]
+    (if (= i up-to)
+      acc
+      (recur (inc i) (conj acc i)))))
+;;
+(my-range 0)  ;=> ()
+(my-range 1)  ;=> (0)
+(my-range 2)  ;=> (1 0)
+(my-range 3)  ;=> (2 1 0)
 
 (defn tails [a-seq]
   [:-])
