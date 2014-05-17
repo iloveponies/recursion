@@ -304,11 +304,48 @@
 ;; (my-drop-while odd? [])         ;=> ()
 
 
-(defn seq= [a-seq b-seq]
-  :-)
 
+;; Exercise 12
+;; Write the function (seq= seq-1 seq-2) that compares two sequences for equality.
+;;
+;; (coll coll) -> bool
+;; Check equality elementwise
+(defn seq= [a-seq b-seq]
+  (cond
+   ;; Three stop conditions
+   ;; Both are 
+   (and (empty? a-seq) (empty? b-seq))  true
+   ;; effectively xor after and
+   (or  (empty? a-seq) (empty? b-seq))  false
+   ;; if the first elements are not equal, stop and return false
+   (not (= (first a-seq) (first b-seq))) false
+   ;; otherwise move on
+   :else (recur (rest a-seq) (rest b-seq))))
+;;
+;; (seq= [1 2 4] '(1 2 4))  ;=> true
+;; (seq= [1 2 3] [1 2 3 4]) ;=> false
+;; (seq= [1 3 5] [])        ;=> false
+
+
+;; Exercise 13
+;; Write the function (my-map f seq-1 seq-2) that returns a sequence of the following kind . The first item is the return value of f called with the first values of seq-1 and seq-2. The second item is the return value of f called with the second values of seq-1 and seq-2 and so forth until seq-1 or seq-2 ends.
+;; This is actually exactly how map works when given two sequences, but for the sake of practice don’t use map when defining my-map.
+;; 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (loop [s1 seq-1
+         s2 seq-2
+         acc []]
+    (if (or (empty? s1) (empty? s2))
+      ;; return acc if either is empty
+      acc
+      ;; otherwise recur
+      (recur (rest s1) (rest s2) (conj acc (f (first s1) (first s2)))))))
+;;
+;; (my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
+;; (my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
+;; (my-map + [1 2 3] [])        ;=> ()
+
+
 
 (defn power [n k]
   :-)
