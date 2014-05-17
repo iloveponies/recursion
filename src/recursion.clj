@@ -58,17 +58,18 @@
 ;; collection -> bool
 ;; check if there is only one element without count
 (defn singleton? [coll]
-  
-  (and ; BOTH
-   ;; first element is not nil
-   ((complement nil?) (first coll))
-   ;; rest collection is empty
+  (and ;; both conditions are required
+   ;; Overall not empty
+   (not (empty? coll))
+   ;; Rest of the collection is empty
    (empty? (rest coll))))
 ;;
-;; (singleton? [1])     ;=> true
-;; (singleton? #{2})    ;=> true
-;; (singleton? [])      ;=> false
-;; (singleton? [1 2 3]) ;=> false
+(singleton? [1])     ;=> true
+(singleton? #{2})    ;=> true
+(singleton? [])      ;=> false
+(singleton? [1 2 3]) ;=> false
+(singleton? [nil]) ;=> true
+(singleton? [nil nil]) ;=> false
 
 
 
