@@ -1,7 +1,45 @@
 (ns recursion)
 
+
+
+;; Exercise 1
+;; Write the function (product coll) that computes the product of a collection of values. The product of a, b and c is a∗b∗c.
+;;
+;; coll -> number
+;; naive version
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
+;;
+;; loop macro version
+(defn product [coll]
+  (loop [acc 1
+         c   coll]
+    (if (empty? c)
+      acc
+      (recur (* acc (first c)) (rest c)))))
+;;
+;; two arity version with tail call optimization without loop macro
+(defn product
+  ;; body with 1 arg (collection only)
+  ([coll] (product coll 1))
+  ;;
+  ;; body with 2 args (collection and an accumulator)
+  ([coll acc]
+     (if (empty? coll)
+       acc
+       (recur (rest coll) (* acc (first coll))))))
+
+;;
+(product [])        ;=> 1  ; special case
+(product [1 2 3])   ;=> 6
+(product [1 2 3 4]) ;=> 24
+(product [0 1 2])   ;=> 0
+(product #{2 3 4})  ;=> 24 ; works for sets too!
+
+
 
 (defn singleton? [coll]
   :-)
