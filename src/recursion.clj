@@ -347,11 +347,77 @@
 
 
 
+;; Exercise 14
+;; Write the function (power n k) that computes the mathematical expression nk.
+;;
+;; (number number) -> number
+;; n^k
+;;
+;; naive version (not tail-call optimized)
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (- k 1)))))
+;;
+;; loop macro version
+(defn power [n k]
+  (loop [i   1
+         acc 1]
+    ;; loop until i is greater than k
+    (if (> i k)
+      acc
+      (recur (inc i) (* acc n)))))
+;;
+;; (power 2 2)  ;=> 4
+;; (power 5 3)  ;=> 125
+;; (power 7 0)  ;=> 1
+;; (power 0 10) ;=> 0
 
+
+;; Exercise 15
+;; Compute the nth Fibonacci number. The nth Fibonacci number, Fn, is defined as:
+;; F0=0
+;; F1=1
+;; Fn=Fn−1+Fn−2
+;; Write the function (fib n) which returns Fn.
+;;
+;; number -> number
+;; calculate the fibonacci number
+;;
+;; naive
 (defn fib [n]
-  :-)
+  (cond
+   (= n 0) 0
+   (= n 1) 1
+   (= n 2) 1
+   (> n 2) (+ (fib (- n 1)) (fib (- n 2)))))
+;;
+;; Using an infinite sequence by iterate
+;; Create moving pairs [0 1] [1 1] [1 2] [2 3] ... [(second prev) (sum prev)]
+(defn fib1 [n]
+  (nth (map first (iterate (fn [sq] [(second sq), (apply +' sq)])
+                           [0 1]))
+       n))
+;; 
+(defn fib1 [n]
+  (->> [0 1]                                         ; |
+       ;; Infinite iteration stated above              V value passes here
+       (iterate (fn [sq] [(second sq) (apply +' sq)]),  )
+       ;; Get first values
+       (map first                                    ,  )
+       ;; Get nth value (realization occurs here)
+       (#(nth % n)                                   ,  )))
+
+;;
+(fib 0) ;=> 0
+(fib 1) ;=> 1
+(fib 2) ;=> 1
+(fib 3) ;=> 2
+(fib 4) ;=> 3
+(fib 5) ;=> 5
+(fib 6) ;=> 8
+(fib 10) ;=> 55
+
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
