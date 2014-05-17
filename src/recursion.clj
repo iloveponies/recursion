@@ -398,7 +398,7 @@
   (nth (map first (iterate (fn [sq] [(second sq), (apply +' sq)])
                            [0 1]))
        n))
-;; 
+;; More readable with threading macro
 (defn fib1 [n]
   (->> [0 1]                                         ; |
        ;; Infinite iteration stated above              V value passes here
@@ -418,9 +418,40 @@
 (fib 6) ;=> 8
 (fib 10) ;=> 55
 
-
+;; Exercise 16
+;; Write the function (my-repeat how-many-times what-to-repeat) that generates a list with what-to-repeat repeated how-man
+;; y-times number of times.
+;;
+;; number, any -> coll
+;;
+;; naive
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    '()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
+;;
+;; multi-arity version
+(defn my-repeat
+  ;; body 1
+  ([n what] (my-repeat n what '()))
+  ;; body 2 with accumulator
+  ([n what acc]
+     (if (<= n 0)
+       acc
+       (recur (dec n) what (cons what acc)))))
+;;
+;; loop macro version
+(defn my-repeat [how-many what]
+  (loop [n how-many
+         acc []]
+    (if (<= n 0)
+      acc
+      (recur (dec n) (conj acc what)))))
+;;
+(my-repeat 2 :a)    ;=> (:a :a)
+(my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
+(my-repeat -1 :a)   ;=> ()
+
 
 (defn my-range [up-to]
   [:-])
