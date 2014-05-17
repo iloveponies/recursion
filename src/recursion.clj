@@ -672,14 +672,28 @@
     a-seq
     (apply seq-merge (map merge-sort (halve a-seq)))))
 ;;
-(merge-sort [])                 ;=> ()
-(merge-sort [1 2 3])            ;=> (1 2 3)
-(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
+;; (merge-sort [])                 ;=> ()
+;; (merge-sort [1 2 3])            ;=> (1 2 3)
+;; (merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
 
 
 
+
+;; Exercise 27
+;; 2 points
+;; Write the function split-into-monotonics that takes a sequence and returns the sequence split into monotonic pieces. Examples:
+;;
+;; seq -> seq of seqs
+;; divide a seq into monotonic sequences
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (>= (inits a-seq)))
+;;
+(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
+(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+;; Hint: You might find useful the functions take-while, drop and inits. Make sure that your inits returns the prefixes from the shortest to the longest.
+(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+
+
 
 (defn permutations [a-set]
   [:-])
