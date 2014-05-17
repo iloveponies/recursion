@@ -689,19 +689,55 @@
 ;;
 ;; seq -> seq of seqs
 ;; divide a seq into monotonic sequences
-(defn split-into-monotonics [a-seq]
-  (>= (inits a-seq)))
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq)
+      (apply >= a-seq)))
 ;;
-(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
-(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
-;; Hint: You might find useful the functions take-while, drop and inits. Make sure that your inits returns the prefixes from the shortest to the longest.
-(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+;; naive version using monotonic?
+(defn split-into-monotonics [a-seq]
+  (if (empty? a-seq)
+    '()
+
+    ;; assign the longest monotonic seq to seq-mono
+    (let [seq-mono (last (filter #(monotonic? %) (rest (inits a-seq))))]
+      ;; combine
+      (cons seq-mono
+            (split-into-monotonics (drop (count seq-mono) a-seq))))))
+;;
+;; (split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
+;; (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+;; ;; Hint: You might find useful the functions take-while, drop and inits. Make sure that your inits returns the prefixes from the shortest to the longest.
+;; (inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+;; (rest (inits [1 2 3 4]))
+
+
+;; (filter #(monotonic? %) (rest (inits [0 5 4 7 1 3])))
+;; (last (filter #(monotonic? %) (rest (inits [0 5 4 7 1 3]))))
 
 
 
+;; Exercise 28
+;; 3 points
+;; Given a sequence, return all permutations of that sequence.
+;;
 (defn permutations [a-set]
-  [:-])
+  :-)
+;;
+(permutations #{})
+;=> (())
+(permutations #{1 5 3})
+;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+;; The order of the permutations doesn’t matter.
 
+
+
+;; Exercise 29
+;; 3 points
+;; Given a set, return the powerset of that set.
+;;
 (defn powerset [a-set]
   [:-])
+;;
+(powerset #{})      ;=> #{#{}}
+(powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
 
