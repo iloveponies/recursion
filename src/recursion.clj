@@ -39,31 +39,165 @@
        ;; recursion
        (recur (rest coll) (* acc (first coll))))))
 ;;
-(product [])        ;=> 1  ; special case
-(product [1 2 3])   ;=> 6
-(product [1 2 3 4]) ;=> 24
-(product [0 1 2])   ;=> 0
-(product #{2 3 4})  ;=> 24 ; works for sets too!
+;; (product [])        ;=> 1  ; special case
+;; (product [1 2 3])   ;=> 6
+;; (product [1 2 3 4]) ;=> 24
+;; (product [0 1 2])   ;=> 0
+;; (product #{2 3 4})  ;=> 24 ; works for sets too!
 
 
+;; Exercise 2
+;; Write down the evaluation of (product [1 2 4]) like we did for sum above. This exercise does not give any points and you do not need to return it.
+(* 1 (* 2 (* 4 1)))
 
+
+;; Exercise 3
+;; Write the function (singleton? coll) which returns true if the collection has only one element in it and false otherwise. This is a very useful helper function in the remainder of this chapter.
+;; Do not use count as it can be expensive on long sequences. This function is not recursive.
+;;
+;; collection -> bool
+;; check if there is only one element without count
 (defn singleton? [coll]
-  :-)
+  
+  (and ; BOTH
+   ;; first element is not nil
+   ((complement nil?) (first coll))
+   ;; rest collection is empty
+   (empty? (rest coll))))
+;;
+;; (singleton? [1])     ;=> true
+;; (singleton? #{2})    ;=> true
+;; (singleton? [])      ;=> false
+;; (singleton? [1 2 3]) ;=> false
 
-(defn my-last [coll]
-  :-)
 
+
+;; Exercise 4
+;; Write (my-last a-seq) that computes the last element of a sequence.
+;; Hint: what is the base case here? How can you check if you’re there?
+;;
+;; coll -> bool
+;; get the last elmenent, nil if empty
+;;
+;; naive
+;; (defn my-last [coll]
+;;   ;; first check for emptiness
+;;   (if (empty? coll)
+;;     nil
+;;     ;; if non-empty use singleton?
+;;     (if (singleton? coll)
+;;       (first coll)
+;;       (recur (rest coll)))))
+;; it works on [nil] but probably not safe
+;;
+;; multi-arity tail call optimization version
+(defn my-last
+  ([coll] (my-last (rest coll) (first coll)))
+  ([coll acc]
+     (if (empty? coll)
+       acc
+       (recur (rest coll) (first coll)))))
+;;
+;; (my-last [])      ;=> nil
+;; (my-last [1 2 3]) ;=> 3
+;; (my-last [2 5])   ;=> 5
+
+
+
+;; Exercise 5
+;; Write the function (max-element a-seq) that computes returns the maximum element in a-seq or nil if a-seq is empty?
+;; You can use the function (max a b) that returns the greater of a and b.
+;;
+;; coll -> number
+;; return maximum value in the collection, nil if empty.
+;;
+;; reduce solution
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (reduce max a-seq)))
+;;
+;; (max-element [2 4 1 4]) ;=> 4
+;; (max-element [2])       ;=> 2
+;; (max-element [])        ;=> nil
 
+
+;; Exercise 6
+;; Write the function (seq-max seq-1 seq-2) that returns the longer one of seq-1 and seq-2. This is a helper for the next exercise. You do not need to use recursion here. It is okay to use count.
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (>= (count seq-2) (count seq-1))
+    seq-2
+    seq-1))
+;;
+;; (seq-max [1] [1 2])   ;=> [1 2]
+;; (seq-max [1 2] [3 4]) ;=> [3 4]
 
+
+
+;; Exercise 7
+;; Write the function (longest-sequence a-seq) that takes a sequence of sequences as a parameter and returns the longest one.
+;;
+;; coll of coll -> coll
+;; 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (reduce seq-max a-seq)))
+;;
+;; (longest-sequence [[1 2] [] [1 2 3]]) ;=> [1 2 3]
+;; (longest-sequence [[1 2]])            ;=> [1 2]
+;; (longest-sequence [])                 ;=> nil
 
+
+
+;; Exercise 8
+;; Implement the function (my-filter pred? a-seq) that works just like the standard filter. Don’t use remove.
+;;
+;; coll -> coll
+;; keep ones meeting criteria
+;;
+;; naive (no tail call optimization)
 (defn my-filter [pred? a-seq]
-  [:-])
+  
+  (if (empty? a-seq)
+    ;; if empty, return empty coll
+    a-seq
+    
+    ;; if not, check if the first element meets pred?
+    (if (pred? (first a-seq))
+      ;; if met, add it
+      (cons (first a-seq)
+            (my-filter pred? (rest a-seq)))
+
+      ;; if not met, skip it
+      (my-filter pred? (rest a-seq)))))
+;;
+;; multi-arity version with tail-call optimization
+(defn my-filter
+  ;; body 1 with 2 args
+  ([pred? a-seq]
+     (if (empty? a-seq)
+       ;; if empty, return it and end
+       a-seq
+       ;; if not, start the accumulator with an empty collection
+       (my-filter pred? [])))
+  ;;
+  ;; body 2 with 3 args including the accumulator
+  ([pred? a-seq acc]
+     (if (empty? a-seq)
+       ;; if done, return acc
+       acc
+       ;; otherwise, assess the first element
+       (if (pred? (first a-seq))
+         ;; if met, add to the accumulator and recur
+         (recur pred? (rest a-seq) (conj acc (first a-seq)))
+         ;; if not met, recur without accumulating
+         (recur pred? (rest a-seq) acc)))))
+;;
+(my-filter odd? [1 2 3 4]) ;=> (1 3)
+(my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
+(my-filter even? [1 3 5 7]) ;=> ()
+
 
 (defn sequence-contains? [elem a-seq]
   :-)
