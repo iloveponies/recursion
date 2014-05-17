@@ -9,16 +9,21 @@
 ;; naive version
 (defn product [coll]
   (if (empty? coll)
+    ;; base case
     1
+    ;; recursion
     (* (first coll)
        (product (rest coll)))))
 ;;
 ;; loop macro version
 (defn product [coll]
-  (loop [acc 1
-         c   coll]
+  (loop [c    coll  ; temporary variable holding collection
+         acc     1] ; temporary variable serving as an accumulator
+    
     (if (empty? c)
+      ;; base case
       acc
+      ;; recursion
       (recur (* acc (first c)) (rest c)))))
 ;;
 ;; two arity version with tail call optimization without loop macro
@@ -29,9 +34,10 @@
   ;; body with 2 args (collection and an accumulator)
   ([coll acc]
      (if (empty? coll)
+       ;; base case
        acc
+       ;; recursion
        (recur (rest coll) (* acc (first coll))))))
-
 ;;
 (product [])        ;=> 1  ; special case
 (product [1 2 3])   ;=> 6
