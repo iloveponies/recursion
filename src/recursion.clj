@@ -180,7 +180,7 @@
        ;; if empty, return it and end
        a-seq
        ;; if not, start the accumulator with an empty collection
-       (my-filter pred? [])))
+       (my-filter pred? a-seq [])))
   ;;
   ;; body 2 with 3 args including the accumulator
   ([pred? a-seq acc]
@@ -194,9 +194,23 @@
          ;; if not met, recur without accumulating
          (recur pred? (rest a-seq) acc)))))
 ;;
-(my-filter odd? [1 2 3 4]) ;=> (1 3)
-(my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
-(my-filter even? [1 3 5 7]) ;=> ()
+;; loop macro version with tail-call optimization
+(defn my-filter [pred? a-seq]
+  (loop [sq a-seq
+         acc []]
+    (if (empty? sq)
+      ;; if nothing left, return the accumulator
+      acc
+      ;; otherwise recur. 
+      (recur (rest sq) (if (pred? (first sq))
+                         ;; if the condition is met, add the element to acc
+                         (conj acc (first sq))
+                         ;; Otherwise, pass this iteration without change
+                         acc)))))
+;;
+;; (my-filter odd? [1 2 3 4]) ;=> (1 3)
+;; (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
+;; (my-filter even? [1 3 5 7]) ;=> ()
 
 
 (defn sequence-contains? [elem a-seq]
