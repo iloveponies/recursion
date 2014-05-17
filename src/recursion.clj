@@ -249,6 +249,27 @@
 ;; coll -> coll
 ;; stop if empty or first false
 ;;
+;; naive
+(defn my-take-while [pred? a-seq]
+  (cond
+   (empty? a-seq)               '()
+   (not (pred? (first a-seq)))  '()
+   :else (cons (first a-seq)    (my-take-while pred? (rest a-seq)))))
+;;
+;; multi-arity version
+(defn my-take-while
+  ;; body 1 with 2 args. provide an empty acc
+  ([pred? a-seq] (my-take-while pred? a-seq []))
+  ;;
+  ;; body 2 with 3 args including acc
+  ([pred? a-seq acc]
+     (cond
+      ;; two stop conditions
+      (empty? a-seq) acc
+      (not (pred? (first a-seq))) acc
+      ;; recur if not met
+      :else (recur pred? (rest a-seq) (conj acc (first a-seq))))))
+;;
 ;; loop macro version
 (defn my-take-while [pred? a-seq]
   (loop [asq a-seq
@@ -257,17 +278,31 @@
      ;; two stop conditions
      (empty? a-seq)             acc
      (not (pred? (first asq)))  acc
-     :else (recur (rest asq) (conj acc (first asq))))))
+     :else (recur (rest asq)    (conj acc (first asq))))))
 ;;
-(my-take-while odd? [1 2 3 4])  ;=> (1)
-(my-take-while odd? [1 3 4 5])  ;=> (1 3)
-(my-take-while even? [1 3 4 5]) ;=> ()
-(my-take-while odd? [])         ;=> ()
+;; (my-take-while odd? [1 2 3 4])  ;=> (1)
+;; (my-take-while odd? [1 3 4 5])  ;=> (1 3)
+;; (my-take-while even? [1 3 4 5]) ;=> ()
+;; (my-take-while odd? [])         ;=> ()
 
 
 
+;; Exercise 11
+;; Write the function (my-drop-while pred? a-seq) that drops elements from a-seq until pred? returns false.
+;;
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+   ;; two stop conditions
+   (empty? a-seq)               '()
+   (not (pred? (first a-seq)))  a-seq
+   ;; No need for an accmulator, thus tail call optimized
+   :else                        (recur pred? (rest a-seq))))
+;;
+;; (my-drop-while odd? [1 2 3 4])  ;=> (2 3 4)
+;; (my-drop-while odd? [1 3 4 5])  ;=> (4 5)
+;; (my-drop-while even? [1 3 4 5]) ;=> (1 3 4 5)
+;; (my-drop-while odd? [])         ;=> ()
+
 
 (defn seq= [a-seq b-seq]
   :-)
