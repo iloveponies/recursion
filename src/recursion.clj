@@ -740,39 +740,34 @@
 (swap-1st-and-ith (range 0 10) 5)
 ;;
 ;; first level only
-(defn tree-of-perm [a-set]
-  (let [;; Convert to a vector
-        a-seq (into [] a-set)
-        ;; Assing length
+(defn tree-of-perm [a-seq]
+  (let [;; Assing length
         len  (count a-seq)
         ;; Create all possible first-level swapped sequences
         seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
-    seqs
-    ))
-(tree-of-perm #{1 5 3 7})
+    seqs))
+(tree-of-perm (into [] #{1 5 3 7}))
 ;;
 ;; Recursive version
-(defn tree-of-perm [a-set]
-  (let [;; Convert to a vector
-        a-seq (into [] a-set)
-        ;; Assing length
+(defn tree-of-perm [a-seq]
+  (let [;; Assing length
         len  (count a-seq)]
 
     (if (<= len 1)
-      ;; No swapping if only one element remaining
+      ;; base case: No swapping if only one element remaining
       a-seq
-      ;; Swapping with recursion
+      ;; otherwise: Swapping, and then map recursions
       (map #(cons (first %) (tree-of-perm (rest %)))
            ;; Create swapped sequences
            (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
 ;;
-(tree-of-perm #{1 5 3 7})
+(tree-of-perm (into [] #{1 5 3 7}))
 ;;
 ;;
 ;; merge helper function bottom up
 (defn merge-up [a-tree]
   (if (= 3 (count a-tree))
-    ;; If 3 elements, at terminal part
+    ;; If 3 elements, at terminal part. Create two seqs
     [(conj (second a-tree) (first a-tree))
      (conj (last a-tree) (first a-tree))]
 
@@ -798,10 +793,10 @@
                 (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
                 (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
                 (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
-;;
-(map merge-up (permutations #{1 5 3 7}))
-(partition-all 4 (flatten (map merge-up (permutations #{1 5 3 7}))))
 
+(map merge-up (tree-of-perm (into [] #{1 5 3 7})))
+(partition-all 4 (flatten (map merge-up (tree-of-perm (into [] #{1 5 3 7})))))
+;
 ;;
 ;; Finally permutation
 (defn permutations [a-set]
@@ -809,12 +804,12 @@
         a-seq (into [] a-set)
         ;; Assing length
         len  (count a-seq)]
-
-    (if (<= len 2)
-      a-seq
-      (map merge-up
-           (map #(cons (first %) (permutations (rest %)))
-                (map #(swap-1st-and-ith a-seq %) (range 0 len)))))))
+    ;;
+    (if (zero? len)
+      ;; if zero, return empty permutation
+      '(())
+      ;; Otherwise, create permutations
+      (partition-all len (flatten (map merge-up (tree-of-perm a-seq)))))))
 
 ;;
 (permutations #{})
