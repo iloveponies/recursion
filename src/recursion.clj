@@ -723,22 +723,31 @@
 ;; set -> seq of seqs
 ;; Create all possible permutation of values in a set
 ;;
+;; seq -> seq
 ;; swap first and ith where i = 0,..,n
 (defn swap-1st-and-ith [coll i]
-  [(rest (take (inc i) coll)) (first coll) (nthrest coll (inc i))])
+  (if (zero? i)
+    ;; No swapping if i = 0
+    coll
+    ;; Otherwise swap first and ith positions
+    (flatten [(nth coll i) (rest (take i coll)) (first coll) (nthrest coll (inc i))])))
 ;;
 (swap-1st-and-ith (range 0 10) 0)
 (swap-1st-and-ith (range 0 10) 1)
 (swap-1st-and-ith (range 0 10) 2)
 (swap-1st-and-ith (range 0 10) 3)
 (swap-1st-and-ith (range 0 10) 4)
-
-
-
-
+(swap-1st-and-ith (range 0 10) 5)
 ;;
 (defn permutations [a-set]
-  :-)
+  (let [;; Convert to a vector
+        a-seq (into [] a-set)
+        ;; Assing length
+        len  (count a-seq)
+        ;; Create all possible first-level swapped sequences
+        seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
+    seqs
+    ))
 ;;
 (permutations #{})
 ;=> (())
