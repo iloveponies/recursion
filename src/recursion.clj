@@ -762,27 +762,6 @@
       (map #(cons (first %) (permutations (rest %)))
            (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
 ;;
-;; merge helper function
-(defn merge-down-tree [lst]
-  ;; Continue until the second element in the list is not
-  (if (= 2 (count lst))
-    lst
-    (map #(conj % (first lst)) (rest lst))))
-;;
-(merge-down-tree '(1 (3 5) (5 3)))
-(rest '(1 (3 (5 7)
-             (7 5))
-          (5 (3 7)
-             (7 3))
-          (7 (5 3)
-             (3 5))))
-;;
-(merge-down-tree '(1 (3 (5 7)
-                        (7 5))
-                     (5 (3 7)
-                        (7 3))
-                     (7 (5 3)
-                        (3 5))))
 ;;
 ;; merge helper function bottom up
 (defn merge-up [a-tree]
@@ -791,9 +770,9 @@
     [(conj (second a-tree) (first a-tree))
      (conj (last a-tree) (first a-tree))]
 
-    ;; If not
-    (map #(conj % (first a-tree)) (map merge-up (rest a-tree)))
-    ))
+    ;; If not go down by mapping
+    (map (fn [x] (map #(conj % (first a-tree)) x))
+         (map merge-up (rest a-tree)))))
 
 (merge-up '(3 (5 7) (7 5)))
 (merge-up '(1 (3 (5 7)
@@ -803,16 +782,28 @@
               (7 (5 3)
                  (3 5))))
 
+(map merge-up '((1 (3 (5 7)
+                      (7 5))
+                   (5 (3 7)
+                      (7 3))
+                   (7 (5 3)
+                      (3 5)))
+                ;;
+                (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
+                (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
+                (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
 
+;;
+;; Finally permutation
 (defn permutations [a-set]
   (let [;; Convert to a vector
         a-seq (into [] a-set)
         ;; Assing length
         len  (count a-seq)]
 
-    (if (<= len 1)
+    (if (<= len 2)
       a-seq
-      (map merge-down-tree
+      (map merge-up
            (map #(cons (first %) (permutations (rest %)))
                 (map #(swap-1st-and-ith a-seq %) (range 0 len)))))))
 
@@ -823,18 +814,7 @@
 ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 ;; The order of the permutations doesn’t matter.
 (permutations #{1 5 3 7})
-'((1 (3 (5 7)
-        (7 5))
-     (5 (3 7)
-        (7 3))
-     (7 (5 3)
-        (3 5)))
 
-  (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
-
-  (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
-
-  (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5))))
 
 
 
