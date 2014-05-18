@@ -7,13 +7,13 @@
 ;;
 ;; coll -> number
 ;; naive version
-(defn product [coll]
-  (if (empty? coll)
-    ;; base case
-    1
-    ;; recursion
-    (* (first coll)
-       (product (rest coll)))))
+;; (defn product [coll]
+;;   (if (empty? coll)
+;;     ;; base case
+;;     1
+;;     ;; recursion
+;;     (* (first coll)
+;;        (product (rest coll)))))
 ;;
 ;; loop macro version
 (defn product [coll]
@@ -27,17 +27,17 @@
       (recur (* acc (first c)) (rest c)))))
 ;;
 ;; two arity version with tail call optimization without loop macro
-(defn product
-  ;; body with 1 arg (collection only)
-  ([coll] (product coll 1))
-  ;;
-  ;; body with 2 args (collection and an accumulator)
-  ([coll acc]
-     (if (empty? coll)
-       ;; base case
-       acc
-       ;; recursion
-       (recur (rest coll) (* acc (first coll))))))
+;; (defn product
+;;   ;; body with 1 arg (collection only)
+;;   ([coll] (product coll 1))
+;;   ;;
+;;   ;; body with 2 args (collection and an accumulator)
+;;   ([coll acc]
+;;      (if (empty? coll)
+;;        ;; base case
+;;        acc
+;;        ;; recursion
+;;        (recur (rest coll) (* acc (first coll))))))
 ;;
 ;; (product [])        ;=> 1  ; special case
 ;; (product [1 2 3])   ;=> 6
@@ -48,7 +48,7 @@
 
 ;; Exercise 2
 ;; Write down the evaluation of (product [1 2 4]) like we did for sum above. This exercise does not give any points and you do not need to return it.
-(* 1 (* 2 (* 4 1)))
+;; (* 1 (* 2 (* 4 1)))
 
 
 ;; Exercise 3
@@ -64,12 +64,12 @@
    ;; Rest of the collection is empty
    (empty? (rest coll))))
 ;;
-(singleton? [1])     ;=> true
-(singleton? #{2})    ;=> true
-(singleton? [])      ;=> false
-(singleton? [1 2 3]) ;=> false
-(singleton? [nil]) ;=> true
-(singleton? [nil nil]) ;=> false
+;; (singleton? [1])     ;=> true
+;; (singleton? #{2})    ;=> true
+;; (singleton? [])      ;=> false
+;; (singleton? [1 2 3]) ;=> false
+;; (singleton? [nil]) ;=> true
+;; (singleton? [nil nil]) ;=> false
 
 
 
@@ -158,42 +158,42 @@
 ;; keep ones meeting criteria
 ;;
 ;; naive (no tail call optimization)
-(defn my-filter [pred? a-seq]
+;; (defn my-filter [pred? a-seq]
 
-  (if (empty? a-seq)
-    ;; if empty, return empty coll
-    a-seq
+;;   (if (empty? a-seq)
+;;     ;; if empty, return empty coll
+;;     a-seq
 
-    ;; if not, check if the first element meets pred?
-    (if (pred? (first a-seq))
-      ;; if met, add it
-      (cons (first a-seq)
-            (my-filter pred? (rest a-seq)))
+;;     ;; if not, check if the first element meets pred?
+;;     (if (pred? (first a-seq))
+;;       ;; if met, add it
+;;       (cons (first a-seq)
+;;             (my-filter pred? (rest a-seq)))
 
-      ;; if not met, skip it
-      (my-filter pred? (rest a-seq)))))
+;;       ;; if not met, skip it
+;;       (my-filter pred? (rest a-seq)))))
 ;;
 ;; multi-arity version with tail-call optimization
-(defn my-filter
-  ;; body 1 with 2 args
-  ([pred? a-seq]
-     (if (empty? a-seq)
-       ;; if empty, return it and end
-       a-seq
-       ;; if not, start the accumulator with an empty collection
-       (my-filter pred? a-seq [])))
-  ;;
-  ;; body 2 with 3 args including the accumulator
-  ([pred? a-seq acc]
-     (if (empty? a-seq)
-       ;; if done, return acc
-       acc
-       ;; otherwise, assess the first element
-       (if (pred? (first a-seq))
-         ;; if met, add to the accumulator and recur
-         (recur pred? (rest a-seq) (conj acc (first a-seq)))
-         ;; if not met, recur without accumulating
-         (recur pred? (rest a-seq) acc)))))
+;; (defn my-filter
+;;   ;; body 1 with 2 args
+;;   ([pred? a-seq]
+;;      (if (empty? a-seq)
+;;        ;; if empty, return it and end
+;;        a-seq
+;;        ;; if not, start the accumulator with an empty collection
+;;        (my-filter pred? a-seq [])))
+;;   ;;
+;;   ;; body 2 with 3 args including the accumulator
+;;   ([pred? a-seq acc]
+;;      (if (empty? a-seq)
+;;        ;; if done, return acc
+;;        acc
+;;        ;; otherwise, assess the first element
+;;        (if (pred? (first a-seq))
+;;          ;; if met, add to the accumulator and recur
+;;          (recur pred? (rest a-seq) (conj acc (first a-seq)))
+;;          ;; if not met, recur without accumulating
+;;          (recur pred? (rest a-seq) acc)))))
 ;;
 ;; loop macro version with tail-call optimization
 (defn my-filter [pred? a-seq]
@@ -251,25 +251,25 @@
 ;; stop if empty or first false
 ;;
 ;; naive
-(defn my-take-while [pred? a-seq]
-  (cond
-   (empty? a-seq)               '()
-   (not (pred? (first a-seq)))  '()
-   :else (cons (first a-seq)    (my-take-while pred? (rest a-seq)))))
+;; (defn my-take-while [pred? a-seq]
+;;   (cond
+;;    (empty? a-seq)               '()
+;;    (not (pred? (first a-seq)))  '()
+;;    :else (cons (first a-seq)    (my-take-while pred? (rest a-seq)))))
 ;;
 ;; multi-arity version
-(defn my-take-while
-  ;; body 1 with 2 args. provide an empty acc
-  ([pred? a-seq] (my-take-while pred? a-seq []))
-  ;;
-  ;; body 2 with 3 args including acc
-  ([pred? a-seq acc]
-     (cond
-      ;; two stop conditions
-      (empty? a-seq) acc
-      (not (pred? (first a-seq))) acc
-      ;; recur if not met
-      :else (recur pred? (rest a-seq) (conj acc (first a-seq))))))
+;; (defn my-take-while
+;;   ;; body 1 with 2 args. provide an empty acc
+;;   ([pred? a-seq] (my-take-while pred? a-seq []))
+;;   ;;
+;;   ;; body 2 with 3 args including acc
+;;   ([pred? a-seq acc]
+;;      (cond
+;;       ;; two stop conditions
+;;       (empty? a-seq) acc
+;;       (not (pred? (first a-seq))) acc
+;;       ;; recur if not met
+;;       :else (recur pred? (rest a-seq) (conj acc (first a-seq))))))
 ;;
 ;; loop macro version
 (defn my-take-while [pred? a-seq]
@@ -355,10 +355,10 @@
 ;; n^k
 ;;
 ;; naive version (not tail-call optimized)
-(defn power [n k]
-  (if (zero? k)
-    1
-    (* n (power n (- k 1)))))
+;; (defn power [n k]
+;;   (if (zero? k)
+;;     1
+;;     (* n (power n (- k 1)))))
 ;;
 ;; loop macro version
 (defn power [n k]
@@ -386,21 +386,21 @@
 ;; calculate the fibonacci number
 ;;
 ;; naive
-(defn fib [n]
-  (cond
-   (= n 0) 0
-   (= n 1) 1
-   (= n 2) 1
-   (> n 2) (+ (fib (- n 1)) (fib (- n 2)))))
+;; (defn fib [n]
+;;   (cond
+;;    (= n 0) 0
+;;    (= n 1) 1
+;;    (= n 2) 1
+;;    (> n 2) (+ (fib (- n 1)) (fib (- n 2)))))
 ;;
 ;; Using an infinite sequence by iterate
 ;; Create moving pairs [0 1] [1 1] [1 2] [2 3] ... [(second prev) (sum prev)]
-(defn fib1 [n]
-  (nth (map first (iterate (fn [sq] [(second sq), (apply +' sq)])
-                           [0 1]))
-       n))
+;; (defn fib [n]
+;;   (nth (map first (iterate (fn [sq] [(second sq), (apply +' sq)])
+;;                            [0 1]))
+;;        n))
 ;; More readable with threading macro
-(defn fib1 [n]
+(defn fib [n]
   (->> [0 1]                                         ; |
        ;; Infinite iteration stated above              V value passes here
        (iterate (fn [sq] [(second sq) (apply +' sq)]),  )
@@ -410,14 +410,15 @@
        (#(nth % n)                                   ,  )))
 
 ;;
-(fib 0) ;=> 0
-(fib 1) ;=> 1
-(fib 2) ;=> 1
-(fib 3) ;=> 2
-(fib 4) ;=> 3
-(fib 5) ;=> 5
-(fib 6) ;=> 8
-(fib 10) ;=> 55
+;; (fib 0) ;=> 0
+;; (fib 1) ;=> 1
+;; (fib 2) ;=> 1
+;; (fib 3) ;=> 2
+;; (fib 4) ;=> 3
+;; (fib 5) ;=> 5
+;; (fib 6) ;=> 8
+;; (fib 10) ;=> 55
+
 
 ;; Exercise 16
 ;; Write the function (my-repeat how-many-times what-to-repeat) that generates a list with what-to-repeat repeated how-man
@@ -426,25 +427,26 @@
 ;; number, any -> coll
 ;;
 ;; naive
-(defn my-repeat [how-many-times what-to-repeat]
-  (if (<= how-many-times 0)
-    '()
-    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
+;; (defn my-repeat [how-many-times what-to-repeat]
+;;   (if (<= how-many-times 0)
+;;     '()
+;;     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 ;;
 ;; multi-arity version
-(defn my-repeat
-  ;; body 1
-  ([n what] (my-repeat n what '()))
-  ;; body 2 with accumulator
-  ([n what acc]
-     (if (<= n 0)
-       acc
-       (recur (dec n) what (cons what acc)))))
+;; (defn my-repeat
+;;   ;; body 1
+;;   ([n what] (my-repeat n what '()))
+;;   ;; body 2 with accumulator
+;;   ([n what acc]
+;;      (if (<= n 0)
+;;        acc
+;;        (recur (dec n) what (cons what acc)))))
 ;;
 ;; loop macro version
 (defn my-repeat [how-many what]
   (loop [n how-many
          acc []]
+    ;;
     (if (<= n 0)
       acc
       (recur (dec n) (conj acc what)))))
@@ -458,11 +460,11 @@
 ;; Write the function (my-range up-to) that works like this:
 ;;
 ;; naive
-(defn my-range [up-to]
-  (let [dec-up-to (dec up-to)]
-    (if (<= up-to 0)
-      '()
-      (cons dec-up-to (my-range dec-up-to)))))
+;; (defn my-range [up-to]
+;;   (let [dec-up-to (dec up-to)]
+;;     (if (<= up-to 0)
+;;       '()
+;;       (cons dec-up-to (my-range dec-up-to)))))
 ;;
 ;; Loop version by incrementing
 (defn my-range [up-to]
@@ -472,10 +474,10 @@
       acc
       (recur (inc i) (conj acc i)))))
 ;;
-(my-range 0)  ;=> ()
-(my-range 1)  ;=> (0)
-(my-range 2)  ;=> (1 0)
-(my-range 3)  ;=> (2 1 0)
+;; (my-range 0)  ;=> ()
+;; (my-range 1)  ;=> (0)
+;; (my-range 2)  ;=> (1 0)
+;; (my-range 3)  ;=> (2 1 0)
 
 
 ;; Exercise 18
@@ -485,10 +487,10 @@
 ;; (reverse [2 3 1]) ;=> (1 3 2)
 ;;
 ;; naive
-(defn tails [a-seq]
-  (if (empty? a-seq)
-    (cons a-seq '())
-    (cons a-seq (tails (rest a-seq)))))
+;; (defn tails [a-seq]
+;;   (if (empty? a-seq)
+;;     (cons a-seq '())
+;;     (cons a-seq (tails (rest a-seq)))))
 ;;
 ;; Using infinite sequence
 (defn tails [a-seq]
@@ -496,15 +498,15 @@
           ;; need to add an empty one at the end
           '(())))
 ;;
-(tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
+;; (tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
 ;;
 ;;
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 ;;
-(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
-; You can output the tails and inits in any order you like.
-(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+;; (inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+;; ; You can output the tails and inits in any order you like.
+;; (inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
 
 
 
@@ -525,32 +527,31 @@
 ;;       acc
 ;;       (recur (inc i) (conj acc (concat (drop i a-seq) (take i a-seq)))))))
 ;;
-(rotations [])        ;=> (())
-(rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
-(rotations [:a :b])   ;=> ((:a :b) (:b :a))
-; The order of rotations does not matter.
-(rotations [:a :b])   ;=> ((:b :a) (:a :b))
-(rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
-(count (rotations [6 5 8 9 2])) ;=> 5
-;; Keep in mind the function concat.
-(concat [1 2 3] [:a :b :c]) ;=> (1 2 3 :a :b :c)
-(concat [1 2] [3 4 5 6])    ;=> (1 2 3 4 5 6)
+;; (rotations [])        ;=> (())
+;; (rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
+;; (rotations [:a :b])   ;=> ((:a :b) (:b :a))
+;; ; The order of rotations does not matter.
+;; (rotations [:a :b])   ;=> ((:b :a) (:a :b))
+;; (rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
+;; (count (rotations [6 5 8 9 2])) ;=> 5
+;; ;; Keep in mind the function concat.
+;; (concat [1 2 3] [:a :b :c]) ;=> (1 2 3 :a :b :c)
+;; (concat [1 2] [3 4 5 6])    ;=> (1 2 3 4 5 6)
 
 
 
 ;; Exercise 20
 ;; Write the function (my-frequencies a-seq) that computes a map of how many times each element occurs in a sequence. E.g.
-(defn my-frequencies-helper [freqs a-seq]
-  [:-])
 ;; :
 ;; You’ll want to structure your code like this:
+;; helper
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
     freqs
-    (recur
-     (merge-with + freqs (zipmap [(first a-seq)] [1]))
-     (rest a-seq))))
-
+    (recur (merge-with + freqs (zipmap [(first a-seq)] [1]))
+           (rest a-seq))))
+;;
+;; user function
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 ;; Where my-frequencies-helper is a recursive helper function.
@@ -644,8 +645,8 @@
 ;;                         (list (first as))
 ;;                         (filter #(>= % (first as)) bs))))))
 ;;
-(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
-(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+;; (seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+;; (seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
 
 
 ;; Exercise 26
@@ -732,21 +733,21 @@
     ;; Otherwise swap first and ith positions
     (flatten [(nth coll i) (rest (take i coll)) (first coll) (nthrest coll (inc i))])))
 ;;
-(swap-1st-and-ith (range 0 10) 0)
-(swap-1st-and-ith (range 0 10) 1)
-(swap-1st-and-ith (range 0 10) 2)
-(swap-1st-and-ith (range 0 10) 3)
-(swap-1st-and-ith (range 0 10) 4)
-(swap-1st-and-ith (range 0 10) 5)
+;; (swap-1st-and-ith (range 0 10) 0)
+;; (swap-1st-and-ith (range 0 10) 1)
+;; (swap-1st-and-ith (range 0 10) 2)
+;; (swap-1st-and-ith (range 0 10) 3)
+;; (swap-1st-and-ith (range 0 10) 4)
+;; (swap-1st-and-ith (range 0 10) 5)
 ;;
 ;; first level only
-(defn tree-of-perm [a-seq]
-  (let [;; Assing length
-        len  (count a-seq)
-        ;; Create all possible first-level swapped sequences
-        seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
-    seqs))
-(tree-of-perm (into [] #{1 5 3 7}))
+;; (defn tree-of-perm [a-seq]
+;;   (let [;; Assing length
+;;         len  (count a-seq)
+;;         ;; Create all possible first-level swapped sequences
+;;         seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
+;;     seqs))
+;; (tree-of-perm (into [] #{1 5 3 7}))
 ;;
 ;; Recursive version
 (defn tree-of-perm [a-seq]
@@ -761,7 +762,7 @@
            ;; Create swapped sequences
            (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
 ;;
-(tree-of-perm (into [] #{1 5 3 7}))
+;; (tree-of-perm (into [] #{1 5 3 7}))
 ;;
 ;;
 ;; merge helper function bottom up
@@ -775,27 +776,27 @@
     (map (fn [x] (map #(conj % (first a-tree)) x))
          (map merge-up (rest a-tree)))))
 
-(merge-up '(3 (5 7) (7 5)))
-(merge-up '(1 (3 (5 7)
-                 (7 5))
-              (5 (3 7)
-                 (7 3))
-              (7 (5 3)
-                 (3 5))))
+;; (merge-up '(3 (5 7) (7 5)))
+;; (merge-up '(1 (3 (5 7)
+;;                  (7 5))
+;;               (5 (3 7)
+;;                  (7 3))
+;;               (7 (5 3)
+;;                  (3 5))))
 
-(map merge-up '((1 (3 (5 7)
-                      (7 5))
-                   (5 (3 7)
-                      (7 3))
-                   (7 (5 3)
-                      (3 5)))
-                ;;
-                (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
-                (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
-                (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
+;; (map merge-up '((1 (3 (5 7)
+;;                       (7 5))
+;;                    (5 (3 7)
+;;                       (7 3))
+;;                    (7 (5 3)
+;;                       (3 5)))
+;;                 ;;
+;;                 (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
+;;                 (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
+;;                 (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
 
-(map merge-up (tree-of-perm (into [] #{1 5 3 7})))
-(partition-all 4 (flatten (map merge-up (tree-of-perm (into [] #{1 5 3 7})))))
+;; (map merge-up (tree-of-perm (into [] #{1 5 3 7})))
+;; (partition-all 4 (flatten (map merge-up (tree-of-perm (into [] #{1 5 3 7})))))
 ;
 ;;
 ;; Finally permutation
@@ -811,13 +812,13 @@
       ;; Otherwise, create permutations
       (partition-all len (flatten (map merge-up (tree-of-perm a-seq)))))))
 
-;;
-(permutations #{})
-;=> (())
-(permutations #{1 5 3})
-;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
-;; The order of the permutations doesn’t matter.
-(permutations #{1 5 3 7})
+;; ;;
+;; (permutations #{})
+;; ;=> (())
+;; (permutations #{1 5 3})
+;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+;; ;; The order of the permutations doesn’t matter.
+;; (permutations #{1 5 3 7})
 
 
 
@@ -834,22 +835,22 @@
 ;;
 ;; set -> seq of seqs
 ;; First create all possible permutations
-(permutations #{1 2 4})
+;; (permutations #{1 2 4})
 
-;; take first i elements from each element
-(map #(map (fn [i] (take i %)) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
-;; as set
-(map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
-;; flatten
-(flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4})))
-;; create a set to remove duplicates
-(set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))))
+;; ;; take first i elements from each element
+;; (map #(map (fn [i] (take i %)) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
+;; ;; as set
+;; (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
+;; ;; flatten
+;; (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4})))
+;; ;; create a set to remove duplicates
+;; (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))))
 
 
-;; set -> set of sets
-;; create all possible subsets from a set including the empty and full sets
-(defn powerset [a-set]
-  (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count a-set)))) (permutations a-set)))))
+;; ;; set -> set of sets
+;; ;; create all possible subsets from a set including the empty and full sets
+;; (defn powerset [a-set]
+;;   (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count a-set)))) (permutations a-set)))))
 ;;
 ;; More readable version with threading
 (defn powerset [a-set]
@@ -862,6 +863,6 @@
          (set                                          ,  ))))
 
 ;;
-(powerset #{})      ;=> #{#{}}
-(powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+;; (powerset #{})      ;=> #{#{}}
+;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
 
