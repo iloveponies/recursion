@@ -739,6 +739,7 @@
 (swap-1st-and-ith (range 0 10) 4)
 (swap-1st-and-ith (range 0 10) 5)
 ;;
+;; first level only
 (defn permutations [a-set]
   (let [;; Convert to a vector
         a-seq (into [] a-set)
@@ -748,6 +749,45 @@
         seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
     seqs
     ))
+
+;; Recursive version
+(defn permutations [a-set]
+  (let [;; Convert to a vector
+        a-seq (into [] a-set)
+        ;; Assing length
+        len  (count a-seq)]
+
+    (if (<= len 1)
+      a-seq
+      (map #(cons (first %) (permutations (rest %)))
+           (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
+;;
+;; merge helper function
+(defn merge-down-tree [lst]
+  ;; Continue until the second element in the list is not 
+  (if (= 2 (count lst))
+    lst
+    (map #(conj % (first lst)) (rest lst))))
+
+(defn merge-down-tree [lst]
+  ;; Continue until the second element in the list is not 
+  (if (not (list? (second lst)))
+    lst
+    (map #(conj % (first lst)) (rest lst))))
+(merge-down-tree '(1 (3 5) (5 3)))
+
+(defn permutations [a-set]
+  (let [;; Convert to a vector
+        a-seq (into [] a-set)
+        ;; Assing length
+        len  (count a-seq)]
+
+    (if (<= len 1)
+      a-seq
+      (map merge-down-tree
+           (map #(cons (first %) (permutations (rest %)))
+                (map #(swap-1st-and-ith a-seq %) (range 0 len)))))))
+
 ;;
 (permutations #{})
 ;=> (())
