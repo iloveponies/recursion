@@ -19,7 +19,7 @@
 (defn product [coll]
   (loop [c    coll  ; temporary variable holding collection
          acc     1] ; temporary variable serving as an accumulator
-    
+
     (if (empty? c)
       ;; base case
       acc
@@ -139,7 +139,7 @@
 ;; Write the function (longest-sequence a-seq) that takes a sequence of sequences as a parameter and returns the longest one.
 ;;
 ;; coll of coll -> coll
-;; 
+;;
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
     nil
@@ -159,11 +159,11 @@
 ;;
 ;; naive (no tail call optimization)
 (defn my-filter [pred? a-seq]
-  
+
   (if (empty? a-seq)
     ;; if empty, return empty coll
     a-seq
-    
+
     ;; if not, check if the first element meets pred?
     (if (pred? (first a-seq))
       ;; if met, add it
@@ -202,7 +202,7 @@
     (if (empty? sq)
       ;; if nothing left, return the accumulator
       acc
-      ;; otherwise recur. 
+      ;; otherwise recur.
       (recur (rest sq) (if (pred? (first sq))
                          ;; if the condition is met, add the element to acc
                          (conj acc (first sq))
@@ -314,7 +314,7 @@
 (defn seq= [a-seq b-seq]
   (cond
    ;; Three stop conditions
-   ;; Both are 
+   ;; Both are
    (and (empty? a-seq) (empty? b-seq))  true
    ;; effectively xor after and
    (or  (empty? a-seq) (empty? b-seq))  false
@@ -331,7 +331,7 @@
 ;; Exercise 13
 ;; Write the function (my-map f seq-1 seq-2) that returns a sequence of the following kind . The first item is the return value of f called with the first values of seq-1 and seq-2. The second item is the return value of f called with the second values of seq-1 and seq-2 and so forth until seq-1 or seq-2 ends.
 ;; This is actually exactly how map works when given two sequences, but for the sake of practice don’t use map when defining my-map.
-;; 
+;;
 (defn my-map [f seq-1 seq-2]
   (loop [s1 seq-1
          s2 seq-2
@@ -764,17 +764,45 @@
 ;;
 ;; merge helper function
 (defn merge-down-tree [lst]
-  ;; Continue until the second element in the list is not 
+  ;; Continue until the second element in the list is not
   (if (= 2 (count lst))
     lst
     (map #(conj % (first lst)) (rest lst))))
-
-(defn merge-down-tree [lst]
-  ;; Continue until the second element in the list is not 
-  (if (not (list? (second lst)))
-    lst
-    (map #(conj % (first lst)) (rest lst))))
+;;
 (merge-down-tree '(1 (3 5) (5 3)))
+(rest '(1 (3 (5 7)
+             (7 5))
+          (5 (3 7)
+             (7 3))
+          (7 (5 3)
+             (3 5))))
+;;
+(merge-down-tree '(1 (3 (5 7)
+                        (7 5))
+                     (5 (3 7)
+                        (7 3))
+                     (7 (5 3)
+                        (3 5))))
+;;
+;; merge helper function bottom up
+(defn merge-up [a-tree]
+  (if (= 3 (count a-tree))
+    ;; If 3 elements, at terminal part
+    [(conj (second a-tree) (first a-tree))
+     (conj (last a-tree) (first a-tree))]
+
+    ;; If not
+    (map #(conj % (first a-tree)) (map merge-up (rest a-tree)))
+    ))
+
+(merge-up '(3 (5 7) (7 5)))
+(merge-up '(1 (3 (5 7)
+                 (7 5))
+              (5 (3 7)
+                 (7 3))
+              (7 (5 3)
+                 (3 5))))
+
 
 (defn permutations [a-set]
   (let [;; Convert to a vector
@@ -794,6 +822,21 @@
 (permutations #{1 5 3})
 ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 ;; The order of the permutations doesn’t matter.
+(permutations #{1 5 3 7})
+'((1 (3 (5 7)
+        (7 5))
+     (5 (3 7)
+        (7 3))
+     (7 (5 3)
+        (3 5)))
+
+  (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
+
+  (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
+
+  (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5))))
+
+
 
 ;; Write a C program to print all permutations of a given string
 ;; http://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
