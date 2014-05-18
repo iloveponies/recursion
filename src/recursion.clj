@@ -831,8 +831,36 @@
 ;; 3 points
 ;; Given a set, return the powerset of that set.
 ;;
+;;
+;; set -> seq of seqs
+;; First create all possible permutations
+(permutations #{1 2 4})
+
+;; take first i elements from each element
+(map #(map (fn [i] (take i %)) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
+;; as set
+(map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
+;; flatten
+(flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4})))
+;; create a set to remove duplicates
+(set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))))
+
+
+;; set -> set of sets
+;; create all possible subsets from a set including the empty and full sets
 (defn powerset [a-set]
-  [:-])
+  (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count a-set)))) (permutations a-set)))))
+;;
+;; More readable version with threading
+(defn powerset [a-set]
+  (let [len     (count a-set)
+        i-range (range (inc len))]
+    ;;
+    (->> (permutations a-set)
+         (map #(map (fn [i] (set (take i %))) i-range) ,  )
+         (flatten                                      ,  )
+         (set                                          ,  ))))
+
 ;;
 (powerset #{})      ;=> #{#{}}
 (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
