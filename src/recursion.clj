@@ -740,7 +740,7 @@
 (swap-1st-and-ith (range 0 10) 5)
 ;;
 ;; first level only
-(defn permutations [a-set]
+(defn tree-of-perm [a-set]
   (let [;; Convert to a vector
         a-seq (into [] a-set)
         ;; Assing length
@@ -749,18 +749,24 @@
         seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
     seqs
     ))
-
+(tree-of-perm #{1 5 3 7})
+;;
 ;; Recursive version
-(defn permutations [a-set]
+(defn tree-of-perm [a-set]
   (let [;; Convert to a vector
         a-seq (into [] a-set)
         ;; Assing length
         len  (count a-seq)]
 
     (if (<= len 1)
+      ;; No swapping if only one element remaining
       a-seq
-      (map #(cons (first %) (permutations (rest %)))
+      ;; Swapping with recursion
+      (map #(cons (first %) (tree-of-perm (rest %)))
+           ;; Create swapped sequences
            (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
+;;
+(tree-of-perm #{1 5 3 7})
 ;;
 ;;
 ;; merge helper function bottom up
@@ -792,6 +798,9 @@
                 (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
                 (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
                 (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
+;;
+(map merge-up (permutations #{1 5 3 7}))
+(partition-all 4 (flatten (map merge-up (permutations #{1 5 3 7}))))
 
 ;;
 ;; Finally permutation
