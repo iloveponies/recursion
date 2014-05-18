@@ -720,6 +720,23 @@
 ;; 3 points
 ;; Given a sequence, return all permutations of that sequence.
 ;;
+;; set -> seq of seqs
+;; Create all possible permutation of values in a set
+;;
+;; swap first and ith where i = 0,..,n
+(defn swap-1st-and-ith [coll i]
+  [(rest (take (inc i) coll)) (first coll) (nthrest coll (inc i))])
+;;
+(swap-1st-and-ith (range 0 10) 0)
+(swap-1st-and-ith (range 0 10) 1)
+(swap-1st-and-ith (range 0 10) 2)
+(swap-1st-and-ith (range 0 10) 3)
+(swap-1st-and-ith (range 0 10) 4)
+
+
+
+
+;;
 (defn permutations [a-set]
   :-)
 ;;
@@ -728,6 +745,9 @@
 (permutations #{1 5 3})
 ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 ;; The order of the permutations doesn’t matter.
+
+;; Write a C program to print all permutations of a given string
+;; http://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
 
 
 
