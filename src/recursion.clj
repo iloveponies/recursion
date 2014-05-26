@@ -781,21 +781,16 @@
   ;; body 2 helper function
   ([a-set current-set acc]
      (if (empty? current-set)
-       ;; If at the end, return check for duplication
-       (if (= (count acc) (count (distinct acc)))
-         ;; if no duplication, return acc (itself a vector) in a vector
-         ;; at the end of recursion acc is like [1 2].
-         ;; need to be [[1 2]] not to be opend up by "for" macro part at the solution binding.
-         [acc]
-         ;; if duplicated, return empty
-         [])
+       ;; If at the end, return acc (itself a vector) in a vector
+       ;; need to be [[1 2]] not to be opend up by "for" macro part at the solution binding.
+       [acc]
        ;;
        ;; If not at the end, do all possible cases using the "for" macro
        (for [;; Pick one element to add next
              elt a-set
-             ;; Only when the acc sequence does not contain the same value as elt
+             ;; Proceed only when the acc sequence does not contain the same value as elt
              :when (not (contains? (set acc) elt))
-             ;; Recurse with elt, pick one solution among multiple solutions.
+             ;; Recurse with elt, pick one solution among multiple solutions, and bind it to solution.
              solution (permutations a-set (rest current-set) (conj acc elt))]
          ;; Return that one solution
          solution))))
