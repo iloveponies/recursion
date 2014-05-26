@@ -724,105 +724,38 @@
 ;;
 ;; set -> seq of seqs
 ;; Create all possible permutation of values in a set
-;;
-;; seq -> seq
-;; swap first and ith where i = 0,..,n
-(defn swap-1st-and-ith [coll i]
-  (if (zero? i)
-    ;; No swapping if i = 0
-    coll
-    ;; Otherwise swap first and ith positions
-    (flatten [(nth coll i) (rest (take i coll)) (first coll) (nthrest coll (inc i))])))
-;;
-;; (swap-1st-and-ith (range 0 10) 0)
-;; (swap-1st-and-ith (range 0 10) 1)
-;; (swap-1st-and-ith (range 0 10) 2)
-;; (swap-1st-and-ith (range 0 10) 3)
-;; (swap-1st-and-ith (range 0 10) 4)
-;; (swap-1st-and-ith (range 0 10) 5)
-;;
-;; first level only
-;; (defn tree-of-perm [a-seq]
-;;   (let [;; Assing length
-;;         len  (count a-seq)
-;;         ;; Create all possible first-level swapped sequences
-;;         seqs (map #(swap-1st-and-ith a-seq %) (range 0 len))]
-;;     seqs))
-;; (tree-of-perm (into [] #{1 5 3 7}))
-;;
-;; Recursive version
-(defn tree-of-perm [a-seq]
-  (let [;; Assing length
-        len  (count a-seq)]
-
-    (if (<= len 1)
-      ;; base case: No swapping if only one element remaining
-      a-seq
-      ;; otherwise: Swapping, and then map recursions
-      (map #(cons (first %) (tree-of-perm (rest %)))
-           ;; Create swapped sequences
-           (map #(swap-1st-and-ith a-seq %) (range 0 len))))))
-;;
-;; (tree-of-perm (into [] #{1 5 3 7}))
-;;
-;;
-;; merge helper function bottom up
-(defn merge-up [a-tree]
-  (if (= 3 (count a-tree))
-    ;; If 3 elements, at terminal part. Create two seqs
-    [(conj (second a-tree) (first a-tree))
-     (conj (last a-tree) (first a-tree))]
-
-    ;; If not go down by mapping
-    (map (fn [x] (map #(conj % (first a-tree)) x))
-         (map merge-up (rest a-tree)))))
-
-;; (merge-up '(3 (5 7) (7 5)))
-;; (merge-up '(1 (3 (5 7)
-;;                  (7 5))
-;;               (5 (3 7)
-;;                  (7 3))
-;;               (7 (5 3)
-;;                  (3 5))))
-
-;; (map merge-up '((1 (3 (5 7)
-;;                       (7 5))
-;;                    (5 (3 7)
-;;                       (7 3))
-;;                    (7 (5 3)
-;;                       (3 5)))
-;;                 ;;
-;;                 (3 (1 (5 7) (7 5)) (5 (1 7) (7 1)) (7 (5 1) (1 5)))
-;;                 (5 (3 (1 7) (7 1)) (1 (3 7) (7 3)) (7 (1 3) (3 1)))
-;;                 (7 (3 (5 1) (1 5)) (5 (3 1) (1 3)) (1 (5 3) (3 5)))))
-
-;; (map merge-up (tree-of-perm (into [] #{1 5 3 7})))
-;; (partition-all 4 (flatten (map merge-up (tree-of-perm (into [] #{1 5 3 7})))))
-;
-;;
-;; Finally permutation
 (defn permutations [a-set]
-  (let [;; Convert to a vector
-        a-seq (into [] a-set)
-        ;; Assing length
-        len  (count a-seq)]
-    ;;
-    (if (zero? len)
-      ;; if zero, return empty permutation
-      '(())
-      ;; Otherwise, create permutations
-      (partition-all len (flatten (map merge-up (tree-of-perm a-seq)))))))
+  (loop [ast a-set
+         acc []]
+    (if (empty? ast)
+      acc
+      (recur (rest ast) (for [elt a-set]
+                          (vec (map #(conj % elt) acc)))))))
 
-;; ;;
-;; (permutations #{})
-;; ;=> (())
-;; (permutations #{1 5 3})
-;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+
+(defn permutations
+  ;; body 1 user function
+  ([a-set] (->> (permutations a-set a-set [[]])
+                ;; drop ones with duplications
+                (filter #(= (count (distinct %)) (count %)), )
+                ))
+  ;; body 2 helper
+  ([a-set current-set acc]
+     (if (empty? current-set)
+       ;; If at the end, return the acc
+       acc
+       ;; If not at the end, do all possible cases
+       (for [;; Pick one element to add next
+             elt a-set
+             ;; Recurse with elt, pick one solution among multiple solutions
+             solution (permutations a-set (rest current-set) (map #(conj % elt) acc))]
+         ;; Return that one solution
+         solution))))
+;;
+(ctest/is (= (permutations #{}) '(())))
+(ctest/is (= (permutations #{1 5 3}) '((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))))
 ;; ;; The order of the permutations doesn’t matter.
 ;; (permutations #{1 5 3 7})
-
-
-
 
 ;; Write a C program to print all permutations of a given string
 ;; http://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
