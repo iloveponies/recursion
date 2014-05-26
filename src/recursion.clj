@@ -833,36 +833,13 @@
 ;; 3 points
 ;; Given a set, return the powerset of that set.
 ;;
-;;
-;; set -> seq of seqs
-;; First create all possible permutations
-;; (permutations #{1 2 4})
 
-;; ;; take first i elements from each element
-;; (map #(map (fn [i] (take i %)) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
-;; ;; as set
-;; (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))
-;; ;; flatten
-;; (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4})))
-;; ;; create a set to remove duplicates
-;; (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count #{1 2 4})))) (permutations #{1 2 4}))))
-
-
-;; ;; set -> set of sets
-;; ;; create all possible subsets from a set including the empty and full sets
-;; (defn powerset [a-set]
-;;   (set (flatten (map #(map (fn [i] (set (take i %))) (range (inc (count a-set)))) (permutations a-set)))))
-;;
-;; More readable version with threading
-
-(def my-fun (fn [a b]
-              ;; map to all elements of a (previous set of sets)
-              ;; add element b to each element of a
-              (map #(conj % b) a)))
-(my-fun #{#{}} 1)
-(my-fun #{#{} #{1}} 2)
-
-
+;; (def my-fun (fn [a b]
+;;               ;; map to all elements of a (previous set of sets)
+;;               ;; add element b to each element of a
+;;               (map #(conj % b) a)))
+;; (my-fun #{#{}} 1)
+;; (my-fun #{#{} #{1}} 2)
 
 ;; sig: set -> set of sets
 ;; purpose: Create the powerset (all possible subsets of a set)
@@ -875,24 +852,11 @@
                  ;; map to all elements of a (previous set of sets)
                  ;; add element b to each element of a
                  (->> (map #(conj % b) a)
-                      ;; concat it with old set
-                      (concat a,  )
-                      ;; make the whole thing a set
-                      (set,  )))]
+                      ;; unite the new set with old set
+                      (clojure.set/union a,  )))]
     ;;
     ;; Transverse a-set using reduce with my-fun
     (reduce my-fun #{#{}} a-set)))
-
-
-;; This takes very long in testing.
-;; (defn powerset [a-set]
-;;   (let [len     (count a-set)
-;;         i-range (range (inc len))]
-;;     ;;
-;;     (->> (permutations a-set)
-;;          (map #(map (fn [i] (set (take i %))) i-range) ,  )
-;;          (flatten                                      ,  )
-;;          (set                                          ,  ))))
 
 ;;
 ;; (ctest/is (= (powerset #{})      #{#{}}))
