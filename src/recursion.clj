@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (require [clojure.test :as ctest]))
 
 
 
@@ -854,8 +855,34 @@
 ;;
 ;; More readable version with threading
 
+(def my-fun (fn [a b]
+              ;; map to all elements of a (previous set of sets)
+              ;; add element b to each element of a
+              (map #(conj % b) a)))
+(my-fun #{#{}} 1)
+(my-fun #{#{} #{1}} 2)
+
+
+
+;; sig: set -> set of sets
+;; purpose: Create the powerset (all possible subsets of a set)
+;; stub:
+;; (defn powerset [a-set]
+;;   #{#{}})
+;;
 (defn powerset [a-set]
-  #{#{}})
+  (let [my-fun (fn [a b]
+                 ;; map to all elements of a (previous set of sets)
+                 ;; add element b to each element of a
+                 (->> (map #(conj % b) a)
+                      ;; concat it with old set
+                      (concat a,  )
+                      ;; make the whole thing a set
+                      (set,  )))]
+    ;;
+    ;; Transverse a-set using reduce with my-fun
+    (reduce my-fun #{#{}} a-set)))
+
 
 ;; This takes very long in testing.
 ;; (defn powerset [a-set]
@@ -868,6 +895,6 @@
 ;;          (set                                          ,  ))))
 
 ;;
-;; (powerset #{})      ;=> #{#{}}
-;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+;; (ctest/is (= (powerset #{})      #{#{}}))
+;; (ctest/is (= (powerset #{1 2 4}) #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}))
 
