@@ -743,6 +743,31 @@
          ;; Return that one solution
          solution))))
 ;;
+;; This does the same
+(defn permutations
+  ;; body 1 user function
+  ([a-set] (permutations a-set a-set []))
+  ;;
+  ;; body 2 helper function
+  ([a-set current-set acc]
+     (if (empty? current-set)
+       ;; If at the end, return check for duplication
+       (if (= (count acc) (count (distinct acc)))
+         ;; if no duplication, return acc (itself a vector) in a vector
+         (do (println (str "acc is a " (type acc) " " (str acc)))
+             #{acc})
+         ;; if duplicated, return empty
+         (do (println (str "acc is a " (type acc) " " (str acc) ". Not  returning"))
+           []))
+       ;;
+       ;; If not at the end, do all possible cases using the "for" macro
+       (for [;; Pick one element to add next
+             elt a-set
+             ;; Recurse with elt, pick one solution among multiple solutions
+             solution (permutations a-set (rest current-set) (conj acc elt))]
+         ;; Return that one solution
+         solution))))
+;;
 ;; (ctest/is (= (permutations #{}) '(())))
 ;; (ctest/is (= (permutations #{1 5 3}) '((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))))
 ;; ;; The order of the permutations doesn’t matter.
