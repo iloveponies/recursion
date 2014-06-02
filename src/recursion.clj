@@ -166,25 +166,33 @@
     (seq-merge a-seq '())))
 
 
-(defn check-inc-state [a-seq]
-    (cond 
-      (empty? a-seq) :empty
-      (singleton? a-seq) :single
-      :else (let [t1 (first a-seq)
-                  t2 (second a-seq)]
-              (cond 
-                (= t1 t2) :equal
-                (> t1 t2) :dec
-                (< t1 t2) :inc))))
+(defn monotonic? [a-seq]
+          (or (apply <= a-seq) (apply >= a-seq)))
 
+(defn monotonics-helper [a-seq res]
+  (if (empty? a-seq) res
+    (let [s (last (take-while monotonic? (drop 2 (inits a-seq))))]
+      (monotonics-helper (drop (count s) a-seq) (conj res s))))) 
+      
 
 (defn split-into-monotonics [a-seq]
-      [:-])
+  (monotonics-helper a-seq []))
+
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set) '(())     
+      (let [r (rotations a-set)]
+        (if (= (count a-set) 2) r
+            (mapcat (fn [s] (map #(cons (first s) %) (permutations (rest s))))  r)))))
+
+(defn powerset1 [a-set res]
+  (if (empty? a-set) (conj res #{})
+      (let [fs (first a-set)
+            rem (disj a-set fs)
+            item (set (list fs))]
+        (powerset1 rem (conj
+                        v rem)))))
 
 (defn powerset [a-set]
-  [:-])
-
-
+  (let [s (set a-set)]
+    (conj (set (mapcat (fn [v] (powerset1 (disj s v) #{})) a-set)) s)))
