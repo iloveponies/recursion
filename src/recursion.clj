@@ -122,29 +122,69 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+ (->>  a-map
+  (map #(my-repeat (second %) (first %)))
+  (apply concat)))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (>= 0 n) (empty? coll)) (empty coll)
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (>= 0 n) (empty? coll)) coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [ct (count a-seq)
+        half-ct (Math/floor (/ ct 2))]
+    [(my-take half-ct a-seq)
+     (my-drop half-ct a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond (empty? a-seq) b-seq
+        (empty? b-seq) a-seq
+        :else (let [[a & next-a] a-seq
+              [b & next-b] b-seq]
+          (if (< a b) (cons a (seq-merge next-a b-seq))
+            (cons b (seq-merge a-seq next-b))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (== 1 (count a-seq))) a-seq
+      (apply seq-merge (map merge-sort (halve a-seq)))))
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  (let [explode
+         (fn explode [old item]
+             (concat (map #(cons    item  %) old)
+                   (map #(cons (- item) %) old)))]
+    (explode a-set)))
 
 (defn powerset [a-set]
   [:-])
 
+
+
+;; Exercise 27
+;; 2 points
+;; Write the function split-into-monotonics that takes a sequence and returns the sequence split into monotonic pieces. Examples:
+;; (split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
+;; (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+;; Hint: You might find useful the functions take-while, drop and inits. Make sure that your inits returns the prefixes from the shortest to the longest.
+;; (inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+;; Exercise 28
+;; 3 points
+;; Given a sequence, return all permutations of that sequence.
+;; (permutations #{})
+;; ;=> (())
+;; (permutations #{1 5 3})
+;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+;; The order of the permutations doesn’t matter.
+;; Exercise 29
+;; 3 points
+;; Given a set, return the powerset of that set.
+;; (powerset #{})      ;=> #{#{}}
+;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
