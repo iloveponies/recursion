@@ -185,14 +185,13 @@
         (if (= (count a-set) 2) r
             (mapcat (fn [s] (map #(cons (first s) %) (permutations (rest s))))  r)))))
 
-(defn powerset1 [a-set res]
-  (if (empty? a-set) (conj res #{})
-      (let [fs (first a-set)
-            rem (disj a-set fs)
-            item (set (list fs))]
-        (powerset1 rem (conj
-                        v rem)))))
+(defn powerset1 [a-set ds res]
+  (let [rs (disj a-set ds)]
+    (if (empty? rs) res
+        (mapcat #(powerset1 rs % (conj res rs)) rs))))
 
-(defn powerset [a-set]
-  (let [s (set a-set)]
-    (conj (set (mapcat (fn [v] (powerset1 (disj s v) #{})) a-set)) s)))
+(defn powerset [a-seq]
+  (let [a-set (set a-seq)]
+    (if (empty? a-set) #{#{}}
+        (set (mapcat #(powerset1 a-set % #{a-set #{}}) a-set)))))
+
