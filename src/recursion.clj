@@ -154,7 +154,23 @@
 
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [helper
+          (fn [accum monotonic the-seq]
+            (if (empty? the-seq) (cons monotonic accum)
+              (let [[f & r] the-seq]
+                (if (or (empty? monotonic)
+                        (empty? (rest monotonic))
+                        (= (pos? (- f (first monotonic)))
+                           (pos? (- (first monotonic) (second monotonic)))))
+                  (recur accum (cons f monotonic) r)
+                  (recur (cons monotonic accum) [f] r)))))]
+    (->> a-seq
+         (helper [] [])
+         (map reverse)
+         reverse)))
+
+(split-into-monotonics [0 1 2 1 0 -1] )
+
 
 (defn permutations [a-set]
   (let [explode
