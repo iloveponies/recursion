@@ -101,9 +101,9 @@
 
 (defn rotations [a-seq]
   (cond
-     (number? (first a-seq)) (rotations (cons a-seq nil))
-     (= (count(a-seq)) (count(first a-seq))) a-seq
-     :else (rotations (cons (concat (first (rest a-seq)) (first (first a-seq))) a-seq))))
+     (not (coll? (first a-seq)))                 (rotations (cons a-seq nil))
+     (= (count a-seq) (count (first a-seq)))     a-seq
+     :else                                       (rotations (cons (concat (rest (first a-seq)) [(first (first a-seq))]) a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (cond
