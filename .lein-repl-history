@@ -1,0 +1,21 @@
+(use 'recursion)
+(product (cons 1 (cons 2 (cons 3 (cons 4 '())))))
+quit
+(max 3 nil)
+quit
+(odd? (first []))
+(odd? (first '()))
+quit
+(use 'recursion)
+(my-repeat 1 "l")
+(my-repeat 1 :a)
+quit
+(use 'recursion)
+(tails [1 2])
+(tails [2 1])
+(inits [1 2])
+(inits [1 2 3])
+(inits [1 2 3 4])
+(use 'recursion :reload)
+(inits [1 2 3 4])
+quit
