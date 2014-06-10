@@ -169,36 +169,16 @@
          (map reverse)
          reverse)))
 
-(split-into-monotonics [0 1 2 1 0 -1] )
-
-
 (defn permutations [a-set]
-  (let [explode
-         (fn explode [old item]
-             (concat (map #(cons    item  %) old)
-                   (map #(cons (- item) %) old)))]
-    (explode a-set)))
+  (let [permute
+          (fn permute [so-far remainder]
+            (if (empty? remainder) [so-far]
+              (apply concat (map (fn [n] (permute (cons n so-far) (remove #(= % n) remainder))) remainder))))]
+    (permute [] a-set)))
 
 (defn powerset [a-set]
-  [:-])
+   #{#{}})
 
-
-
-;; Exercise 27
-;; 2 points
-;; Write the function split-into-monotonics that takes a sequence and returns the sequence split into monotonic pieces. Examples:
-;; (split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
-;; (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
-;; Hint: You might find useful the functions take-while, drop and inits. Make sure that your inits returns the prefixes from the shortest to the longest.
-;; (inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
-;; Exercise 28
-;; 3 points
-;; Given a sequence, return all permutations of that sequence.
-;; (permutations #{})
-;; ;=> (())
-;; (permutations #{1 5 3})
-;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
-;; The order of the permutations doesn’t matter.
 ;; Exercise 29
 ;; 3 points
 ;; Given a set, return the powerset of that set.
