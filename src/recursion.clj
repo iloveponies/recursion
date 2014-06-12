@@ -177,10 +177,11 @@
     (permute [] a-set)))
 
 (defn powerset [a-set]
-   #{#{}})
-
-;; Exercise 29
-;; 3 points
-;; Given a set, return the powerset of that set.
-;; (powerset #{})      ;=> #{#{}}
-;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+  (letfn
+    [(ps [accum superset]
+      (if (empty? superset)
+        accum
+        (reduce ps
+                (conj accum superset)
+                (map (partial disj superset) superset))))]
+    (ps #{#{}} (set a-set))))
