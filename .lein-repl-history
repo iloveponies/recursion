@@ -73,3 +73,37 @@ quit
 (use 'recursion :reload)
 (rotations [1 2 3])
 quit
+(use 'recursion)
+(inits [0 1 2 1 0])
+(use 'recursion :reload)
+(inits [0 1 2 1 0])
+(take-while monotonic? (inits [0 1 2 1 0])
+(take-while monotonic? (inits [0 1 2 1 0]))
+quit
+(filter monotonic? (inits [0 1 2 1 0]))
+(use 'recursion)
+(filter monotonic? (inits [0 1 2 1 0]))
+(use 'recursion)
+(filter monotonic? (inits [0 1 2 1 0]))
+(use 'recursion :reload)
+(filter monotonic? (inits [0 1 2 1 0]))
+(use 'recursion :reload)
+(filter monotonic? (inits [0 1 2 1 0]))
+(monotonic? (last (inits [0 1 2 1 0])))
+ (last (inits [0 1 2 1 0]))
+(def mon? (monotonic?))
+let mon? monotonic
+let [mon? monotonic?]
+(use 'recursion :reload)
+(monotonic? (last (inits [0 1 2 1 0])))
+(monotonic? (last (inits [0 1 2 1 ])))
+(monotonic? (last (inits [0 1 2  ])))
+(use 'recursion :reload)
+(split-into-monotonics [0 1 2 1 0])
+(take-while (fn [x] (apply <= x)) (inits [0 1 2 0 1]))
+(use 'recursion :reload)
+(split-into-monotonics [0 1 2 1 0])
+quit
+(use 'recursion :reload)
+(split-into-monotonics [0 1 2 1 0])
+quit
