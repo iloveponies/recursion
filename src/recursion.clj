@@ -7,7 +7,7 @@
 
 (defn singleton? [coll]
   (and (not (nil? (first coll)))
-       (nil? (first (rest coll)))))
+       (nil? (rest coll))))
 
 (defn my-last [coll]
   (if (singleton? coll)
@@ -20,25 +20,38 @@
     (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  (max (max-element seq-1)
-       (max-element seq-2)))
+  (if (> (count seq-1) (count seq-2)) seq-1 seq-2))
 
 (defn longest-sequence [a-seq]
-  (first (first (sort-by last #(compare %2 %1)
-                   (map (fn [x] [x (count x)])
-                        a-seq)))))
+  (if (singleton? a-seq)
+    a-seq
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (seq a-seq)
+    (if (pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))
+    '()))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (if (seq a-seq)
+    (if (= elem (first a-seq))
+      true
+      (sequence-contains? elem (rest a-seq)))
+    false))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (or (empty? a-seq)
+          (not (pred? (first a-seq))))
+    '()
+    (cons (first a-seq) (my-take-while pred? (rest a-seq)))))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) '()
+   (pred? (first a-seq)) '()
+   :else (cons (first a-seq) (my-drop-while pred? (rest a-seq)))))
 
 (defn seq= [a-seq b-seq]
   :-)
