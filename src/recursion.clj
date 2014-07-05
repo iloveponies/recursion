@@ -158,9 +158,6 @@
     (let [[fst-half snd-half] (halve a-seq)]
       (seq-merge (merge-sort fst-half) (merge-sort snd-half)))))
 
-(defn all-tree [pred? a-seq]
-  ())
-
 (defn monotonical? [a-seq]
   (if (empty? a-seq) true
       (let [seq-diff (map (fn [x y] (- x y)) a-seq (rest a-seq))
