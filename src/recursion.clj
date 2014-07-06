@@ -88,10 +88,14 @@
     (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    []
+    (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (<= up-to 0)
+    []
+    (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
   [:-])
