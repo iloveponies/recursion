@@ -6,10 +6,12 @@
     (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (= (count coll) 1))
 
 (defn my-last [coll]
-  :-)
+  (if (singleton? coll)
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
   :-)
