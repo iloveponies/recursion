@@ -101,9 +101,11 @@
     [[]]
     (cons a-seq (tails (rest a-seq)))))
 
+; Return sorted by increasing length
 (defn inits [a-seq]
-  (let [reversed-seq (reverse a-seq)]
-    (map reverse (tails reversed-seq))))
+  (let [reversed-seq (reverse a-seq)
+        inits-unsorted (map reverse (tails reversed-seq))]
+    (sort-by count inits-unsorted)))
 
 (defn rotate-n [a-seq n]
   (if (= n 0)
@@ -144,13 +146,25 @@
     (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [size (count a-seq)
+        half (int (/ size 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [a-head (first a-seq)
+                b-head (first b-seq)]
+            (if (< a-head b-head)
+              (cons a-head (seq-merge (rest a-seq) b-seq))
+              (cons b-head (seq-merge (rest b-seq) a-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (let [[left right] (halve a-seq)]
+      (seq-merge (merge-sort left) (merge-sort right)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
