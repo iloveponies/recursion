@@ -130,7 +130,8 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [pairs (seq a-map)]
+    (apply concat (map (fn [[elt count]] (my-repeat count elt)) pairs))))
 
 (defn my-take [n coll]
   [:-])
