@@ -116,10 +116,18 @@
     (map (fn [n] (rotate-n a-seq n)) (range 0 (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [head (first a-seq)
+          tail (rest a-seq)
+          prev-count (get freqs head)
+          updated-frequency (if (nil? prev-count)
+                              1
+                              (+ prev-count 1))]
+      (my-frequencies-helper (conj freqs {head updated-frequency}) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
