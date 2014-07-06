@@ -83,7 +83,9 @@
     (* n (power n (- k 1)))))
 
 (defn fib [n]
-  :-)
+  (if (< n 2)
+    n
+    (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
