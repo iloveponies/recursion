@@ -20,7 +20,11 @@
     :else (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [len1 (count seq-1)
+        len2 (count seq-2)]
+    (if (> len1 len2)
+      seq-1
+      seq-2)))
 
 (defn longest-sequence [a-seq]
   [:-])
