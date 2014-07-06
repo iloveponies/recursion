@@ -101,11 +101,9 @@
     [[]]
     (cons a-seq (tails (rest a-seq)))))
 
-; Return sorted by increasing length
+; Return sorted by decreasing length (so the longest prefix is first, etc.)
 (defn inits [a-seq]
-  (let [reversed-seq (reverse a-seq)
-        inits-unsorted (map reverse (tails reversed-seq))]
-    (sort-by count inits-unsorted)))
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotate-n [a-seq n]
   (if (= n 0)
@@ -166,8 +164,26 @@
     (let [[left right] (halve a-seq)]
       (seq-merge (merge-sort left) (merge-sort right)))))
 
+(defn is-monotonic? [a-seq]
+  (let [consec-pairs (map vector a-seq (rest a-seq))]
+    (or (every? (fn [[a b]] (< a b)) consec-pairs)
+        (every? (fn [[a b]] (> a b)) consec-pairs))))
+
+(defn longest-monotonic-prefix [a-seq]
+  (if (empty? a-seq)
+    '()
+    ; Here we take advantage of the fact that inits returns the prefixes
+    ; in order of longest to shortest.  Also note that because a-seq
+    ; contains at least one element, we're guaranteed to get at least
+    ; one result (since any one-element sequence is monotonic increasing).
+    (first (drop-while (complement is-monotonic?) (inits a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [mon-pfx (longest-monotonic-prefix a-seq)
+          tail (drop (count mon-pfx) a-seq)]
+      (cons mon-pfx (split-into-monotonics tail)))))
 
 (defn permutations [a-set]
   [:-])
