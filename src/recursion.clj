@@ -105,8 +105,15 @@
   (let [reversed-seq (reverse a-seq)]
     (map reverse (tails reversed-seq))))
 
+(defn rotate-n [a-seq n]
+  (if (= n 0)
+    a-seq
+    (rotate-n (concat (rest a-seq) (list (first a-seq))) (- n 1))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (map (fn [n] (rotate-n a-seq n)) (range 0 (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
