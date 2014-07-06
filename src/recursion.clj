@@ -78,7 +78,9 @@
     
 
 (defn power [n k]
-  :-)
+  (if (= k 0)
+    1
+    (* n (power n (- k 1)))))
 
 (defn fib [n]
   :-)
