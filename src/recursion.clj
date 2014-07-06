@@ -68,7 +68,14 @@
     :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    []
+    (let [head-1 (first seq-1)
+          head-2 (first seq-2)
+          tail-1 (rest seq-1)
+          tail-2 (rest seq-2)]
+      (cons (f head-1 head-2) (my-map f tail-1 tail-2)))))
+    
 
 (defn power [n k]
   :-)
