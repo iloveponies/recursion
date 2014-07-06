@@ -75,7 +75,6 @@
           tail-1 (rest seq-1)
           tail-2 (rest seq-2)]
       (cons (f head-1 head-2) (my-map f tail-1 tail-2)))))
-    
 
 (defn power [n k]
   (if (= k 0)
@@ -98,10 +97,13 @@
     (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    [[]]
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (let [reversed-seq (reverse a-seq)]
+    (map reverse (tails reversed-seq))))
 
 (defn rotations [a-seq]
   [:-])
