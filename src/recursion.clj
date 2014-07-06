@@ -124,7 +124,7 @@
           updated-frequency (if (nil? prev-count)
                               1
                               (+ prev-count 1))]
-      (my-frequencies-helper (conj freqs {head updated-frequency}) (rest a-seq)))))
+      (my-frequencies-helper (conj freqs {head updated-frequency}) tail))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
