@@ -195,5 +195,13 @@
     (apply concat (map (fn [rot] (permutations-help rot permutations)) (rotations a-seq)))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (let [elt (first a-set)
+          remaining (rest a-set)
+          powerset-of-remaining (powerset remaining)]
+      (clojure.set/union
+        ; Set of all subsets without the element
+        powerset-of-remaining
+        ; Set of all subsets with the element
+        (set (map (fn [s] (conj s elt)) powerset-of-remaining))))))
