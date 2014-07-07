@@ -185,8 +185,16 @@
           tail (drop (count mon-pfx) a-seq)]
       (cons mon-pfx (split-into-monotonics tail)))))
 
-(defn permutations [a-set]
-  [:-])
+;(defn permutations-help [a-seq]
+;  (let [tail-permutations (permutations (tail a-seq))]
+;    (map (fn [tail-perm] (cons (head a-seq) tail-perm)))))
+
+(defn permutations [a-seq]
+  (let [all-rotations (rotations a-seq)
+        help (fn [rot]
+               (let [tail-permutations (rotations (rest rot))]
+                 (map (fn [tail-perm] (cons (first rot) tail-perm)) tail-permutations)))]
+    (apply concat (map help all-rotations))))
 
 (defn powerset [a-set]
   [:-])
