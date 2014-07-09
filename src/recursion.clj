@@ -9,7 +9,10 @@
   (and (not= [] coll) (= [] (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (cond
+    (= [] coll) nil
+    (singleton? coll) (first coll)
+    :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
   :-)
