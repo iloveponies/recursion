@@ -10,13 +10,13 @@
 
 (defn my-last [coll]
   (cond
-    (= [] coll) nil
+    (empty? coll) nil
     (singleton? coll) (first coll)
     :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
   (cond
-    (= [] a-seq) nil
+    (empty? a-seq) nil
     (singleton? a-seq) (first a-seq)
     :else (max (first a-seq) (max-element (rest a-seq)))))
 
@@ -25,11 +25,15 @@
     seq-2))
 
 (defn longest-sequence [a-seq]
-  (if (= [] a-seq) nil
+  (if (empty? a-seq) nil
     (reduce seq-max a-seq)))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [elem (first a-seq)]
+    (cond
+      (empty? a-seq) a-seq
+      (pred? elem) (cons elem (my-filter pred? (rest a-seq)))
+      :else (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
