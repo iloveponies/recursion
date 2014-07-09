@@ -25,7 +25,8 @@
     seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (= [] a-seq) nil
+    (reduce seq-max a-seq)))
 
 (defn my-filter [pred? a-seq]
   [:-])
