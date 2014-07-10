@@ -95,7 +95,9 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) [[]]
+    :else (take (count a-seq) (iterate (fn [x] (conj (vec (rest x)) (first x))) a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
