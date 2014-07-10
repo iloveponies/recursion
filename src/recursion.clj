@@ -77,7 +77,9 @@
     :else (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+    (>= 0 how-many-times) []
+    :else (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
 
 (defn my-range [up-to]
   [:-])
