@@ -87,10 +87,12 @@
     :else (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) (cons [] a-seq)
+    :else (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   [:-])
