@@ -100,10 +100,12 @@
     :else (take (count a-seq) (iterate (fn [x] (conj (vec (rest x)) (first x))) a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) freqs
+    :else (my-frequencies-helper (assoc freqs (first a-seq) (+ 1 (or (get freqs (first a-seq)) 0))) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
