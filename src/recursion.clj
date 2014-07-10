@@ -66,7 +66,9 @@
     :else (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (cond
+    (zero? k) 1
+    :else (* n (power n (- k 1)))))
 
 (defn fib [n]
   :-)
