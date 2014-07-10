@@ -82,7 +82,9 @@
     :else (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+    (>= 0 up-to) []
+    :else (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
   [:-])
