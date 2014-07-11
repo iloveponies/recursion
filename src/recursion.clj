@@ -125,7 +125,10 @@
     :else coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [mid (int (/ (count a-seq) 2))]
+    (cond
+      (>= 1 (count a-seq)) [[] a-seq]
+      :else [(my-take mid a-seq) (my-drop mid a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
