@@ -114,7 +114,10 @@
       (concat (repeat c k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (= 0 n) nil
+    (= nil (first coll)) (my-take (- n 1) (rest coll))
+    :else (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
   [:-])
