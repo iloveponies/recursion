@@ -164,5 +164,8 @@
            (apply concat (map (fn [r] (first-and-one (first r) (permutations (rest r)))) rs)))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (map set (cond
+            (empty? a-set) '(())
+            :else (let [f (first a-set)
+              r (rest a-set)]
+              (clojure.set/union (powerset r) (map #(conj % f) (powerset r)))))))
