@@ -120,7 +120,9 @@
     :else (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (< 0 n) (my-drop (- n 1) (rest coll))
+    :else coll))
 
 (defn halve [a-seq]
   [:-])
