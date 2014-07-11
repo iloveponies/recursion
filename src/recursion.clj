@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (:use clojure.contrib.generic.math-functions))
 
 (defn product [coll]
   (if (empty? coll)
@@ -129,7 +130,7 @@
    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  (#(vector (my-take % a-seq) (my-drop % a-seq))(count a-seq)))
+  ((fn [x] (vector (my-take x a-seq) (my-drop x a-seq)))(floor (/ (count a-seq) 2))))
 
 (defn seq-merge [a-seq b-seq]
   (cond
