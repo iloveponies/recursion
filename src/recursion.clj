@@ -131,7 +131,14 @@
       :else [(my-take mid a-seq) (my-drop mid a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [afirst (first a-seq)
+        bfirst (first b-seq)]
+    (cond
+      (and (empty? a-seq) (empty? b-seq)) nil
+      (empty? a-seq) (cons bfirst (seq-merge a-seq (rest b-seq)))
+      (empty? b-seq) (cons afirst (seq-merge (rest a-seq) b-seq))
+      (> afirst bfirst) (cons bfirst (seq-merge a-seq (rest b-seq)))
+      :else (cons afirst (seq-merge (rest a-seq) b-seq)))))
 
 (defn merge-sort [a-seq]
   [:-])
