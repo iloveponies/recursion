@@ -99,31 +99,48 @@
 
 
 (defn rotations [a-seq]
-  (concat (seq (first a-seq)) (rest a-seq)))
+  (letfn [(rotacc [coll beg])
+          (let [rot (concat (rest coll) (vector (first coll)))]
+            (if (= rot beg) rot
+              (cons rot (rotacc rot beg))))]))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq) freqs
+    (#(if (nil? %)
+     (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)
+     (my-frequencies-helper (assoc freqs (first a-seq) (inc %)) (rest a-seq))))
+    (get freqs (first a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map) '()
+    (concat (repeat (val (first a-map)) (key (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (= n 0) (empty? coll)) '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (= n 0) coll
+   (empty? coll) '()
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (#(vector (my-take % a-seq) (my-drop % a-seq))(count a-seq)))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (< (peek a-seq) (peek b-seq)) (conj (seq-merge a-seq (pop b-seq)) (peek b-seq) )
+   :else (conj (seq-merge (pop a-seq) b-seq) (peek a-seq))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[x y] (halve a-seq)]
+    (seq-merge (merge-sort x) (merge-sort y))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
