@@ -135,6 +135,8 @@
 
 (defn seq-merge [a-seq b-seq]
   (cond
+   (not (coll? a-seq)) (seq-merge (vector a-seq) b-seq)
+   (not (coll? b-seq)) (seq-merge a-seq (vector b-seq))
    (empty? a-seq) b-seq
    (empty? b-seq) a-seq
    (< (peek a-seq) (peek b-seq)) (conj (seq-merge a-seq (pop b-seq)) (peek b-seq) )
@@ -142,9 +144,10 @@
 
 (defn merge-sort [a-seq]
   (cond
-   (or (empty? a-seq) (singleton? a-seq)) a-seq
+   (empty? a-seq) a-seq
+   (singleton? a-seq) (first a-seq)
    :else (let [[x y] (halve a-seq)]
-           [(merge-sort x) (merge-sort y)])))
+           (seq-merge (merge-sort x) (merge-sort y)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
