@@ -1,0 +1,3 @@
+(require '[clojure.math.numeric-tower :as math])
+(math/expt 4 6)
+exit

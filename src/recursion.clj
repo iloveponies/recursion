@@ -1,5 +1,5 @@
 (ns recursion
-  (:use clojure.contrib.generic.math-functions))
+  (:require [clojure.math.numeric-tower :as math]))
 
 (defn product [coll]
   (if (empty? coll)
@@ -18,10 +18,12 @@
 
 (defn max-element [a-seq]
   (letfn [(max-acc [a-seq max]
-                   (if (> (first a-seq) max)
-                     (max-acc (rest a-seq) (first a-seq))
-                     (max-acc (rest a-seq) max)))]
-    max-acc (rest a-seq) (first a-seq)))
+                   (if (empty? a-seq)
+                     max
+                     (if (> (first a-seq) max)
+                       (max-acc (rest a-seq) (first a-seq))
+                       (max-acc (rest a-seq) max))))]
+    (max-acc (rest a-seq) (first a-seq))))
 
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2))
@@ -30,10 +32,12 @@
 
 (defn longest-sequence [a-seq]
   (letfn [(long-acc [a-seq max]
-                   (if (seq-max (first a-seq) max)
+                   (if (empty? a-seq)
+                     max
+                     (if (seq-max (first a-seq) max)
                      (long-acc (rest a-seq) (first a-seq))
-                     (long-acc (rest a-seq) max)))]
-    long-acc (rest a-seq) (first a-seq)))
+                     (long-acc (rest a-seq) max))))]
+    (long-acc (rest a-seq) (first a-seq))))
 
 (defn my-filter [pred? a-seq]
   (cond
@@ -88,11 +92,11 @@
 
 (defn my-range [up-to]
   (if (< up-to 1) '()
-    (cons (dec up-to) (my-range (dec up-to)))))
+    (concat (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) (seq '())
-    (cons (seq a-seq) (tails (rest a-seq)))))
+  (if (empty? a-seq) a-seq
+    (conj (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (if (empty? a-seq) (seq '())
@@ -100,10 +104,7 @@
 
 
 (defn rotations [a-seq]
-  (letfn [(rotacc [coll beg])
-          (let [rot (concat (rest coll) (vector (first coll)))]
-            (if (= rot beg) rot
-              (cons rot (rotacc rot beg))))]))
+  (concat (rest a-seq) (vector (first a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq) freqs
@@ -119,18 +120,18 @@
   (if (empty? a-map) '()
     (concat (repeat (val (first a-map)) (key (first a-map))) (un-frequencies (rest a-map)))))
 
-(defn my-take [n coll]
-  (if (or (= n 0) (empty? coll)) '()
-    (cons (first coll) (my-take (dec n) (rest coll)))))
-
 (defn my-drop [n coll]
   (cond
-   (= n 0) coll
-   (empty? coll) '()
+   (or (= n 0) (empty? coll)) coll
    :else (my-drop (dec n) (rest coll))))
 
+(defn my-take [n coll]
+  (cond
+   (or (= n 0) (empty? coll)) []
+   :else (cons (first coll) (my-take (dec n) (rest coll)))))
+
 (defn halve [a-seq]
-  ((fn [x] (vector (my-take x a-seq) (my-drop x a-seq)))(floor (/ (count a-seq) 2))))
+  ((fn [x] (vector (my-take x a-seq) (my-drop x a-seq)))(int (/ (count a-seq) 2))))
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -140,8 +141,10 @@
    :else (conj (seq-merge (pop a-seq) b-seq) (peek a-seq))))
 
 (defn merge-sort [a-seq]
-  (let [[x y] (halve a-seq)]
-    (seq-merge (merge-sort x) (merge-sort y))))
+  (cond
+   (or (empty? a-seq) (singleton? a-seq)) a-seq
+   :else (let [[x y] (halve a-seq)]
+           [(merge-sort x) (merge-sort y)])))
 
 (defn split-into-monotonics [a-seq]
   [:-])
