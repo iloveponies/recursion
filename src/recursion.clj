@@ -1,10 +1,22 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll) 1
+    (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (and
+   (complement nil?) (first coll)
+   (empty? (rest coll))))
+
+((complement nil?) (first []))
+
+(empty? (rest []))
+
+(singleton? [1])     ;=> true
+(singleton? #{2})    ;=> true
+(singleton? [])      ;=> false
+(singleton? [1 2 3]) ;=> false
 
 (defn my-last [coll]
   :-)
