@@ -92,26 +92,25 @@
 
 (defn my-range [up-to]
   (if (< up-to 1) '()
-    (concat (dec up-to) (my-range (dec up-to)))))
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) a-seq
-    (conj (seq a-seq) (tails (rest a-seq)))))
+  (if (empty? a-seq) '(())
+    (conj (tails (rest a-seq)) (seq a-seq) )))
 
 (defn inits [a-seq]
-  (if (empty? a-seq) (seq '())
-    (cons (seq a-seq) (inits (reverse (rest (reverse a-seq)))))))
+  (if (empty? a-seq) '(())
+    (conj (inits (reverse (rest (reverse a-seq)))) (seq a-seq))))
 
 
 (defn rotations [a-seq]
-  (concat (rest a-seq) (vector (first a-seq))))
+  (reduce (fn [x _] (conj x (concat (rest (peek x)) (vector (first (peek x)))))) [a-seq] (range (dec (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  (if (empty? a-seq) freqs
-    (#(if (nil? %)
-     (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)
-     (my-frequencies-helper (assoc freqs (first a-seq) (inc %)) (rest a-seq))))
-    (get freqs (first a-seq)))))
+  (cond
+   (empty? a-seq) freqs
+   (nil? (get freqs (first a-seq))) (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq))
+   :else (my-frequencies-helper (assoc freqs (first a-seq) (inc (get freqs (first a-seq)))) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
