@@ -51,8 +51,6 @@
    (= elem (first a-seq)) true
    :else (sequence-contains? elem (rest a-seq))))
 
-
-
 (defn my-take-while [pred? a-seq]
   (cond
    (empty? a-seq) '()
@@ -68,6 +66,7 @@
 (defn seq= [seq-1 seq-2]
   (cond
     (and (empty? seq-1) (empty? seq-2)) true
+    (or (empty? seq-1) (empty? seq-2)) false
     (= (first seq-1) (first seq-2)) (seq= (rest seq-1) (rest seq-2))
     :else false))
 
@@ -149,7 +148,13 @@
            (seq-merge (merge-sort x) (merge-sort y)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq) a-seq
+  ((defn monotonic? [a-seq]
+     (or
+       (apply <= a-seq)
+       (apply >= a-seq)))
+  (fn [x] (cons x (split-into-monotonics (drop (count x) a-seq))))
+  (first (filter monotonic? a-seq)))))
 
 (defn permutations [a-set]
   [:-])
