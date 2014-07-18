@@ -6,29 +6,23 @@
 
 (defn singleton? [coll]
   (and
-   (complement nil?) (first coll)
+   ((complement empty?) coll)
    (empty? (rest coll))))
 
-((complement nil?) (first []))
-
-(empty? (rest []))
-
-(singleton? [1])     ;=> true
-(singleton? #{2})    ;=> true
-(singleton? [])      ;=> false
-(singleton? [1 2 3]) ;=> false
+(defn empty-or-singleton? [a-seq]
+  (or (empty? a-seq) (singleton? a-seq)))
 
 (defn my-last [coll]
-  :-)
+  (if (empty-or-singleton? coll) (first coll) (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty-or-singleton? a-seq) (first a-seq) (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (<= (count seq-1)(count seq-2)) seq-2 seq-1))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty-or-singleton? a-seq) (first a-seq) (seq-max (first a-seq)(longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
   [:-])
