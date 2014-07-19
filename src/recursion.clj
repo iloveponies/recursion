@@ -19,16 +19,28 @@
    :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (cond
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   :else (max-element (cons (max (first a-seq) (second a-seq)) (rest (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (<= (count seq-1) (count seq-2)) seq-2 seq-1))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (cond (empty? a-seq) nil
+        (singleton? a-seq) (first a-seq)
+        :else (longest-sequence (cons (seq-max (first a-seq) (second a-seq)) (rest (rest a-seq))))
+))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [x (first a-seq)
+          f (my-filter pred? (rest a-seq))]
+      (if (pred? x)
+        (cons x f)
+        f))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
