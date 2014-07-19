@@ -34,13 +34,10 @@
 ))
 
 (defn my-filter [pred? a-seq]
-  (if (empty? a-seq)
-    a-seq
-    (let [x (first a-seq)
-          f (my-filter pred? (rest a-seq))]
-      (if (pred? x)
-        (cons x f)
-        f))))
+  (let [fst (first a-seq) rst (rest a-seq)]
+    (cond (empty? a-seq) a-seq
+          (pred? fst) (cons fst (my-filter pred? rst))
+          :else (my-filter pred? rst))))
 
 (defn sequence-contains? [elem a-seq]
   (cond
@@ -61,7 +58,11 @@
    :else a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+   (not= (count a-seq) (count b-seq)) false 
+   (and (empty? a-seq) (empty? b-seq)) true
+   (not= (first a-seq) (first b-seq)) false 
+   :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
