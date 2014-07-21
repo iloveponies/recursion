@@ -74,19 +74,35 @@
    :else (+ (fib (dec n))(fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+   (>= 0 how-many-times) '()
+   (= 1 how-many-times) (list what-to-repeat)
+   :else (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
+
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+   (= 0 up-to) '()
+   :else (cons (dec up-to)(my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) (cons a-seq '())
+   :else (cons (list* a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (reverse (tails a-seq)))
 
 (defn rotations [a-seq]
-  [:-])
+  ;(concat a-seq (rotations a-seq))
+  )
+
+(rotations [])        ;=> (())
+(rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
+(rotations [:a :b])   ;=> ((:a :b) (:b :a))
+; The order of rotations does not matter.
+(rotations [:a :b])   ;=> ((:b :a) (:a :b))
+(rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
