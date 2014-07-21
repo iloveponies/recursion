@@ -114,34 +114,84 @@
     (map #(rotate-n a-seq %) (range (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          value (get freqs elem)
+          new-value (if value (inc value) 1)
+          new-freqs (assoc freqs elem new-value)]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if-not (empty? a-map)
+     (let [[k v] (first a-map)
+           part (repeat v k)]
+       (concat part (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    (sequence coll)
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    (vector (my-take half a-seq) (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (if (empty? a-seq)
+    (sequence b-seq)
+    (if (empty? b-seq)
+      (sequence a-seq)
+      (if (< (first a-seq) (first b-seq))
+        (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+        (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    (sequence a-seq)
+    (let [[a b] (halve a-seq)
+          sorted-a (merge-sort a)
+          sorted-b (merge-sort b)]
+      (seq-merge sorted-a sorted-b))))
+
+(defn take-greedy-while [pred? a-seq]
+  (first (filter #(apply pred? %) (inits a-seq))))
+
+(defn get-with-length [len seqs]
+  (if-not (empty? seqs)
+    (let [fst (first seqs)]
+      (if (= len (count fst)) fst (get-with-length len (rest seqs))))))
+
+(defn get-longest [& seqs]
+  (let [max-length (apply max (map count seqs))]
+    (get-with-length max-length seqs)))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if-not (empty? a-seq)
+    (let [asc (take-greedy-while < a-seq)
+          desc (take-greedy-while > a-seq)
+          const (take-greedy-while = a-seq)
+          mono (get-longest asc desc const)
+          res (my-drop (count mono) a-seq)]
+      (cons mono (split-into-monotonics res)))))
 
-(defn permutations [a-set]
-  [:-])
+(defn extract [a-seq]
+  (map #(vector % (remove #{%} a-seq)) a-seq))
+
+(defn permutations [a-seq]
+  (if (empty? a-seq)
+    '(())
+    (apply concat (map (fn [[fst rst]]
+           (map #(cons fst %) (permutations rst)))
+         (extract a-seq)))))
 
 (defn powerset [a-set]
   [:-])
