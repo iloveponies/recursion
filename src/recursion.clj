@@ -55,6 +55,7 @@
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq)) true
+    (or (empty? a-seq) (empty? b-seq)) false
     (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
     :else false))
 
@@ -88,14 +89,29 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (cons (sequence a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (cons (sequence a-seq) (inits (butlast a-seq)))))
+
+(defn rotate [a-seq]
+  (if (empty? a-seq)
+    '()
+    (cons (last a-seq) (butlast a-seq))))
+
+(defn rotate-n [a-seq n]
+  (if (zero? n)
+    (sequence a-seq)
+    (rotate-n (rotate a-seq) (dec n))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (map #(rotate-n a-seq %) (range (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
