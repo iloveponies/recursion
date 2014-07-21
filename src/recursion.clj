@@ -194,5 +194,11 @@
          (extract a-seq)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [fst (first a-set)
+          rst (rest a-set)
+          b-set (powerset rst)
+          c-set (set (map #(conj % fst) b-set))]
+      (clojure.set/union b-set c-set))))
 
