@@ -51,6 +51,7 @@
 (defn seq= [a-seq b-seq]
   (cond
    (and (empty? a-seq) (empty? b-seq)) true
+   (not= (count a-seq)(count b-seq)) false
    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
    :else false))
 
@@ -67,7 +68,6 @@
    :else (* n (power n (dec k)))))
 
 (defn fib [n]
-  (println n)
   (cond
    (= 0 n) 0
    (= 1 n) 1
@@ -78,7 +78,6 @@
    (>= 0 how-many-times) '()
    (= 1 how-many-times) (list what-to-repeat)
    :else (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
-
 
 (defn my-range [up-to]
   (cond
@@ -91,21 +90,21 @@
    :else (cons (list* a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (reverse (tails a-seq)))
+  (cond
+   (empty? a-seq) (list (list))
+   :else (cons (list* a-seq) (inits (butlast a-seq)))))
+
+(defn rot [n a-seq]
+  (if (> n 0)
+    (cons (concat (drop n a-seq)(take n a-seq))(rot (dec n) a-seq))))
 
 (defn rotations [a-seq]
-  ;(concat a-seq (rotations a-seq))
-  )
-
-(rotations [])        ;=> (())
-(rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
-(rotations [:a :b])   ;=> ((:a :b) (:b :a))
-; The order of rotations does not matter.
-(rotations [:a :b])   ;=> ((:b :a) (:a :b))
-(rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
+  ;(let [rota (fn [n the-seq] (if (< n (count a-seq))(cons (concat (drop n a-seq)(take n a-seq))(rot (inc n) a-seq))))])
+  (if (empty? a-seq) (list (list))
+    (rot (count a-seq) a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  )
 
 (defn my-frequencies [a-seq]
   [:-])
