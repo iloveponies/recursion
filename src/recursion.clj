@@ -122,14 +122,11 @@
 (defn un-frequencies [a-map]
   (un-frequencies-helper '() a-map))
 
-(defn my-take-helper [taken n coll]
+(defn my-take [n coll]
   (if (or (empty? coll)
           (<= n 0))
-    taken
-    (my-take-helper (cons (first coll) taken) (dec n) (rest coll))))
-
-(defn my-take [n coll]
-  (reverse (my-take-helper '() n coll)))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
   (if (or (empty? coll)
