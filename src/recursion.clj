@@ -1,25 +1,52 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if (and (not (empty? coll)) (empty? (rest coll)))
+    true
+    false))
 
-(defn my-last [coll]
-  :-)
+(defn my-last [a-seq]
+  ; Check for an empty seq.
+  (if (empty? a-seq)
+    (first a-seq)
+    ; If not an empty seq, check if it is a singleton.
+    (if (singleton? a-seq)
+      (first a-seq)
+      ; if not a singleton, recur with the rest of the seq.
+      (my-last (rest a-seq)))))
 
 (defn max-element [a-seq]
-  :-)
+  (cond
+   ; check for empty
+   (empty? a-seq) nil
+   ; reached the end of the seq
+   (singleton? a-seq) (first a-seq)
+   :else (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [seq1-count (count seq-1)
+        seq2-count (count seq-2)]
+    (if (> seq1-count seq2-count)
+      seq-1
+      seq-2)))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  "This function returns the longest sequence given in a-seq. Looks like max-element!"
+  (cond
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  )
+
+(my-filter odd? [1 2 3 4])
 
 (defn sequence-contains? [elem a-seq]
   :-)
