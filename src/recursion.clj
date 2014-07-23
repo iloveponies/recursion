@@ -113,28 +113,48 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies-helper [unfreqs a-map]
-  (println "unfreqs: " unfreqs)
-
   (if (empty? a-map) unfreqs
     (let [fst (first a-map)
-          unfreq (repeat (val fst) (key fst))
-          _ (println "unfreq: " unfreq)]
+          unfreq (repeat (val fst) (key fst))]
       (un-frequencies-helper (concat unfreq unfreqs) (rest a-map)))))
 
 (defn un-frequencies [a-map]
   (un-frequencies-helper '() a-map))
 
+(defn my-take-helper [taken n coll]
+  (if (or (empty? coll)(= 0 n)) taken
+    (my-take-helper (concat taken (list (first coll))) (dec n) (rest coll))))
+
 (defn my-take [n coll]
-  [:-])
+  (my-take-helper '() n coll))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (empty? coll) (= 0 n)) coll
+    (my-drop (dec n)(rest coll))))
+
+(defn halve-helper [fst n a-seq]
+  (cond
+   (empty? a-seq) (vector fst a-seq)
+   (= 0 n)(vector fst a-seq)
+   :else (halve-helper (concat fst (list (first a-seq))) (dec n) (rest a-seq))))
 
 (defn halve [a-seq]
-  [:-])
+  (halve-helper '() (int (/ (count a-seq) 2)) a-seq))
+
+(defn improved<= [a b]
+  (cond
+   (nil? a) false
+   (nil? b) true
+   :else (<= a b)))
+
+(defn seq-merge-helper [sorted-seq a-seq b-seq]
+  (cond
+   (and (empty? a-seq)(empty? b-seq)) sorted-seq
+   (improved<= (first a-seq)(first b-seq)) (seq-merge-helper (concat sorted-seq (list (first a-seq))) (rest a-seq) b-seq)
+   :else (seq-merge-helper (concat sorted-seq (list (first b-seq))) a-seq (rest b-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper '() a-seq b-seq))
 
 (defn merge-sort [a-seq]
   [:-])
