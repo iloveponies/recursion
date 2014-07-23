@@ -139,7 +139,13 @@
     (cons (take index a-seq) (cons (drop index a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else          (let [a (first a-seq) b (first b-seq)]
+                    (if (<= a b)
+                      (cons a (seq-merge (rest a-seq) b-seq))
+                      (cons b (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
   [:-])
