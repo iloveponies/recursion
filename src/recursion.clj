@@ -162,7 +162,10 @@
       (seq-merge (merge-sort (first halves)) (merge-sort (last halves))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  ())
+
+;(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
+;(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
 
 (defn permutations [a-set]
   [:-])
