@@ -104,13 +104,25 @@
     (rot (count a-seq) a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  )
+  (if (empty? a-seq) freqs
+   (let [fst (first a-seq)
+         freq (get freqs fst)]
+     (my-frequencies-helper (assoc freqs fst (if (nil? freq) 1 (inc freq))) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
+
+(defn un-frequencies-helper [unfreqs a-map]
+  (println "unfreqs: " unfreqs)
+
+  (if (empty? a-map) unfreqs
+    (let [fst (first a-map)
+          unfreq (repeat (val fst) (key fst))
+          _ (println "unfreq: " unfreq)]
+      (un-frequencies-helper (concat unfreq unfreqs) (rest a-map)))))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (un-frequencies-helper '() a-map))
 
 (defn my-take [n coll]
   [:-])
