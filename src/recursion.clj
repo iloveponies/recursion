@@ -136,7 +136,7 @@
 
 (defn halve [a-seq]
   (let [index (int (/ (count a-seq) 2))]
-    (cons (take index a-seq) (cons (drop index a-seq) '()))))
+    (cons (my-take index a-seq) (cons (my-drop index a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -148,7 +148,10 @@
                       (cons b (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [[first-half second-half] (halve a-seq)]
+      (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
