@@ -135,7 +135,8 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [index (int (/ (count a-seq) 2))]
+    (cons (take index a-seq) (cons (drop index a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
