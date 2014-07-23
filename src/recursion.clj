@@ -157,7 +157,9 @@
   (seq-merge-helper '() a-seq b-seq))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (empty-or-singleton? a-seq) a-seq
+    (let [halves (halve a-seq)]
+      (seq-merge (merge-sort (first halves)) (merge-sort (last halves))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
