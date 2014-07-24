@@ -44,9 +44,11 @@
    :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  )
-
-(my-filter odd? [1 2 3 4])
+  (if (empty? a-seq)
+    (rest a-seq)
+    (if (pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
