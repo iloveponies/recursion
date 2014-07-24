@@ -161,11 +161,20 @@
     (let [halves (halve a-seq)]
       (seq-merge (merge-sort (first halves)) (merge-sort (last halves))))))
 
-(defn split-into-monotonics [a-seq]
-  ())
+(defn split-into-monotonics-helper [mono pred a-seq]
+  (if (pred (first mono) (first a-seq))
+    (split-into-monotonics-helper (cons (first a-seq) mono) pred (rest a-seq))
+    (split-into-monotonics-helper (cons (first a-seq) mono) (complement pred) (rest a-seq))))
+
+;(defn split-into-monotonics [a-seq]
+;  (cond
+;   (empty-or-singleton? a-seq) a-seq
+;   (split-into-monotonics-helper  a-seq)))
 
 ;(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
 ;(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+
+(defn split-into-monotonics [a-seq])
 
 (defn permutations [a-set]
   [:-])
