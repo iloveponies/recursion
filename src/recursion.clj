@@ -84,8 +84,15 @@
           (f (first seq-1) (first seq-2))
           (my-map + (rest seq-1) (rest seq-2)))))
 
+(defn factorial [n]
+  (if (zero? n)
+    1
+    (* n (factorial (dec n)))))
+
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
 (defn fib [n]
   :-)
