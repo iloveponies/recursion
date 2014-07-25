@@ -153,11 +153,25 @@
     (let [[first-half second-half] (halve a-seq)]
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    true
+    (let [increasing (apply <= a-seq)
+            decreasing (apply >= a-seq)]
+        (or increasing decreasing))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [seq-cnt (count a-seq)]
+    (if (empty? a-seq)
+      '()
+     (let [initials (inits a-seq)
+           monotonic (last (take-while monotonic? initials))]
+            (cons monotonic (split-into-monotonics (drop (count monotonic) a-seq)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond
+   (empty? a-set) '(())
+   ))
 
 (defn powerset [a-set]
   [:-])
