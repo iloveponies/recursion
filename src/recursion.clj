@@ -6,16 +6,24 @@
     (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (= 1 (count coll)))
 
 (defn my-last [coll]
-  :-)
+  (if (empty? coll)
+    nil
+    (if (singleton? coll)
+      (first coll)
+      (my-last (rest coll)))))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (reduce max a-seq)))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [count-1 (count seq-1)
+        count-2 (count seq-2)]
+    (if (> count-1 count-2) seq-1 seq-2)))
 
 (defn longest-sequence [a-seq]
   [:-])
