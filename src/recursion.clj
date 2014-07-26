@@ -82,13 +82,23 @@
        (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (< how-many-times 1)
+    '()
+    (cons what-to-repeat
+          (my-repeat (dec how-many-times) what-to-repeat))))
+
 
 (defn my-range [up-to]
-  [:-])
+  (if (< up-to 1)
+    '()
+    (cons (dec up-to)
+          (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (cons (seq a-seq)
+          (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   [:-])
@@ -131,4 +141,4 @@
 
 (use 'clojure.repl)
 
-
+(tails [1 2 3 4]) 
