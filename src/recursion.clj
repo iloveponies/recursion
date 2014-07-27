@@ -109,13 +109,25 @@
     (take (count a-seq) (map concat (tails a-seq) (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (my-frequencies-helper (assoc freqs
+                             (first a-seq)
+                             (inc (get freqs (first a-seq) 0)))
+                           (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (reduce (fn [all [key val]]
+            (concat all (repeat val key))) [] a-map))
+
+(defn un-frequencies2 [a-map]
+  (if (empty? (first a-map))
+    '()
+    (concat (repeat ((first a-map) 1) ((first a-map) 0))
+            (un-frequencies2 (rest a-map)))))
 
 (defn my-take [n coll]
   [:-])
@@ -143,4 +155,4 @@
 
 (use 'clojure.repl)
 
-
+(my-frequencies (un-frequencies2 {:a 100 :b 10}))
