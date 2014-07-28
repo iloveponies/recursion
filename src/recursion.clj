@@ -130,19 +130,38 @@
             (un-frequencies2 (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (< n 1)
+          (empty? coll))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (< n 1)
+          (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (= (count a-seq) (count b-seq) 0) '()
+   (= (count a-seq) 0) b-seq
+   (= (count b-seq) 0) a-seq
+   :else (let [sorted (if (< (first a-seq) (first b-seq))
+                        {:min a-seq :high b-seq}
+                        {:min b-seq :high a-seq})]
+           (cons (first (sorted :min))
+                 (seq-merge (rest (sorted :min)) (sorted :high))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (= (count a-seq) 1) a-seq
+   (= (count a-seq) 0) '()
+   :else(seq-merge (merge-sort ((halve a-seq) 0))
+                   (merge-sort ((halve a-seq) 1)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
@@ -155,4 +174,4 @@
 
 (use 'clojure.repl)
 
-(my-frequencies (un-frequencies2 {:a 100 :b 10}))
+
