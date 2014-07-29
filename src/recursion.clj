@@ -163,8 +163,25 @@
    :else(seq-merge (merge-sort ((halve a-seq) 0))
                    (merge-sort ((halve a-seq) 1)))))
 
+(defn split-into-monotonics2 [a-seq]
+  (if (empty? a-seq)
+    '(())
+    (let [first (first a-seq)
+          secnd (first (rest a-seq))]
+      (if (< first secnd)
+        (cons (seq first) (split-into-monotonics2 (rest a-seq)))
+        (cons (seq first) (seq (split-into-monotonics2 (rest a-seq))))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [mono (last (take-while (fn [v]
+                                   (or (< (count v) 2)
+                                       (> (last v)
+                                          (first (rest (reverse v))))))
+                                 (inits a-seq)))
+          rst (drop (count mono) a-seq)]
+      (cons mono (split-into-monotonics rst)))))
 
 (defn permutations [a-set]
   [:-])
@@ -173,5 +190,5 @@
   [:-])
 
 (use 'clojure.repl)
-
-
+(split-into-monotonics [0 1 2 1 0])  
+(split-into-monotonics [0 5 4 7 1 3])
