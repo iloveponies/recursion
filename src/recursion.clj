@@ -123,10 +123,17 @@
 (defn rotate-seq [a-seq]
   (let [seq-suffix (rest a-seq)
         first-elem (first a-seq)]
-    (concat seq-suffix (cons first-elem `()))))
+    (if (= nil first-elem)
+      `()
+      (concat seq-suffix (cons first-elem `())))))
 
+; By using map and concat you can merge the tails and inits!
 (defn rotations [a-seq]
-  )
+  (if (empty? a-seq)
+    `(())
+    (let [tails-list-rev (rest (reverse (tails a-seq)))
+          init-list (rest (inits a-seq))]
+      (map (fn [l1 l2] (concat l2 l1)) init-list tails-list-rev))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
