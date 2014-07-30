@@ -105,15 +105,23 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
-(defn rotate-n [a-seq n]
-  (if (= n 0)
-    a-seq
-    (rotate-n (concat (rest a-seq) (list (first a-seq))) (- n 1))))
+;(defn rotate-n [a-seq n]
+;  (if (= n 0)
+;    a-seq
+;    (rotate-n (concat (rest a-seq) (list (first a-seq))) (- n 1))))
+;
+;(defn rotations [a-seq]
+;  (if (empty? a-seq)
+;    '(())
+;    (map (fn [n] (rotate-n a-seq n)) (range 0 (count a-seq)))))
 
+; More elegant solution?
 (defn rotations [a-seq]
   (if (empty? a-seq)
-    '(())
-    (map (fn [n] (rotate-n a-seq n)) (range 0 (count a-seq)))))
+    '[[]]
+    (let [the-inits (rest (inits a-seq))
+          the-tails (rest (reverse (tails a-seq)))]
+      (map (fn [a b] (concat b a)) the-inits the-tails))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
