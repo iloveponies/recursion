@@ -113,13 +113,20 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    `(())
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
+
+(defn rotate-seq [a-seq]
+  (let [seq-suffix (rest a-seq)
+        first-elem (first a-seq)]
+    (concat seq-suffix (cons first-elem `()))))
 
 (defn rotations [a-seq]
-  [:-])
+  )
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
