@@ -155,13 +155,22 @@
       (concat (repeat curr-count curr-elem) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (empty? coll) `()
+   (zero? n) `()
+   :else (cons (first coll) (my-take (dec n) (rest coll)) )))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll) (rest coll)
+   (zero? n) (seq coll)
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [div-int (int (/ (count a-seq) 2))
+        first-half (my-take div-int a-seq)
+        second-half (my-drop div-int a-seq)]
+    [first-half second-half]))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
