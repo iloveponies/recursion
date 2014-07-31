@@ -136,13 +136,23 @@
       (map (fn [l1 l2] (concat l2 l1)) init-list tails-list-rev))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [tmp-count (get freqs (first a-seq))
+          real-count (if (= tmp-count nil)
+                       0
+                       tmp-count)]
+      (my-frequencies-helper (assoc freqs (first a-seq) (inc real-count)) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    `()
+    (let [curr-elem (key (first a-map))
+          curr-count (val (first a-map))]
+      (concat (repeat curr-count curr-elem) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
