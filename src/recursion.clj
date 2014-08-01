@@ -176,11 +176,11 @@
   (if (empty? a-seq)
     b-seq
     (let [a-first (first a-seq)
-                 less-than-seq (my-take-while (fn [e] (if (<= e a-first)
+          less-than-seq (my-take-while (fn [e] (if (<= e a-first)
                                                         true
                                                         false))
                                               b-seq)
-                 greater-than-seq (my-drop-while (fn [e] (if (<= e a-first)
+          greater-than-seq (my-drop-while (fn [e] (if (<= e a-first)
                                                            true
                                                            false))
                                                  b-seq)]
@@ -193,6 +193,9 @@
           second-half (get (halve a-seq) 1)]
       (seq-merge (merge-sort first-half)
                  (merge-sort second-half)))))
+
+(defn monotonic-seq? [a-seq]
+  )
 
 (defn split-into-monotonics [a-seq]
   [:-])
