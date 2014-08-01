@@ -173,10 +173,26 @@
     [first-half second-half]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (if (empty? a-seq)
+    b-seq
+    (let [a-first (first a-seq)
+                 less-than-seq (my-take-while (fn [e] (if (<= e a-first)
+                                                        true
+                                                        false))
+                                              b-seq)
+                 greater-than-seq (my-drop-while (fn [e] (if (<= e a-first)
+                                                           true
+                                                           false))
+                                                 b-seq)]
+      (seq-merge (rest a-seq) (concat less-than-seq (cons a-first `()) greater-than-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (= 1 (count a-seq)))
+    a-seq
+    (let [first-half (get (halve a-seq) 0)
+          second-half (get (halve a-seq) 1)]
+      (seq-merge (merge-sort first-half)
+                 (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
