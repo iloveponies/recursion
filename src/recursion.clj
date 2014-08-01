@@ -184,11 +184,14 @@
       (cons mono (split-into-monotonics rst)))))
 
 (defn permutations [a-set]
-  [:-])
+  (println a-set)
+  (if (empty? a-set)
+    '()
+    (cons (map (fn [i] i) (rotations a-set))
+          (permutations (rest a-set)))))
 
 (defn powerset [a-set]
   [:-])
 
 (use 'clojure.repl)
-(split-into-monotonics [0 1 2 1 0])  
-(split-into-monotonics [0 5 4 7 1 3])
+(set (permutations #{1 3 5}))
