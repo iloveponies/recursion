@@ -148,17 +148,25 @@
            (seq-merge (merge-sort x) (merge-sort y)))))
 
 (defn split-into-monotonics [a-seq]
-  (if (empty? a-seq) a-seq
-  ((defn monotonic? [a-seq]
-     (or
-       (apply <= a-seq)
-       (apply >= a-seq)))
-  (fn [x] (cons x (split-into-monotonics (drop (count x) a-seq))))
-  (first (filter monotonic? a-seq)))))
+  (if (or (empty? a-seq) (singleton? a-seq)) a-seq
+    (let [mono (last
+                (filter (fn [a-seqn]
+                          (or
+                           (apply <= a-seqn)
+                           (apply >= a-seqn)))
+                        (map (fn [x] (my-take x a-seq)) (range 1 (inc (count a-seq))))))]
+      (cons mono (split-into-monotonics (my-drop (count mono) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond
+   (empty? a-set) [a-set]
+   (singleton? a-set) [a-set]
+   :else (for [i (range(count a-set))
+          p (permutations (concat (my-take i a-set) (my-drop (inc i) a-set)))]
+      (conj p (get (into [] a-set) i)))))
 
 (defn powerset [a-set]
   [:-])
+
+(defmacro dbg[x] `(let [x# ~x] (println "dbg:" '~x "=" x#) x#))
 
