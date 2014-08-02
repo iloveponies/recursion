@@ -185,13 +185,21 @@
 
 (defn permutations [a-set]
   (println a-set)
-  (if (empty? a-set)
-    '()
-    (cons (map (fn [i] i) (rotations a-set))
-          (permutations (rest a-set)))))
+  (cond
+   (empty? a-set) '(())
+   (= (count a-set) 2) (rotations a-set)
+   :else(let [rots (rotations a-set)]
+          (apply concat (map (fn [lst]
+                               (let [frst (first lst)]
+                                 (map #(cons frst %) (permutations (rest lst)))))
+                             rots)))))
 
 (defn powerset [a-set]
   [:-])
 
 (use 'clojure.repl)
-(set (permutations #{1 3 5}))
+(set (permutations #{1 5 3}))
+(permutations #{1 5 3})
+(apply concat (map (fn [lst]
+                     (map #(cons 1 %) (rotations lst)))
+                   [[2 3] [4 5]]))
