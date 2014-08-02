@@ -184,22 +184,45 @@
       (cons mono (split-into-monotonics rst)))))
 
 (defn permutations [a-set]
-  (println a-set)
   (cond
    (empty? a-set) '(())
-   (= (count a-set) 2) (rotations a-set)
+   (< (count a-set) 3) (rotations a-set)
    :else(let [rots (rotations a-set)]
-          (apply concat (map (fn [lst]
-                               (let [frst (first lst)]
-                                 (map #(cons frst %) (permutations (rest lst)))))
-                             rots)))))
+          (apply concat
+                 (map (fn [lst]
+                        (map #(cons (first lst) %) (permutations (rest lst))))
+                      rots)))))
 
 (defn powerset [a-set]
-  [:-])
+  (set (concat
+        (map set (tails a-set))
+        (map set (inits a-set))
+        (map (fn [elm] (set [elm] )) a-set))))
+
+(defn powerset2 [a-set]
+  (if (empty? a-set)
+    #{#{}}
+    (concat a-set
+            #{#{(first a-set)}}
+            (if (> (count a-set) 1)
+              (do
+                (println a-set)
+                (map (fn [lst] #{(rest lst)}) (permutations a-set)))
+              (do
+                (println "nada")
+                []))
+            (powerset2 (rest a-set)))))
 
 (use 'clojure.repl)
 (set (permutations #{1 5 3}))
-(permutations #{1 5 3})
-(apply concat (map (fn [lst]
-                     (map #(cons 1 %) (rotations lst)))
-                   [[2 3] [4 5]]))
+(powerset2 #{1 2 4 5})
+(def a-set #{1 2 4})
+(if (> (count a-set) 1)
+  (do
+    (println a-set)
+    (map (fn [lst] #{(rest lst)}) (permutations a-set)))
+  (do
+    (println "nada")
+    []))
+  
+(map (fn [lst] (rest lst)) (permutations a-set))
