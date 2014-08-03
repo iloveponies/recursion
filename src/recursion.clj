@@ -53,13 +53,18 @@
         :else (my-drop-while pred? (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond (and (empty? a-seq) (empty? b-seq)) true
+        (not (= (first a-seq) (first b-seq))) false
+        :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2)) '()
+      (cons (f (first seq-1) (first seq-2))
+            (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k) 1
+      (* n (power n (dec k)))))
 
 (defn fib [n]
   :-)
