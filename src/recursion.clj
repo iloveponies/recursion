@@ -175,10 +175,14 @@
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq)
     '()
-    (let [mono (last (take-while (fn [v]
+    (let [fun (if (and (> (count a-seq) 1)
+                       (> (first (rest a-seq)) (first a-seq)))
+               >
+               <)
+          mono (last (take-while (fn [v]
                                    (or (< (count v) 2)
-                                       (> (last v)
-                                          (first (rest (reverse v))))))
+                                       (fun (last v)
+                                            (first (rest (reverse v))))))
                                  (inits a-seq)))
           rst (drop (count mono) a-seq)]
       (cons mono (split-into-monotonics rst)))))
@@ -194,35 +198,9 @@
                       rots)))))
 
 (defn powerset [a-set]
-  (set (concat
-        (map set (tails a-set))
-        (map set (inits a-set))
-        (map (fn [elm] (set [elm] )) a-set))))
-
-(defn powerset2 [a-set]
-  (if (empty? a-set)
-    #{#{}}
-    (concat a-set
-            #{#{(first a-set)}}
-            (if (> (count a-set) 1)
-              (do
-                (println a-set)
-                (map (fn [lst] #{(rest lst)}) (permutations a-set)))
-              (do
-                (println "nada")
-                []))
-            (powerset2 (rest a-set)))))
+  (cond (empty? a-set) #{#{}}
+        :else (set (cons (set a-set)
+                         (apply concat (map (fn [lst] (powerset (rest lst))) (permutations a-set)))))))
 
 (use 'clojure.repl)
-(set (permutations #{1 5 3}))
-(powerset2 #{1 2 4 5})
-(def a-set #{1 2 4})
-(if (> (count a-set) 1)
-  (do
-    (println a-set)
-    (map (fn [lst] #{(rest lst)}) (permutations a-set)))
-  (do
-    (println "nada")
-    []))
-  
-(map (fn [lst] (rest lst)) (permutations a-set))
+
