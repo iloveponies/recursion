@@ -197,10 +197,22 @@
                         (map #(cons (first lst) %) (permutations (rest lst))))
                       rots)))))
 
-(defn powerset [a-set]
+;mapping over 'permutations' blows calculation time sky high
+(defn pow [a-set]
   (cond (empty? a-set) #{#{}}
         :else (set (cons (set a-set)
-                         (apply concat (map (fn [lst] (powerset (rest lst))) (permutations a-set)))))))
+                         (apply concat (map (fn [lst] (pow (rest lst))) (permutations a-set)))))))
 
-(use 'clojure.repl)
+;this was stolen from SooDesuNe: https://github.com/iloveponies/recursion/pull/206/files
+(defn powerset [a-set]
+  (cond
+   (empty? a-set)
+   #{#{}}
+   (singleton? a-set)
+   #{a-set, #{}}
+   :else
+   (let [excl-set (powerset (set (rest a-set))),
+         incl-set (map (fn[x] (set (conj x (first a-set)))) excl-set)]
+     (clojure.set/union incl-set excl-set))))
+
 
