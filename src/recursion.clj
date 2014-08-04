@@ -168,9 +168,14 @@
 (defn powerset [a-set]
   (cond
    (or (empty? a-set) (singleton? a-set)) #{a-set}
-   :else (apply clojure.set/union #{#{}} #{a-set} (map (fn [i]
-                            (powerset (clojure.set/union (into #{} (my-take i a-set)) (into #{} (my-drop (inc i) a-set)))))
-                          (range (count a-set))))))
+   :else (apply clojure.set/union
+                #{#{}}
+                #{(into #{} a-set)}
+                (map (fn [i]
+                       (powerset (clojure.set/union
+                                  (into #{} (my-take i a-set))
+                                  (into #{} (my-drop (inc i) a-set)))))
+                     (range (count a-set))))))
 
 (defmacro dbg[x] `(let [x# ~x] (println "dbg:" '~x "=" x#) x#))
 
