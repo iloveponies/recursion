@@ -161,11 +161,16 @@
     (let [halves (halve a-seq)]
       (seq-merge (merge-sort (first halves)) (merge-sort (last halves))))))
 
-(defn split-into-monotonics [a-seq]
-  ())
+(defn split-helper [result part a-seq]
+  (cond
+   (empty? a-seq) (concat result (list part))
+   (or (empty? part)(nil? (second part))) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
+   (<= (first part)(last part)(first a-seq)) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
+   (>= (first part)(last part)(first a-seq)) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
+   :else (split-helper (concat result (list part)) '() a-seq)))
 
-;(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
-;(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
+(defn split-into-monotonics [a-seq]
+  (split-helper '() '() a-seq))
 
 (defn permutations [a-set]
   [:-])
