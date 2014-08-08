@@ -83,15 +83,13 @@
     (cons (dec up-to) (my-range (dec up-to)))
     '()))
 
-(defn tails [a-seq]
-  (if (empty? a-seq)
-    '(())
-    (cons a-seq (tails (rest a-seq)))))
+(defn tails [coll]
+  (for [n (->> coll count inc (range 0))]
+    (drop n coll)))
 
-(defn inits [a-seq]
-  (if (empty? a-seq)
-    '(())
-    (conj (inits (butlast a-seq)) a-seq)))
+(defn inits [coll]
+  (for [n (->> coll count inc (range 0))]
+    (take n coll)))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
@@ -142,8 +140,14 @@
     (let [[h1 h2] (halve a-seq)]
       (seq-merge (merge-sort h1) (merge-sort h2)))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn monotonic? [coll]
+  (or (= coll (sort coll)) (= coll (sort > coll))))
+
+(defn split-into-monotonics [coll]
+  (if (empty? coll)
+    ()
+    (let [monotonic (->> coll inits (take-while monotonic?) last)]
+      (cons monotonic (split-into-monotonics (drop (count monotonic) coll))))))
 
 (defn permutations [a-set]
   [:-])
