@@ -76,9 +76,12 @@
         rest-a (rest seq-1)
         rest-b (rest seq-2)]
     (if 
-      (or (empty? seq-1) (empty? seq-2)) 
+      (or (empty? rest-a) (empty? rest-b)) 
       []
-      (cons (f first-a first-b) (my-map f rest-a rest-b)))))
+      (if 
+        (or (empty? seq-1) (empty? seq-2)) 
+        (conj [] (f first-a first-b))
+        (cons (f first-a first-b) (my-map f rest-a rest-b))))))
 
 (defn power [n k]
   :-)
