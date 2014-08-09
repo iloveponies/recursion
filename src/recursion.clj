@@ -113,8 +113,21 @@
     (empty? a-seq) [[]]
     :else (cons a-seq (inits (butlast a-seq)))))
 
+(defn rotate [a-seq]
+  (concat (rest a-seq) (conj nil (first a-seq))))
+
+
+(defn rotations-helper [a-seq rotated]
+  (cond
+    (some #{a-seq} rotated) rotated
+    :else (rotations-helper (rotate a-seq) (conj rotated a-seq))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if 
+    (empty? a-seq) 
+    (conj nil a-seq)
+    (rotations-helper a-seq [])))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
