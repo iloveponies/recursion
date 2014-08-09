@@ -164,16 +164,23 @@
 (defn split-helper [result part a-seq]
   (cond
    (empty? a-seq) (concat result (list part))
-   (or (empty? part)(nil? (second part))) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
-   (<= (first part)(last part)(first a-seq)) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
-   (>= (first part)(last part)(first a-seq)) (split-helper result (concat part (list(first a-seq))) (rest a-seq))
+   (or (empty? part)
+        (nil? (second part))
+        (<= (first part)(last part)(first a-seq))
+        (>= (first part)(last part)(first a-seq)))
+          (split-helper result (concat part (list(first a-seq))) (rest a-seq))
    :else (split-helper (concat result (list part)) '() a-seq)))
 
 (defn split-into-monotonics [a-seq]
   (split-helper '() '() a-seq))
 
+(defn permutation-helper [a-set]
+  (cond
+   (<= (count a-set) 2) (rotations a-set)
+   :else (rotations (rest a-set))))
+
 (defn permutations [a-set]
-  [:-])
+  (permutation-helper a-set))
 
 (defn powerset [a-set]
   [:-])
