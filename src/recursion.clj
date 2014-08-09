@@ -81,22 +81,37 @@
       (cons (f first-a first-b) (my-map f rest-a rest-b)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (cond
+    (zero? n) 0
+    (= 1 n) 1
+    :else (+ (fib (- n 1)) (fib (- n 2)))))
 
-(defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+
+(defn my-repeat [times what]
+  (cond 
+    (<= times 0) []
+    (= 1 times) (conj nil what)
+    :else (cons what (my-repeat (dec times) what))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+    (<= up-to 0) []
+    :else (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) [[]]
+    :else (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) [[]]
+    :else (cons a-seq (inits (butlast a-seq)))))
 
 (defn rotations [a-seq]
   [:-])
