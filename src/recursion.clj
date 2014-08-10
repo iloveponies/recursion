@@ -171,10 +171,18 @@
     (my-take-helper n coll [])))
 
 (defn my-drop [n coll]
-  [:-])
+  (if
+    (or (empty? coll) (<= n 0))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (if 
+    (empty? a-seq)
+    ['() '()]
+    (let [size (count a-seq)
+          half (int (/ size 2))]
+      [(my-take half a-seq) (my-drop half a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
