@@ -207,7 +207,13 @@
     (seq-merge-helper a-seq b-seq []))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if 
+    (<= (count a-seq) 1)
+    a-seq
+    (let [halved (halve a-seq)
+          f (halved 0)
+          s (halved 1)]
+      (seq-merge (merge-sort f) (merge-sort s)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
