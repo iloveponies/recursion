@@ -111,7 +111,7 @@
 (defn inits [a-seq]
   (cond
     (empty? a-seq) [[]]
-    :else (cons a-seq (inits (butlast a-seq)))))
+    :else (conj (inits (butlast a-seq)) a-seq)))
 
 (defn rotate [a-seq]
   (concat (rest a-seq) (conj nil (first a-seq))))
