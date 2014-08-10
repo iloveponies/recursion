@@ -184,8 +184,27 @@
           half (int (/ size 2))]
       [(my-take half a-seq) (my-drop half a-seq)])))
 
+(defn seq-merge-helper [a-seq b-seq result]
+  (let [empty-a (empty? a-seq)
+        empty-b (empty? b-seq)]
+        (cond 
+          (and empty-a empty-b) result
+          empty-a (seq-merge-helper 
+                    a-seq 
+                    (rest b-seq) 
+                    (conj result (first b-seq)))
+          empty-b (seq-merge-helper
+                    (rest a-seq)
+                    b-seq
+                    (conj result (first a-seq)))
+          :else (if 
+                  (> (first a-seq) (first b-seq))
+                  (seq-merge-helper a-seq (rest b-seq) (conj result (first b-seq)))
+                  (seq-merge-helper (rest a-seq) b-seq (conj result (first a-seq)))))))
+
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+    (seq-merge-helper a-seq b-seq []))
 
 (defn merge-sort [a-seq]
   [:-])
