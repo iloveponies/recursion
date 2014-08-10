@@ -149,9 +149,17 @@
     (let [monotonic (->> coll inits (take-while monotonic?) last)]
       (cons monotonic (split-into-monotonics (drop (count monotonic) coll))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn permutations [s]
+  (if (empty? s)
+    '(())
+    (mapcat (fn [e]
+              (map #(cons e %)
+                   (permutations (disj (set s) e))))
+            s)))
 
-(defn powerset [a-set]
-  [:-])
+(defn powerset [s]
+  (if (empty? s)
+    #{#{}}
+    (let [s (set s) e (first s) rest (powerset (disj s e))]
+      (set (concat rest (map #(conj % e) rest))))))
 
