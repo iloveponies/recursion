@@ -130,10 +130,23 @@
 
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if 
+    (empty? a-seq)
+    freqs
+    (let [value (first a-seq)
+          current-value (freqs value)
+          current-count (if 
+                          (nil? current-value) 
+                          1 
+                          (inc current-value))
+          new-freqs (assoc freqs value current-count)]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (if 
+    (empty? a-seq)
+    {}
+    (my-frequencies-helper {} a-seq)))
 
 (defn un-frequencies [a-map]
   [:-])
