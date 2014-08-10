@@ -158,9 +158,17 @@
           v (val value)]
       (concat (repeat v k) (un-frequencies (rest a-map))))))
 
+(defn my-take-helper [n coll result]
+  (if
+    (or (zero? n) (empty? coll))
+    result
+    (my-take-helper (dec n) (rest coll) (conj result (first coll)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if
+    (zero? n)
+    '()
+    (my-take-helper n coll [])))
 
 (defn my-drop [n coll]
   [:-])
