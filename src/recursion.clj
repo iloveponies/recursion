@@ -136,7 +136,7 @@
     (cond (empty? a-seq) '()
           (singleton? a-seq) a-seq
           :else (seq-merge (merge-sort (first halved))
-                   (merge-sort (second halved))))))
+                           (merge-sort (second halved))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
