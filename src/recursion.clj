@@ -215,8 +215,22 @@
           s (halved 1)]
       (seq-merge (merge-sort f) (merge-sort s)))))
 
+(defn split-into-monotonics-helper [a-seq last-seq result]
+  (if 
+    (empty? a-seq)
+    (conj result last-seq)
+    (let [f (first a-seq)
+          r (rest a-seq)]
+      (if 
+        (empty? last-seq)
+        (split-into-monotonics-helper r [f] result)
+        (if 
+          (> (last last-seq) f)
+          (split-into-monotonics-helper r [f] (conj result last-seq))
+          (split-into-monotonics-helper r (conj last-seq f) result))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (split-into-monotonics-helper a-seq [] []))
 
 (defn permutations [a-set]
   [:-])
