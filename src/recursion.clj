@@ -125,11 +125,18 @@
     [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  (let [to-merge (first a-seq)]
-    (if (empty? a-seq) '())))
+  (let [a (first a-seq), b (first b-seq)]
+    (cond (empty? a-seq) b-seq
+          (empty? b-seq) a-seq
+          (= (min a b) a) (cons a (seq-merge (rest a-seq) b-seq))
+          :else (cons b (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [halved (halve a-seq)]
+    (cond (empty? a-seq) '()
+          (singleton? a-seq) a-seq
+          :else (seq-merge (merge-sort (first halved))
+                   (merge-sort (second halved))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
