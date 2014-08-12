@@ -228,17 +228,12 @@
         (let [first-val (first last-seq)
               second-val (first (rest last-seq))
               last-val (last last-seq)
-              greater (> second-val first-val)]
-          (if
-            greater
+              greater (> second-val first-val)
+              func (if greater > <)]
             (if
-              (> f last-val)
+              (func f last-val)
               (split-into-monotonics-helper r (conj last-seq f) result)
-              (split-into-monotonics-helper r [f] (conj result last-seq)))
-            (if
-              (< f last-val)
-              (split-into-monotonics-helper r (conj last-seq f) result)
-              (split-into-monotonics-helper r [f]  (conj result last-seq)))))))))
+              (split-into-monotonics-helper r [f] (conj result last-seq))))))))
 
 (defn split-into-monotonics [a-seq]
   (split-into-monotonics-helper a-seq [] []))
