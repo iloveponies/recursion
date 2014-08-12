@@ -20,9 +20,7 @@
                    (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  (let [c1 (count seq-1) 
-        c2 (count seq-2)]
-    (if (== (max c1 c2) c1) seq-1 seq-2)))
+  (if (> (count seq-1) (count seq-2)) seq-1 seq-2))
 
 (defn longest-sequence [a-seq]
   (cond (empty? a-seq) nil
@@ -54,6 +52,7 @@
 
 (defn seq= [a-seq b-seq]
   (cond (and (empty? a-seq) (empty? b-seq)) true
+        (not (= (count a-seq) (count b-seq))) false
         (not (= (first a-seq) (first b-seq))) false
         :else (seq= (rest a-seq) (rest b-seq))))
 
@@ -88,7 +87,8 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  (rest (map concat (tails a-seq) (reverse (inits a-seq)))))
+  (if (empty? a-seq) '(())
+      (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-freqs-helper [freqs a-seq]
   (let [a-key (first a-seq)
