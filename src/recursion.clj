@@ -43,8 +43,8 @@
      (cond (empty? coll)
            '()
            (pred? (first coll))
-           (cons (first coll) (helper (next coll)))
-           :else (helper (next coll))))]
+           (cons (first coll) (lazy-seq (helper (next coll))))
+           :else (lazy-seq (helper (next coll)))))]
      (helper a-seq)))
 
 (defn sequence-contains? [elem a-seq]
