@@ -28,8 +28,8 @@
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
     nil
-    (seq-max 
-      (first a-seq) 
+    (seq-max
+      (first a-seq)
       (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
@@ -75,8 +75,8 @@
         first-b (first seq-2)
         rest-a (rest seq-1)
         rest-b (rest seq-2)]
-    (if 
-      (or (empty? seq-1) (empty? seq-2)) 
+    (if
+      (or (empty? seq-1) (empty? seq-2))
       []
       (cons (f first-a first-b) (my-map f rest-a rest-b)))))
 
@@ -93,7 +93,7 @@
 
 
 (defn my-repeat [times what]
-  (cond 
+  (cond
     (<= times 0) []
     (= 1 times) (conj nil what)
     :else (cons what (my-repeat (dec times) what))))
@@ -123,34 +123,34 @@
     :else (rotations-helper (rotate a-seq) (conj rotated a-seq))))
 
 (defn rotations [a-seq]
-  (if 
-    (empty? a-seq) 
+  (if
+    (empty? a-seq)
     (conj nil a-seq)
     (rotations-helper a-seq [])))
 
 
 (defn my-frequencies-helper [freqs a-seq]
-  (if 
+  (if
     (empty? a-seq)
     freqs
     (let [value (first a-seq)
           current-value (freqs value)
-          current-count (if 
-                          (nil? current-value) 
-                          1 
+          current-count (if
+                          (nil? current-value)
+                          1
                           (inc current-value))
           new-freqs (assoc freqs value current-count)]
       (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  (if 
+  (if
     (empty? a-seq)
     {}
     (my-frequencies-helper {} a-seq)))
 
 
 (defn un-frequencies [a-map]
-  (if 
+  (if
     (empty? a-map)
     '()
     (let [value (first a-map)
@@ -177,7 +177,7 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  (if 
+  (if
     (empty? a-seq)
     ['() '()]
     (let [size (count a-seq)
@@ -187,27 +187,27 @@
 (defn seq-merge-helper [a-seq b-seq result]
   (let [empty-a (empty? a-seq)
         empty-b (empty? b-seq)]
-        (cond 
-          (and empty-a empty-b) result
-          empty-a (seq-merge-helper 
-                    a-seq 
-                    (rest b-seq) 
-                    (conj result (first b-seq)))
-          empty-b (seq-merge-helper
-                    (rest a-seq)
-                    b-seq
-                    (conj result (first a-seq)))
-          :else (if 
-                  (> (first a-seq) (first b-seq))
-                  (seq-merge-helper a-seq (rest b-seq) (conj result (first b-seq)))
-                  (seq-merge-helper (rest a-seq) b-seq (conj result (first a-seq)))))))
+    (cond
+      (and empty-a empty-b) result
+      empty-a (seq-merge-helper
+                a-seq
+                (rest b-seq)
+                (conj result (first b-seq)))
+      empty-b (seq-merge-helper
+                (rest a-seq)
+                b-seq
+                (conj result (first a-seq)))
+      :else (if
+              (> (first a-seq) (first b-seq))
+              (seq-merge-helper a-seq (rest b-seq) (conj result (first b-seq)))
+              (seq-merge-helper (rest a-seq) b-seq (conj result (first a-seq)))))))
 
 
 (defn seq-merge [a-seq b-seq]
-    (seq-merge-helper a-seq b-seq []))
+  (seq-merge-helper a-seq b-seq []))
 
 (defn merge-sort [a-seq]
-  (if 
+  (if
     (<= (count a-seq) 1)
     a-seq
     (let [halved (halve a-seq)
@@ -215,19 +215,29 @@
           s (halved 1)]
       (seq-merge (merge-sort f) (merge-sort s)))))
 
+
 (defn split-into-monotonics-helper [a-seq last-seq result]
-  (if 
+  (if
     (empty? a-seq)
     (conj result last-seq)
     (let [f (first a-seq)
           r (rest a-seq)]
-      (if 
-        (empty? last-seq)
-        (split-into-monotonics-helper r [f] result)
-        (if 
-          (> (last last-seq) f)
-          (split-into-monotonics-helper r [f] (conj result last-seq))
-          (split-into-monotonics-helper r (conj last-seq f) result))))))
+      (if
+        (or (empty? last-seq) (= 1 (count last-seq)))
+        (split-into-monotonics-helper r (conj last-seq f) result)
+        (let [first-val (first last-seq)
+              second-val (first (rest last-seq))
+              greater (> second-val first-val)]
+          (if
+            greater
+            (if
+              (> f second-val)
+              (split-into-monotonics-helper r (conj last-seq f) result)
+              (split-into-monotonics-helper r [f] (conj result last-seq)))
+            (if
+              (< f second-val)
+              (split-into-monotonics-helper r (conj last-seq f) result)
+              (split-into-monotonics-helper r [f]  (conj result last-seq)))))))))
 
 (defn split-into-monotonics [a-seq]
   (split-into-monotonics-helper a-seq [] []))
