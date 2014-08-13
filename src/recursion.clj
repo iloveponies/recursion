@@ -12,7 +12,7 @@
 (defn my-last [coll]
   (if (empty? (next coll))
     (first coll)
-    (my-last (next coll))))
+    (recur (next coll))))
 
 (defn max-element [a-seq]
   (loop [coll (next a-seq), acc (first a-seq)]
@@ -38,14 +38,12 @@
       acc-seq
       (recur (seq-max acc-seq (first colls)) (next colls)))))
 
-(defn my-filter [pred? a-seq]
-   (letfn [(helper [coll]
-     (cond (empty? coll)
-           '()
-           (pred? (first coll))
-           (cons (first coll) (lazy-seq (helper (next coll))))
-           :else (lazy-seq (helper (next coll)))))]
-     (helper a-seq)))
+(defn my-filter [pred? coll]
+   (cond (empty? coll)
+         '()
+         (pred? (first coll))
+         (cons (first coll) (lazy-seq (my-filter pred? (next coll))))
+         :else (lazy-seq (my-filter pred? (next coll)))))
 
 (defn sequence-contains? [elem a-seq]
   (loop [coll a-seq]
@@ -53,19 +51,15 @@
           (= elem (first coll)) true
           :else (recur (next coll)))))
 
-(defn my-take-while [pred? a-seq]
-  (letfn [(helper [coll]
-                  (cond (empty? coll) '()
-                        (not (pred? (first coll))) '()
-                        :else (cons (first coll) (helper (next coll)))))]
-    (helper a-seq)))
+(defn my-take-while [pred? coll]
+  (cond (empty? coll) '()
+        (not (pred? (first coll))) '()
+        :else (cons (first coll) (lazy-seq (my-take-while pred? (next coll))))))
 
-(defn my-drop-while [pred? a-seq]
-  (letfn [(helper [coll]
-                  (cond (empty? coll) '()
-                        (not (pred? (first coll))) coll
-                        :else (helper (next coll))))]
-    (helper a-seq)))
+(defn my-drop-while [pred? coll]
+  (cond (empty? coll) '()
+        (not (pred? (first coll))) coll
+        :else (recur pred? (next coll))))
 
 (defn seq= [a-seq b-seq]
   :-)

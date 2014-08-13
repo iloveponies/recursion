@@ -6,13 +6,14 @@
 (my-filter odd? [1 2 3 4]) ;=> (1 3)
 (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
 (my-filter even? [1 3 5 7]) ;=> ()
-(my-filter even? [])
+(my-filter even? [2 4])
+(my-last (range 1 5))
 
 (sequence-contains? 3 [1 2 3 "pony"]) ;=> true
 (sequence-contains? 3 [4 7 9]) ;=> false
 (sequence-contains? :pony [])  ;=> false
 
-(my-take-while odd? [1 2 3 4])  ;=> (1)
+(my-take-while odd? [1 7 2 3 4])  ;=> (1)
 (my-take-while odd? [1 3 4 5])  ;=> (1 3)
 (my-take-while even? [1 3 4 5]) ;=> ()
 (my-take-while odd? [])         ;=> ()
