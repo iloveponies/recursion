@@ -61,23 +61,52 @@
         (not (pred? (first coll))) coll
         :else (recur pred? (next coll))))
 
-(defn seq= [a-seq b-seq]
-  :-)
+(defn seq= [seq-a seq-b]
+  (let [empty-a? (empty? seq-a)
+        empty-b? (empty? seq-b)
+        ]
+    (cond
+        (and empty-a? empty-b?) true
+        (or empty-a? empty-b?)  false
+        (not (= (first seq-a) (first seq-b))) false
+        :else (recur (next seq-a) (next seq-b))
+        )))
 
-(defn my-map [f seq-1 seq-2]
-  [:-])
+(defn my-map  [f seq-1 seq-2]
+  (let [f1 (first seq-1)
+        f2 (first seq-2)]
+    (if
+      (or (empty? seq-1) (empty? seq-2))
+      '()
+      (cons (f f1 f2) (lazy-seq (my-map f (next seq-1) (next seq-2)))))))
 
-(defn power [n k]
-  :-)
 
-(defn fib [n]
-  :-)
+(defn power  "calculate power of n to k"(
+  [n k]
+  (power n k 1))
+  ([n k acc]
+   (if (< k 1)
+     acc
+     (recur n (dec k) (* acc n)))))
+
+(defn fib " calculate fibonnaci number n"
+  ([n] (fib n 0 1))
+  ([n f-nth a]
+   (if (< n 1)
+     f-nth
+     (recur (dec n) (+ f-nth a) f-nth))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (< how-many-times 1)
+    '()
+    (cons what-to-repeat (lazy-seq (my-repeat (dec how-many-times) what-to-repeat)))))
 
 (defn my-range [up-to]
-  [:-])
+  (let [val (dec up-to)]
+    (if (< up-to 1)
+      '()
+      (cons val (lazy-seq (my-range val))))))
+
 
 (defn tails [a-seq]
   [:-])
