@@ -108,8 +108,10 @@
       (cons val (lazy-seq (my-range val))))))
 
 
-(defn tails [a-seq]
-  [:-])
+(defn tails [coll]
+  (if (empty? coll)
+    '(())
+    (cons (seq coll) (lazy-seq (tails (next coll))))))
 
 (defn inits [a-seq]
   [:-])
