@@ -6,7 +6,7 @@
     (* (first coll) (product(rest coll)))))
 
 (defn singleton? [coll]
-  (and (not (nil? (first coll)))
+  (and (not (empty? coll))
        (empty? (next coll))))
 
 (defn my-last [coll]
@@ -20,12 +20,12 @@
       acc
       (recur (next coll) (max acc (first coll))))))
 
-(defn seq-max-old [seq-1 seq-2]
-    (if (< (count seq-1) (count seq-2))
-         seq-2
-         seq-1))
+(defn seq-max [seq-1 seq-2]
+    (if (> (count seq-1) (count seq-2))
+         seq-1
+         seq-2))
 
-(defn seq-max [s1 s2]
+(defn seq-max-r [s1 s2]
   (loop [r1 s1, r2 s2]
     (cond
      (empty? r2) s1
@@ -114,14 +114,18 @@
 
 (defn inits
   "create sequence of all subsets from start forward"
-  ([coll] (inits coll (count coll)))
-  ([coll n]
-   (if (< n 1)
-     '(())
-     (cons (take n coll) (inits coll (dec n))))))
+  ([coll]
+   (map #(take % coll) (range (inc (count coll))))))
 
-(defn rotations [a-seq]
-  [:-])
+(defn rotations
+  ([x]
+   (if (empty? x)
+     '(())
+     (rotations x (count x))))
+  ([x n]
+   (if (< n 1)
+     '()
+     (cons x (rotations (concat (next x) (list (first x))) (dec n))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
