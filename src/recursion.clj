@@ -107,14 +107,18 @@
       '()
       (cons val (lazy-seq (my-range val))))))
 
-
-(defn tails [coll]
+(defn tails [coll] "create sequence of all subsets from tail back"
   (if (empty? coll)
     '(())
-    (cons (seq coll) (lazy-seq (tails (next coll))))))
+    (cons (seq coll) (tails (next coll)))))
 
-(defn inits [a-seq]
-  [:-])
+(defn inits
+  "create sequence of all subsets from start forward"
+  ([coll] (inits coll (count coll)))
+  ([coll n]
+   (if (< n 1)
+     '(())
+     (cons (take n coll) (inits coll (dec n))))))
 
 (defn rotations [a-seq]
   [:-])

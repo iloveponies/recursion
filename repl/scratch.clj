@@ -49,13 +49,15 @@
 (my-range 2)  ;=> (1 0)
 (my-range 3)  ;=> (2 1 0)
 
-(defn inits2
+(defn inits2 [coll]
   "create sequence of all initial subsets"
-  ([coll] (inits2 coll '()))
-  ([coll acc]
-   (if (empty? coll)
-     '()
-     (cons (seq coll) (tails2 (next coll))))))
+  (reverse (map reverse (tails (reverse coll)))))
+(cons '(:a) (seq '(())))
+
+(defn inits3 [coll]
+  (if (empty? coll)
+    '(())
+    (cons (seq coll) (lazy-seq (tails (next coll))))))
 
 (tails '(:x 23 56 1))
 
