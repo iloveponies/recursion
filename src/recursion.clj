@@ -54,7 +54,10 @@
      :else          '())))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq)        a-seq
+   (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+   :else                 a-seq))
 
 (defn seq= [a-seq b-seq]
   :-)
