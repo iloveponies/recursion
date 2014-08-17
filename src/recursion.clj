@@ -45,7 +45,13 @@
    :else                  (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (let [head (first a-seq)
+        tail (rest a-seq)]
+    (cond
+     (empty? a-seq) a-seq
+     (pred? head)   (cons head
+                          (my-take-while pred? tail))
+     :else          '())))
 
 (defn my-drop-while [pred? a-seq]
   [:-])
