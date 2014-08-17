@@ -97,10 +97,16 @@
             (my-range n)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (cons (seq a-seq)
+          (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (concat (inits (drop-last a-seq))
+            (list (seq a-seq)))))
 
 (defn rotations [a-seq]
   [:-])
