@@ -30,7 +30,13 @@
         :else              (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [head (first a-seq)
+        tail (rest a-seq)]
+    (cond
+     (empty? a-seq) a-seq
+     (pred? head)  (cons head
+                         (my-filter pred? tail))
+     :else         (my-filter pred? tail))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
