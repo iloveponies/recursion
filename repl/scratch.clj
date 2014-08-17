@@ -1,28 +1,25 @@
 (use 'recursion :reload)
 
 (defn my-frequencies2 "count frequencies of different elements"
-                 ([a-seq] (my-frequencies2 a-seq {}))
-                 ([a-seq freqs]
-                  (if (empty? a-seq)
-                    freqs
-                    (recur (next a-seq) (freqs)))))
-
-
+  ([a-seq] (my-frequencies2 a-seq {}))
+  ([a-seq freqs]
+   (let [count-item
+         (fn [item coll]
+           (assoc coll item (inc (get coll item 0))))]
+     (if (empty? a-seq)
+       freqs
+       (recur (next a-seq) (count-item (first a-seq) freqs))))))
 
 (my-frequencies []) ;=> {}
 (my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 
-(def fs {:a 0 :b 2 :c 4} )
+(def fs {:m 67 :a 0  :c 4 :b 2} )
 
-(inc (get fs :c 0)) nil)
+(into (sorted-map) fs)
 
-(update-in {:freqs fs} [ :freqs :c] inc)
+(defn count-item [item coll]
+  (assoc coll item (inc (get fs item 0))))
 
-(assoc fs :c (inc (get fs :c 0)))
+(count-item :b fs)
 
-(def users [{:name "James" :age 26}  {:name "John" :age 43}])
-
-(update-in users [1 :age] inc)
-
-
-(doc update-in)
+(doc sorted-map)
