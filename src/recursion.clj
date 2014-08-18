@@ -109,7 +109,10 @@
             (list (seq a-seq)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (map-indexed (fn [i _] (concat (drop i a-seq) (take i a-seq)))
+                 a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
