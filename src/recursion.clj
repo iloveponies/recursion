@@ -139,25 +139,68 @@
      (recur (next a-seq) (my-frequencies-helper freqs (first a-seq))))))
 
 (defn un-frequencies [a-map]
-  (map (fn [{item count}] (repeat item count) a-map)))
+  (mapcat (fn [[item count]] (repeat count item)) a-map))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (< n 1))
+    '()
+    (lazy-seq (cons (first coll) (my-take (dec n)(next coll))))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll) '()
+   (< n 1) coll
+   :else (recur (dec n) (next coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [some (int (/ (count a-seq) 2))]
+    (vector (take some a-seq) (drop some a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)]
+    (cond
+     (empty? a-seq)
+     b-seq
+     (empty? b-seq)
+     a-seq
+     :else
+     (if (< a b)
+       (lazy-seq (cons a (seq-merge (next a-seq) b-seq)))
+       (lazy-seq (cons b (seq-merge a-seq (next b-seq))))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [how-many (count a-seq)
+        some (int (/ how-many 2))]
+    (if (< how-many 2)
+      a-seq
+      (let
+        [left (take some a-seq)
+         right (drop some a-seq)]
+        (seq-merge (merge-sort left) (merge-sort right))))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn split-into-monotonics
+  ([a-seq] (split-into-monotonics a-seq (first a-seq) '() :none))
+  ([a-seq last acc direction]
+     (if (empty? a-seq)
+       (reverse acc)
+       (let [current (first a-seq)
+             this-delta (cond
+                         (== last current) :none
+                         (< current last) :down
+                         :else :up)]
+         (println a-seq last acc direction " | " current this-delta)
+         (if
+          (or (= direction :none)         ; accumulate this one?
+              (= direction this-delta))
+          (split-into-monotonics (next a-seq)
+                                 current
+                                 (cons current acc)
+                                 this-delta)
+           (cons acc (split-into-monotonics a-seq
+                                            current
+                                            '()
+                                            this-delta)))))))
 
 (defn permutations [a-set]
   [:-])
