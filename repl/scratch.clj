@@ -1,5 +1,9 @@
 (use 'recursion :reload)
 
-(my-frequencies []) ;=> {}
-(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
-(my-frequencies [1 nil 3 1 4 5 1 nil 5 '() 5 {}])
+(un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
+(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+(my-frequencies (un-frequencies {:a 100 :b 10})) ;=> {:a 100 :b 10}
+
+(def fs {:a 3 :b 2 "^_^" 1})
+
+(map #(str [item count]) fs)

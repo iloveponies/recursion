@@ -118,14 +118,14 @@
    (map #(take % coll) (range (inc (count coll))))))
 
 (defn rotations
-  ([x]
-   (if (empty? x)
+  ([coll]
+   (if (empty? coll)
      '(())
-     (rotations x (count x))))
-  ([x n]
+     (rotations coll (count coll))))
+  ([coll n]
    (if (< n 1)
      '()
-     (cons x (rotations (concat (next x) (list (first x))) (dec n))))))
+     (cons coll (rotations (concat (next coll) (list (first coll))) (dec n))))))
 
 (defn my-frequencies-helper [coll item]
   (assoc coll item (inc (get coll item 0))))
@@ -139,7 +139,7 @@
      (recur (next a-seq) (my-frequencies-helper freqs (first a-seq))))))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (map (fn [{item count}] (repeat item count) a-map)))
 
 (defn my-take [n coll]
   [:-])
