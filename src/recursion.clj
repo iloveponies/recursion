@@ -127,19 +127,16 @@
      '()
      (cons x (rotations (concat (next x) (list (first x))) (dec n))))))
 
-(defn my-frequencies-helper [freqs a-seq]
-  [:-])
+(defn my-frequencies-helper [coll item]
+  (assoc coll item (inc (get coll item 0))))
 
 (defn my-frequencies
   "count frequencies of different elements"
   ([a-seq] (my-frequencies a-seq {}))
   ([a-seq freqs]
-   (let [count-item
-         (fn [item coll]
-           (assoc coll item (inc (get coll item 0))))]
-     (if (empty? a-seq)
-       freqs
-       (recur (next a-seq) (count-item (first a-seq) freqs))))))
+   (if (empty? a-seq)
+     freqs
+     (recur (next a-seq) (my-frequencies-helper freqs (first a-seq))))))
 
 (defn un-frequencies [a-map]
   [:-])
