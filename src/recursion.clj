@@ -148,7 +148,16 @@
     (vector (my-take half a-seq) (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) '()
+   (empty? a-seq)                      b-seq
+   (empty? b-seq)                      a-seq
+   :else                               (let [a      (first a-seq)
+                                             b      (first b-seq)
+                                             lower  (min a b)
+                                             a-rest (if (< a b) (rest a-seq) a-seq)
+                                             b-rest (if (< a b) b-seq (rest b-seq))]
+                                         (cons lower (seq-merge a-rest b-rest)))))
 
 (defn merge-sort [a-seq]
   [:-])
