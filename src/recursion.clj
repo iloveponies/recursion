@@ -160,7 +160,11 @@
                                          (cons lower (seq-merge a-rest b-rest)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= 0 (count a-seq) 1)
+    a-seq
+    (let [in-half (halve a-seq)]
+      (seq-merge (merge-sort (first in-half))
+                 (merge-sort (last in-half))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
