@@ -180,27 +180,36 @@
         (seq-merge (merge-sort left) (merge-sort right))))))
 
 (defn split-into-monotonics
-  ([a-seq] (split-into-monotonics a-seq (first a-seq) '() :none))
+  ([a-seq]
+   (if (empty? a-seq)
+     '()
+     (split-into-monotonics a-seq (first a-seq) '() :none)))
   ([a-seq last acc direction]
      (if (empty? a-seq)
-       (reverse acc)
+       (list (reverse acc))
        (let [current (first a-seq)
              this-delta (cond
                          (== last current) :none
                          (< current last) :down
-                         :else :up)]
-         (println a-seq last acc direction " | " current this-delta)
-         (if
-          (or (= direction :none)         ; accumulate this one?
-              (= direction this-delta))
+                         :else :up)
+             next-direction (if (= direction :none) this-delta direction)]
+         (cond
+          (or (= direction :none)         ; collect same values, or first value
+              (= this-delta :none))
           (split-into-monotonics (next a-seq)
                                  current
                                  (cons current acc)
-                                 this-delta)
-           (cons acc (split-into-monotonics a-seq
+                                 next-direction)
+          (= this-delta direction)                ; accumulate if in same direction
+          (split-into-monotonics (next a-seq)
+                                 current
+                                 (cons current acc)
+                                 next-direction)
+          :else                                ; changing direction
+          (cons (reverse acc) (split-into-monotonics (next a-seq)
                                             current
-                                            '()
-                                            this-delta)))))))
+                                            (list current)
+                                            :none)))))))
 
 (defn permutations [a-set]
   [:-])
