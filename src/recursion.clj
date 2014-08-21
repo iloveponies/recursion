@@ -196,9 +196,36 @@
 (defn split-into-monotonics [a-seq]
   (reverse (sim-helper a-seq [])))
 
+(defn permutations-helper [a-set helper]
+  (let [rots (rotations (vec a-set))]
+    (if (empty? a-set)
+      (lazy-seq helper)
+      (for [temp rots]
+        (permutations-helper (rest temp) (conj helper (first temp)))))))
+
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (let [x (permutations-helper a-set [])
+          done (fn [y] (apply concat y))]
+      (loop [temp x
+             n 0]
+        (if (= (inc n) (count a-set))
+          temp
+          (recur (done temp) (inc n)))))))
+
+(defn powerset-helper [a-set ans]
+  (if (empty? a-set)
+    ans
+  (let [rots (rotations (vec a-set))]
+    (loop [temp rots
+           answers ans]
+      (if (empty? temp)
+        (conj answers a-set)
+        (recur (rest temp) (powerset-helper (set (rest (first temp))) answers)))))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (let [b-set (set a-set)]
+  (if (empty? b-set)
+    (conj b-set #{})
+    (conj (set (powerset-helper b-set #{})) #{}))))
