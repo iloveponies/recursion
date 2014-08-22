@@ -167,7 +167,14 @@
                  (merge-sort (last in-half))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [diff      (apply - (take 2 a-seq))
+          f         (if (pos? diff) > <)
+          monotonic (last (take-while (partial apply f)
+                                      (rest (inits a-seq))))]
+      (cons monotonic
+            (split-into-monotonics (drop (count monotonic) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
