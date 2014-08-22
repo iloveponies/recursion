@@ -177,7 +177,12 @@
             (split-into-monotonics (drop (count monotonic) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (mapcat (fn [x]
+              (map (fn [y] (cons x y))
+                   (permutations (disj (set a-set) x))))
+            a-set)))
 
 (defn powerset [a-set]
   [:-])
