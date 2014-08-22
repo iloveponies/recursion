@@ -211,8 +211,21 @@
                                             (list current)
                                             :none)))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn drop-nth [seq idx]
+  (concat (take idx seq) (drop (inc idx) seq)))
+
+(defn conseach [item colls]
+  (map #(cons item %) colls))
+
+(defn permutations [coll]
+  (cond (empty? coll)
+        '(())
+        (empty? (next coll))
+        (list coll)
+        :else
+        (mapcat
+         #(conseach (nth coll %) (permutations (drop-nth coll %)))
+         (range (count coll)))))
 
 (defn powerset [a-set]
   [:-])
