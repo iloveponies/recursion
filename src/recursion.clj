@@ -185,5 +185,11 @@
             a-set)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (let [e  (first a-set)
+          ps (powerset (disj (set a-set) e))]
+      (set (concat ps
+                   (map (fn [x]
+                          (conj x e))
+                        ps))))))
