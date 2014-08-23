@@ -223,10 +223,17 @@
         (empty? (next coll))
         (list coll)
         :else
-        (mapcat
-         #(conseach (nth coll %) (permutations (drop-nth coll %)))
-         (range (count coll)))))
+        (let [scoll (seq coll)]
+          (mapcat
+           #(conseach (nth scoll %) (permutations (drop-nth scoll %)))
+           (range (count scoll))))))
+
+(defn sub1s [a-set]
+  (set (map #(disj a-set %) a-set)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (let [sset (if (set? a-set) a-set (set a-set))]
+    (if (empty? sset)
+      #{#{}}
+      (apply conj #{} sset
+             (mapcat powerset (sub1s sset))))))
