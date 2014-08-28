@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (:use [clojure.set :only [union]]))
 
 (defn product [coll]
   (if (empty? coll)
@@ -169,10 +170,19 @@
             (cons monotonic (split-into-monotonics (drop (count monotonic) a-seq)))))))
 
 (defn permutations [a-set]
-  (cond
-   (empty? a-set) '(())
-   ))
+  (if (>= 1 (count a-set))
+    (list (into '() a-set))
+    (for [head a-set
+          tail (permutations (disj (set a-set) head))]
+      (do
+        (cons head tail)))))
+
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [first-set (conj #{} (first a-set))
+          tail (powerset (rest a-set))]
+      (union (map #(union first-set %) tail)
+             tail))))
 
