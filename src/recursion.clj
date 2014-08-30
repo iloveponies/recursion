@@ -190,8 +190,19 @@
           (merge-sort first-part)
           (merge-sort second-part)))))
 
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
+
+(defn monotonic-init [a-seq]
+  (last (take-while monotonic? (drop 2 (reverse (inits a-seq))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [mono-split (monotonic-init a-seq)]
+      (cons mono-split
+            (split-into-monotonics (drop
+                                   (count mono-split) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
