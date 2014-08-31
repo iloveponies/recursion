@@ -204,8 +204,30 @@
             (split-into-monotonics (drop
                                    (count mono-split) a-seq))))))
 
+(defn permutations-helper [work-items results]
+  (cond
+    (= (count work-items) 0)
+      (seq (set results))
+    :else
+      (let [[prefix-seq rest-seq] (first work-items)
+            rest-work-items       (rest work-items)
+            rots                  (rotations rest-seq)
+            concat-fn             (fn [elem] (concat prefix-seq elem))
+            to-add                (map concat-fn rots)
+            index                 (inc (count prefix-seq))
+            splitter              (fn [elem] (split-at index elem))
+            map-new-items         (map splitter to-add)
+            filter-pred           (fn [elem] (>= (count (get elem 1)) 2))
+            new-items             (filter filter-pred map-new-items)
+            new-work-items        (concat rest-work-items new-items)
+            new-results           (concat results to-add)]
+        (permutations-helper new-work-items new-results))))
+
 (defn permutations [a-set]
-  [:-])
+  (let [rots                  (rotations a-set)
+        splitter              (fn [elem] (split-at 1 elem))
+        work-items            (map splitter rots)]
+    (permutations-helper work-items '())))
 
 (defn powerset [a-set]
   [:-])
