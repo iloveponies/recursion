@@ -221,6 +221,11 @@
             (recur acc (conj mon f) f (rest the-seq))
             (recur (conj acc mon) [f] f (rest the-seq))))))))
 
+(defn ins [v a]
+  (let [n (count v)]
+    (for [i (range (inc n))]
+      (concat (conj (vec (take i v)) a) (drop i v)))))
+
 (defn permutations [a-set]
   (if (empty? a-set)
     [[]]
@@ -231,12 +236,6 @@
           acc
           (recur (reduce concat (map (fn [x] (ins x (first a-seq))) acc))
                  (rest a-seq)))))))
-
-(defn ins [v a]
-  (let [n (count v)]
-    (for [i (range (inc n))]
-      (concat (conj (vec (take i v)) a) (drop i v)))))
-
 
 (defn indexed [a-seq]
   (let [indexes (range 0 (count a-seq))]
