@@ -210,16 +210,22 @@
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq)
     []
-    (loop [acc []
-           mon []
-           l (first a-seq)
-           the-seq a-seq]
-      (if (empty? the-seq)
-        (conj acc mon)
-        (let [f (first the-seq)]
-          (if (<= l f)
-            (recur acc (conj mon f) f (rest the-seq))
-            (recur (conj acc mon) [f] f (rest the-seq))))))))
+    (if (nil? (next a-seq))
+      a-seq
+      (let [f (first  a-seq)
+            s (second a-seq)
+            op (if (<= f s) <= >=)]
+           (loop [acc []
+                  mon [f s]
+                  l s
+                  the-seq (drop 2 a-seq)
+                  c op]
+             (if (empty? the-seq)
+               (conj acc mon)
+               (let [f (first the-seq)]
+                 (if (c l f)
+                   (recur acc (conj mon f) f (rest the-seq) (if (<= l f) <= >=))
+                   (recur (conj acc mon) [f] f (rest the-seq) (fn [x y] true))))))))))
 
 (defn ins [v a]
   (let [n (count v)]
