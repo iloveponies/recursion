@@ -106,15 +106,13 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  (cond
-    (empty? a-seq)
-      a-seq
-    (singleton? a-seq)
-      a-seq
-    (singleton? (rest a-seq))
-      (concat a-seq (reverse a-seq))
-    :else
-      '()))
+  (if (empty? a-seq)
+    '(())
+    (rest
+      (map
+        #(concat %1 %2)
+        (tails a-seq)
+        (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [elem (first a-seq)
