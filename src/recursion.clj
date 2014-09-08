@@ -209,11 +209,6 @@
           :else
           (apply concat (map perms (rotations s))))))
 
-(permutations #{})
-;=> (())
-(permutations #{1 5 3})
-;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
-
 (defn powerset [s]
   (if (empty? s)
     #{#{}}
