@@ -114,8 +114,8 @@
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
-    [(empty a-seq)]
-    (cons a-seq (rotate a-seq (count a-seq)))))
+    (seq [()])
+    (cons (seq a-seq) (rotate a-seq (count a-seq)))))
 
 
 (defn count-elem-helper [n elem coll]
@@ -220,8 +220,37 @@
       (let [l (get-lesser a-seq)]
         (cons l (split-into-monotonics (my-drop (count l) a-seq)))))))
 
+
+(defn walk-through-outer [a-seq]
+  (println "Outer Input:" a-seq)
+  (if (empty? a-seq)
+    ()
+    ((walk-through-inner (first a-seq) [])
+      (walk-through-outer (rest a-seq)))))
+
+(defn walk-through-inner [a-seq, done-seq]
+  (println "Inner Input: " a-seq)
+  (if (empty? a-seq)
+    done-seq
+    (let [a (first a-seq) 
+          new-seq (conj done-seq a)]
+      (println new-seq)
+      (walk-through-inner (rest a-seq) new-seq))))
+  
+    
+(defn tst [a-set]
+  (if (empty? a-set)
+    (println "empty")
+    (let [a-rotations (rotations a-set)]
+      (println "Starting search")
+      (walk-through-outer a-rotations))))
+
+
+
 (defn permutations [a-set]
-  [:-])
+  (cond
+    (empty? a-set) (seq [()])
+    :else (rotations a-set)))
 
 (defn powerset [a-set]
   [:-])
