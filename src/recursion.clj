@@ -182,8 +182,43 @@
     :else (let [[t-seq1, t-seq2] (halve a-seq)]
             (seq-merge (merge-sort t-seq1) (merge-sort t-seq2)))))
 
+
+
+(defn get-greater [a-seq]
+  (let [a (first a-seq)
+        b (second a-seq)]
+    (if (nil? b)
+      [a]
+      (if (>= b a)
+        (cons a (get-greater (rest a-seq)))
+        [a]))))
+
+(defn get-lesser [a-seq]
+  (let [a (first a-seq)
+        b (second a-seq)]
+    (if (nil? b)
+      [a]
+      (if (<= b a)
+        (cons a (get-lesser (rest a-seq)))
+        [a]))))
+
+(defn rising? [a-seq]
+  (if (empty? a-seq)
+    false
+    (let [a (first a-seq)
+          b (second a-seq)]
+      (if (nil? b)
+        false
+        (>= b a)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (if (rising? a-seq)
+      (let [l (get-greater a-seq)]
+        (cons l (split-into-monotonics (my-drop (count l) a-seq))))
+      (let [l (get-lesser a-seq)]
+        (cons l (split-into-monotonics (my-drop (count l) a-seq)))))))
 
 (defn permutations [a-set]
   [:-])
