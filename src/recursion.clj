@@ -184,12 +184,57 @@
       (let [halves (halve a-seq)]
         (seq-merge (merge-sort (first halves)) (merge-sort (second halves)))))))
 
+(defn fits-dec? [a-seq elem]
+  (and (>= (first a-seq) (second a-seq)) (>= (last a-seq) elem)))
+
+(defn fits-inc? [a-seq elem]
+  (and (<= (first a-seq) (second a-seq)) (<= (last a-seq) elem)))
+
+(defn fits? [a-seq elem]
+  (or (fits-dec? a-seq elem) (fits-inc? a-seq elem)))
+
+(defn monotonic-help [a-seq current result]
+  (if (empty? a-seq)
+    (if (empty? current)
+      result
+      (conj result current))
+    (if (empty? current)
+      (monotonic-help (rest a-seq) [(first a-seq)] result)
+      (let [f (first a-seq)
+            r (rest a-seq)]
+        (if (or (== (count current) 1) (fits? current f))
+          (monotonic-help r (concat current [f]) result)
+          (monotonic-help r [f] (conj result current)))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (seq (monotonic-help a-seq [] [])))
+
+(defn permutation-help [a-set result]
+  )
 
 (defn permutations [a-set]
   [:-])
 
+(defn add-zeros [b len]
+  (if (>= (count b) len)
+    b
+    (add-zeros (apply str (cons \0 b)) len)))
+
+(defn to-binary [n len]
+  (add-zeros (Integer/toBinaryString n) len))
+
+(defn to-set [set a-seq k-bin]
+  (if (empty? a-seq)
+    set
+    (if (= (first k-bin) \1)
+      (to-set (conj set (first a-seq)) (rest a-seq) (rest k-bin))
+      (to-set set (rest a-seq) (rest k-bin)))))
+
+(defn powerset-help [result a-seq k n]
+  (if (>= k (power 2 n))
+    result
+    (powerset-help (conj result (to-set #{} a-seq (to-binary k n))) a-seq (inc k) n)))
+
 (defn powerset [a-set]
-  [:-])
+  (powerset-help #{} (seq a-set) 0 (count a-set)))
 
