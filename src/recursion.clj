@@ -221,37 +221,38 @@
         (cons l (split-into-monotonics (my-drop (count l) a-seq)))))))
 
 
-(defn walk-through-outer [a-seq]
-  (println "Outer Input:" a-seq)
-  (if (empty? a-seq)
-    ()
-    ((walk-through-inner (first a-seq) [])
-      (walk-through-outer (rest a-seq)))))
 
-(defn walk-through-inner [a-seq, done-seq]
-  (println "Inner Input: " a-seq)
-  (if (empty? a-seq)
-    done-seq
-    (let [a (first a-seq) 
-          new-seq (conj done-seq a)]
-      (println new-seq)
-      (walk-through-inner (rest a-seq) new-seq))))
-  
-    
-(defn tst [a-set]
-  (if (empty? a-set)
-    (println "empty")
-    (let [a-rotations (rotations a-set)]
-      (println "Starting search")
-      (walk-through-outer a-rotations))))
-
-
+;;------------------------------------------------------------------
+;; 1. Partition the input into a first element and take the rest as is
+;; 2. Combine the first element with the permutations of the rest elements.
+;;------------------------------------------------------------------
+(defn permutations-helper [[fst-value & rest-values]]
+  (map (fn [a-seq] (cons fst-value a-seq)) (permutations rest-values)))
 
 (defn permutations [a-set]
   (cond
-    (empty? a-set) (seq [()])
-    :else (rotations a-set)))
+    (empty? a-set) '(())
+    (singleton? a-set) (list a-set)
+    :else (apply concat (map permutations-helper (rotations a-set)))))
 
+
+;;------------------------------------------------------------------
+;; 1. map all the 'tails' and 'inits' as sets, to remove doubles...
+;; 2. merge the two sets
+;; 3. return a set of sets
+;;------------------------------------------------------------------
+(defn power-helper [a-set]
+  (let [init (inits a-set)
+        tail (tails a-set)]
+  (set (concat (map set tail) (map set init)))))
+
+;;------------------------------------------------------------------
+;; 1. map all the permutations of the set with the power-helper function
+;; 2. concatenate all the results into one sequence
+;; 3. return a set instead of the sequence
+;;------------------------------------------------------------------
 (defn powerset [a-set]
-  [:-])
+  (set (apply concat (map power-helper (permutations a-set)))))
+
+
 
