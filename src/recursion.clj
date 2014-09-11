@@ -226,14 +226,13 @@
 ;; 1. Partition the input into a first element and take the rest as is
 ;; 2. Combine the first element with the permutations of the rest elements.
 ;;------------------------------------------------------------------
-(defn permutations-helper [[fst-value & rest-values]]
-  (map (fn [a-seq] (cons fst-value a-seq)) (permutations rest-values)))
-
 (defn permutations [a-set]
+  (let [permutations-helper (fn [[fst-value & rest-values]]
+        (map (fn [a-seq] (cons fst-value a-seq)) (permutations rest-values)))]
   (cond
     (empty? a-set) '(())
     (singleton? a-set) (list a-set)
-    :else (apply concat (map permutations-helper (rotations a-set)))))
+    :else (apply concat (map permutations-helper (rotations a-set))))))
 
 
 ;;------------------------------------------------------------------
