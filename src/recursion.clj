@@ -146,11 +146,32 @@
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (< (count a-seq) 2) a-seq
+    (let [ok? (fn [x y] (<= x y))
+          helper
+          (fn [n k coll pred?]
+            (if (empty? coll) coll
+              (if (pred? k (first coll))
+                (helper (inc n) (first coll) (rest coll) pred?)
+                [(take n a-seq)
+                 (recur (dec n) k coll
+                        (fn [x y] (not (pred? x y))))])))]
+      (helper 0 (first a-seq) (rest a-seq) ok?))))
 
-(defn permutations [a-set]
-  [:-])
+(defn perm [a-seq, a-set]
+  (if (empty? a-set)
+    [a-seq]
+    (for [elem a-set
+          solution (perm (conj a-seq elem)
+                         (disj a-set elem))]
+      solution)))
 
-(defn powerset [a-set]
-  [:-])
+(defn permutations [a-set] (perm () (set a-set)))
+
+(defn powerset [a-seq]
+  (loop [t a-seq p #{ #{} }]
+    (if (empty? t) p
+      (recur (rest t)
+        (clojure.set/union p
+          (map (fn [x] (conj x (first t))) p))))))
 
