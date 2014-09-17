@@ -146,17 +146,7 @@
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  (if (< (count a-seq) 2) a-seq
-    (let [ok? (fn [x y] (<= x y))
-          helper
-          (fn [n k coll pred?]
-            (if (empty? coll) coll
-              (if (pred? k (first coll))
-                (helper (inc n) (first coll) (rest coll) pred?)
-                [(take n a-seq)
-                 (recur (dec n) k coll
-                        (fn [x y] (not (pred? x y))))])))]
-      (helper 0 (first a-seq) (rest a-seq) ok?))))
+  [])
 
 (defn perm [a-seq, a-set]
   (if (empty? a-set)
