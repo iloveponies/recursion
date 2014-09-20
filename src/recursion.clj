@@ -155,15 +155,6 @@
           n (count last-monotonic-init)]
       (cons last-monotonic-init (split-into-monotonics (drop n a-seq))))))
 
-
-(split-into-monotonics [])   ;=> ((0 1 2) (1 0))
-(split-into-monotonics [0])   ;=> ((0 1 2) (1 0))
-(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
-(split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
-(split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
-
-
-
 (defn permutations [a-set]
  (let [rot (rotations a-set)]  
    (cond 
@@ -180,13 +171,5 @@
     (let [powerset-rest (powerset (set (rest a-set)))
           sets-with-rest (set (map (fn [r-set] (conj r-set (first a-set))) powerset-rest))]  
       (set (concat powerset-rest (conj sets-with-rest #{(first a-set)} (set a-set)))))))
-      
-
-(powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
-                      ; #{#{} #{1} #{2} #{1 2} #{4} #{1 4} #{2 4} #{1 2 4}}
-(powerset #{})      ;=> #{#{}}
-(powerset #{1 2 3 4 5})
-(powerset [1 2 3])
-
 
 (conj #{#{}} #{1 2})
