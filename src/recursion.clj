@@ -251,7 +251,8 @@
 ;; 3. return a set instead of the sequence
 ;;------------------------------------------------------------------
 (defn powerset [a-set]
-  (set (apply concat (map power-helper (permutations a-set)))))
+  (println "Not fast enough"))
+  ;;(set (apply concat (map power-helper (permutations a-set)))))
 
 
 
