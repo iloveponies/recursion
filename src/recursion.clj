@@ -229,5 +229,40 @@
         work-items            (map splitter rots)]
     (permutations-helper work-items '())))
 
+(defn powerset-conj-helper [element original-set results]
+  (if (empty? original-set)
+    results
+    (powerset-conj-helper
+      element
+      (rest original-set)
+      (conj results (conj element (first original-set))))))
+
+(defn powerset-filter-helper [a-set element-length]
+  (my-filter (fn [elem] (= (count elem) element-length)) a-set))
+
+(defn powerset-folder-helper [input-set original-set results]
+  (if (empty? input-set)
+    results
+    (powerset-folder-helper
+      (set (rest input-set))
+      original-set
+      (clojure.set/union
+        results
+        (powerset-conj-helper (set (first input-set)) original-set #{})))))
+
+(defn powerset-count-conj-helper [original-set results count stop-count]
+  (if (= count stop-count)
+    results
+    (let [elements (set (powerset-filter-helper results count))]
+      (powerset-count-conj-helper
+        original-set
+        (powerset-folder-helper elements original-set results)
+        (inc count)
+        stop-count))))
+
 (defn powerset [a-set]
-  [:-])
+    (let [mapper          (fn [element] (conj #{} element))
+          initial-results   (conj (set (map mapper a-set)) #{})]
+      (if (empty? a-set)
+        #{#{}}
+        (powerset-count-conj-helper a-set initial-results 1 (count a-set)))))
