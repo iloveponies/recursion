@@ -175,16 +175,25 @@
    (= 2 (count a-seq)) (rotations a-seq)
    :else (per 0  a-seq)))
 
-
-
-
-
-
-
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [b-seq]
+                     (cond
+                      (empty? b-seq) true
+                      (apply <= b-seq) true
+                      (apply >= b-seq) true
+                      :else false))]
+    (let [ monotonic (fn [x]
+                       (first (reverse (take-while monotonic? (inits x)))))]
+      (if (empty? a-seq)
+        ()
+        (cons (monotonic a-seq) (split-into-monotonics (drop (count (monotonic a-seq)) a-seq )))))))
+
 
 
 (defn powerset [a-set]
-  [:-])
+  (let [p (fn [x] (conj x (first a-set)))]
+    (if (empty? a-set)
+    '(())
+     (set (map (fn [y] (set y)) (clojure.set/union (powerset (next a-set))
+                                                   (map p (powerset (next a-set)))))))))
 
