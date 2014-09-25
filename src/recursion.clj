@@ -83,10 +83,6 @@
           (== (first a-seq) (first b-seq))
           (seq= (rest a-seq) (rest b-seq)))))
 
-(seq= [1 2 4] '(1 2 4))  ;=> true
-(seq= [1 2 3] [1 2 3 4]) ;=> false
-(seq= [1 3 5] [])        ;=> false
-
 (defn my-map [f seq-1 seq-2]
   (cond
    (or (empty? seq-1) (empty? seq-2)) '()
@@ -108,19 +104,32 @@
           (fib (dec (dec n))))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    '()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (<= up-to 0)
+    '()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (seq ['()])
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (reverse
+   (map
+    reverse
+    (tails
+     (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [result (rest (map concat (tails a-seq) (inits a-seq)))]
+    (if (empty? result)
+      (seq ['()])
+      result)))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
