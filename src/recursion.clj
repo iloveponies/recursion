@@ -156,11 +156,46 @@
                (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [mono-seq (fn self [oper x]
+                          (cond (empty? x) '()
+                                (singleton? x) '()
+                                (apply
+                                  oper [(first x) (second x)]) (concat [(second x)]
+                                                                       (self oper (rest x)))
+                                :else '()))]
+    (cond (empty? a-seq) a-seq
+          (singleton? a-seq) a-seq
+          (< (first a-seq)
+             (second a-seq)) (cons (cons (first a-seq)
+                                         (mono-seq < a-seq))
+                                   (split-into-monotonics
+                                     (drop (+ 1 (count (mono-seq < a-seq)))
+                                           a-seq)))
+          (> (first a-seq)
+             (second a-seq)) (cons (cons (first a-seq)
+                                         (mono-seq > a-seq))
+                                   (split-into-monotonics
+                                     (drop (+ 1 (count (mono-seq > a-seq)))
+                                           a-seq)))
+          :else (cons (cons (first a-seq) '())
+                      (split-into-monotonics (drop 1 a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond (empty? a-set) '(())
+        (empty? (rest a-set)) a-set
+        (empty? (rest (rest a-set))) [a-set (reverse a-set)]
+        :else (apply concat (for [elem a-set]
+                              (reduce (fn [init x]
+                                        (conj init (cons elem x)))
+                                      []
+                                      (permutations (filter (fn [x]
+                                                      (not (= x elem)))
+                                                    a-set)))))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (let [a-set (set a-set)]
+    (apply clojure.set/union
+           #{a-set}
+           (map (fn [elem]
+                  (powerset (disj a-set elem)))
+                a-set))))
