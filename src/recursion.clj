@@ -132,19 +132,31 @@
       result)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [x (first a-seq)
+          current-val (get freqs x 0)
+          new-freqs (assoc freqs x (inc current-val))]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    (seq [])
+    (let [[k v] (first a-map)]
+      (concat (repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (<= n 0))
+    (seq [])
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (empty? coll) (<= n 0))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
