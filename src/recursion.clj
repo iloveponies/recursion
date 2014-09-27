@@ -177,8 +177,22 @@
    :else (let [[h1 h2] (halve a-seq)]
            (seq-merge (merge-sort h1) (merge-sort h2)))))
 
+(defn seq-all-pair [pred s]
+  (cond
+   (empty? s) true
+   (singleton? s) true
+   :else (and (pred (first s) (second s)) (seq-all-pair pred (rest s)))))
+
+(defn seq-is-monotonic? [s]
+  (or (seq-all-pair <= s) (seq-all-pair >= s)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [a-seq-inits (inits a-seq)
+        f-monot (my-last (take-while seq-is-monotonic? a-seq-inits))]
+    (cond
+      (empty? a-seq) '(())
+      (= (count f-monot) (count a-seq)) (seq [(seq a-seq)])
+      :else (cons f-monot (split-into-monotonics (drop (count f-monot) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
