@@ -150,22 +150,32 @@
 
 (defn my-take [n coll]
   (if (or (empty? coll) (<= n 0))
-    (seq [])
+    '()
     (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  (if (or (empty? coll) (<= n 0))
-    coll
-    (my-drop (dec n) (rest coll))))
+  (cond
+    (empty? coll) '()
+    (<= n 0) (seq coll)
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [hc (int (/ (count a-seq) 2))]
+    [(my-take hc a-seq) (my-drop hc a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else (cons (first b-seq) (seq-merge  a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) '()
+   (singleton? a-seq) a-seq
+   :else (let [[h1 h2] (halve a-seq)]
+           (seq-merge (merge-sort h1) (merge-sort h2)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
