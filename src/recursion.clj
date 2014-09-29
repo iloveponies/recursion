@@ -207,6 +207,29 @@
 ;(permutations [1 5 3])
 ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 
-(defn powerset [a-set]
-  [:-])
+;(set-union #{1} #{2})
 
+;(clojure.set/union)
+
+;(range 1)
+
+;(set (range 2))
+
+(defn add-to-all-sets [x seq-of-sets]
+  (map #(conj % x) seq-of-sets))
+
+(defn powerset [a-set]
+  (let [as-set (set a-set)]
+    (cond
+     (empty? as-set) #{#{}}
+     (singleton? as-set) #{as-set #{}}
+     :else (let [powerset-of-subset-in-x (fn [x] (powerset (disj as-set x)))]
+             (set (apply concat
+                         (map (fn [x]
+                                (let [sub-powerset (powerset-of-subset-in-x x)]
+                                  (concat
+                                   (add-to-all-sets x sub-powerset)
+                                   sub-powerset)))
+                              as-set)))))))
+
+;(count (powerset (range 10)))
