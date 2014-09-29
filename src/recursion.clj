@@ -119,28 +119,53 @@
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
     freqs
-    (my-frequencies-helper (assoc freqs (first a-seq) (inc (get freqs (first a-seq)))) (rest a-seq))))
+    (cond
+     (contains? freqs (first a-seq)) (my-frequencies-helper (assoc freqs (first a-seq) (inc (get freqs (first a-seq)))) (rest a-seq))
+     :else (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    ""
+    (let [amount (first (vals a-map))
+          value (first (keys a-map))]
+
+       (concat (repeat amount value) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (= n 0) (list)
+   (< (count coll) n) (seq coll)
+   :else (cons (first coll ) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (= n 0) coll
+   (or (= (count coll) 0) (< (count coll) n)) (list)
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    [() a-seq]
+    (let [size (int (/ (count a-seq) 2))]
+      (vector (my-take size a-seq) (my-drop size a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? b-seq) a-seq
+   (empty? a-seq) b-seq
+   :else (if (<= (first a-seq) (first b-seq))
+      (cons (first a-seq) (seq-merge (rest a-seq) (seq b-seq)))
+      (cons (first b-seq) (seq-merge (seq a-seq) (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (seq-merge
+     (merge-sort (get (halve a-seq) 0))
+     (merge-sort (get (halve a-seq) 1)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
