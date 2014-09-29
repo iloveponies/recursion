@@ -195,7 +195,17 @@
       :else (cons f-monot (split-into-monotonics (drop (count f-monot) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+   (cond
+    (empty? a-set) '(())
+    (singleton? a-set) (list (seq a-set))
+    :else
+    (let [as-set (set a-set)
+          permutations-of-subset-without-x (fn [x] (permutations (disj as-set x)))
+          permutations-starting-with-x (fn [x] (map #(cons x %) (permutations-of-subset-without-x x)))]
+        (apply concat (map #(permutations-starting-with-x %) as-set)))))
+
+;(permutations [1 5 3])
+;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 
 (defn powerset [a-set]
   [:-])
