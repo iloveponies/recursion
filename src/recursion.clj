@@ -223,13 +223,9 @@
     (cond
      (empty? as-set) #{#{}}
      (singleton? as-set) #{as-set #{}}
-     :else (let [powerset-of-subset-in-x (fn [x] (powerset (disj as-set x)))]
-             (set (apply concat
-                         (map (fn [x]
-                                (let [sub-powerset (powerset-of-subset-in-x x)]
-                                  (concat
-                                   (add-to-all-sets x sub-powerset)
-                                   sub-powerset)))
-                              as-set)))))))
+     :else (let [powerset-of-subset-wo-fst (powerset (disj as-set (first as-set)))]
+             (set (concat
+                         (add-to-all-sets (first as-set) powerset-of-subset-wo-fst)
+                         powerset-of-subset-wo-fst))))))
 
-;(count (powerset (range 10)))
+;(count (powerset (range 12)))
