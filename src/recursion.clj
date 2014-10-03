@@ -210,7 +210,7 @@
 (defn nchoose2 [a-set]
    (cond
      (empty? (rest a-set)) '()
-     (== (count a-set) 2) (cons a-set '())
+     (== (count a-set) 2) (cons (set a-set) '())
      :else (let [first-elem (first a-set)]
                  (concat (map (fn [elem] #{first-elem elem}) (rest a-set)) (nchoose2 (rest a-set))))))
 
@@ -218,26 +218,19 @@
   (cond
    ;(== k 0) (cons #{} '())
    ;(== k 1) (map (fn [elem] #{elem}) a-seq)
-   (== (count a-set) k) (cons a-set '())
+   (== (count a-set) k) (cons (set a-set) '())
+   (== k 0) (cons #{} '())
    (== k 1) (map (fn [elem] #{elem}) a-set)
    (== k 2) (nchoose2 a-set)
    :else (let [helper (fn helper [a-set k]
                         (if (== (count a-set) k)
-                          (cons a-set '())
+                          (cons (set a-set) '())
                           (let [first-elem (first a-set)]
                           (concat (map (fn [subset] (conj subset first-elem)) (nchoose3 (rest a-set) (dec k)))
                                   (helper (rest a-set) k)))))]
            (helper a-set k))))
 
-
-
-
 (defn powerset [a-set]
-  (cond
-   (empty? a-set) (cons #{} '())
-   (empty? (rest a-set)) #{a-set}
-   (== (count a-set) 2)
-   ;:else ())
-  ))
-
+  (let [helper (fn helper [k] (nchoose3 a-set k))]
+    (set (apply concat (map helper (range (inc (count a-set))))))))
 
