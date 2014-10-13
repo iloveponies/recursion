@@ -106,7 +106,7 @@
       (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
@@ -114,7 +114,7 @@
     (rest 
       (my-map concat 
         (tails a-seq)
-        (reverse (inits a-seq))))))
+        (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -176,12 +176,31 @@
           (merge-sort first-seq)
           (merge-sort sec-seq)))))
 
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic (last (take-while monotonic? (rest (inits a-seq))))]
+    (if (empty? a-seq)
+    '()
+    (cons 
+      monotonic
+      (split-into-monotonics (drop (count monotonic) a-seq))))))
+
+(defn perm-helper [a-set acc]
+  (if (empty? a-set)
+    (list acc)
+    (apply concat (map #(perm-helper 
+                         (remove (fn [x] (= x %)) a-set) 
+                         (cons % acc)) 
+                       a-set))))
 
 (defn permutations [a-set]
-  [:-])
+  (perm-helper a-set '()))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (clojure.set/union 
+     (powerset (rest a-set))
+     (map #(conj % (first a-set)) (powerset (rest a-set))))))
