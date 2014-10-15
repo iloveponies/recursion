@@ -230,31 +230,168 @@
 
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+
+  (if (empty? a-seq)
+    freqs
+    (let
+
+      [newfr (my-frequencies-helper freqs (rest a-seq))]
+
+      (if (contains? newfr (first a-seq))
+        (assoc newfr (first a-seq) (+ 1 (get newfr (first a-seq)) ))
+        (assoc newfr (first a-seq) 1)
+        )
+
+      )
+    )
+
+  )
 
 (defn my-frequencies [a-seq]
-  [:-])
+
+  (my-frequencies-helper {} a-seq)
+
+ )
+
+
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
 
 (defn un-frequencies [a-map]
-  [:-])
+
+  (apply concat (
+   map
+   (fn [[x y]]
+
+     (repeat y x)
+
+     )
+   a-map
+   ))
+
+  )
+
+(un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
+(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+(my-frequencies (un-frequencies {:a 100 :b 10})) ;=> {:a 100 :b 10}
 
 (defn my-take [n coll]
-  [:-])
+
+  ((fn ! [k n coll]
+     (if (or (> k n) (empty? coll))
+       '()
+       (cons (first coll) (! (inc k) n (rest coll)))
+       )
+     ) 1 n coll)
+
+  )
+
 
 (defn my-drop [n coll]
-  [:-])
+
+  ((fn ! [k n coll]
+
+     (cond
+      (empty? coll) '()
+      (> k n) coll
+      :else
+      (! (inc k) n (rest coll))
+      )
+     ) 1 n coll)
+
+  )
 
 (defn halve [a-seq]
-  [:-])
+
+  (let
+
+    [mid (int (/ (count a-seq) 2))]
+
+    (conj [] (my-take mid a-seq) (my-drop mid a-seq) )
+
+    )
+
+  )
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+
+  (
+   (fn ! [as bs]
+
+     (cond
+
+      (and (empty? as) (empty? bs)) '()
+      (empty? as) bs
+      (empty? bs) as
+      :else
+      (let
+
+        [l (first as) r (first bs)]
+        (if (< l r )
+
+          (cons l (! (rest as) bs))
+
+          (cons r (! as (rest bs)))
+          )
+        )
+
+      )
+
+     )
+
+   a-seq b-seq)
+
+  )
+
 
 (defn merge-sort [a-seq]
-  [:-])
+
+
+
+      (if (>= 1 (count a-seq))
+
+        a-seq
+
+        (
+         let
+         [ [x y] (halve a-seq)]
+
+         (seq-merge (merge-sort x) (merge-sort y))
+
+         )
+
+        )
+
+
+  )
+
+(defn monotonic? [a-seq]
+
+
+  (and (not (empty? a-seq )) (or (apply <= a-seq) (apply >= a-seq)))
+
+  )
+
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+
+  (if (empty? a-seq)
+    '()
+    (let
+    [rev (rest (reverse (inits a-seq)))
+     f (my-take-while monotonic? rev)
+     total (first (drop (- (count f) 1) f))
+     restseq (drop (count f) a-seq)
+     ]
+
+
+       (cons total (split-into-monotonics restseq))
+
+
+    )
+)
+)
+
+
 
 (defn permutations [a-set]
   [:-])
