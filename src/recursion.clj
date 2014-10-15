@@ -391,10 +391,58 @@
 )
 )
 
+(defn calc [a-set indx]
+  (let [v (into [] a-set)]
+    (map (fn [k] (get v k)) indx)
+    )
+)
 
 
 (defn permutations [a-set]
-  [:-])
+
+  (let
+    [ind (repeat (count a-set) -1)
+     v (into [] a-set)
+     n (count a-set)
+     ]
+    ((fn gen [after mp used]
+
+       (if (>= after n)
+         (cons (calc a-set (vals mp)) '())
+         (let [q (map (fn [i]
+
+                (if (not (contains? used i))
+
+
+                  (first (
+                   filter
+                   (complement empty?)
+
+                   (concat (gen (inc after) (assoc mp after i) (assoc used i 1) ) '())
+
+                   ))
+
+                  '()
+
+                  )
+
+                ) (range 0 n)
+              )
+             ]
+
+          q
+
+         )
+         )
+
+      )
+     0 {} {}
+     )
+
+
+    )
+  )
+
 
 (defn powerset [a-set]
   [:-])
