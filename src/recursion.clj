@@ -415,19 +415,24 @@
 
 
 
+
 (defn comb [a-set n k ]
 
   ((fn h [i after mp]
-    (map
+    (if (> i k )
+      '()
+      (apply concat (map
 
      (fn inner [idx]
        (if (== i k)
-         (concat (calc a-set (vals (assoc mp (dec after) idx))) '())
-         (h (inc i) idx (assoc mp (dec after) idx))
+         (cons (calc a-set (vals (assoc mp (dec i) idx))) '())
+         (h (inc i) idx (assoc mp (dec i) idx))
          )
        )
 
-     (range (inc after) (inc n)))
+     (range (inc after) (inc n))))
+      )
+
     ) 1 0 {})
 
   )
@@ -436,10 +441,11 @@
 (defn powerset [a-set]
 
 
-  (map (fn [k]
-         (comb a-set (count a-set) k)
-         ) (range 0 (+ 1 (count a-set))))
+  (into  #{} (cons #{} (map (fn [z] (into #{} z)) (apply concat (map (fn [k]
+         (comb (cons 0 a-set) (count a-set) k)
+         ) (range 0 (+ 1 (count a-set))))))))
 
 
   )
+
 
