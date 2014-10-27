@@ -15,16 +15,25 @@
     (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (let [a (first a-seq) b (first (rest a-seq))]
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (first a-seq)
+    (if (= a (max a b)) (max-element (cons a (rest (rest a-seq)))) (max-element (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (> (count seq-1) (count seq-2)) seq-1 seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (let [a (first a-seq) b (first (rest a-seq))]
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (first a-seq)
+    (if (= a (seq-max a b)) (longest-sequence (cons a (rest (rest a-seq)))) (longest-sequence (rest a-seq))))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
+        (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
