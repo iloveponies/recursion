@@ -115,14 +115,27 @@
      (cons () nil)
      (cons (seq a-seq) (inits (reverse (rest (reverse a-seq)))))))
 
+(defn myconcat [seq1 seq2]
+  (if (not (empty? (first seq1)))
+     (cons (concat (first seq1) (first seq2)) (myconcat (rest seq1) (rest seq2)))
+     ()))
+
 (defn rotations [a-seq]
-  [:-])
+  (let [seq1 (tails a-seq)
+       seq2 (reverse (inits a-seq))]
+    (if (empty? a-seq)
+      (cons () ())
+      (myconcat seq1 seq2))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          new-freq (if (contains? freqs elem) (assoc freqs elem (inc (get freqs elem))) (assoc freqs elem 1))]
+      (my-frequencies-helper new-freq (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
