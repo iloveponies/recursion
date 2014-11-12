@@ -105,19 +105,33 @@
   )
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
-
+  (if ((complement pos?) how-many-times)
+    '()
+    (cons what-to-repeat (my-repeat (- how-many-times 1) what-to-repeat))
+   )
+  )
 (defn my-range [up-to]
-  [:-])
+  (cond
+   (<= up-to 0) '()
+   (pos? up-to) (cons (dec up-to) (my-range (dec up-to)))
+   )
+  )
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (cons a-seq (tails (rest a-seq)))
+   )
+  )
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))
+   )
+  )
 
 (defn rotations [a-seq]
-  [:-])
+
+  )
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
