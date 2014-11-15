@@ -218,10 +218,12 @@
       true
       false))
   )
+
 (defn largest-monotonic [a-seq]
   (let [monotonics-list (take-while ismonotonic? (inits a-seq))]
     (nth monotonics-list (dec (count monotonics-list))))
   )
+
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq)
     '()
