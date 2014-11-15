@@ -125,40 +125,110 @@
   )
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))
-   )
+  (reverse (map reverse (tails (reverse a-seq))))
+  )
+
+(defn rotations_helper [head tail]
+  (let [new-head (rest head)
+        new-tail (concat tail (vector (first head)))]
+    (
+     if (empty? head)
+      '()
+      (concat (vector (concat head tail)) (rotations_helper new-head new-tail))))
   )
 
 (defn rotations [a-seq]
-
+  (if ( empty? a-seq)
+    '(())
+    (rotations_helper a-seq '())
+   )
   )
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          count (get freqs elem)
+          new-freqs (if (nil? count)
+                      (assoc freqs elem 1)
+                      (assoc freqs elem (inc count)))]
+      (my-frequencies-helper new-freqs (rest a-seq))))
+  )
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq)
+  )
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if ( empty? a-map)
+    '()
+    (let [pair (first a-map)
+          [elem count] pair]
+      (concat (repeat count elem) (un-frequencies (rest a-map)))))
+  )
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (empty? coll) '()
+   (= n 0) '()
+   :else (cons (first coll) (my-take (dec n) (rest coll)))
+   )
+  )
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll) '()
+   (= n 0) coll
+   :else (my-drop (dec n) (rest coll))
+   )
+  )
 
 (defn halve [a-seq]
-  [:-])
+  (let [size (count a-seq)
+        half (int (/ size 2))]
+    (cons (my-take half a-seq) (vector (my-drop half a-seq))))
+  )
 
+(defn seq-merge-helper [final a-seq b-seq]
+  (cond
+   (empty? a-seq) (concat final b-seq)
+   (empty? b-seq) (concat final a-seq)
+   :else (let [a-first (first a-seq)
+               b-first (first b-seq)]
+           (if (< a-first b-first)
+             (seq-merge-helper (conj final a-first) (rest a-seq) b-seq)
+             (seq-merge-helper (conj final b-first) a-seq (rest b-seq))))
+   )
+  )
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper [] a-seq b-seq)
+  )
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (empty? (rest a-seq))
+    a-seq
+    (let [[f-half s-half] (halve a-seq)]
+      (seq-merge (merge-sort f-half) (merge-sort s-half)))
+   )
+  )
 
+(defn ismonotonic? [a-seq]
+  (let [sorted-a-seq (merge-sort a-seq)]
+    (if (or (= a-seq sorted-a-seq) (= a-seq (reverse sorted-a-seq)))
+      true
+      false))
+  )
+(defn largest-monotonic [a-seq]
+  (let [monotonics-list (take-while ismonotonic? (inits a-seq))]
+    (nth monotonics-list (dec (count monotonics-list))))
+  )
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [monotonic (largest-monotonic a-seq)
+          size (count monotonic)]
+      (cons monotonic (split-into-monotonics (drop size a-seq)))))
+  )
 
 (defn permutations [a-set]
   [:-])
