@@ -27,22 +27,43 @@
     seq-1))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (first a-seq)
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq))
+      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (if (empty? a-seq)
+    false
+    (if (= elem (first a-seq))
+      true
+      (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) a-seq
+   (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+   :else []))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) a-seq
+   (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+   :else a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) true
+   (or (empty? a-seq) (empty? b-seq)) false
+   (and (singleton? a-seq) (singleton? b-seq) (= (first a-seq) (first b-seq))) true
+   (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+   :else false))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
