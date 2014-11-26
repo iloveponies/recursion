@@ -189,5 +189,8 @@
     (mapcat (fn [l] (all-combinations (first a-set) l)) (permutations (rest a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [sub-superset (powerset (rest a-set))]
+      (concat sub-superset (set (map (fn [elm] (conj elm (first a-set))) sub-superset))))))
 
