@@ -103,7 +103,9 @@
   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    [[]]
+    (my-map concat (rest (tails a-seq)) (rest (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
@@ -115,10 +117,14 @@
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+   (or (= 0 n) (empty? coll) (< (count coll) n)) coll
+   (= 1 n) [(first coll)]
+   :else (concat [(first coll)] (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (<= (count coll) n) []
+  (reverse (my-take (- (count coll) n) (reverse coll)))))
 
 (defn halve [a-seq]
   [:-])
