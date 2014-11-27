@@ -1,4 +1,5 @@
 (ns recursion)
+(use '[clojure.tools.trace])
 
 (defn product [coll]
   (if (empty? coll)
@@ -232,8 +233,21 @@
       (cons monotonic (split-into-monotonics (drop size a-seq)))))
   )
 
+(defn add2 [elem a-list-of-lists]
+  (if (empty? a-list-of-lists)
+    '()
+    (cons (cons elem (first a-list-of-lists)) (add2 elem (rest a-list-of-lists))))
+  )
+
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (mapcat (fn [some-set]
+           (add2 (first some-set) (permutations (rest some-set))))
+         (rotations a-set))
+   )
+  )
+
 
 (defn powerset [a-set]
   [:-])
