@@ -118,7 +118,9 @@
 
 (defn my-take [n coll]
   (cond
-   (or (= 0 n) (empty? coll) (< (count coll) n)) coll
+   (= 0 n) []
+   (empty? coll) coll
+   (< (count coll) n) coll
    (= 1 n) [(first coll)]
    :else (concat [(first coll)] (my-take (- n 1) (rest coll)))))
 
@@ -127,7 +129,7 @@
   (reverse (my-take (- (count coll) n) (reverse coll)))))
 
 (defn halve [a-seq]
-  [:-])
+  (cons (my-take (int (/ (count a-seq) 2)) a-seq) (cons (my-drop (int (/ (count a-seq) 2)) a-seq) nil)))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
