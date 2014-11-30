@@ -1,5 +1,4 @@
 (ns recursion)
-(use '[clojure.tools.trace])
 
 (defn product [coll]
   (if (empty? coll)
