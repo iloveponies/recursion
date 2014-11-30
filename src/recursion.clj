@@ -250,5 +250,10 @@
 
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (let [pset (powerset (rest a-set))
+          elem (first a-set)]
+      (concat (map #(conj % elem) pset ) pset))
+   )
+)
