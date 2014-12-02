@@ -9,11 +9,11 @@
     (empty? (rest coll))))
 
 (defn my-last [coll]
-  (let [my-last' (fn [xs x]
+  (let [my-last- (fn [xs x]
                    (if (empty? xs)
                      x
                      (recur (rest xs) (first xs))))]
-    (my-last' coll nil)))
+    (my-last- coll nil)))
 
 (defn max-element [a-seq]
   (cond
@@ -54,7 +54,7 @@
     (cond
      (empty? a-seq) a-seq
      (pred? fst) (cons fst (my-take-while pred? (rest a-seq)))
-     :else nil)))
+     :else '())))
 
 (defn my-drop-while [pred? a-seq]
   (cond
@@ -77,65 +77,88 @@
      (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  (let [power' (fn [n k res]
-                 (if (= 0 k)
+  (let [power- (fn [n k res]
+                 (if (>= 0 k)
                    res
                    (recur n (dec k) (* n res))))]
-    (power' n k 1)))
+    (power- n k 1)))
 
 (defn fib [n]
-  (let [fib' (fn [m res1 res2]
-               (if (= 0 m)
+  (let [fib- (fn [m res1 res2]
+               (if (>= 0 m)
                  res1
                  (recur (dec m) res2 (+ res1 res2))))]
-    (fib' n 0 1)))
+    (fib- n 0 1)))
 
 (defn my-repeat [n x]
-  (let [my-repeat' (fn [m y res]
+  (let [my-repeat- (fn [m y res]
                      (if (>= 0 m)
                        res
                        (recur (dec m) y (cons y res))))]
-    (my-repeat' n x '())))
+    (my-repeat- n x '())))
 
 (defn my-range [up-to]
-  (let [my-range' (fn [lim res]
-                    (if (<= lim 0)
+  (let [my-range- (fn [lim n res]
+                    (if (<= lim n)
                       res
-                      (recur (dec lim) (cons (dec lim) res))))]
-    (my-range' up-to '())))
+                      (recur lim (inc n) (cons n res))))]
+    (my-range- up-to 0 '())))
 
-(defn tails [a-seq]
-  [:-])
+(defn parts [f a-seq]
+  (let [cnts (range (+ 1 (count a-seq)))]
+    (map #(f % a-seq) cnts)))
 
 (defn inits [a-seq]
-  [:-])
+  (parts take a-seq))
+
+(defn tails [a-seq]
+  (parts drop a-seq))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [rotation (fn [n]
+                   (concat (drop n a-seq) (take n a-seq)))]
+    (map rotation (range (max 1 (count a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [freq (fn [fqs elem]
+               (let [curr-fq (get fqs elem)
+                     new-fq (if (nil? curr-fq) 1 (+ 1 curr-fq))]
+                 (assoc fqs elem new-fq)))]
+    (reduce freq freqs a-seq)))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [un-frequence (fn [[k n]]
+                       (repeat n k))]
+    (mapcat un-frequence a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    (sequence coll)
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [div (int (/ (count a-seq) 2))]
+    (split-at div a-seq)))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [f (fn [xs x]
+            (let [[smaller larger] (split-with #(<= % x) xs)]
+              (concat smaller (seq [x]) larger)))]
+    (reduce f a-seq b-seq)))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[fst snd] (halve a-seq)]
+    (if (or (empty? a-seq) (singleton? a-seq))
+      (sequence a-seq)
+      (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
