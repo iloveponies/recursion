@@ -167,12 +167,21 @@
                          (filter (complement empty?) (inits xs)))))
         mono (longest-mono a-seq)]
     (if (nil? mono)
-      mono
+      '()
       (cons mono (split-into-monotonics (drop (count mono) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [bijection (fn [s]
+                    (let [perms (permutations (rest s))]
+                      (map cons
+                         (repeat (count perms) (first s))
+                         perms)))]
+    (if (empty? a-set)
+      (list ())
+      (mapcat bijection (rotations a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{a-set}
+    '()))
 
