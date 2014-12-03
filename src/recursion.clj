@@ -171,17 +171,19 @@
       (cons mono (split-into-monotonics (drop (count mono) a-seq))))))
 
 (defn permutations [a-set]
-  (let [bijection (fn [s]
-                    (let [perms (permutations (rest s))]
-                      (map cons
-                         (repeat (count perms) (first s))
-                         perms)))]
+  (let [permutation (fn [s] (map cons
+                               (repeat (first s))
+                               (permutations (rest s))))]
     (if (empty? a-set)
       (list ())
-      (mapcat bijection (rotations a-set)))))
+      (mapcat permutation (rotations a-set)))))
 
 (defn powerset [a-set]
   (if (empty? a-set)
-    #{a-set}
-    '()))
+    #{(set a-set)}
+    (let [union clojure.set/union
+          f (fn [elem, s]
+              (map #(union #{elem} %) s))
+          powerset-tail (powerset (rest a-set))]
+      (union powerset-tail (f (first a-set) powerset-tail)))))
 
