@@ -121,8 +121,7 @@
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [freq (fn [fqs elem]
-               (let [curr-fq (get fqs elem)
-                     new-fq (if (nil? curr-fq) 1 (+ 1 curr-fq))]
+               (let [new-fq (inc (get fqs elem 0))]
                  (assoc fqs elem new-fq)))]
     (reduce freq freqs a-seq)))
 
@@ -161,7 +160,15 @@
       (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [longest-mono (fn [xs]
+                       (last
+                        (take-while
+                         #(or (apply < %) (apply > %))
+                         (filter (complement empty?) (inits xs)))))
+        mono (longest-mono a-seq)]
+    (if (nil? mono)
+      mono
+      (cons mono (split-into-monotonics (drop (count mono) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
