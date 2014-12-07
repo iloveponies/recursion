@@ -151,12 +151,24 @@
    (or (empty? a-seq) (= (count a-seq) 1)) a-seq
    :else (seq-merge (merge-sort (vec (first (halve a-seq)))) (merge-sort (vec (second (halve a-seq)))))))
 
+(defn monotonic? [a-seq]
+  (or (= (sort a-seq) a-seq) (= (reverse (sort a-seq)) a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (let [monotonic (->> a-seq inits (take-while monotonic?) last)]
+    (cons monotonic (split-into-monotonics (drop (count monotonic) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+   (if (not (empty? (rest a-set)))
+     (apply concat (for [x a-set]
+                     (map #(cons x %) (permutations (remove #{x} a-set))))) [a-set]))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (clojure.set/union (powerset (rest a-set))
+                       (map #(conj % (first a-set)) (powerset (rest a-set))))))
+
 
