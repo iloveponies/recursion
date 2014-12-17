@@ -22,14 +22,15 @@
     (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  (if (< (count seq-1) (count seq-2))
-    seq-2
-    seq-1))
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
-  (if (empty? (rest a-seq))
-    (first a-seq)
-    (max-element (first a-seq) (longest-sequence (rest a-seq)))))
+  (cond
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
   (if (empty? a-seq)
@@ -181,9 +182,23 @@
                  (split-into-monotonics
                   (drop (count first-monotonic) a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn permutations [a-seq]
+  (cond
+    (empty? a-seq) '(())
+    :else (mapcat (fn [e1]
+              (map (fn [e2] (cons e1 e2))
+                   (permutations
+                    (remove (fn [x] (= x e1)) a-seq))))
+            a-seq)))
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+   (empty? a-set)#{#{}}
+   :else  (let [elem (first a-set)
+          elems-prev (rest a-set)
+          powerset-prev (powerset elems-prev)]
+      (clojure.set/union
+        powerset-prev
+        (set (map (fn [x] (conj x elem)) powerset-prev))))))
+
 
