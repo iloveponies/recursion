@@ -34,8 +34,20 @@
    (singleton? a-seq) (first a-seq)
    :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
+;; sample my-filter should look like my-map
+(defn my-map [f a-seq]
+  (if (empty? a-seq)
+    a-seq
+    (cons (f (first a-seq))
+          (my-map f (rest a-seq)))))
+
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [[x & xs] a-seq]      
+      (if (pred? x)
+        (cons x (my-filter pred? xs))
+        (my-filter pred? xs)))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
