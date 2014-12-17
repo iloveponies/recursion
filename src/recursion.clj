@@ -193,12 +193,12 @@
 
 (defn powerset [a-set]
   (cond
-   (empty? a-set)#{#{}}
+   (empty? a-set) #{#{}}
    :else  (let [elem (first a-set)
-          elems-prev (rest a-set)
-          powerset-prev (powerset elems-prev)]
+          elems-prev (rest a-set)]
       (clojure.set/union
-        powerset-prev
-        (set (map (fn [x] (conj x elem)) powerset-prev))))))
+        (powerset elems-prev)
+        (set (map (fn [x] (conj x elem))
+                  (powerset elems-prev)))))))
 
 
