@@ -56,8 +56,8 @@
 (defn my-drop-while [pred? a-seq]
   (cond
    (empty? a-seq) '()
-   (not (pred? (first a-seq))) (cons (first a-seq) (my-drop-while pred? (rest a-seq)))
-   :else '()))
+   (not (pred? (first a-seq))) a-seq 
+   :else (my-drop-while pred? (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
   (cond
@@ -96,13 +96,15 @@
 (defn tails [a-seq]
   (if (empty? a-seq)
     '(())
-    (cons (seq a-seq) (tails (rest a-seq)))))
+    (cons (sequence a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  (map (fn [n] (concat (drop n a-seq) (take n a-seq))) (range 0 (count a-seq))))
+  (if (empty? a-seq)
+    '(())
+    (map (fn [n] (concat (drop n a-seq) (take n a-seq))) (range 0 (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -126,24 +128,50 @@
 (defn my-drop [n coll]
   (cond 
    (empty? coll) '()
-   (<= n 0) (seq coll)
+   (<= n 0) (sequence coll)
    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [k (int (/ (count a-seq) 2))]
+    (vector (take k a-seq) (drop k a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (loop [s1 a-seq s2 b-seq res '()]
+    (cond
+     (empty? s1) (concat (reverse res) s2)
+     (empty? s2) (concat (reverse res) s1)
+     :else (let [a (first s1)
+                 b (first s2)]
+             (if (< a b)
+               (recur (rest s1) s2 (cons a res))
+               (recur s1 (rest s2) (cons b res)))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (sequence a-seq)
+    (let [[as bs] (halve a-seq)]
+      (seq-merge (merge-sort as) (merge-sort bs)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (letfn [(monotonic? [xs]
+            (or (empty? xs)
+                (apply <= xs)
+                (apply >= xs)))]
+    (if (empty? a-seq)
+      '()
+      (let [as (last (my-take-while monotonic? (inits a-seq)))
+            bs (my-drop (count as) a-seq)]
+        (cons as (split-into-monotonics bs))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (mapcat (fn [x] (map #(cons x %) (permutations (disj (set a-set) x)))) a-set)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (let [x (first a-set)
+          xs (rest a-set)
+          ss (powerset xs)]
+      (clojure.set/union ss (into #{} (map #(conj % x) ss))))))
