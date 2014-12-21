@@ -8,6 +8,8 @@
 (defn singleton? [coll]
   (and (first coll) (not (second coll))))
 
+;;testing ssh keys
+
 (defn my-last [coll]
   :-)
 
