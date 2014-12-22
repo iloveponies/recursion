@@ -121,13 +121,19 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (apply concat (map #(repeat (get a-map %) %) (keys a-map))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (empty? coll) []
+    (zero? n) []
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (empty? coll) coll
+    (zero? n) coll
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
