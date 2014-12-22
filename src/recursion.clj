@@ -109,10 +109,16 @@
         (map (fn [n] (concat (drop n a-seq) (take n a-seq))) (range 0 (count a-seq))))) 
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [f (first a-seq)
+          c (or (get freqs f) 0)
+          new-freq (assoc freqs f (inc c))]
+          (my-frequencies-helper new-freq (rest a-seq)))))
+    
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
