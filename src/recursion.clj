@@ -100,16 +100,10 @@
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  (let [rng (fn rng' [n] (if (< n 0)
-                           '()
-                           (cons n (rng' (dec n)))))]
-    (rng (dec up-to))))
-
-;(defn my-range [up-to]
-;  (let [rng (fn rng' [n] (if (< n 0)
-;                           '()
-;                           (cons n (rng' (dec n)))))]
-;    (rng (dec up-to))))
+  (let [decreased (dec up-to)]
+    (if (< up-to 1)
+      '()
+      (cons decreased (my-range decreased)))))
 
 (defn tails [a-seq]
   (if (empty? a-seq)
