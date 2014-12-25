@@ -65,10 +65,14 @@
       a-seq)))
 
 (defn seq= [a-seq b-seq]
-  (cond
-    (and (empty? a-seq) (empty? b-seq)) true
-    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
-    :else false))
+  (let [check-equality (fn chk [as bs]
+                         (cond
+                           (and (empty? as) (empty? bs)) true
+                           (= (first as) (first bs)) (chk (rest as) (rest bs))
+                           :else false))]
+    (if (= (count a-seq) (count b-seq))
+      (check-equality a-seq b-seq)
+      false)))
 
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2))
