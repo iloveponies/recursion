@@ -92,7 +92,7 @@
 (def fib
   (memoize (fn [n] (if (< n 2)
                      n
-                     (+' (fib (- n 1)) (fib (- n 2)))))))
+                     (+' (fib (dec n)) (fib (- n 2)))))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   (if (< how-many-times 1)
@@ -104,6 +104,12 @@
                            '()
                            (cons n (rng' (dec n)))))]
     (rng (dec up-to))))
+
+;(defn my-range [up-to]
+;  (let [rng (fn rng' [n] (if (< n 0)
+;                           '()
+;                           (cons n (rng' (dec n)))))]
+;    (rng (dec up-to))))
 
 (defn tails [a-seq]
   (if (empty? a-seq)
@@ -123,7 +129,7 @@
   (if (empty? a-seq)
     freqs
     (let [current (first a-seq)
-          count-for-current (+ (get freqs current 0) 1)]
+          count-for-current (inc (get freqs current 0))]
       (my-frequencies-helper
         (assoc freqs current count-for-current)
         (rest a-seq)))))
