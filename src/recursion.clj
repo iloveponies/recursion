@@ -97,18 +97,24 @@
    (< how-many-times 1)
      '()
    :else
-     (concat
-        (vector (my-repeat (- how-many-times 1) what-to-repeat))
-        (vector what-to-repeat))))
+     (conj
+        (my-repeat (- how-many-times 1) what-to-repeat)
+        what-to-repeat)))
 
 (defn my-range [up-to]
-  [:-])
+  (if (< up-to 1)
+    '()
+    (conj (my-range (- up-to 1)) (- up-to 1))))
 
-(defn tails [a-seq]
-  [:-])
+(defn tails [a-seq])
+
 
 (defn inits [a-seq]
-  [:-])
+  (conj (map (fn [x] (pop x))
+    (map reverse
+       (map my-range
+            (map (fn [x] (+ x 1)) a-seq))))
+        '() ))
 
 (defn rotations [a-seq]
   [:-])
