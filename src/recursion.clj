@@ -137,7 +137,7 @@
     (let [[elem amount] (first freqs)]
       (concat (repeat amount elem) (un-frequencies (rest freqs))))))
 
-; interesting: (conj) adds element at different side for seqs & lists
+; (conj) adds element at different side for seqs & lists
 
 (defn my-take [n coll]
   (if (or (< n 1) (empty? coll))
@@ -169,8 +169,18 @@
     (let [[half-1 half-2] (halve a-seq)]
       (seq-merge (merge-sort half-1) (merge-sort half-2)))))
 
+; (< 1 2 3) = (apply < [1 2 3])
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [inits' (inits a-seq)
+        monotonous-range (my-last (my-take-while
+                                    (fn [x] (if (empty? x)
+                                              true
+                                              (or (apply <= x) (apply >= x))))
+                                    inits'))]
+    (if (empty? a-seq)
+      '()
+      (cons monotonous-range (split-into-monotonics (my-drop (count monotonous-range) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
