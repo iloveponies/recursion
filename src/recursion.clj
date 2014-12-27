@@ -179,17 +179,26 @@
       (cons monotonous-range (split-into-monotonics (my-drop (count monotonous-range) a-seq))))))
 
 (defn permutations [a-set]
-  (let [perms' (fn perms [prefix a-set]
-                 (cond
-                   (empty? a-set) (seq [prefix])
-                   :else (let [rots (rotations a-set)]
-                           (mapcat identity ; one-level seq flattening
-                             (map
-                               (fn [rot]
-                                 (let [head-elem (first rot)]
-                                   (perms (cons head-elem prefix) (rest rot))))
-                               rots)))))]
-    (perms' #{} a-set)))
+  (if (empty? a-set)
+    [[]]
+    (let [all-permutations (fn [x] (map
+                                     (fn [y] (cons (first x) y))
+                                     (permutations (rest x))))]
+      (apply concat (map all-permutations (rotations a-set))))))
+
+; my impl
+;(defn permutations [a-set]
+;  (let [perms' (fn perms [prefix a-set]
+;                 (cond
+;                   (empty? a-set) (seq [prefix])
+;                   :else (let [rots (rotations a-set)]
+;                           (mapcat identity ; one-level seq flattening
+;                             (map
+;                               (fn [rot]
+;                                 (let [head-elem (first rot)]
+;                                   (perms (cons head-elem prefix) (rest rot))))
+;                               rots)))))]
+;    (perms' #{} a-set)))
 
 (defn powerset [a-set]
   [:-])
