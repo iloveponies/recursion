@@ -106,30 +106,60 @@
     '()
     (conj (my-range (- up-to 1)) (- up-to 1))))
 
-(defn tails [a-seq])
+(defn tails-rec [a-seq]
+  (if (> 1 (count a-seq))
+    '()
+    (conj (tails-rec (subvec a-seq 1)) a-seq )))
 
+(defn tails [a-seq]
+  (conj (tails-rec a-seq) '() ))
+
+(defn inits-rec [a-seq]
+  (if (> 1 (count a-seq))
+    '()
+    (conj (inits-rec (pop a-seq)) a-seq )))
 
 (defn inits [a-seq]
-  (conj (map (fn [x] (pop x))
-    (map reverse
-       (map my-range
-            (map (fn [x] (+ x 1)) a-seq))))
-        '() ))
+  (conj (inits-rec a-seq) '() ))
+
+(defn rotate [a-seq]
+  (concat (rest a-seq) (vector(first a-seq))))
+
+(defn rotations-recursion [rotations-seq a-seq]
+  (let [rotated-seq (rotate a-seq)]
+    (if (>= (count rotations-seq)(count a-seq))
+     rotations-seq
+     (rotations-recursion (conj rotations-seq rotated-seq) rotated-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (rotations-recursion '() a-seq))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [current-elem (first a-seq)]
+      (if (contains? freqs current-elem)
+        (my-frequencies-helper
+           (assoc freqs current-elem (inc (freqs current-elem)))
+           (rest a-seq))
+        (my-frequencies-helper
+           (assoc freqs current-elem 1)
+           (rest a-seq))))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (let [current (first a-map)]
+      (concat (my-repeat (second current) (first current)) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (let [times (min n (count coll))]
+    (if (zero? times)
+      '()
+      (cons (first coll) (my-take (dec times) (rest coll))))))
 
 (defn my-drop [n coll]
   [:-])
