@@ -162,13 +162,36 @@
       (cons (first coll) (my-take (dec times) (rest coll))))))
 
 (defn my-drop [n coll]
-  [:-])
+  (let [times (min n (count coll))]
+    (if (zero? times)
+      coll
+      (my-drop (dec times) (subvec coll 1)))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [pivot (int (/ (count a-seq) 2))]
+   (conj '() (my-drop pivot a-seq) (my-take pivot a-seq))))
+
+(defn bigger [a b]
+  (cond
+   (and (nil? a) (nil? b))
+     nil
+   (nil? a) b
+   (nil? b) a
+   :else (max a b)))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+ (let [a (first a-seq)
+       b (first b-seq)
+       big (bigger a b)
+       a-rest (if (= big a)
+                 (rest a-seq)
+                 a-seq)
+       b-rest (if (= big b)
+                (rest b-seq)
+                b-seq)]
+   (if (nil? big)
+     '()
+     (cons big (seq-merge a-rest b-rest)))))
 
 (defn merge-sort [a-seq]
   [:-])
