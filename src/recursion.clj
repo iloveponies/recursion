@@ -132,7 +132,9 @@
      (rotations-recursion (conj rotations-seq rotated-seq) rotated-seq))))
 
 (defn rotations [a-seq]
-  (rotations-recursion '() a-seq))
+  (if (empty? a-seq)
+    '(())
+    (rotations-recursion '() a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -169,32 +171,37 @@
 
 (defn halve [a-seq]
   (let [pivot (int (/ (count a-seq) 2))]
-   (conj '() (my-drop pivot a-seq) (my-take pivot a-seq))))
+   (conj '() (drop pivot a-seq) (take pivot a-seq))))
 
-(defn bigger [a b]
+(defn smaller [a b]
   (cond
    (and (nil? a) (nil? b))
      nil
    (nil? a) b
    (nil? b) a
-   :else (max a b)))
+   :else (min a b)))
 
 (defn seq-merge [a-seq b-seq]
  (let [a (first a-seq)
        b (first b-seq)
-       big (bigger a b)
-       a-rest (if (= big a)
+       small (smaller a b)
+       a-rest (if (= small a)
                  (rest a-seq)
                  a-seq)
-       b-rest (if (= big b)
+       b-rest (if (= small b)
                 (rest b-seq)
                 b-seq)]
-   (if (nil? big)
+   (if (nil? small)
      '()
-     (cons big (seq-merge a-rest b-rest)))))
+     (cons small (seq-merge a-rest b-rest)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (singleton? a-seq) (empty? a-seq))
+    a-seq
+    (let [halved (halve a-seq)
+          first-seq (first halved)
+          second-seq (second halved)]
+      (seq-merge (merge-sort first-seq) (merge-sort second-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
