@@ -166,28 +166,41 @@
         (merge-sort top-half)
         (merge-sort bottom-half)))))
 
-(defn monotonic? [a-seq]
-  (or
-    (apply <= a-seq)
-    (apply >= a-seq)))
-
 (defn split-into-monotonics [a-seq]
+  (let [monotonic? (fn [a-seq]
+                     (or
+                       (apply <= a-seq)
+                       (apply >= a-seq)))]                     
   (if (< (count a-seq) 1)
     ()
     (let [ls (longest-sequence
                (take-while monotonic? (rest (inits a-seq))))]
-      (conj (split-into-monotonics (drop (count ls) a-seq)) ls))))
+      (conj (split-into-monotonics (drop (count ls) a-seq)) ls)))))
 
 (defn permute [done-seq a-seq]
   (if (empty? a-seq)
     (list done-seq)
-    (apply concat (map 
-                    (partial permute (conj done-seq (first a-seq))) 
-                      (rotations (rest a-seq))))))
+    (apply concat 
+           (map 
+             (partial permute (conj done-seq (first a-seq))) 
+             (rotations (rest a-seq))))))
 
  (defn permutations [a-set]
-  (apply concat (map (partial permute ()) (rotations a-set))))
+   (apply concat 
+          (map 
+            (partial permute ()) 
+            (rotations a-set))))
  
 (defn powerset [a-set]
-  (set (map set (apply concat (map inits (permutations a-set))))))
-  
+	(let [powerset-helper (fn [max size current unused]
+	                        (if (= size max)
+	                          current
+	                          (recur max 
+                                  (inc size)
+                                  (set (concat 
+                                         (map 
+                                           (fn [e] (conj e (first unused))) 
+                                           current)
+                                         current))
+                                  (rest unused))))]
+	  (powerset-helper (count a-set) 0 #{#{}} a-set)))
