@@ -1,8 +1,6 @@
 (ns recursion
   (:require [clojure.set :as set]))
 
-; TODO study alternative impls after finished, especially #27-29
-
 (defn product [coll]
   (if (empty? coll)
     1
@@ -181,7 +179,14 @@
       '()
       (cons monotonous-range (split-into-monotonics (my-drop (count monotonous-range) a-seq))))))
 
+; documenting my impl for myself:
 ; tests were barking at (perms []) case due to the type of collection
+; 1234 -> rots: 1234 2341 3412 4123
+; so we take 1st rot, take its head 1 and append rots of the rest. do it recursively (after finished we take 2nd rot, take its head 2 ...)
+;  234 -> rots: 234 342 423
+;   34 -> rots: 34 43
+;    4 -> rots: 4
+; P(n) = n!
 (defn permutations [a-set]
   (let [perms' (fn perms [prefix a-set]
                  (cond
