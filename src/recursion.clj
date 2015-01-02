@@ -1,5 +1,5 @@
 (ns recursion)
-
+(require '[clojure.set :refer [union difference]])
 (defn reload []
   (use 'recursion :reload))
 
@@ -218,10 +218,11 @@
   )
 
 (defn permutations-helper [a-set a-list result]
+  "This needs rework, should work with sequences and not only sets"
   (if (empty? a-set)
     (cons a-list result)
     (for [x a-set
-          solution (permutations-helper (clojure.set/difference a-set #{x}) (cons x a-list) result)]
+          solution (permutations-helper (difference a-set #{x}) (cons x a-list) result)]
       solution
       )
     )
@@ -237,13 +238,15 @@
   (permutations-helper a-set () ()))
 
 (defn powerset-helper [a-set acc-set]
+  "Expects acc-set to have empty set already."
   (if (empty? a-set)
-    (conj #{} acc-set)
-    (#{})
+    acc-set
+    (powerset-helper (rest a-set) (union acc-set (map #(conj % (first a-set)) acc-set)))
     )
   )
+
 (defn powerset [a-set]
   "(powerset #{})      ;=> #{#{}}
    (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
   "
-  [:-])
+  (powerset-helper a-set #{#{}}))
