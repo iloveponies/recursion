@@ -187,5 +187,13 @@
 	 
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+    (not (set? a-set)) (powerset (set a-set))
+    (empty? a-set) #{#{}}
+    :else 
+      (set (conj 
+        (apply concat
+        (map powerset
+          (map (fn [elem] (disj a-set elem)) a-set)))
+        a-set))))
 
