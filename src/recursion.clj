@@ -106,21 +106,15 @@
     '()
     (conj (my-range (- up-to 1)) (- up-to 1))))
 
-(defn tails-rec [a-seq]
-  (if (> 1 (count a-seq))
-    '()
-    (conj (tails-rec (subvec a-seq 1)) a-seq )))
 
 (defn tails [a-seq]
-  (conj (tails-rec a-seq) '() ))
-
-(defn inits-rec [a-seq]
-  (if (> 1 (count a-seq))
-    '()
-    (conj (inits-rec (pop a-seq)) a-seq )))
+ (if (empty? a-seq)
+    '(())
+    (cons (apply list a-seq)
+          (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (conj (inits-rec a-seq) '() ))
+ (map reverse (reverse (tails (reverse a-seq)))))
 
 (defn rotate [a-seq]
   (concat (rest a-seq) (vector(first a-seq))))
@@ -204,10 +198,24 @@
       (seq-merge (merge-sort first-seq) (merge-sort second-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+   (let [increasing (last (take-while (fn [x] (if (empty? x)
+                       x
+                       (or
+                        (apply < x)
+                        (apply > x))))
+               (inits a-seq)))
+        inc-len (count increasing)]
+    (cons increasing
+          (split-into-monotonics (drop inc-len a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (singleton? a-set)
+    '()
+     (let [valid-elems (fn [elem a-set]
+                        (clojure.set/difference a-set [elem]))]
+      ())))
 
 (defn powerset [a-set]
   [:-])
