@@ -1,0 +1,27 @@
+(doc first)
+(doc rest)
+(max -1 nil)
+(seq)
+(defn fib [n]
+  (if (< n 2)
+    n
+    (+ (fib (- n 1)) (fib (- n 2)))))
+fib(4)
+(fib 4)
+(seq [1 2])
+'(())
+(defn tails [a-seq]
+  (if (empty? a-seq)
+    '(())
+    (cons a-seq (tails (rest a-seq)))))
+(defn inits [a-seq]
+  (map reverse (tails (reverse a-seq))))
+(inits [1 2 3 4])
+({:a 1} :a)
+({:a 1} :b)
+(:b {:b 2})
+(:b {:c 2})
+(repeat :a 3)
+(repeat 3 :a)
+(seq 1 2)
+(vec 1 2)
