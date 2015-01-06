@@ -210,12 +210,17 @@
     (cons increasing
           (split-into-monotonics (drop inc-len a-seq))))))
 
+(defn permutations-helper [a-set]
+  (if (empty? a-set)
+    '(())
+    (apply concat (map (fn [x]
+                         (map (fn [y]
+                                (concat (list x) y))
+                              (permutations-helper (disj a-set x))))
+                       a-set))))
+
 (defn permutations [a-set]
-  (if (singleton? a-set)
-    '()
-     (let [valid-elems (fn [elem a-set]
-                        (clojure.set/difference a-set [elem]))]
-      ())))
+ (permutations-helper (set a-set)))
 
 (defn powerset [a-set]
   [:-])
