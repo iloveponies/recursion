@@ -218,7 +218,6 @@
   )
 
 (defn permutations-helper [a-set a-list result]
-  "This needs rework, should work with sequences and not only sets"
   (if (empty? a-set)
     (cons a-list result)
     (for [x a-set
@@ -234,8 +233,9 @@
   ;=> (())
   (permutations #{1 5 3})
   ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+  Quite hack needed for passing unit tests.
   "
-  (permutations-helper a-set () ()))
+  (vec (map #(vec %) (permutations-helper (set a-set) () ()))))
 
 (defn powerset-helper [a-set acc-set]
   "Expects acc-set to have empty set already."
