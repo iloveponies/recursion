@@ -75,7 +75,10 @@
     (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (cond
+    (zero? n) 0
+    (= n 1) 1
+    :else (+ (fib (dec n)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
