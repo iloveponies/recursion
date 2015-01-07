@@ -83,16 +83,17 @@
       (cons what-to-repeat ( my-repeat (- how-many-times 1) what-to-repeat))))
 
 (defn my-range [up-to]
-  (if (zero? 0) '()
-      (cons (dec up-to) (my-range (dec up-to)))))
+  (if (zero? 0)
+    '()
+    (cons (- up-to 1) (my-range (- up-to 1)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) (cons '())
-      (cons a-seq (tails a-seq ))))
-      
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons a-seq (tails (rest a-seq)))))
 
-(defn inits [a-seq])
- ; (reverse (map tails (reverse a-seq)))
+(defn inits [a-seq]
+  (reverse (map reverse (tails (reverse a-seq)))))
   
 (defn rotations [a-seq]
   [:-])
