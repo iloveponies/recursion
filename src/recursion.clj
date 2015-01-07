@@ -51,7 +51,10 @@
       (cons (first a-seq) (my-take-while pred? (rest a-seq)))))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (not (pred? (first a-seq))) a-seq
+    :else (my-drop-while pred? (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
   :-)
