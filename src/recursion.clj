@@ -21,7 +21,9 @@
     (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [seq1-len (count seq-1)
+        seq2-len (count seq-2)]
+    (if (> seq1-len seq2-len) seq-1 seq-2)))
 
 (defn longest-sequence [a-seq]
   [:-])
