@@ -183,8 +183,20 @@
               (merge-sort s1)
               (merge-sort s2)))))
 
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq)
+      (apply >= a-seq)))
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [init-ls (inits a-seq)
+          first-seq (first (filter (fn [x]
+                                     (and (not (empty? x))
+                                          (monotonic? x)))
+                                   init-ls))
+          ]
+      (cons first-seq
+            (split-into-monotonics (drop (count first-seq) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
