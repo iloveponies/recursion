@@ -66,8 +66,11 @@
 
 (defn seq= [a-seq b-seq]
   (cond 
-    (not (= (first a-seq) (first b-seq))) false
     (and (empty? a-seq) (empty? b-seq)) true
+    (or 
+      (and (empty? a-seq) (not (empty? b-seq)))
+      (and (empty? b-seq) (not (empty? a-seq)))
+      (not (= (first a-seq) (first b-seq)))) false
     :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
@@ -110,7 +113,6 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
-
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq) freqs
     (let [seq-key (first a-seq)
@@ -135,7 +137,7 @@
 
 (defn halve [a-seq]
   (let [n (int (/ (count a-seq) 2))]
-    (vec (list (my-take n a-seq) (my-drop n a-seq)))))
+    [(my-take n a-seq) (my-drop n a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
   (let [a (first a-seq) b (first b-seq)]
@@ -153,11 +155,29 @@
       (seq-merge (merge-sort first-half) 
                  (merge-sort second-half)))))
 
+(defn rotations-helper [a-seq n]
+  (if (zero? n) '()
+    (cons (concat (drop n a-seq) (take n a-seq)) 
+          (rotations-helper a-seq (dec n)))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq) '(())
+    (rotations-helper a-seq (count a-seq))))
+
+;; Algorithm
+;; 1. Reverse and find inits
+;; 2. take-while with is-monotonic? as filter
+;; 3. take the last one (assume of size k)
+;; 4. drop k from original
+;; 5. recurse
+(defn is-monotonic? [a-seq]
+  (if (< (count a-seq) 2) true
+    (or (apply > a-seq) (apply < a-seq))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq) '()
+   (let [largest (last (take-while is-monotonic? (reverse (inits a-seq))))]
+    (cons largest (split-into-monotonics (drop (count largest) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
