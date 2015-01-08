@@ -104,10 +104,21 @@
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
+
+(defn rotations-helper [rotated unrotated]
+  (if (empty? unrotated)
+    '()
+    (cons
+      (concat unrotated rotated)
+      (rotations-helper
+        (reverse (cons (first unrotated) (reverse rotated)))
+        (rest unrotated)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (rotations-helper '() a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -162,12 +173,56 @@
           sorted-b (merge-sort b)]
       (seq-merge sorted-a sorted-b))))
 
+(defn monotonic? [a-seq]
+  (or
+    (empty? a-seq)
+    (apply >= a-seq)
+    (apply <= a-seq)))
+
+(defn mono-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [init-seq (inits a-seq)
+          mono-inits (take-while monotonic? init-seq)
+          mono-count (count mono-inits)
+          mono-seq (last mono-inits)]
+      (mono-helper
+        (reverse (cons mono-seq (reverse monotonics)))
+        (drop (dec mono-count) a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (mono-helper '() a-seq))
+
+(defn combine-helper [elem a b]
+  (if (empty? b)
+    (list (concat a [elem]))
+    (cons
+      (concat a [elem] b)
+      (combine-helper elem (concat a [(first b)]) (rest b)))))
+
+(defn combine [elem perms]
+  (apply concat (map (fn [perm] (combine-helper elem '() perm)) perms)))
+
+(defn permutations-helper [a-set]
+  (if (empty? a-set)
+    '(())
+    (let [elem (first a-set)]
+      (combine elem (permutations-helper (disj a-set elem))))))
 
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper (set a-set)))
+
+(defn power-combine [elem rest]
+  (clojure.set/union
+    rest
+    (map (fn [a-set] (conj a-set elem)) rest)))
+
+(defn powerset-helper [a-set]
+  (if (empty? a-set)
+    #{a-set}
+    (let [elem (first a-set)
+          rest (disj a-set elem)]
+      (power-combine elem (powerset-helper rest)))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (powerset-helper (set a-set)))
