@@ -117,7 +117,7 @@
 
 (defn rotations [a-seq]
   (if (empty? a-seq) (cons () a-seq)
-  (take (count a-seq) (partition (count a-seq) 1 (cycle a-seq)))))
+    (take (count a-seq) (partition (count a-seq) 1 (cycle a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -130,7 +130,7 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies-helper [a-map]
- )
+  )
 
 (defn un-frequencies [a-map]
   (un-frequencies-helper a-map))
@@ -142,29 +142,26 @@
   (drop n coll))
 
 (defn halve [a-seq]
-  (let [a (int (/ (count a-seq) 2))] (vector (my-take a a-seq) (my-drop a a-seq))))
+  (let [a (int (/ (count a-seq) 2))]
+    (vector (my-take a a-seq) (my-drop a a-seq))))
 
 (defn seq-merge [a-seq b-seq]
   (cond
-   (or (empty? a-seq) (empty? b-seq)) b-seq
-   (< (first a-seq) (first b-seq))
-          (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
-   :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
+   (and (empty? a-seq) (empty? b-seq))
+   '()
+   (empty? a-seq)
+   (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   (empty? b-seq)
+   (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+   :else
+   (if (> (first a-seq) (first b-seq))
+     (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+     (cons (first a-seq) (seq-merge (rest a-seq) b-seq)))))
 
-(defn merge* [left right]
-  (cond (nil? left) right
-        (nil? right) left
-        true (let [[l & *left] left
-                   [r & *right] right]
-               (if (<= l r) (cons l (merge* *left right))
-                            (cons r (merge* left *right))))))
-
-(defn merge-sort [L]
-  (let [[l & *L] L]
-    (if (nil? *L)
-      L
-      (let [[left right] (split-at (/ (count L) 2) L)]
-        (merge* (merge-sort left) (merge-sort right))))))
+(defn merge-sort [a-seq]
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (seq-merge (get (halve a-seq) 1) (get (halve a-seq) 0))
+    (seq-merge (merge-sort (get (halve a-seq) 1)) (merge-sort (get (halve a-seq) 0)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
