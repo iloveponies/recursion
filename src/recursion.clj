@@ -199,8 +199,22 @@
             (split-into-monotonics (drop (count first-seq) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [remove-at (fn [a-set n]
+                    (concat (take n a-set)
+                            (drop (inc n) a-set)))]
+    (if (empty? a-set)
+      '(())
+      (apply concat
+             (map (fn [x n]
+                    (map (fn [y] (cons x y))
+                         (permutations (remove-at a-set n))))
+                  a-set
+                  (range 0 (count a-set)))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (let [powerset-rest (powerset (rest a-set))]
+      (concat powerset-rest (map (fn [x] (cons (first a-set) x)) powerset-rest)))))
 
+;;
