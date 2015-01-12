@@ -179,8 +179,31 @@
    (let [largest (last (take-while is-monotonic? (reverse (inits a-seq))))]
     (cons largest (split-into-monotonics (drop (count largest) a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
 
+(defn set->permutations [a-set]
+  (cond
+    (empty? a-set) '(())
+    (singleton? a-set) (list (list (first a-set)))
+    :else (apply concat (map (fn [x] (map (fn [res] (cons x res))
+                                          (set->permutations (disj a-set x))))
+                             a-set))))
+
+(defn permutations [a-set]
+  (set->permutations (set a-set)))
+
+;; Algorithm
+;; 1.the power set of the empty set has one element, the empty set
+;; 2. for every additional element in our set
+;; the power set consists of the subsets that don't
+;; contain this element (just take the previous power set)
+;; plus the subsets that do contain the element (use list
+;; comprehension to add [x] onto everything in the
+;; previous power set)
 (defn powerset [a-set]
-  [:-])
+  (reduce (fn [a x]
+            (->> a
+                 (map #(set (concat #{x} %)))
+                 (concat a)
+                 set)) 
+          #{#{}} a-set))
+
