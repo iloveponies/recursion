@@ -140,7 +140,11 @@
     (cons first-half (cons tail-half '()))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and (not (empty? a-seq)) (empty? b-seq)) a-seq
+    (and (empty? a-seq) (not (empty? b-seq))) b-seq
+    (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+    :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
   [:-])
