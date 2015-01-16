@@ -123,22 +123,41 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (let [[item repeats] (first a-map)]
+      (concat (repeat repeats item) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    '()
+    (conj (my-take (- n 1) (rest coll)) (first coll))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    coll
+    (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [middle (int (/ (count a-seq) 2))]
+    [(my-take middle a-seq) (my-drop middle a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [a-first (first a-seq) b-first (first b-seq)]
+      (if (< a-first b-first)
+        (conj (seq-merge (rest a-seq) b-seq) a-first)
+        (conj (seq-merge (rest b-seq) a-seq) b-first)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq))
+    a-seq
+    (let [[a-halve b-halve] (halve a-seq)
+          a-sorted (merge-sort a-halve)
+          b-sorted (merge-sort b-halve)]
+      (seq-merge a-sorted b-sorted))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
