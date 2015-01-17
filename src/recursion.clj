@@ -178,5 +178,10 @@
       a-set)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (let [prev (powerset (set (rest a-set)))]
+      (set
+        (concat
+          (map (fn [elt] (set (cons (first a-set) elt))) prev)
+          prev)))))
