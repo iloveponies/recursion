@@ -147,7 +147,10 @@
     :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= 0 (count a-seq) 1)
+    a-seq
+    (let [[first-half second-half] (halve a-seq)]
+      (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
