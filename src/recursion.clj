@@ -59,8 +59,7 @@
   (cond
    (and (empty? a-seq) (empty? b-seq)) true
    (or
-    (and (empty? a-seq) (not (empty? b-seq)))
-    (and (not (empty a-seq)) (empty? b-seq))
+    (or (empty? a-seq) (empty? b-seq))
     (not (= (first a-seq) (first b-seq)))) false
    :else (seq= (rest a-seq) (rest b-seq))))
 
@@ -93,8 +92,9 @@
       (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) '(())
-      (cons (reverse (into () a-seq)) (tails (rest a-seq)))))
+  (if (empty? a-seq) 
+    '(())
+    (cons (reverse (into () a-seq)) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
