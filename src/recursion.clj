@@ -169,7 +169,13 @@
         (cons longest-decr (split-into-monotonics (drop num-decr a-seq)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (list a-set)
+    (mapcat
+      (fn [x]
+        (map (fn [y] (cons x y))
+             (permutations (remove (fn [z] (= x z)) a-set))))
+      a-set)))
 
 (defn powerset [a-set]
   [:-])
