@@ -153,7 +153,20 @@
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [increasing-filter (fn [x] (apply <= (seq x)))
+          decreasing-filter (fn [x] (apply >= (seq x)))
+          inits-seqs (rest (inits a-seq))
+          incr-mono-seqs (filter increasing-filter inits-seqs)
+          decr-mono-seqs (filter decreasing-filter inits-seqs)
+          longest-incr (last incr-mono-seqs)
+          longest-decr (last decr-mono-seqs)
+          num-incr (count incr-mono-seqs)
+          num-decr (count decr-mono-seqs)]
+      (if (<= num-decr num-incr)
+        (cons longest-incr (split-into-monotonics (drop num-incr a-seq)))
+        (cons longest-decr (split-into-monotonics (drop num-decr a-seq)))))))
 
 (defn permutations [a-set]
   [:-])
