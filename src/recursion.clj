@@ -159,12 +159,34 @@
           b-sorted (merge-sort b-halve)]
       (seq-merge a-sorted b-sorted))))
 
+
+(defn monotonics-helper [a-seq]
+  (if (empty? a-seq)
+    '()
+    (cons (take 2 a-seq) (monotonics-helper (drop 2 a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (= (mod (count a-seq) 2) 1)
+    (cons (take 3 a-seq) (monotonics-helper (drop 3 a-seq)))
+    (cons (take 2 a-seq) (monotonics-helper (drop 2 a-seq)))))
+
+(defn my-interleave [a-number a-set]
+  (if (empty? a-set)
+    [[a-number]]
+    (let [add-number (fn [b-set] (cons (first a-set) b-set))]
+      (concat [(cons a-number a-set)]
+            (map add-number (my-interleave a-number (rest a-set)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (or (empty? a-set) (singleton? a-set))
+    [a-set]
+    (apply concat (map (fn [b-set] (my-interleave (first a-set) b-set))
+         (permutations (rest a-set))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    [a-set]
+    (let [subsets (powerset (rest a-set))]
+      (concat subsets (map (fn [b-set] (cons (first a-set) b-set))
+                           subsets)))))
 
