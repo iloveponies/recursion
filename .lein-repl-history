@@ -1,0 +1,111 @@
+(defn my-frequencies [a-seq] (let [helper (fn [freq se]
+                                            (if (empty? se)
+                                              freq
+                                              (if (= nil (get (first se) freq))
+                                                (helper (assoc freq (first se) 1) (rest se))
+                                                (helper (assoc freq (+ (first se) (get (first se) freq))) (rest se)))))]
+                               (helper {} a-seq)))
+(defn my-frequencies [a-seq] (let [helper (fn [freq se]
+                                            (if (empty? se)
+                                              freq
+                                              (if (= nil (get (first se) freq))
+                                                (recur (assoc freq (first se) 1) (rest se))
+                                                (recur (assoc freq (+ (first se) (get (first se) freq))) (rest se)))))]
+                               (helper {} a-seq)))
+(my-frequencies [])
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
+(defn my-frequencies [a-seq] (let [helper (fn [freq se]
+                                            (if (empty? se)
+                                              freq
+                                              (if (= nil (get (first se) freq))
+                                                (recur (assoc freq (first se) 1) (rest se))
+                                                (recur (assoc freq (first se) (+ (get (first se) freq) 1)) (rest se)))))]
+                               (helper {} a-seq)))
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
+(assoc {:a 2, :b 1} :a 3)
+(defn my-frequencies-helper [freqs a-seq]
+  (if (empty? a-seq)
+    freqs
+    (if (contains? freqs (first a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq) (+ 1 (get (first a-seq)))) (rest a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)))))
+(defn my-frequencies [a-seq] (my-frequencies-helper {} a-seq))
+(my-frequencies [])
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
+(defn my-frequencies-helper [freqs a-seq]
+  (if (empty? a-seq)
+    freqs
+    (if (contains? freqs (first a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq) (+ 1 (get freqs (first a-seq)))) (rest a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)))))
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
+quit
+(defn my-rotations-helper [n a-seq] (if (< 0 n)
+                                      (cons
+                                       (concat (rest a-seq) (first a-seq))
+                                       (my-rotations-helper (dec n) (concat (rest a-seq) (first a-seq))))
+                                      '()))
+(defn rotations [a-seq] (my-rotations-helper (count a-seq) a-seq))
+(rotations [])
+(rotations [1 2 3])
+(defn my-rotations-helper [n a-seq] (if (< 1 n)
+                                      (cons
+                                       (concat (rest a-seq) (first a-seq))
+                                       (my-rotations-helper (dec n) (concat (rest a-seq) (first a-seq))))
+                                      '()))
+(rotations [1 2 3])
+(seq 1)
+(cons 1)
+(cons '() 1)
+(cons 1 '())
+(defn my-rotations-helper [n a-seq] (if (< 0 n)
+                                      (cons
+                                       (concat (rest a-seq) (cons (first a-seq) '()))
+                                       (my-rotations-helper (dec n) (concat (rest a-seq) (cons (first a-seq) '()))))
+                                      '()))
+(rotations [])
+(rotations [1 2 3])
+quit
+(defn my-take-while [pred? a-seq] (if (pred? (first a-seq))
+                                    (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+                                    '()))
+(my-take-while odd? [1 2 3 4])
+(my-take-while odd? [])
+(defn my-take-while [pred? a-seq] (if (and (not (empty? a-seq)) (pred? (first a-seq)))
+                                    (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+                                    '()))
+(my-take-while odd? [])
+quit
+(defn my-drop-while [pred? a-seq] (if (pred? (first a-seq))
+                                    (my-drop-while pred? (rest a-seq))
+                                    a-seq))
+(my-drop-while odd? [1 2 3 4])
+(my-drop-while odd? [1 3 4 5])
+(my-drop-while even? [1 3 4 5])
+(my-drop-while odd? [])
+(defn my-drop-while [pred? a-seq] (if (and (not (empty? a-seq)) (pred? (first a-seq)))
+                                    (my-drop-while pred? (rest a-seq))
+                                    a-seq))
+(my-drop-while odd? [])
+(my-drop-while odd? [1 3 4 5])
+quit
+(defn seq= [a-seq b-seq] (if (and (empty? a-seq) (empty? b-seq))
+                           true
+                           (if (= (first a-seq) (first b-seq))
+                             (seq= (rest a-seq) (rest b-seq))
+                             false)))
+(seq= [1 2 4] '(1 2 4))
+(seq= [1 2 3] [1 2 3 4])
+(seq= [1 3 5] [])
+(seq= [] [])
+(seq= [1 2 2] [1 1 1 1])
+quit
+(defn seq= [a-seq b-seq] (if (and (empty? a-seq) (empty? b-seq))
+                           true
+                           (if (= (first a-seq) (first b-seq))
+                             (seq= (rest a-seq) (rest b-seq))
+                             false)))
+(seq= [1 2 4] '(1 2 4))
+(seq= [] [])
+(seq= [1 2 nil] [1 2])
+quit
