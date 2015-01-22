@@ -99,17 +99,31 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
+(defn rotations-helper [head-list tail-list]
+  (cond
+    (empty? tail-list) []
+    :else (cons (concat tail-list head-list) (rotations-helper (concat head-list [(first tail-list)]) (rest tail-list)))))
+
 (defn rotations [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) [[]]
+    :else (rotations-helper [] a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+   (if (empty? a-seq)
+        freqs
+        (let [first-item (first a-seq)
+              curre-value (get freqs first-item)
+              new-fags (if (nil? curre-value)
+                         (assoc freqs first-item 1)
+                         (assoc freqs first-item (inc curre-value)))]
+          (my-frequencies-helper new-fags (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (mapcat #(repeat (second %) (first %)) (seq a-map)))
 
 (defn my-take [n coll]
   [:-])
