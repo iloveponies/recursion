@@ -128,12 +128,12 @@
 (defn my-take [n coll]
   (cond
     (or (zero? n) (empty? coll)) []
-    :else (concat (first coll) (my-take (dec n) coll))))
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 
 (defn my-drop [n coll]
   (cond
-    (or (zero? n) (empty? coll)) []
+    (or (zero? n) (empty? coll)) coll
     :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
