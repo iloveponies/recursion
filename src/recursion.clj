@@ -126,10 +126,15 @@
   (mapcat #(repeat (second %) (first %)) (seq a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (or (zero? n) (empty? coll)) []
+    :else (concat (first coll) (my-take (dec n) coll))))
+
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (or (zero? n) (empty? coll)) []
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
