@@ -107,7 +107,7 @@
 
 (cons '(1) '(()))
 
-(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+(inits [1 2 3 4]);=> (() (1) (1 2) (1 2 3) (1 2 3 4))
 ; You can output the tails and inits in any order you like.
 (inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
 
@@ -159,9 +159,8 @@
    (empty? a-map) a-map
    :else   (let [current-key (key (first a-map))
                  current-value (val (first a-map))]
-          (concat
- (repeat current-value current-key)
-          (un-freq (rest a-map))
-          ))))
+             (concat
+              (repeat current-value current-key)
+              (un-freq (rest a-map)) ))))
 
 (un-freq {:a 3 :b 2 "^_^" 1} )
