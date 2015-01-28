@@ -137,10 +137,19 @@
     :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [h (int (/ (count a-seq) 2))]
+    [(my-take h a-seq) (my-drop h a-seq)]))
+
+(defn seq-merge-helper [a b completed]
+  (cond
+    (empty? a) (seq-merge-helper (rest a) (rest b) (conj completed (first b)))
+    (empty? b) (seq-merge-helper (rest a) (rest b) (conj completed (first a)))
+    (< (first a) (first b)) (seq-merge-helper (rest a) b (conj completed (first a)))
+    (> (first a) (first b)) (seq-merge-helper a (rest b) (conj completed (first b)))
+    :else completed))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper a-seq b-seq []))
 
 (defn merge-sort [a-seq]
   [:-])
