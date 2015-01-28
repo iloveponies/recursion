@@ -142,17 +142,20 @@
 
 (defn seq-merge-helper [a b completed]
   (cond
-    (empty? a) (seq-merge-helper (rest a) (rest b) (conj completed (first b)))
-    (empty? b) (seq-merge-helper (rest a) (rest b) (conj completed (first a)))
+    (and (empty? a) (empty? b)) completed
+    (empty? a) (seq-merge-helper a (rest b) (conj completed (first b)))
+    (empty? b) (seq-merge-helper (rest a) b (conj completed (first a)))
     (< (first a) (first b)) (seq-merge-helper (rest a) b (conj completed (first a)))
-    (> (first a) (first b)) (seq-merge-helper a (rest b) (conj completed (first b)))
-    :else completed))
+    :else (seq-merge-helper a (rest b) (conj completed (first b)))))
 
 (defn seq-merge [a-seq b-seq]
   (seq-merge-helper a-seq b-seq []))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (< (count a-seq) 2) a-seq
+    :else (let [[a b] (halve a-seq)]
+            (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
