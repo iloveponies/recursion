@@ -151,10 +151,13 @@
 (defn un-frequencies [a-map]
   (un-frequencies-helper a-map []))
 
-(defn my-take [n coll]
+(defn my-take-helper [n coll]
   (if (zero? n)
     coll
-    (my-take (dec n) (drop-last coll))))
+    (my-take-helper (dec n) (drop-last coll))))
+
+(defn my-take [n coll]
+  (my-take-helper (max (- (count coll) n) 0) coll))
 
 (defn my-drop [n coll]
   (if (zero? n)
@@ -163,7 +166,7 @@
 
 (defn halve [a-seq]
   (let [half (int (/ (count a-seq) 2))
-        h1 (my-take (- (count a-seq) half) a-seq)
+        h1 (my-take half a-seq)
         h2 (my-drop half a-seq)]
     [h1 h2]))
 
@@ -191,11 +194,46 @@
                  (merge-sort (second half-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (loop [b-seq a-seq
+         c-seq a-seq
+         n-seq []]
+    (cond
+     (empty? c-seq)
+       n-seq
+     (or (apply <= b-seq) (apply >= b-seq))
+       (recur (my-drop (count b-seq) c-seq) (my-drop (count b-seq) c-seq) (conj n-seq b-seq))
+     :else
+       (recur (drop-last b-seq) c-seq n-seq))))
+
+
+(defn collect-seqs [a-seq]
+  (if (empty? a-seq)
+    a-seq
+    (loop [b-seq a-seq]
+      (if (not (every? seq? b-seq))
+        b-seq
+        (recur (apply concat b-seq))))))
+
+(defn permutation-helper [a-seq start]
+  (let [atstart (get a-seq start)]
+    (if (== (count a-seq) (inc start))
+      a-seq
+      (for [x (range start (count a-seq))]
+        (let [atx (get a-seq x)
+              swapped (assoc-in (assoc-in a-seq [start] atx) [x] atstart)]
+          (permutation-helper swapped (inc start)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    [[]]
+    (collect-seqs (permutation-helper (vec a-set) 0))))
+
+(defn powerset-helper [a-set b-set]
+  (if (empty? a-set)
+    (set b-set)
+    (set (reduce concat
+            (for [x a-set]
+              (powerset-helper (disj a-set x) (conj b-set (disj a-set x))))))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (conj (powerset-helper (set a-set) #{}) (set a-set)))
