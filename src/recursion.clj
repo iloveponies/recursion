@@ -181,9 +181,22 @@
     [a-seq] ; sequences with two or fewer elements are always monotonic
     (reverse (monotonic-helper a-seq []))))
 
+(defn permutations-helper [a-set perms-seq]
+  (if (empty? a-set)
+    [perms-seq]
+    (for [elem a-set
+          solution (permutations-helper (disj a-set elem) (conj perms-seq elem))]
+        solution)))
+
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper (into #{} a-set) []))
+
+(defn powerset-helper [a-set all-sets]
+  (if (empty? a-set)
+    #{all-sets}
+    (for [elem a-set
+          solution (powerset-helper (disj a-set elem) (conj all-sets a-set))]
+      solution)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (conj (apply clojure.set/union (powerset-helper (into #{} a-set) #{})) #{}))
