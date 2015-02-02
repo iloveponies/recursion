@@ -8,8 +8,8 @@
 
 (defn singleton? [coll]
   (and
-   (not (nil? (first coll)))
-   (empty? (rest coll))))
+    (empty? (rest coll))
+    (not (empty? coll))))
 
 (defn my-last [coll]
   :-)
