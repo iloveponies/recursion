@@ -167,14 +167,27 @@
 (defn un-frequencies [a-map]
   (un-frequencies-helper '() a-map))
 
+(defn my-take-helper [n coll elem]
+    (if (or (= n 0) (empty? coll))
+      [elem]
+      (concat [elem] (my-take-helper (- n 1) (rest coll) (first coll)))))
+
 (defn my-take [n coll]
-  [:-])
+  (my-take-helper (- n 1) (rest coll) (first coll)))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (= n 0)
+    coll
+    (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [get-middle (fn [coll] (int (/ (count coll) 2)))]
+    (let [a (seq (my-take (get-middle a-seq) a-seq))]
+      (if (singleton? a-seq)
+        (into [] (cons '()  [a-seq]))
+
+      (into [] (cons a [(my-take (- (count a-seq) (get-middle a-seq)) (my-drop (get-middle a-seq) a-seq)
+    )] ))) )))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
