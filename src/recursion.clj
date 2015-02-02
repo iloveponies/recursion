@@ -7,7 +7,9 @@
        (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (and
+   (not (nil? (first coll)))
+   (empty? (rest coll))))
 
 (defn my-last [coll]
   :-)
