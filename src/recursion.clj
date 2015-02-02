@@ -108,11 +108,11 @@
   (let
     [new-head (fn [head tail] (concat head [(first tail)]))
      rotator (fn rotator [head tail]
-                  (cond
-                   (empty? tail) '()
-                   :else (cons
-                          (concat tail head)
-                          (rotator (new-head head tail) (rest tail)))))]
+               (cond
+                (empty? tail) '()
+                :else (cons
+                       (concat tail head)
+                       (rotator (new-head head tail) (rest tail)))))]
     (cond
      (empty? a-seq) '(())
      :else (rotator '() a-seq))))
@@ -124,11 +124,11 @@
                     (assoc freqs element (inc (if (get freqs element)
                                                 (get freqs element)
                                                 0))))]
-  (cond
-   (empty? a-seq) freqs
-   :else (my-frequencies-helper
-          (update-freqs freqs element)
-          (rest a-seq)))))
+    (cond
+     (empty? a-seq) freqs
+     :else (my-frequencies-helper
+            (update-freqs freqs element)
+            (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
@@ -167,9 +167,9 @@
 
 (defn merge-sort [a-seq]
   (let [[first-half second-half] (halve a-seq)]
-  (cond
-   (or (empty? a-seq) (empty? (rest a-seq))) a-seq
-   :else (seq-merge (merge-sort first-half) (merge-sort second-half)))))
+    (cond
+     (or (empty? a-seq) (empty? (rest a-seq))) a-seq
+     :else (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn monotonic? [a-seq]
   (cond
@@ -178,12 +178,12 @@
 
 (defn monotonic-until [inits-seq & [n]]
   (let [counter (or n 0)]
-  (cond
-   (empty? inits-seq) counter
-   (monotonic? (first inits-seq)) (monotonic-until
-                                   (rest inits-seq)
-                                   (inc counter))
-   :else counter)))
+    (cond
+     (empty? inits-seq) counter
+     (monotonic? (first inits-seq)) (monotonic-until
+                                     (rest inits-seq)
+                                     (inc counter))
+     :else counter)))
 
 (defn split-into-monotonics [a-seq]
   (let [inits-seq (rest (inits a-seq))]
@@ -193,9 +193,63 @@
             (take (monotonic-until inits-seq) a-seq)
             (split-into-monotonics (drop (monotonic-until inits-seq) a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn find-ascending-pair-index [v & [i]]
+  (if (empty? v)
+    nil
+    (let [index (or i (dec (count v)))]
+      (cond
+       (= index 0) nil
+       (< (v (dec index)) (v index )) (dec index)
+       :else (find-ascending-pair-index v (dec index))))))
 
-(defn powerset [a-set]
-  [:-])
+(defn find-last-greater-than-index [v index & [i]]
+  (let [reference (v index)
+        try-index (or i (dec (count v)))]
+    (cond
+     (< reference (v try-index)) try-index
+     :else (find-last-greater-than-index v index (dec try-index)))))
 
+(defn swap [v i1 i2]
+  (assoc v i2 (v i1) i1 (v i2)))
+
+(defn reverse-from-index [v index]
+  (vec (concat (subvec v 0 index) (reverse (subvec v index)))))
+
+(defn perms-helper [v]
+  (cond
+   (empty? v) '(())
+   (empty? (rest v)) '(())
+   :else (let [asc-pair-idx (find-ascending-pair-index v)]
+           (if (not asc-pair-idx)
+             (cons (seq v) '())
+             (let [lgt-idx (find-last-greater-than-index v asc-pair-idx)]
+               (cons
+                (seq v)
+                (perms-helper (reverse-from-index
+                               (swap v asc-pair-idx lgt-idx)
+                               (inc asc-pair-idx)))))))))
+
+(defn permutations
+  "Finds all permutations of a set based on lexicographic order.
+  See http://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order"
+  [a-set]
+  (perms-helper (vec (merge-sort a-set))))
+
+(defn add-element-to-set
+  "Returns the given set and a separate copy with the given element added."
+  [a-set element]
+  (set(cons element a-set)))
+
+(defn powerset
+  "The power set of the empty set is the set containing the
+  empty set and the power set of any other set is all the subsets of the
+  set containing some specific element and all the subsets of the set not
+  containing that specific element."
+  [a-set]
+  (cond
+   (empty? a-set) #{#{}}
+   :else (clojure.set/union
+          (powerset (rest a-set))
+          (map
+           (fn [subset] (add-element-to-set subset (first a-set)))
+           (powerset (rest a-set))))))
