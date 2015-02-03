@@ -236,7 +236,7 @@
   (perms-helper (vec (merge-sort a-set))))
 
 (defn add-element-to-set
-  "Returns the given set and a separate copy with the given element added."
+  "Returns the given set with the given element added."
   [a-set element]
   (set(cons element a-set)))
 
