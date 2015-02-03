@@ -246,10 +246,12 @@
   set containing some specific element and all the subsets of the set not
   containing that specific element."
   [a-set]
-  (cond
-   (empty? a-set) #{#{}}
-   :else (clojure.set/union
-          (powerset (rest a-set))
-          (map
-           (fn [subset] (add-element-to-set subset (first a-set)))
-           (powerset (rest a-set))))))
+  (let [subsets-without-first-element (fn [a-set] (powerset (rest a-set)))
+        subsets-with-first-element (fn [a-set] (map
+                                                (fn [subset] (add-element-to-set subset (first a-set)))
+                                                (powerset (rest a-set))))]
+    (cond
+     (empty? a-set) #{#{}}
+     :else (clojure.set/union
+            (subsets-without-first-element a-set)
+            (subsets-with-first-element a-set)))))
