@@ -13,9 +13,10 @@
    :else                false))
 
 (defn my-last [coll]
-  (if (singleton? coll)
-    (first coll)
-    (my-last (rest coll))))
+  (cond
+   (empty? coll)     nil
+   (singleton? coll) (first coll)
+   :else             (my-last (rest coll))))
 
 (defn max-element [a-seq]
   :-)
