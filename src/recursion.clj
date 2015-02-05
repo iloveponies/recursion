@@ -1,3 +1,4 @@
+
 (ns recursion)
 
 (defn product [coll]
@@ -53,10 +54,18 @@
    :else                   (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [hd (first a-seq)]
+      (if (pred? hd)
+        (cons hd (my-take-while pred? (rest a-seq)))
+        '()))))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+    :else (cons (first a-seq) (rest a-seq))))
 
 (defn seq= [a-seq b-seq]
   :-)
