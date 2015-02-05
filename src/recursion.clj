@@ -1,4 +1,3 @@
-
 (ns recursion)
 
 (defn product [coll]
