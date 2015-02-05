@@ -189,11 +189,29 @@
       (into [] (cons a [(my-take (- (count a-seq) (get-middle a-seq)) (my-drop (get-middle a-seq) a-seq)
     )] ))) )))
 
+
+(defn seq-merge-helper[a-seq b-seq result-seq]
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) result-seq
+    (empty? a-seq) (seq-merge-helper a-seq (rest b-seq) (cons (first b-seq) result-seq))
+   (empty? b-seq) (seq-merge-helper (rest a-seq) b-seq (cons (first a-seq) result-seq))
+   (> (first a-seq) (first b-seq)) (seq-merge-helper (rest a-seq) b-seq (cons (first a-seq) result-seq))
+    :else (seq-merge-helper a-seq (rest b-seq) (cons (first b-seq) result-seq))
+   )
+  )
+
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper (reverse a-seq) (reverse b-seq) '())
+  )
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (let [left (merge-sort (first (halve a-seq)))]
+    (let [right (merge-sort  (first (rest (halve a-seq))))]
+      (seq-merge left right)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
