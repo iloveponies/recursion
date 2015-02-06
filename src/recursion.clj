@@ -69,8 +69,8 @@
 (longest-sequence [[1 2]])            ;=> [1 2]
 (longest-sequence [])
 
-(defn my-filter [pred? [fst & rst]]
-  (if (nil? fst)
+(defn my-filter [pred? [fst & rst :as all]]
+  (if (empty? all)
     '()
     (let [filtered-rest (my-filter pred? rst)]
       (if (pred? fst)
@@ -80,6 +80,12 @@
 (my-filter odd? [1 2 3 4]) ;=> (1 3)
 (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
 (my-filter even? (range 1 50)) ;=> ()
+
+  (my-filter odd? [1 2 3 4])
+  (my-filter false? [1 2 3])
+  (my-filter nil? [1 nil 2])
+  (my-filter (fn [x] (> x 9000)) [12 49 90 9001])
+  (my-filter even? [1 3 5 7])
 
 (defn sequence-contains? [elem a-seq]
   (cond
@@ -126,6 +132,8 @@
   (cond
     (and (empty? a-seq) (empty? b-seq))
       true
+    (or (empty? a-seq) (empty? b-seq))
+      false
     (= (first a-seq) (first b-seq))
       (seq= (rest a-seq) (rest b-seq))
     :else
@@ -134,6 +142,13 @@
 (seq= [1 2 4] '(1 2 4))  ;=> true
 (seq= [1 2 3] [1 2 3 4]) ;=> false
 (seq= [1 3 5] [])        ;=> false
+
+  (seq= [1 2 4] '(1 2 4))
+  (seq= [] [])
+  (seq= [1 2 nil] [1 2])
+  (seq= [1 4 2] [1 2 4])
+  (seq= [1 2 3] [1 2 3 4])
+  (seq= [1 3 5] [])
 
 (defn my-map [f seq-1 seq-2]
   (cond
