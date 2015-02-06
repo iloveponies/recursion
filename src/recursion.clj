@@ -102,10 +102,16 @@
                      what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (<= up-to 0)
+    '()
+    (let [n-1 (- up-to 1)]
+      (cons n-1 (my-range n-1)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (cons a-seq
+          (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   [:-])
