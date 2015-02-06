@@ -179,9 +179,18 @@
     (let [[a b] (separate-monotonic a-seq)]
       (cons a (split-into-monotonics b)))))
 
+(defn permutations-helper [a-seq values]
+  (if (empty? values)
+    [a-seq]
+    (for [v values
+          solution (permutations-helper (conj a-seq v) (disj values v))]
+      solution)))
+
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper [] (set a-set)))
 
 (defn powerset [a-set]
-  [:-])
-
+  (let [s (set a-set)] 
+    (apply clojure.set/union
+           #{s}
+           (map (fn [v] (powerset (disj s v))) s))))
