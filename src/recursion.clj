@@ -73,10 +73,17 @@
                          (seq= (rest a-seq) (rest b-seq)))))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    '()
+    (let [x1 (first seq-1)
+          x2 (first seq-2)
+          fx (f x1 x2)]
+      (cons fx
+            (my-map f (rest seq-1) (rest seq-2))))))
 
 (defn power [n k]
-  :-)
+  (if (<= k 0) 1
+      (* n (power n (- k 1)))))
 
 (defn fib [n]
   :-)
