@@ -86,7 +86,13 @@
       (* n (power n (- k 1)))))
 
 (defn fib [n]
-  :-)
+  (cond
+    (<= n 0)      0
+    (or (== n 1)
+        (== n 2)) 1
+    :else (let [fn-2 (fib (- n 2))
+                fn-1 (fib (- n 1))]
+            (+ fn-1 fn-2))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
