@@ -164,7 +164,8 @@
       (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [n (int (/ (count a-seq) 2))]
+    (vector (take n a-seq) (drop n a-seq))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
