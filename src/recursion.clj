@@ -129,10 +129,15 @@
     (rotate a-seq (count a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)]
+     (if (find freqs elem)
+        (my-frequencies-helper (update-in freqs [elem] inc)(rest a-seq))
+        (my-frequencies-helper (assoc freqs elem 1) (rest a-seq))))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
