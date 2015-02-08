@@ -140,7 +140,10 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    a-map
+    (let [[key times] (first a-map)]
+      (concat (repeat times key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
