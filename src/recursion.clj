@@ -155,7 +155,13 @@
       (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (= n 0)
+      coll
+    (empty? coll)
+      coll
+    :else
+      (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
