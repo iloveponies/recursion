@@ -5,10 +5,15 @@
     1
     (* (first coll)
        (product (rest coll)))))
-;E3 ??? wtf tee jotenkin toisin!
+
+;E2 ...
+
+;E3
 (defn singleton? [coll]
-  ;(and (not (empty? coll)) (nil? (get coll 1))))
-  (= 1 (count coll)))
+    (cond
+     (empty? coll) false
+     (empty? (rest coll)) true
+     :else false))
 
 ;E4
 (defn single-or-empty [coll]
@@ -29,7 +34,7 @@
   (if (<= (count seq-1) (count seq-2))
     seq-2
     seq-1))
-;E7 WIP ????
+;E7
 (defn longest-sequence [a-seq]
   (if (single-or-empty a-seq)
     (first a-seq)
@@ -46,9 +51,16 @@
   (cond (empty? a-seq) false
         (= elem (first a-seq)) true
         :else (sequence-contains? elem (rest a-seq))))
-;E10 WIP!!!
+
+;E10
 (defn my-take-while [pred? a-seq]
-  )
+  (let [f (first a-seq)
+        r (rest a-seq)]
+    (cond (empty? a-seq) ()
+          (pred? f) (cons f (my-take-while pred? r))
+          :else '() )))
+
+; (my-take-while odd? [1 2 3 4])
 
 ;E11
 (defn my-drop-while [pred? a-seq]
@@ -107,10 +119,16 @@
 
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
-;(inits '(1 2 3 4))
+
 ;E19
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq) '([])
+    (let [i (inits a-seq)
+          t (reverse (tails a-seq))
+          fi (first i)
+          ft (first t)]
+      (rest (my-map concat t i)))))
+(rotations '(1 2))
 
 ;E20
 (defn my-frequencies-helper [freqs a-seq]
@@ -138,25 +156,54 @@
 
 ;E22
 (defn my-take [n coll]
-  [:-])
-
+  (let [x (first coll)
+        r (rest coll)]
+    (cond  (<= n 0) []
+           (or (empty? coll) (nil? coll)) []
+           (= n 1) [x]
+           :else (cons x (my-take (- n 1) r)))))
+; E23
 (defn my-drop [n coll]
-  [:-])
-
+  (let [x (first coll)
+        r (rest coll)]
+    (cond  (or (empty? coll) (nil? coll)) []
+           (= n 0) coll
+           :else (my-drop (- n 1) r))))
+; E24
 (defn halve [a-seq]
-  [:-])
+  (let [n (int (/ (count a-seq) 2))]
+    [(my-take n a-seq) (my-drop n a-seq)]))
 
+;E25
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)
+        ar (rest a-seq)
+        br (rest b-seq)]
+    (cond (or (empty? a-seq) (nil? a-seq)) b-seq
+          (or (empty? b-seq) (nil? b-seq)) a-seq
+          (< a b) (cons a (seq-merge ar b-seq))
+          :else (cons b (seq-merge a-seq br)))))
 
+
+
+;E26
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (nil? a-seq) (empty? a-seq) (singleton? a-seq))
+    a-seq
+    (let [[a b] (halve a-seq)]
+      (seq-merge (merge-sort a)
+                 (merge-sort b)))))
+;E27 wip
+(defn split-into-monotonics [a-seq])
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+; (split-into-monotonics [1 -2 1 0])
+; (last (rest (reverse (inits [1 2 1 0]))))
 
+;E28 wip
 (defn permutations [a-set]
   [:-])
 
+;E29 wip
 (defn powerset [a-set]
-  [:-])
+  (inits a-set))
