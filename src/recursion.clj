@@ -118,7 +118,16 @@
        (tails (reverse  a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [helper
+        (fn [xs xss]
+          (cond
+            (empty? xs)                 [[]]
+            (== (count xs) (count xss)) xss
+            :else (let [xs'  (concat (rest xs) [(first xs)])
+                        xss' (cons xs' xss)]
+                    (recur xs' xss'))))]
+    (helper a-seq [])))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
