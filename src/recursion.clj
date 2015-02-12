@@ -40,6 +40,8 @@
     (first a-seq)
     (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
+
+
 ;E8
 (defn my-filter [pred? a-seq]
   (cond (empty? a-seq) a-seq
@@ -60,7 +62,6 @@
           (pred? f) (cons f (my-take-while pred? r))
           :else '() )))
 
-; (my-take-while odd? [1 2 3 4])
 
 ;E11
 (defn my-drop-while [pred? a-seq]
@@ -194,16 +195,43 @@
     (let [[a b] (halve a-seq)]
       (seq-merge (merge-sort a)
                  (merge-sort b)))))
-;E27 wip
-(defn split-into-monotonics [a-seq])
+;E27
+(defn split-into-monotonics [a-seq]
+  (if (empty? a-seq) ()
+    (let [init (rest (reverse (inits a-seq)))
+          a    (last (my-take-while (fn [x] (= (last x) (max-element x))) init))
+          b    (last (my-take-while (fn [x] (= (first x) (max-element x))) init))
+          c    (seq-max a b)
+          n    (count c)
+          r    (my-drop n a-seq)]
+      (concat [c] (split-into-monotonics r))
+      )))
 
-; (split-into-monotonics [1 -2 1 0])
-; (last (rest (reverse (inits [1 2 1 0]))))
+;E28
+(defn permutations
+  [a-set]
+  (cond
+   (empty? a-set) [()]
+   (vector? a-set)
+   (if (= 1 (count a-set))
+     (list [(a-set 0)])
+     (loop [i 0
+            permutaatiot '()]
+       (if (= i (count a-set))
+         permutaatiot
+         (let [muut (into [] (concat (my-take i a-set) (my-drop (inc i) a-set)))
+               muu-muut (permutations muut)
+               uudet-muut (map #(conj % (a-set i)) muu-muut)]
+           (recur (inc i) (into permutaatiot uudet-muut))))))
+   :else (permutations (into [] a-set))))
 
-;E28 wip
-(defn permutations [a-set]
-  [:-])
 
-;E29 wip
+;E29
 (defn powerset [a-set]
-  (inits a-set))
+  (if (empty? a-set)
+    '(())
+    (let [ps (powerset (rest a-set))]
+    (concat ps
+            (map #(conj % (first a-set)) ps)))))
+
+
