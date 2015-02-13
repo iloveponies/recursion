@@ -187,7 +187,7 @@
       (seq-merge xs' ys'))))
 
 (defn split-into-monotonics [a-seq]
-  (inits a-seq))
+  [:-])
 
 (defn permutations [a-set]
   [:-])
