@@ -161,7 +161,11 @@
     (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [sz (count a-seq)
+        md (quot sz 2)]
+    [(my-take md a-seq)
+     (my-drop md a-seq)]))
+    
 
 (defn seq-merge [a-seq b-seq]
   [:-])
