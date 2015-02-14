@@ -187,8 +187,23 @@
           ys'     (merge-sort ys)]
       (seq-merge xs' ys'))))
 
+(defn mono? [xs]
+  (or (apply <= xs)
+      (apply >= xs)))
+
+(defn helper [xs mono monos]
+  (if (empty? xs)
+    (if (empty? mono) monos
+        (concat monos [mono]))
+    (let [mono' (concat mono [(first xs)])]
+      (if (mono? mono')
+        (recur (rest xs) mono' monos)
+        (recur (rest xs)
+                [(first xs)]
+                (concat monos [mono]))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (helper a-seq [] []))
 
 (defn permutations [a-set]
   [:-])
