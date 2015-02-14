@@ -191,7 +191,7 @@
   (or (apply <= xs)
       (apply >= xs)))
 
-(defn helper [xs mono monos]
+(defn split-into-mono-helper [xs mono monos]
   (if (empty? xs)
     (if (empty? mono) monos
         (concat monos [mono]))
@@ -199,14 +199,29 @@
       (if (mono? mono')
         (recur (rest xs) mono' monos)
         (recur (rest xs)
-                [(first xs)]
-                (concat monos [mono]))))))
+               [(first xs)]
+               (concat monos [mono]))))))
 
 (defn split-into-monotonics [a-seq]
-  (helper a-seq [] []))
+  (split-into-mono-helper a-seq [] []))
+
+(defn permute-x [x left right xss]
+  (if (empty? right)
+    (cons (concat left [x])
+          xss)
+    (let [perm   (concat left [x] right)
+          xss'   (cons perm xss)
+          left'  (concat left [(first right)])
+          right' (rest right)]
+      (recur x left' right' xss'))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    [[]]
+    (let [x (first a-set)
+          f (fn [xs] (permute-x x [] xs []))
+          ps (permutations (rest a-set))]
+      (apply concat (map f ps)))))
 
 (defn powerset [a-set]
   [:-])
