@@ -121,8 +121,9 @@
   (let [helper
         (fn [xs xss]
           (cond
-            (empty? xs)                 [[]]
-            (== (count xs) (count xss)) xss
+            (empty? xs)      [[]]
+            (== (count xs)
+                (count xss)) xss
             :else (let [xs'  (concat (rest xs) [(first xs)])
                         xss' (cons xs' xss)]
                     (recur xs' xss'))))]
@@ -165,7 +166,7 @@
         md (quot sz 2)]
     [(my-take md a-seq)
      (my-drop md a-seq)]))
-    
+
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -194,4 +195,3 @@
 
 (defn powerset [a-set]
   [:-])
-
