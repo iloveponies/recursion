@@ -218,11 +218,16 @@
 (defn permutations [a-set]
   (if (empty? a-set)
     [[]]
-    (let [f (fn [xs]
-              (permute-x (first a-set)
-                         [] xs []))]
+    (let [x    (first a-set)
+          prms (permutations (rest a-set))
+          f    (fn [right] (permute-x x [] right []))]
       (apply concat
-             (map f (permutations (rest a-set)))))))
+             (map f prms)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [x  (first a-set)
+          ps (powerset (rest a-set))
+          f  (fn [xs] [(set (cons x xs)) xs])]
+      (set (apply concat (map f ps))))))
