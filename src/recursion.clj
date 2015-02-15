@@ -119,7 +119,9 @@
      (inits (drop-last a-seq)))))
 
 (defn rotations [a-seq]
-    (map concat (rest (tails a-seq)) (rest (reverse (inits a-seq)))))
+  (if (empty? a-seq)
+    '(())
+    (map concat (rest (tails a-seq)) (rest (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -140,26 +142,76 @@
      (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n))
+    '()
+    (cons
+     (first coll)
+     (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (empty? coll)
+    '()
+    (if (not (zero? n))
+      (my-drop (dec n) (rest coll))
+      (cons
+       (first coll)
+       (my-drop n (rest coll))))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [k (int (/ (count a-seq) 2))]
+    (vector
+     (my-take k a-seq)
+     (my-drop k a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) '()
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else (if (< (first a-seq) (first b-seq))
+           (cons
+            (first a-seq)
+            (seq-merge (rest a-seq) b-seq))
+           (cons
+            (first b-seq)
+            (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+    (if (< (count a-seq) 2)
+      a-seq
+      (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [s] (if (empty? s)
+                             true
+                             (or (apply <= s) (apply >= s))))
+        monotonic-prefixes (fn [s] (take-while monotonic? (reverse (inits s))))
+        l (fn [s] (apply max (map count (monotonic-prefixes a-seq))))
+        k (l a-seq)]
+    (if (empty? a-seq)
+      '()
+       (cons
+        (take k a-seq)
+        (split-into-monotonics (drop k a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [permutations-by-level
+        (fn [rotation]
+          (map (fn [permutation]
+                 (cons
+                  (first rotation)
+                  permutation))
+               (permutations (rest rotation))))]
+    (cond
+     (empty? a-set) '(())
+     (== (count a-set) 1) (list a-set)
+     :else (apply concat (map permutations-by-level (rotations a-set))))))
+
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    '#{#{}}
+    (cons
+     (set a-set)
+     (set (apply concat (map powerset (map rest (rotations a-set))))))))
 
