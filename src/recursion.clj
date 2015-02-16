@@ -175,7 +175,24 @@
 ;; tricky ones, as noted in the lecture pages.. will come back later
 ;; as suggested
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (defn ordered-seq [orig-seq tail-seq order]
+    (if (or (empty? tail-seq)
+            (empty? orig-seq))
+      '()
+      (concat [(first orig-seq)] (if (order (first orig-seq) (first tail-seq))
+                                   (ordered-seq (rest orig-seq) (rest tail-seq) order)
+                                   '()))))
+  (if (empty? a-seq)
+    '()
+    (if (> (count a-seq) 2)
+      (let [seq-le (ordered-seq a-seq (rest a-seq) <=)
+            temp-seq-le (drop (count seq-le) seq-le)
+            seq-ge (ordered-seq temp-seq-le (rest temp-seq-le) >=)
+            temp-seq-ge (drop (count seq-ge) seq-ge)]
+        (if (not (empty? seq-le))
+          (cons seq-le (split-into-monotonics (drop (count seq-le) a-seq)))
+          (cons seq-ge (split-into-monotonics (drop (count seq-ge) a-seq)))))
+      (cons a-seq '()))))
 
 (defn permutations [a-set]
   [:-])
