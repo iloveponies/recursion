@@ -150,18 +150,48 @@
     a-seq
     (let [[a b] (halve a-seq)]
       (seq-merge (merge-sort a) (merge-sort b)))))
+
 (defn monotonic?[a-seq] (if (empty? a-seq) false (or (apply >= a-seq) (apply <= a-seq))))
+
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq) 
     a-seq
-  (let [x (last (filter monotonic? (inits a-seq)))]
-    (cons x (split-into-monotonics (drop (count x) a-seq))))))
+    (let [x (last (filter monotonic? (inits a-seq)))]
+      (cons x (split-into-monotonics (drop (count x) a-seq))))))
 
-
+(splice '(1 2 3 4) 50 0)
+(defn splice[a-seq value index]
+  (if (or (> index (count a-seq)) (empty? a-seq))
+    nil
+    (concat (splice a-seq value (inc index)) (list (concat (take index a-seq) (cons value (drop index a-seq)))))))
+(defn intersplice [seq-seqs value]
+  (if (empty? seq-seqs) 
+    nil
+    (concat (splice (first seq-seqs) value 0) (intersplice (rest seq-seqs) value))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond 
+    (>= 1 (count a-set)) (list (into '() a-set))
+    :else (intersplice (permutations (rest a-set)) (first a-set))))
+(defn remove-n[n a-set] (set (concat (take n a-set) (drop (inc n) a-set))))
 
+;;figure out how to do one-sets
+
+(one-set 0 #{1 2 3 4 5})    
+(defn n-sets[n a-set]
+  (if (= n 1) 
+(defn one-sets[a-set]
+  (map (fn[n] (set [n])) a-set))
+(defn two-sets[a-set]
+ (map (fn[mini-set] (conj mini-set (first a-set))) (one-sets (rest a-set)))) 
+(defn three-sets[a-set]
+  (map (fn[mini-set] (conj mini-set (first a-set))) (two-sets (rest a-set))))
+(two-sets #{2 3 4})
+(two-sets #{1 2 3 4})
+(three-sets #{1 2 3 4})
+(one-sets #{1,2,3,4,5,6})
 (defn powerset [a-set]
-  [:-])
+ 
+
+
 
