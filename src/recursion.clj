@@ -183,8 +183,24 @@
         (seq-merge (merge-sort left) (merge-sort right))
    )))
 
+(defn find-series' [f acc a-seq]
+  (cond
+   (empty? a-seq) 0
+   (= 1 (count a-seq)) (+ 1 acc)
+   (f (first a-seq) (first (rest a-seq))) (find-series' f (+ 1 acc) (rest a-seq))
+   :else (+ 1 acc)
+  ))
+
+(defn find-series [f a-seq]
+  (find-series' f 0 a-seq))
+
 (defn split-into-monotonics [a-seq]
-  (inits a-seq))
+  (let [asc (find-series < a-seq)
+        desc (find-series > a-seq)
+        longest (if (> asc desc) asc desc)]
+    (if (empty? a-seq)
+      a-seq
+   (concat [(take longest a-seq)] (split-into-monotonics (drop longest a-seq))))))
 
 (defn permutations [a-set]
   (if (empty? a-set)
@@ -194,12 +210,11 @@
               (permutations (filter (fn [e] (not (= e n))) a-set))))
        a-set)))
 
-
-(disj #{1 2 3 4} 3)
-(permutations #{1 2 3 4})
-
-(concat #{1 2 3} [4])
-(count (permutations #{ 1 2 3 4}))
-
 (defn powerset [a-set]
-  [:-])
+:-)
+
+(powerset #{1 2 4})
+
+(powerset #{1 2 3})
+
+(powerset #{})
