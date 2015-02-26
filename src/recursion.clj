@@ -172,8 +172,6 @@
     (seq-merge (merge-sort (first (halve a-seq)))
                (merge-sort (first (rest (halve a-seq)))))))
 
-;; tricky ones, as noted in the lecture pages.. will come back later
-;; as suggested
 (defn split-into-monotonics [a-seq]
   (defn ordered-seq [orig-seq tail-seq order]
     (if (or (empty? tail-seq)
@@ -195,8 +193,37 @@
       (cons a-seq '()))))
 
 (defn permutations [a-set]
-  [:-])
+  (defn helper [prefix suffix]
+    (if (empty? suffix)
+      prefix
+      (flatten (map (fn [i] (helper (concat prefix (nth suffix i))
+                                    (concat (take i suffix)
+                                            (drop (inc i) suffix))))
+                    (range 0 (count suffix))))))
+  (defn take-counts [a-list]
+    (if (empty? a-list)
+      a-list
+      (cons (take (count a-set) a-list)
+            (take-counts (drop (count a-set) a-list)))))
+  (if (empty? a-set)
+    '(())
+    (take-counts (helper '() (map list a-set)))))
 
 (defn powerset [a-set]
   [:-])
 
+  ;; public static void permutation(String str) { 
+  ;;     permutation("", str); 
+  ;; }
+  
+  ;; private static void permutation(String prefix, String str) {
+  ;;     int n = str.length();
+  ;;     if (n == 0) System.out.println(prefix);
+  ;;     else {
+  ;;         for (int i = 0; i < n; i++)
+  ;;             permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
+  ;;     }
+  ;; }    
+
+  ;; above Java code copied from
+  ;; http://stackoverflow.com/questions/4240080/generating-all-permutations-of-a-given-string
