@@ -125,11 +125,16 @@
     '()
     (cons (dec up-to) (my-range (dec up-to)))))
 
+(defn tails-c [a-seq]
+  (if (empty? a-seq)
+    '()
+    (cons (seq a-seq) (tails-c (rest a-seq)))))
+
 (defn tails [a-seq]
-  [:-])
+  (conj (vec (map vec (tails-c a-seq))) []))
 
 (defn inits [a-seq]
-  [:-])
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   [:-])
