@@ -131,22 +131,40 @@
     (cons (seq a-seq) (tails-c (rest a-seq)))))
 
 (defn tails [a-seq]
-  (conj (vec (map vec (tails-c a-seq))) []))
+  (conj (vec (map vec (tails-c a-seq))) [])) ;stupid expression to get [] at the end of sequence
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 
+(defn rotate [a-sek]
+  (concat (rest a-sek) (cons (first a-sek) '())))
+
+(defn spinner [a-sek rounds]
+  (if (== rounds 0)
+    '()
+    (cons a-sek (spinner (rotate a-sek) (dec rounds)))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (conj '() []) ;stupid expression to get f-king (())
+    (spinner (seq a-seq) (count a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [occurrences (fn [fr sq]
+                        (if (contains? fr (first sq))
+                          (assoc fr (first sq) (inc (get fr (first sq))))
+                          (assoc fr (first sq) 1)))]
+      (my-frequencies-helper (occurrences freqs a-seq) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (concat (repeat (val (first a-map)) (key (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
   [:-])
