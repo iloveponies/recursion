@@ -167,13 +167,23 @@
     (concat (repeat (val (first a-map)) (key (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (== n 0))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
+
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll)
+     '()
+   (== n 0)
+     coll
+   :else
+     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [mid (int (/ (count a-seq) 2))]
+    [(my-take mid a-seq) (my-drop mid a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
