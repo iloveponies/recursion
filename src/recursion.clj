@@ -204,8 +204,29 @@
     (let [[alku loppu] (halve a-seq)]
       (seq-merge (merge-sort alku) (merge-sort loppu)))))
 
+;order ascending=1 descending=-1 not known=0
+(defn mini-mono [order element a-seq mono]
+  (cond
+    (or (empty? a-seq) (and (== (count a-seq) 1) (nil? element)))
+      [mono a-seq]
+    (nil? element)
+      (mini-mono order (first a-seq) (rest a-seq) (cons (first a-seq) mono))
+     (== element (first a-seq))
+      (mini-mono order (first a-seq) (rest a-seq) (cons (first a-seq) mono))
+     (< element (first a-seq))
+       (cond
+        (== order 0) (mini-mono 1 (first a-seq) (rest a-seq) (cons (first a-seq) mono))
+        (== order 1) (mini-mono 1 (first a-seq) (rest a-seq) (cons (first a-seq) mono))
+        (== order -1) [mono a-seq])
+     (> element (first a-seq))
+       (cond
+        (== order 0) (mini-mono -1 (first a-seq) (rest a-seq) (cons (first a-seq) mono))
+        (== order -1) (mini-mono -1 (first a-seq) (rest a-seq) (cons (first a-seq)) mono)
+        (== order 1) [mono a-seq])))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [[mono mini] (mini-mono 0 nil a-seq [])]
+    (cons (reverse mono) (if (empty? mini ) '() (split-into-monotonics mini)))))
 
 (defn permutations [a-set]
   [:-])
