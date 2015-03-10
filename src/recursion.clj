@@ -228,6 +228,31 @@
   (let [[mono mini] (mini-mono 0 nil a-seq [])]
     (cons (reverse mono) (if (empty? mini ) '() (split-into-monotonics mini)))))
 
+(defn swap [a-vec from-index to-index]
+  (if (== from-index to-index)
+    a-vec
+    (let [src (get a-vec from-index)
+          dest (get a-vec to-index)]
+      (assoc a-vec to-index src from-index dest))))
+
+(defn heap-s-swap [a-vec n j]
+  (let [index (fn [i] (- i 1))]
+    (if (odd? n)
+      (swap a-vec (index 1) (index n))
+      (swap a-vec (index j) (index n)))))
+
+(defn generate [n per-mutable collector j]
+  (cond
+   (== n 1)
+    (cons per-mutable collector)
+   (> j n)
+     collector
+   :else
+    (generate (dec n) (heap-s-swap per-mutable n j) collector (inc j))))
+
+
+
+
 (defn permutations [a-set]
   [:-])
 
