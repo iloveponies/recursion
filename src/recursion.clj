@@ -189,16 +189,8 @@
 
 
 (defn permutations [a-set]
-  (if (= (count a-set) 2)
-    (let [[a b] a-set]
-      [[a b] [b a]])
-    (map concat (repeat [(first a-set)]) (permutations (rest a-set)))))
+  [:-])
 
-(map concat (repeat [5]) [[1,3]])
-
-(rotations #{1 5 3})
-(permutations #{1 5 3 4})
-(= (permutations #{1 5 3}) '((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1)))
 
 
 (defn powerset [a-set]
