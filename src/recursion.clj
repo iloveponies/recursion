@@ -210,7 +210,11 @@
     (take-counts (helper '() (map list a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    [#{}]
+    (concat (powerset (rest a-set))
+            (map (fn [s] (conj s (first a-set)))
+                 (powerset (rest a-set))))))
 
   ;; public static void permutation(String str) { 
   ;;     permutation("", str); 
