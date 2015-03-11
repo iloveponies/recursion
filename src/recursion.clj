@@ -248,7 +248,8 @@
    (> j n)
      collector
    :else
-    (generate (dec n) (heap-s-swap per-mutable n j) collector (inc j))))
+     (generate n (heap-s-swap per-mutable n j)
+      (generate (dec n) per-mutable collector j) (inc j))))
 
 
 
