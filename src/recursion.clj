@@ -241,21 +241,22 @@
       (swap a-vec (index 1) (index n))
       (swap a-vec (index j) (index n)))))
 
-(defn generate [n per-mutable collector j]
-  (cond
-   (== n 1)
-    (cons per-mutable collector)
-   (> j n)
-     collector
-   :else
-     (generate n (heap-s-swap per-mutable n j)
-      (generate (dec n) per-mutable collector j) (inc j))))
+(defn gen-h [n perm bag]
+  (if (== n 1)
+    (cons perm bag)
+    (gen n perm bag)))
 
-
-
+(defn gen [N origin bag]
+  (loop [i 1
+         permu origin
+         n N
+         pack bag]
+    (if (> i n)
+      pack
+      (recur (inc i) (heap-s-swap permu n i) n (gen-h (dec n) permu pack)))))
 
 (defn permutations [a-set]
-  [:-])
+  (gen (count a-set) a-set '()))
 
 (defn powerset [a-set]
   [:-])
