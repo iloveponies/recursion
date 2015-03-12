@@ -183,8 +183,12 @@
 (defn split-into-monotonics [a-seq]
   [:-])
 
+(defn dropIndex [i a-str]
+  (if (< i 0) ""
+    (cons (take i a-str) (drop (+ 1 i) a-str))))
+
 (defn permutations [a-set]
-  [:-])
+  )
 
 (defn powerset [a-set]
   [:-])
