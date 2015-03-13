@@ -28,17 +28,31 @@
         (max f (max-element r))))))
 
 (defn seq-max [seq-1 seq-2]
-  ;;(if (empty? a-se
-  [:-])
+  (if (empty? seq-2)
+    (if (empty? seq-1) nil seq-1)
+    (if (<= (count seq-1) (count seq-2))
+      seq-2
+      seq-1)))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq) nil
+    (seq-max (first a-seq)
+             (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [f (first a-seq)
+        r (my-filter pred? (rest a-seq))]
+    (if (not (empty? a-seq))
+      (if (pred? f) 
+        (cons f r)
+        r))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (if (empty? a-seq)
+    false
+    (if (== elem (first a-seq))
+      true
+      (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
   [:-])
