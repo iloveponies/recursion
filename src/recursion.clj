@@ -200,18 +200,29 @@
               (merge-sort a)
               (merge-sort b)))))
 
-(defn splitter [sub-seq a-seq]
+;; asdfffffffffffffffffffffff
+(defn monotonic? [a-seq]
+  (or
+    (apply <= a-seq)
+    (apply >= a-seq)))
+
+(defn splitter [retval sub-seq a-seq]
   (let [l (last sub-seq)
         f (first a-seq)
         r (rest a-seq)]
     (cond
-      (empty? a-seq) [sub-seq]
-      (< l f) 
-
+      (empty? a-seq) (if (empty? sub-seq)
+                       retval
+                       (cons sub-seq retval))
+      (or (empty? sub-seq) 
+          (< f l)) (splitter (cons seq retval) [f] r)
+      :else (splitter retval (concat sub-seq [f]) r))))
 
 
 (defn split-into-monotonics [a-seq]
-  (inits a-seq))
+  (if (empty? a-seq)
+    ()
+    (splitter [] {} a-seq)))
 
 (defn my-take-while [pred? a-seq]
   (let [f (first a-seq)
