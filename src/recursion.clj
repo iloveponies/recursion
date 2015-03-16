@@ -126,7 +126,10 @@
           (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (if (empty? a-seq)
+    [[]]
+    (cons a-seq
+          (inits (drop-last a-seq)))))
 
 (defn rotations-helper [n a-seq]
   (if (zero? n)
@@ -200,40 +203,35 @@
               (merge-sort a)
               (merge-sort b)))))
 
-;; asdfffffffffffffffffffffff
 (defn monotonic? [a-seq]
   (or
     (apply <= a-seq)
     (apply >= a-seq)))
 
-(defn splitter [retval sub-seq a-seq]
-  (let [l (last sub-seq)
-        f (first a-seq)
-        r (rest a-seq)]
-    (cond
-      (empty? a-seq) (if (empty? sub-seq)
-                       retval
-                       (cons sub-seq retval))
-      (or (empty? sub-seq) 
-          (< f l)) (splitter (cons seq retval) [f] r)
-      :else (splitter retval (concat sub-seq [f]) r))))
-
-
-(defn split-into-monotonics [a-seq]
+(defn select-first-monotonic [a-seq] 
   (if (empty? a-seq)
     ()
-    (splitter [] {} a-seq)))
+    (if (monotonic? (first a-seq))
+      (first a-seq)
+      (select-first-monotonic (rest a-seq)))))
 
-(defn my-take-while [pred? a-seq]
-  (let [f (first a-seq)
-        r (rest a-seq)]
-    (if (or (empty? a-seq)
-            (not (pred? f)))
-      ()
-      (cons f (my-take-while pred? r)))))
+(defn split-into-monotonics [a-seq]
+  (let [f-seq (select-first-monotonic (inits a-seq))]
+    (if (= (count f-seq) (count a-seq))
+      [f-seq]
+      (cons
+        f-seq
+        (split-into-monotonics (my-drop (count f-seq) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    ()
+    (map (fn [p s] 
+           (map (fn [z] concat p z) s))
+         (map (fn [y] 
+                [(first y)
+                 (permutations (rest y))])
+              (rotations a-set)))))
 
 (defn powerset [a-set]
   [:-])
