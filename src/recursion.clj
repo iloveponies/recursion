@@ -223,6 +223,17 @@
         f-seq
         (split-into-monotonics (my-drop (count f-seq) a-seq))))))
 
+;; 3 points
+;;
+;; Given a sequence, return all permutations of that sequence.
+;;
+;; (permutations #{})
+;; ;=> (())
+;; (permutations #{1 5 3})
+;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
+
+The order of the permutations doesn’t matter. 
+
 (defn permutations [a-set]
   (if (empty? a-set)
     ()
@@ -232,6 +243,13 @@
                 [(first y)
                  (permutations (rest y))])
               (rotations a-set)))))
+
+;; 3 points
+;;
+;; Given a set, return the powerset of that set.
+;;
+;; (powerset #{})      ;=> #{#{}}
+;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
 
 (defn powerset [a-set]
   [:-])
