@@ -48,11 +48,14 @@
     (> (count a-seq) 1) (sequence-contains? elem (rest a-seq))
     :else false))
 
+
+
 (defn my-take-while [pred? a-seq]
   (if (empty? a-seq) 
-    a-seq
+    '()
     (if (pred? (first a-seq))
-      (cons (first a-seq) (my-take-while pred? (rest a-seq))))))
+      (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+      '())))
 
 
 (defn my-drop-while [pred? a-seq]
@@ -102,8 +105,10 @@
   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
+  (if (> (count a-seq) 0)
   (let [indexes (range 0 (count a-seq))]
-    (map (fn[n] (concat (drop n a-seq) (take n a-seq))) indexes)))  
+    (map (fn[n] (concat (drop n a-seq) (take n a-seq))) indexes))
+  (list '())))
 
 
 (defn my-frequencies-helper [freqs a-seq]
