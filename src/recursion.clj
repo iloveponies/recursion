@@ -182,8 +182,22 @@
 (permutations #{1 2 3})
 ;;figure out how to do one-sets
 
+(defn drop-nth[k a-set]
+  (set (concat (take (dec k) a-set) (drop k a-set))))
+(defn n-minus-one-sets[a-set]
+  (loop [k (count a-set)
+         all-sets '()]
+    (if (= k 0) all-sets
+      (recur (dec k) (conj all-sets (drop-nth k a-set))))))
 
-(defn powerset [a-set])
+
+(defn powerset [a-set]
+  (loop [all-sets (list (set a-set))
+         k (count a-set)
+         accum (list (set a-set))]
+    (if (= k 0) (set accum)
+     (let [results (seq (set (apply concat (map n-minus-one-sets all-sets))))]
+      (recur results (dec k) (apply conj accum results))))))
 
 
 
