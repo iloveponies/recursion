@@ -1,0 +1,8 @@
+(rest []) 
+(empty? (rest [])) 
+(empty? (rest [1])) 
+(empty? (rest [1 2])) 
+(empty? (first [1 2])) 
+(first [1 2]) 
+(not (first [1 2])) 
+(not (nil? (first [1 2]))) 
