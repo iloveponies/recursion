@@ -135,28 +135,53 @@
 ;;     (rothelp a-seq 0)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) freqs
+   (contains? freqs (first a-seq))
+     (my-frequencies-helper (assoc freqs
+                              (first a-seq)
+                              (inc (get freqs (first a-seq))))
+                            (rest a-seq))
+   :else (my-frequencies-helper
+          (assoc freqs (first a-seq) 1)
+          (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (reduce concat (map #(repeat (get a-map %) %) (keys a-map))))
 
 (defn my-take [n coll]
-  [:-])
+  (map (fn [x _] x) coll (range n)))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll) '()
+   (zero? n) coll
+   :else (recur (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [mid (int (/ (count a-seq) 2))]
+    (cons (take mid a-seq)
+          (cons (drop mid a-seq) '()))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (<= (first a-seq)
+       (first b-seq)) (concat (list (first a-seq))
+                              (seq-merge (rest a-seq) b-seq))
+   :else (concat (list (first b-seq))
+                 (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) '()
+   (singleton? a-seq) a-seq
+   :else (seq-merge (merge-sort (first (halve a-seq)))
+                    (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
