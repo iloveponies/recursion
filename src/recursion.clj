@@ -115,11 +115,12 @@
   (->> a-seq
        (reverse)
        (tails)
-       (map reverse)))
+       (map reverse)
+       (reverse)))
 
-;; New solution inspired by another contributor
+;; ;; New solution inspired by another contributor
 (defn rotations [a-seq]
-  (set (map concat (tails a-seq) (reverse (inits a-seq)))))
+  (set (map concat (tails a-seq) (inits a-seq))))
 
 ;; Old solution
 ;; (defn rotations [a-seq]
@@ -184,7 +185,14 @@
                     (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [sorted (fn [x] (= x (merge-sort x)))
+        fst-mono #(last (take-while sorted (inits %)))]
+    (->> a-seq
+         (tails)
+         (reverse)
+         (map fst-mono)
+         (reverse)
+         (filter #(>= (count %) 2)))))
 
 (defn permutations [a-set]
   [:-])
