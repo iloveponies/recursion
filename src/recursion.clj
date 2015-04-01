@@ -283,9 +283,10 @@ suffix))))
 :else
 (apply concat (map perms (rotations a-set))))))
 
-defn powerset [a-set]
+(defn powerset [a-set]
 (if (empty? a-set)
 (hash-set (hash-set))
 (clojure.set/union (powerset (next a-set))
 (map #(conj % (first a-set)) (powerset (next a-set))))))
+
 
