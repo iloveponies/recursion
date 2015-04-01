@@ -253,7 +253,19 @@ new-fags (if (nil? curre-value)
 
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+(if (empty? a-seq)
+(set a-seq)
+(let [monotonic? (fn [a-seq] (or
+(apply <= a-seq)
+(apply >= a-seq)))
+split-help (fn [prefix suffix]
+(if (monotonic? prefix)
+(list prefix suffix)
+(recur (butlast prefix)
+(cons (last prefix)
+suffix))))
+[prefix suffix] (split-help a-seq '())]
+(cons prefix (split-into-monotonics suffix)))))
 
 (defn permutations [a-set]
   [:-])
