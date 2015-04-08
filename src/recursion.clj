@@ -228,36 +228,8 @@
   (let [[mono mini] (mini-mono 0 nil a-seq [])]
     (cons (reverse mono) (if (empty? mini ) '() (split-into-monotonics mini)))))
 
-(defn swap [a-vec from-index to-index]
-  (if (== from-index to-index)
-    a-vec
-    (let [src (get a-vec from-index)
-          dest (get a-vec to-index)]
-      (assoc a-vec to-index src from-index dest))))
-
-(defn heap-s-swap [a-vec n j]
-  (let [index (fn [i] (- i 1))]
-    (if (odd? n)
-      (swap a-vec (index 1) (index n))
-      (swap a-vec (index j) (index n)))))
-
-(defn gen-h [n perm bag]
-  (if (== n 1)
-    (cons perm bag)
-    (gen n perm bag)))
-
-(defn gen [N origin bag]
-  (loop [i 1
-         permu origin
-         n N
-         pack bag]
-    (if (> i n)
-      pack
-      (recur (inc i) (heap-s-swap permu n i) n (gen-h (dec n) permu pack)))))
-
 (defn permutations [a-set]
-  (gen (count a-set) a-set '()))
+  [:-])
 
 (defn powerset [a-set]
   [:-])
-
