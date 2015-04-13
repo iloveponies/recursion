@@ -19,7 +19,11 @@
 (defn max-element [a-seq]
   (if (empty? a-seq)
     nil
-    (last (sort a-seq)))
+    (if (= (count a-seq) 1)  
+      (first a-seq)
+      (max (first a-seq) (max-element (rest a-seq)))
+      )
+    )
   )
 
 (defn seq-max [seq-1 seq-2]
