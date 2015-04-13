@@ -90,7 +90,10 @@
   )
 
 (defn power [n k]
-  :-)
+  (if (= 0 k)
+    1
+    (* n (power n (dec k))))
+  )
 
 (defn fib [n]
   :-)
