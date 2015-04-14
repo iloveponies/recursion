@@ -104,16 +104,30 @@
   )
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+    (<= how-many-times 0) '()
+    (= how-many-times 1) (conj '() what-to-repeat)
+    :else (conj (my-repeat (dec how-many-times) what-to-repeat) what-to-repeat)
+    ) 
+  )
 
 (defn my-range [up-to]
-  [:-])
+  (if (= up-to 0)
+    '()
+    (conj (my-range (dec up-to)) (dec up-to)))
+  )
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq) 
+    ['()]
+    (conj (tails (rest a-seq)) a-seq))
+  )
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq) 
+    ['()]
+    (conj (tails (drop 1 a-seq)) a-seq))
+  )
 
 (defn rotations [a-seq]
   [:-])
