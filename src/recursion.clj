@@ -126,11 +126,17 @@
 (defn inits [a-seq]
   (if (empty? a-seq) 
     ['()]
-    (conj (tails (drop 1 a-seq)) a-seq))
+    (conj (inits (drop-last 1 a-seq)) a-seq))
   )
 
 (defn rotations [a-seq]
-  [:-])
+  (let [length (count a-seq)
+        helper (fn [x]
+                 (take length (drop x (concat a-seq a-seq))))]
+    (if (= 0 (count a-seq))
+           (list '())
+            (map helper (range length))))
+  )
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
