@@ -148,9 +148,17 @@
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
-
+ 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [element (first a-map)]
+    (if (not (empty? element)) 
+      (let [times (second element)
+            el (first element)
+            next-int (rest a-map)]
+        (concat (repeat times el) (un-frequencies next-int))
+        ))
+    )
+  )
 
 (defn my-take [n coll]
   [:-])
