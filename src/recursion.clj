@@ -161,16 +161,24 @@
   )
 
 (defn my-take [n coll]
-  [:-])
+  (if (and (not (empty? coll)) (< 0 n))
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    '()
+  ))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (>= 0 n) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))
+    ))
 
 (defn halve [a-seq]
-  [:-])
+  (let [mid (int (/ (count a-seq) 2))]
+    (vector (take mid a-seq) (drop mid a-seq) )))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+
+  )
 
 (defn merge-sort [a-seq]
   [:-])
