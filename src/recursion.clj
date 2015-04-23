@@ -140,13 +140,26 @@
     ))
 
 (defn halve [a-seq]
-  [:-])
+  (let [h (int (/ (count a-seq) 2))]
+    [(my-take h a-seq) (my-drop h a-seq)]
+    ))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [f-a (first a-seq) f-b (first b-seq)]
+    (cond
+     (empty? a-seq) b-seq
+     (empty? b-seq) a-seq
+     (< f-a f-b) (cons f-a (seq-merge (rest a-seq) b-seq))
+     :else (cons f-b (seq-merge a-seq (rest b-seq)))
+     )))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) a-seq
+   (singleton? a-seq) a-seq
+   :else (let [h (halve a-seq)]
+           (seq-merge (merge-sort (first h))
+                      (merge-sort (second h))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
