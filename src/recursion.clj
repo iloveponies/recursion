@@ -116,19 +116,28 @@
     (map concat (tails a-seq) (reverse (rest (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (my-frequencies-helper
+     (assoc freqs (first a-seq) (inc (get freqs (first a-seq) 0)))
+     (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (flatten (map #(repeat (second %) (first %)) a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (if (and (pos? n) (seq coll))
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    (empty coll)))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (pos? n)
+    (recur (dec n) (rest coll))
+    coll
+    ))
 
 (defn halve [a-seq]
   [:-])
