@@ -1,22 +1,42 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (cond
+   (empty? coll) 1
+   :else (* (first coll)
+            (product (rest coll)))))
+  ;:-)
 
 (defn singleton? [coll]
-  :-)
+  (and
+   ;(first coll)
+   (empty? (rest coll))
+   (not (empty? coll))))
+  ;:-)
 
 (defn my-last [coll]
-  :-)
+  (first (reverse coll)))
+  ;:-)
 
 (defn max-element [a-seq]
-  :-)
+  (last (sort a-seq)))
+  ;:-)
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [a (count seq-1)
+        b (count seq-2)]
+    (cond
+     (== a b) seq-2
+     (== (max a b) a) seq-1
+     :else seq-2)))
+  ;[:-])
 
 (defn longest-sequence [a-seq]
-  [:-])
+  ;(fn [x] (max x (first a-seq)))
+  (cond
+   (empty? a-seq) nil
+   :else (apply max-key count a-seq)))
+  ;[:-])
 
 (defn my-filter [pred? a-seq]
   [:-])
