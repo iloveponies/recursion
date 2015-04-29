@@ -6,7 +6,7 @@
     (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (and (empty? (rest coll)) ((complement empty?) coll)))
 
 (defn my-last [coll]
   :-)
