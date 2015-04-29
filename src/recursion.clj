@@ -9,7 +9,10 @@
   (and (empty? (rest coll)) ((complement empty?) coll)))
 
 (defn my-last [coll]
-  :-)
+  (let [remainders (rest coll)]
+    (if (or (singleton? remainders) (empty? coll))
+      (first remainders)
+      (my-last remainders))))
 
 (defn max-element [a-seq]
   :-)
