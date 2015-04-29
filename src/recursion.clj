@@ -10,12 +10,16 @@
 
 (defn my-last [coll]
   (let [remainders (rest coll)]
-    (if (or (singleton? remainders) (empty? coll))
-      (first remainders)
-      (my-last remainders))))
+    (if (singleton? coll)
+      (first coll)
+      (if (or (singleton? remainders) (empty? coll))
+        (first remainders)
+        (my-last remainders)))))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (my-last (sort a-seq))))
 
 (defn seq-max [seq-1 seq-2]
   [:-])
