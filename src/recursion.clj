@@ -22,7 +22,11 @@
     (my-last (sort a-seq))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [count-1 (count seq-1)
+        count-2 (count seq-2)]
+    (if (> count-1 count-2)
+      seq-1
+      seq-2)))
 
 (defn longest-sequence [a-seq]
   [:-])
