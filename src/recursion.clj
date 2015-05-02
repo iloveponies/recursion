@@ -110,7 +110,9 @@
     (cons a-seq (inits heads)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [headz (inits a-seq)
+        tailz (reverse (tails a-seq))]
+    (set (map concat tailz headz))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
