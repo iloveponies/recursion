@@ -94,7 +94,9 @@
     ()))
 
 (defn my-range [up-to]
-  [:-])
+  (if (zero? up-to)
+    ()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   [:-])
