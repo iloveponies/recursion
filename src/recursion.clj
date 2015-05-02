@@ -99,10 +99,15 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (vector a-seq)
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (let [heads (reverse (rest (reverse a-seq)))]
+  (if (empty? a-seq)
+    (vector a-seq)
+    (cons a-seq (inits heads)))))
 
 (defn rotations [a-seq]
   [:-])
