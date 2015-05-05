@@ -192,11 +192,21 @@
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [x]
+                     (or (empty? x) (apply <= x) (apply >= x)))
+        first-part (last (take-while monotonic? (inits a-seq)))
+        last-part (drop (count first-part) a-seq)]
+    (if (empty? a-seq)
+      '()
+      (cons first-part (split-into-monotonics last-part)))))
 
 (defn permutations [a-set]
-  [:-])
+  (loop [result (rotations a-set)
+         to-go (rotations a-set)]
+    (cond
+      (empty? a-set) (list a-set)
+      (empty? to-go) result
+      :else (recur (conj result (reverse (first to-go))) (rest to-go)))))
 
 (defn powerset [a-set]
   [:-])
-
