@@ -1,0 +1,8 @@
+(+ 1 2 3)
+(rest [1 2 3])
+(rest [])
+(first [])
+(complement empty [])
+(complement empty? [])
+(complement (empty? []))
+((complement empty?) [])
