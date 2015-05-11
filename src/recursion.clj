@@ -31,10 +31,20 @@
         (max f (max-element r))))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [count-seq-1 (count seq-1)
+        count-seq-2 (count seq-2)]
+  (if (> count-seq-1 count-seq-2)
+    seq-1
+    seq-2)))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (let [f (first a-seq)
+          r (rest a-seq)]
+      (if (empty? r)
+        f
+        (seq-max f (longest-sequence r))))))
 
 (defn my-filter [pred? a-seq]
   [:-])
