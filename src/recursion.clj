@@ -66,10 +66,22 @@
       (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [f (first a-seq)
+          r (rest a-seq)]
+      (if (pred? f)
+        (cons f (my-take-while pred? r))
+        '()))))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [f (first a-seq)
+          r (rest a-seq)]
+      (if (pred? f)
+        (my-drop-while pred? r)
+        a-seq))))
 
 (defn seq= [a-seq b-seq]
   :-)
