@@ -131,9 +131,11 @@
     (concat (repeat (first (reverse (first a-map))) (first (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  (if (= n 1)
-    (first coll)
-    (concat (first coll) (my-take (- n 1) (rest coll)))))
+  (if (empty? coll)
+    []
+    (if (= n 1)
+      [(first coll)]
+      (cons (first coll) (my-take (- n 1) (rest coll))))))
 
 (defn my-drop [n coll]
   [:-])
