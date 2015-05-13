@@ -159,24 +159,31 @@
                 (recur (cons x result) (drop how-many-to-drop a-seq)))))]
     (reverse (monotonic-helper '() a-seq))))
 
-
-
 (defn permutations [a-set]
-  (let [permutations (fn [result a-set])]))
+    (let [perm-tree (fn [[node & branches]]
+                      (map #(cons node %) (permutations branches)))]
+    (if (empty? a-set)
+      (cons a-set a-set)
+      (apply concat (map perm-tree (rotations a-set))))))
 
-;; Sequence -> Sequence of Seqs
-;; Given a sequence, produce a sequence of seq where 
-;; each seq is has a first of the first seq and a rest
-;; of the rotations of the rest of the seq. Clear as mud.
-;; Example: (expand-perm '(1 3 5)) => ((1 3 5) (1 5 3))
-(defn expand-perm [a-seq]
-  (let [rot (rotations (rest a-seq))]
-    (if (empty? rot)
-      '()
-      (cons (list (first a-seq)
-                  (first rot))
-            (expand-form)))))
 
 (defn powerset [a-set]
-  [:-])
+  (let [mask-length (count a-set)
+        one-mask #(map read-string (map str (Integer/toString % 2)))
+        set-mask-seq #(map one-mask (range 0 (Math/pow 2 %)))
+        padd-it (fn [length myseq] 
+                  (loop [n (count myseq)
+                         result myseq]
+                    (if (= n length)
+                      result
+                      (recur (inc n) (cons 0 result)))))
+        set-mask (map #(padd-it mask-length %) (set-mask-seq mask-length))
+        apply-one (fn [mask] (map #(if (= 1 %1) %2) mask a-set))
+        ]
+    (if (empty? a-set) 
+      #{#{}}
+      (set (map set (map #(remove nil? %) (map apply-one set-mask)))))))
+
+
+
 
