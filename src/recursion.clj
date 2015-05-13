@@ -126,7 +126,9 @@
   (my-frequencies-helper freqs a-seq)))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    []
+    (concat (repeat (get a-map (first (reverse (first a-map)))) (first (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
   [:-])
