@@ -148,8 +148,20 @@
   (let [l (int (/ (count a-seq) 2))]
     (cons (my-take l a-seq) (cons (my-drop l a-seq) []))))
 
+(defn seq-merge-helper [s-seq a-seq b-seq]
+  (cond
+   (empty? a-seq)
+     (concat s-seq b-seq)
+   (empty? b-seq)
+     (concat s-seq a-seq)
+   (< (first a-seq) (first b-seq))
+     (cons (first a-seq) (seq-merge-helper s-seq (rest a-seq) b-seq))
+   :else
+     (cons (first b-seq) (seq-merge-helper s-seq a-seq (rest b-seq)))))
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [s-seq []]
+    (seq-merge-helper s-seq a-seq b-seq)))
 
 (defn merge-sort [a-seq]
   [:-])
