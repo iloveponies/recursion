@@ -164,7 +164,13 @@
     (seq-merge-helper s-seq a-seq b-seq)))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+   (< (count a-seq) 2)
+     a-seq
+   :else
+     (let [left (my-take 1 (halve a-seq)) right (my-drop 1 (halve a-seq))]
+       (seq-merge (merge-sort left) (merge-sort right))
+   )))
 
 (defn split-into-monotonics [a-seq]
   [:-])
