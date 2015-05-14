@@ -133,8 +133,8 @@
 (defn my-take [n coll]
   (if (empty? coll)
     []
-    (if (= n 1)
-      [(first coll)]
+    (if (= n 0)
+      []
       (cons (first coll) (my-take (- n 1) (rest coll))))))
 
 (defn my-drop [n coll]
@@ -145,7 +145,8 @@
       (my-drop (- n 1) (rest coll)))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [l (int (/ (count a-seq) 2))]
+    (cons (my-take l a-seq) (cons (my-drop l a-seq) []))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
