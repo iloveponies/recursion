@@ -189,10 +189,26 @@
       (seq-merge (merge-sort (get halves 0)) (merge-sort (get halves 1))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (set a-seq)
+    (let [mono? (fn [a-seq] (or
+                                   (apply <= a-seq)
+                                   (apply >= a-seq)))
+          split (fn [a b]
+                       (if (mono? a)
+                         (list a b)
+                         (recur (butlast a)
+                                (cons (last a)
+                                      b))))
+          [a b] (split a-seq '())]
+      (cons a (split-into-monotonics b)))))
 
 (defn permutations [a-set]
-  [:-])
+  (seq
+   (if (seq (rest a-set))
+     (apply concat (for [x a-set]
+                     (map #(cons x %) (permutations (remove #{x} a-set)))))
+     [a-set])))
 
 (defn powerset [a-set]
   (reduce (fn [a x]
