@@ -152,10 +152,15 @@
       (concat (repeat n value) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (= 0 n) (empty? coll))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (empty? coll) '()
+    (<= n 0) coll
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
