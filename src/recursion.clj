@@ -135,13 +135,21 @@
       (rotations-div a-seq []))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [el (first a-seq)
+          ra-seq (rest a-seq)
+          new-freqs (assoc freqs el (inc (get freqs el 0)))]
+      (my-frequencies-helper new-freqs ra-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (let [[value n] (first a-map)]
+      (concat (repeat n value) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
