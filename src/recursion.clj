@@ -126,7 +126,13 @@
     (reverse (map reverse (tails ra-seq)))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (letfn [(rotations-div [left right]
+              (if (empty? left)
+                []
+                (cons (concat left right) (rotations-div (rest left) (conj right (first left))))))]
+      (rotations-div a-seq []))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
