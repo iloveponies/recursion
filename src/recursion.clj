@@ -20,16 +20,25 @@
       (my-last (rest coll)))))
 
 (defn max-element [a-seq]
-  (apply max a-seq))
+  (cond 
+    (empty? a-seq) nil
+    (< (count a-seq) 2) (first a-seq)
+    :else  (apply max a-seq)
+  ))
 
 (defn seq-max [seq-1 seq-2]
-  (if (< (count seq-1) (count seq-2))
-    seq-2
+  (if (> (count seq-1) (count seq-2))
     seq-1
+    seq-2
   ))
 
 (defn longest-sequence [a-seq]
-  (apply seq-max a-seq))
+  (cond
+    (empty? a-seq) nil
+    (= (count a-seq) 1) (first a-seq)
+    :else (longest-sequence (conj (rest (rest a-seq)) (seq-max (first a-seq) (second a-seq))
+      )
+    )))
 
 (defn my-filter [pred? a-seq]
   (if (empty? a-seq)
@@ -51,7 +60,7 @@
   (if (empty? a-seq)
     a-seq
     (if (pred? (first a-seq))
-      (cons (first a-seq) (my-take-while (rest a-seq)))
+      (cons (first a-seq) (my-take-while pred? (rest a-seq)))
       '()
     )))
 
@@ -63,18 +72,20 @@
       a-seq)))
 
 (defn seq= [a-seq b-seq]
-  (if (== (count a-seq) (count b-seq))
-    false
-    (if (== (first a-seq)(first b-seq))
-      (seq= (rest a-seq)(rest b-seq))
-      false)))
+  (cond
+    (not (== (count a-seq) (count b-seq))) false
+    (empty? a-seq) true
+    (== (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+    :else false
+  ))
 
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2))
     '()
     (cons 
       (f (first seq-1) (first seq-2)) 
-      (f (rest seq-1) (rest seq-2)))))
+      (my-map f (rest seq-1) (rest seq-2)))
+  ))
 
 (defn power [n k]
   (if (zero? k)
@@ -85,7 +96,8 @@
   (cond
     (= n 0) 0
     (= n 1) 1
-    :else (+ (fib (dec n)) (fib ((dec (dec n)))))))
+    :else (+ (fib (dec n)) (fib (dec (dec n))))
+  ))
 
 (defn my-repeat [how-many-times what-to-repeat]
   (if (< how-many-times 1)
@@ -95,18 +107,35 @@
 (defn my-range [up-to]
   (if (== up-to 0)
     '()
-    (cons (my-range (dec up-to)))))
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty a-seq)
-    '()
-    (cons a-seq (tails (rest a-seq)))))
+  (cond 
+    (empty? a-seq) '([])
+    :else
+    (apply vector (cons a-seq (tails (apply vector (rest a-seq))))
+    )))
+
+(defn inits-apu [a-seq]
+  (cond 
+    (empty? a-seq) '([])
+    :else
+    (apply vector (cons a-seq (inits-apu (apply vector (butlast a-seq))))
+    )))
 
 (defn inits [a-seq]
-  (tails (reverse a-seq)))
+  (apply vector (reverse (inits-apu a-seq))))
 
 (defn rotations [a-seq]
-)
+  (if (empty? a-seq)
+    '(())
+    (map 
+      (fn [x] 
+        (concat
+          (get (tails a-seq) x) 
+          (get (inits a-seq) x))) 
+      (my-range (count a-seq))
+    )))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -120,17 +149,18 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  (apply concat (map (fn [key] (my-repeat (key a-map) key)) (keys a-map))))
+  (apply concat (map (fn [x] (my-repeat (get a-map x) x)) (keys a-map)))
+)
+
+(defn my-drop [n col]
+  (if (< n 1)
+    col
+    (my-drop (dec n) (rest col))
+  ))
 
 (defn my-take [n coll]
-  (if (= (str n) (str (count coll)))
-    coll
-    (my-take n (butlast coll))))
-
-(defn my-drop [n coll]
-  (if (= (str n) (str 0))
-    coll	
-    (my-drop ((dec n) (rest coll)))))
+  (reverse (my-drop (- (count coll) n) (reverse coll)))
+)
 
 (defn halve [a-seq]
   (if (< (count a-seq) 2)
@@ -158,12 +188,79 @@
     :else (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (second (halve a-seq)))
     )))
 
+(defn my-take-while2 [pred? a-seq viimeisin]
+  "Ottaa kaksipaikkaisen predikaatin jonon perättäisten alkioiden vertailemiseen. Viimeisin-parametrin käyttö varmistaa ensimmäisen alkion käsittelemisen oikein."
+  (if (< (count a-seq) 1)
+    a-seq
+    (if (pred? viimeisin (first a-seq))
+      (cons (first a-seq) (my-take-while2 pred? (rest a-seq) (first a-seq)))
+      '()
+    )))
+
+(defn my-drop-while2 [pred? a-seq viimeisin]
+  "Vrt. my-take-while2"
+  (if (< (count a-seq) 1)
+    a-seq
+    (if (pred? viimeisin (first a-seq))
+      (my-drop-while2 pred? (rest a-seq) (first a-seq))
+      a-seq
+    )))
+
+(defn split-into-monotonics-apuri [a-seq tulos]
+  "Apuri kerryttää tulosta recursioiden yli."
+  (cond
+    (< (count a-seq) 1) tulos
+    (= (count a-seq) 1) (conj tulos a-seq)
+    (< (first a-seq) (second a-seq)) (split-into-monotonics-apuri
+      (my-drop-while2 (fn [x y] (< x y)) a-seq (dec (first a-seq))) 
+      (conj tulos (my-take-while2 (fn [x y] (< x y)) a-seq (dec (first a-seq)))))
+    (> (first a-seq) (second a-seq)) (split-into-monotonics-apuri
+      (my-drop-while2 (fn [x y] (> x y)) a-seq (inc (first a-seq))) 
+      (conj tulos (my-take-while2 (fn [x y] (> x y)) a-seq (inc (first a-seq)))))
+    :else (split-into-monotonics-apuri (rest a-seq)
+      (conj tulos (seq [(first a-seq)])))
+  ))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (reverse (split-into-monotonics-apuri a-seq '()))
+)
+
+(defn permutations2 [a-set]
+  (if (< (count a-set) 2 )
+    (conj '() (seq a-set))
+    (seq (set
+        (map
+          (fn [alkio] (map (fn [jono] (conj jono alkio)) (apply concat (rotations (permutations2 (disj a-set alkio))))))
+          (seq a-set)
+        )))
+  ))
 
 (defn permutations [a-set]
-  [:-])
+  (if (< (count a-set) 2 )
+    (conj '() (conj '() (seq a-set)))
+    (seq (set
+        (map
+          (fn [alkio] 
+            (map 
+              (fn [jono] (apply concat (conj jono alkio)))  
+              (rotations (permutations (disj (set a-set) alkio)))))
+          (seq a-set)
+        ))
+)
+  ))
+
+(defn powerset-apuri [tulos a-set]
+  (if (empty? a-set)
+    (clojure.set/union tulos #{#{}})
+    (powerset-apuri
+      (clojure.set/union
+        tulos
+        (set (map 
+            (fn [x] (conj x (first (seq a-set)))) 
+            (seq tulos))))
+      (disj (set a-set) (first (seq a-set))) ;Rasittaa tuo "set a-set", kesti hetken huomata sen tarpeellisuus.
+    )))
 
 (defn powerset [a-set]
-  [:-])
-
+  (powerset-apuri #{#{}} a-set)
+)
