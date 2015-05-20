@@ -163,7 +163,13 @@
     :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(() ())
+    (let [h (int (/ (count a-seq) 2))]
+      (loop [c h, lf [], rg a-seq]
+        (if (= c 0)
+          (list lf rg)
+          (recur (dec c) (conj lf (first rg)) (rest rg)))))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
