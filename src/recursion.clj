@@ -100,8 +100,13 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
+(defn rotate [sq n]
+  (if (= n 0)
+    ()
+    (cons (seq sq) (rotate (conj (drop-last sq) (last sq)) (- n 1)))))
+
 (defn rotations [a-seq]
-  [:-])
+  (rotate a-seq (count a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
