@@ -113,10 +113,14 @@
   [:-])
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (= n 0) (empty? coll))
+    ()
+    (cons (first coll) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (= n 0)
+    coll
+    (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
