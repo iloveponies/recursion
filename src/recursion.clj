@@ -12,8 +12,8 @@
 (defn my-last [coll]
   (cond
    (empty? coll) nil
-   (singleton? coll) coll
-   :else my-last (rest coll)))
+   (singleton? coll) (first coll)
+   :else (my-last (rest coll))))
 
 (defn max-element [a-seq]
   :-)
