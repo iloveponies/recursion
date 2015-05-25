@@ -124,8 +124,15 @@
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
+(defn uf-helper [mp acc]
+  (if (empty? mp)
+    acc
+    (let [[v n] (first mp)]
+      (uf-helper (rest mp) (concat acc (my-repeat n v))))))
+
+
 (defn un-frequencies [a-map]
-  [:-])
+  (uf-helper a-map {}))
 
 (defn my-take [n coll]
   (if (or (= n 0) (empty? coll))
