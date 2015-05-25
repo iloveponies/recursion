@@ -60,6 +60,7 @@
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq)) true
+    (or (empty? a-seq) (empty? b-seq)) false
     (and (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))) true
     :else false))
 
