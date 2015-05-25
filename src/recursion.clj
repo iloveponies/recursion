@@ -130,7 +130,6 @@
     (let [[v n] (first mp)]
       (uf-helper (rest mp) (concat acc (my-repeat n v))))))
 
-
 (defn un-frequencies [a-map]
   (uf-helper a-map {}))
 
@@ -145,7 +144,8 @@
     (my-drop (- n 1) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [midpoint (quot (count a-seq) 2)]
+    [(my-take midpoint a-seq) (seq (my-drop midpoint a-seq))]))
 
 (defn seq-merge [a-seq b-seq]
   (cond
