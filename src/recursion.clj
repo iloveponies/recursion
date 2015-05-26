@@ -172,10 +172,23 @@
           (recur (dec c) (conj lf (first rg)) (rest rg)))))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and (empty? a-seq) (empty? b-seq)) '()
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [fa (first a-seq)
+                fb (first b-seq)
+                ra (rest a-seq)
+                rb (rest b-seq)]
+            (if (< fa fb)
+              (cons fa (seq-merge ra b-seq))
+              (cons fb (seq-merge a-seq rb))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (let [[first-half second-half] (halve a-seq)]
+      (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
