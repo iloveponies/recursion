@@ -35,7 +35,11 @@
     (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq] ; ei tehty ?
-  (filter pred? a-seq))
+  (if (empty? a-seq)
+    a-seq
+    (conj (when (= true (pred? (first a-seq)))
+            (first a-seq))
+          (my-filter pred? (rest a-seq)))))
 
 
 
@@ -44,11 +48,18 @@
         (not (= elem (first a-seq))) (sequence-contains? elem (rest a-seq))
         :else true))
 
-(defn my-take-while [pred? a-seq] ; ei tehty?
-  (take-while pred? a-seq))
+(defn my-take-while [pred? a-seq]
+  (remove nil? (if (empty? a-seq)
+                  a-seq
+                  (cons (when (pred? (first a-seq))
+                          (first a-seq))
+                          (when (pred? (first a-seq))
+                            (my-take-while pred? (rest a-seq)))))))
+
+
 
 (defn my-drop-while [pred? a-seq] ; ei tehty?
-  (drop-while pred? a-seq))
+  :-)
 
 (defn seq= [a-seq b-seq]
   (cond (and (empty? a-seq) (empty? b-seq)) true
@@ -150,12 +161,12 @@
 
 
 
-(defn split-into-monotonics [a-seq]
+(defn split-into-monotonics [a-seq] ; ei tehty
   [:-])
 
-(defn permutations [a-set]
+(defn permutations [a-set]  ; ei tehty
   [:-])
 
-(defn powerset [a-set]
+(defn powerset [a-set]  ; ei tehty
   [:-])
 
