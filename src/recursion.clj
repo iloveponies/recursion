@@ -15,12 +15,12 @@
     (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  (let [max-el
-        (fn ml [a-seq acc]
-          (if (empty? a-seq)
-            acc
-            (ml (rest a-seq) (if (> acc (first a-seq)) acc (first a-seq)))))]
-    (max-el (rest a-seq) (first a-seq))))
+  (if (empty? a-seq)
+    nil
+    (let [me (max-element (rest a-seq))]
+      (if (nil? me)
+        (first a-seq)
+        (max (first a-seq) me)))))
 
 
 
@@ -115,13 +115,20 @@
     (helper a-seq [])))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (my-frequencies-helper (merge freqs {(first a-seq) (if (contains? freqs (first a-seq)) (+ 1 (get freqs (first a-seq))) 1)}) (rest  a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    ()
+    (let [fst (first a-map)
+          k (first fst)
+          v (second fst)]
+    (concat (repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
