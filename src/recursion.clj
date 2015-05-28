@@ -73,7 +73,12 @@
 
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) true
+   (or (empty? a-seq) (empty? b-seq)) false
+   (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+   :else false))
+
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2))
     '()
@@ -134,8 +139,8 @@
 (defn halve [a-seq]
   (let [c (int (/ (count a-seq) 2))]
     (if (empty? a-seq)
-      '()
-      (cons (my-take c a-seq) (cons (my-drop c a-seq) '())))))
+      '[]
+      (conj (conj '[] (my-take c a-seq)) (my-drop c a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -148,7 +153,8 @@
   (cond
    (empty? a-seq) '()
    (= (count a-seq) 1) a-seq
-   :else (seq-merge (merge-sort (halve a-seq)))))
+   :else (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (first (rest (halve a-seq)))))))
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
