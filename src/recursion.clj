@@ -131,19 +131,34 @@
     (concat (repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    ()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
+
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    (vector (my-take half a-seq) (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   (> (first a-seq) (first b-seq))
+    (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
+   :else
+    (cons (first a-seq) (seq-merge (rest a-seq) b-seq))))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
