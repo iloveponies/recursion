@@ -190,8 +190,22 @@
     (let [[first-half second-half] (halve a-seq)]
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
+;; (defn split-into-monotonics [a-seq]
+;;   (if (empty? a-seq)
+;;     '()
+;;     (let [parts (filter #(> (count %) 1) (inits a-seq))
+;;           decr (apply max (map #(if (apply >= %) (count %) 0) parts))
+;;           grow (apply max (map #(if (apply <= %) (count %) 0) parts))
+;;           monotonic (max grow decr)]
+;;       (cons (take monotonic a-seq) (split-into-monotonics (drop monotonic a-seq))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [grow (count (take-while <= a-seq))
+          decr (count (take-while >= a-seq))
+          ]
+      )
 
 (defn permutations [a-set]
   [:-])
