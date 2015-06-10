@@ -132,37 +132,94 @@
 
 
 (defn rotations [a-seq]
-  (map concat  (reverse(rest (tails a-seq)))(inits a-seq)))
+  (if (empty? a-seq)
+    '(())
+  (map concat  (reverse(rest (tails a-seq)))(inits a-seq))))
+
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [elem (first a-seq)]
+    (cond
+     (empty? a-seq) freqs
+     (contains? freqs elem)(my-frequencies-helper
+                            (assoc freqs elem (inc (get freqs elem)))
+                            (rest a-seq))
+     :else (my-frequencies-helper
+            (assoc freqs elem 1)
+            (rest a-seq))
+    )))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
+
+
+(defn un-frequencies-helper [a-map a-seq]
+  (if (empty? a-map)
+    a-seq
+  (let [first-key (first(first a-map))
+       first-amount (first(rest(first a-map)))]
+    (un-frequencies-helper (rest a-map) (concat a-seq (repeat first-amount first-key))))))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (un-frequencies-helper a-map []))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or(zero? n) (empty? coll))
+    ()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
+
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or(zero? n) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
+
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    (vector (my-take half a-seq) (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+    (cond
+      (and (empty? a-seq) (empty? b-seq)) ()
+      (empty? a-seq) b-seq
+      (empty? b-seq) a-seq
+      (< (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge b-seq (rest a-seq)))
+      (< (first b-seq) (first a-seq)) (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq)(singleton? a-seq))
+    a-seq
+    (seq-merge (merge-sort (get (halve a-seq) 0))
+               (merge-sort (get (halve a-seq) 1)))))
+
+
+(defn monotonic? [a-seq]
+  (cond
+   (empty? a-seq) true
+   (singleton? a-seq) true
+  :else (or (apply >= a-seq) (apply <= a-seq))))
+
+
+(defn take-first-monotonic [a-seq]
+  (if (monotonic? a-seq)
+    a-seq
+   (take-first-monotonic (my-take (- (count a-seq) 1) a-seq))))
+
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (let [first-monotonic (take-first-monotonic a-seq)]
+      (cons first-monotonic
+            (split-into-monotonics (my-drop (count first-monotonic) a-seq))))))
+
+
 
 (defn permutations [a-set]
-  [:-])
+
+  )
 
 (defn powerset [a-set]
   [:-])
