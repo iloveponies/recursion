@@ -215,9 +215,9 @@
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq)
     a-seq
-    (let [a-set-inits (drop 1 (inits a-seq)) ; drop the empty init
-          monotonic-lt (last (take-while #(apply < %) a-set-inits))
-          monotonic-gt (last (take-while #(apply > %) a-set-inits))
+    (let [a-seq-inits (drop 1 (inits a-seq)) ; drop the empty init
+          monotonic-lt (last (take-while #(apply < %) a-seq-inits))
+          monotonic-gt (last (take-while #(apply > %) a-seq-inits))
           monotonic (if (> (count monotonic-lt) (count monotonic-gt))
                       monotonic-lt
                       monotonic-gt)]
