@@ -24,22 +24,40 @@
     (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty-or-singleton? a-seq)
+    (first a-seq)
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [value (first a-seq)]
+    ; Let's be happy with just empty? now..
+    (if (empty? a-seq)
+      a-seq
+      (if (pred? value)
+        (cons value (my-filter pred? (rest a-seq)))
+        (my-filter pred? (rest a-seq))))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond (empty? a-seq) false
+        (= elem (first a-seq)) true
+        :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (cond (empty? a-seq) a-seq
+          (pred? current) (cons current (my-take-while pred? (rest a-seq)))
+          :else '())))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (cond (empty? a-seq) a-seq
+          (pred? current) (my-drop-while pred? (rest a-seq))
+          :else a-seq)))
 
 (defn seq= [a-seq b-seq]
   :-)
@@ -100,4 +118,3 @@
 
 (defn powerset [a-set]
   [:-])
-
