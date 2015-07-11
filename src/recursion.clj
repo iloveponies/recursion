@@ -60,22 +60,34 @@
           :else a-seq)))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond (and (empty? a-seq) (empty? b-seq)) true                          ; all were equal
+        (or (empty? a-seq) (empty? b-seq)) false                          ; only the other ran out
+        (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))  ; current elements equal
+        :else false))                                                     ; current elements not equal
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    '()
+    (cons (f (first seq-1) (first seq-2))
+          (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (< k 1) 1
+              (* n (power n (dec k)))))
 
-(defn fib [n]
-  :-)
+(defn fib "Horribly inefficient fibonacci generator unless HC compiler magic" [n]
+  (cond (< n 1) 0
+        (= n 1) 1
+        :else   (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0) '()
+                            (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (let [to-append (dec up-to)]
+    (if (< to-append 0) '()
+                        (conj (my-range to-append) to-append))))
 
 (defn tails [a-seq]
   [:-])
