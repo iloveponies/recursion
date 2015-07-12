@@ -165,19 +165,36 @@
   (un-frequencies-helper '() a-map))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (<= n 0))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+   (empty? coll) coll
+   (zero? n) (seq coll)
+   :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [k (int (/ (count a-seq) 2))]
+    (vector (my-take k a-seq) (my-drop k a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+   (empty? a-seq) b-seq
+   (empty? b-seq) a-seq
+   :else
+     (let [a (first a-seq)
+           b (first b-seq)]
+       (if (< a b)
+         (cons a (seq-merge (rest a-seq) b-seq))
+         (cons b (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [halves (halve a-seq)]
+      (seq-merge (merge-sort (halves 0)) (merge-sort (halves 1))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
