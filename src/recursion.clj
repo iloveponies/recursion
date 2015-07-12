@@ -90,22 +90,39 @@
                         (conj (my-range to-append) to-append))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ; Mildly inelegant feel to this. Guidance mentioned map/reverse..?
+    '([])
+    (conj (tails (rest a-seq)) a-seq)))
 
 (defn inits [a-seq]
-  [:-])
+  ; But then, map and reverse are useful at least here.
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  ; Makes little sense to have () yield (()). It even breaks the formula of
+  ; (count a-seq) == (count rotations). Perhaps there is a beter way..
+  (if (empty? a-seq)
+    '([])
+    (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [current (first a-seq)]
+    (if (empty? a-seq)
+      freqs
+      (my-frequencies-helper (assoc freqs current (inc (get freqs current 0)))
+                             (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [key-and-value (first a-map)
+        current-key (first key-and-value)
+        current-value (second key-and-value)]
+    (if (empty? a-map)
+      '()
+      (concat (repeat current-value current-key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
