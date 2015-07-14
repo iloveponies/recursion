@@ -159,10 +159,19 @@
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
+; NOTE Sorting is possibly done in a mutable way
   [:-])
 
 (defn permutations [a-set]
   [:-])
 
 (defn powerset [a-set]
-  [:-])
+  (loop [values a-set
+         powerset #{#{}}]
+    (let [value (first values)]
+      (if (empty? values)
+        powerset
+        (recur (rest values) (apply conj
+                               powerset
+                               (map (fn [a-set] (conj a-set value))
+                                         powerset)))))))
