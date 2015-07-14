@@ -125,19 +125,38 @@
       (concat (repeat current-value current-key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (<= n 0))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (empty? coll) '()
+    (<= n 0) coll
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [pivot (int (/ (count a-seq) 2))]
+    (vector (my-take pivot a-seq) (my-drop pivot a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)
+        a-empty (empty? a-seq)
+        b-empty (empty? b-seq)
+        pick-a (fn [] (cons a (seq-merge (rest a-seq) b-seq)))
+        pick-b (fn [] (cons b (seq-merge a-seq (rest b-seq))))]
+    (cond
+      (and a-empty b-empty) '()
+      (and b-empty (not a-empty)) (pick-a)
+      (and a-empty (not b-empty)) (pick-b)
+      (<= a b) (pick-a)
+      :else (pick-b))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (empty-or-singleton? a-seq)
+    a-seq
+    (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
