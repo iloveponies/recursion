@@ -153,11 +153,43 @@
     (seq-merge (merge-sort (first (halve a-seq)))
                (merge-sort (last (halve a-seq))))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn inits [a-seq]
+  (for [n (range (inc (count a-seq)))]
+    (take n a-seq)))
 
-(defn permutations [a-set]
-  [:-])
+(defn both? [p q]
+  (or (every? true? [p q])
+      (every? false? [p q])))
 
-(defn powerset [a-set]
-  [:-])
+(defn monotonic? [[f s t :as a-seq]]
+  (cond
+   (< (count a-seq) 3) true
+   (both? (< f s) (< s t)) (recur (rest a-seq))
+   :else false))
+
+(defn monotonic-chunk [a-seq]
+  (let [chunks (drop 2 (inits a-seq))]
+    (last (take-while monotonic? chunks))))
+
+(defn split-into-monotonics
+  ([a-seq] (split-into-monotonics a-seq []))
+  ([a-seq out]
+   (if (empty? a-seq)
+     out
+     (let [chunk (monotonic-chunk a-seq)]
+       (recur
+        (drop (count chunk) a-seq)
+        (conj out chunk))))))
+
+(defn permutations [s]
+  (let [a-set (set s)]
+    (cond (empty? a-set) '(())
+          (empty? (rest a-set)) (list (apply list a-set))
+          :else (for [x a-set y (permutations (disj a-set x))]
+                  (cons x y)))))
+
+ (defn powerset [a-set]
+   (if (empty? a-set)
+     '(())
+     (let [lower (powerset (rest a-set))]
+       (concat (map #(cons (first a-set) %) lower) lower))))
