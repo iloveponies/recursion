@@ -69,13 +69,27 @@
      a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+   (and (empty? a-seq) (empty? b-seq))
+     true
+   (or (empty? a-seq) (empty? b-seq))
+     false
+   (= (first a-seq) (first b-seq))
+     (seq= (rest a-seq) (rest b-seq))
+   :else
+     false))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond
+   (or (empty? seq-1) (empty? seq-2))
+     '()
+   :else
+     (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
 (defn fib [n]
   :-)
