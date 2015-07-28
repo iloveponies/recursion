@@ -170,10 +170,13 @@
 ;84
 
 (defn my-take [n coll]
-  (map (fn[i] (get coll i)) (my-range (+ 1 n))))
+  (map (fn[i] (get coll i)) (reverse (my-range (min n (count coll))))))
+;86
 
 (defn my-drop [n coll]
-  [:-])
+  (if (> n (count coll))
+      ('())
+      (map (fn[i] (get coll i)) (map (fn[x] (+ n x)) (reverse (my-range (- (count coll) n)))))))
 
 (defn halve [a-seq]
   [:-])
