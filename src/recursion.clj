@@ -194,11 +194,27 @@
       (seq-merge (merge-sort (first (halve a-seq)))
                  (merge-sort (second (halve a-seq)))))))
 
-(defn split-into-monotonics [a-seq]
-  )
+;_________________________split-into-monotonics_____________________________________________
+
+(defn one-mono-seq-length [coll length]
+  (if (empty? coll)
+    length
+    (if (singleton? coll)
+      (inc length)
+      (if (< (second coll) (first coll))
+        (inc length)
+        (one-mono-seq-length (rest coll) (inc length))))))
 
 
-(defn pair [ a-coll b-coll]
+ (defn split-into-monotonics [a-seq]
+   (let [monolen (one-mono-seq-length a-seq 0)]
+   (if (empty? a-seq)
+     '()
+      (cons (my-take monolen a-seq)(split-into-monotonics (my-drop monolen a-seq))))))
+
+;___________________________________________________________________________________________
+
+ (defn pair [ a-coll b-coll]
  (map a-coll b-coll))
 
 (defn coll-merge [a-coll b-coll]
@@ -213,11 +229,57 @@
    :else    (pair (permutations (first (halve a-set)))
                   (permutations (second (halve a-set))))))
 
-(defn powerset [a-set])
-;  (if (empty? a-set)
-;    #{}
-;    (if (singleton? a-set)
-;      #{(first a-set)}
-;      #{(cons #{} #{(cons (powerset #{(first (halve a-set))})
-;                      (powerset #{(second (halve a-set))}))})})))
+(defn swap-adjacent [coll pos]
+  (if (empty? coll)
+    []
+    (if (> pos (count coll))
+      []
+      (if (== 0 pos)
+        (if (singleton? coll)
+          (vector (first coll)[])
+          (apply vector (second coll) (first coll)(nthrest coll 2)[]))
+        (apply vector (first coll) (swap-adjacent (rest coll) (dec pos)))))))
 
+
+
+(defn call-swap [coll i]
+    (if (empty? coll)
+      '() 
+      (if (< i (count coll))
+     (cons (seq coll) (seq (call-swap (swap-adjacent coll i) (inc i))))
+     (cons vector coll '()))))
+
+;_______________________________________________________powerset____________________________
+
+(defn to-bin [number bit-count]
+  (if (== bit-count 0)
+    '()
+    (cons (bit-test number (dec bit-count)) (to-bin number (dec bit-count)))))
+
+
+
+(defn bin-range [bit-count]
+  (let [conv-to-bin (fn [x] (to-bin x bit-count))]
+    (map conv-to-bin (range 0 (power 2 bit-count)))))
+
+
+(defn map-truthy [original bin-row]
+  (if (empty? original)
+    []
+   (cons (if (first bin-row)(first original) nil)
+          (map-truthy (rest original) (rest bin-row)))))
+   ; (filter bin-row original)))
+
+(defn map-one [original bin-row]
+ (apply hash-set (filter identity (apply concat (filter (fn [x](not (empty? x))) [(map-truthy original bin-row)])))))
+
+(defn map-one2 [original bin-row]
+  (apply hash-set (map first (filter second (map hash-set bin-row original)))))
+
+(defn powerset2 [coll]
+   (apply hash-set (map (fn [x] (map-one2 coll x))(bin-range (count coll)))))
+(defn plus [x y]
+  (+ x y 5))
+
+(defn powerset [coll]
+   (apply hash-set (map (fn [x] (map-one coll x))(bin-range (count coll)))))
