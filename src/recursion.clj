@@ -170,22 +170,43 @@
 ;84
 
 (defn my-take [n coll]
-  (map (fn[i] (get coll i)) (reverse (my-range (min n (count coll))))))
+  (if (or (empty? coll) (>= 0 n))
+      '()
+      (cons (first coll) (my-take (dec n) (rest coll)))))
 ;86
 
 (defn my-drop [n coll]
-  (if (> n (count coll))
-      ('())
-      (map (fn[i] (get coll i)) (map (fn[x] (+ n x)) (reverse (my-range (- (count coll) n)))))))
+  (cond
+     (== 0 n)
+       coll
+     (> n (count coll))
+       '()
+     :else
+       (my-drop (dec n) (rest coll))))
+;88
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+   (cons (my-take half a-seq) (cons (my-drop half a-seq) '()))))
+;91
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+      b-seq
+    (empty? b-seq)
+      a-seq
+    (< (first a-seq) (first b-seq))
+      (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+     :else
+      (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
+;93
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (== 1 (count a-seq)))
+      a-seq
+      (let [halved (halve a-seq)]
+       seq-merge (merge-sort (first halved) (rest halved)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
