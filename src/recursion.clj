@@ -206,13 +206,28 @@
   (if (or (empty? a-seq) (== 1 (count a-seq)))
       a-seq
       (let [halved (halve a-seq)]
-       seq-merge (merge-sort (first halved) (rest halved)))))
+       (seq-merge (merge-sort (first halved)) (merge-sort (second halved))))))
+;96
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (apply < (take 2 a-seq))
+        (let [mono (my-take-while (fn[x] (or (empty? x) (apply <= x))) (reverse (inits a-seq)))
+          winner (last mono)]
+         (cons winner (split-into-monotonics (drop (count winner) a-seq))))
+        (let [mono (my-take-while (fn[x] (or (empty? x) (apply >= x))) (reverse (inits a-seq)))
+              winner (last mono)]
+         (cons winner (split-into-monotonics (drop (count winner) a-seq)))))))
+;98
+
+(defn all-except i n
+  (my-filter (fn[j] (not (== i j))) (reverse (my-range (+ 1 n)))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (or (empty? a-set) (== 1 (count a-set)))
+    a-set
+    (map (fn[n] (cons (get a-set n) (permutations (map (f[pos] (get a-set pos) (all-except n (count a-set))) a-set)))))))
 
 (defn powerset [a-set]
   [:-])
