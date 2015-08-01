@@ -221,14 +221,23 @@
          (cons winner (split-into-monotonics (drop (count winner) a-seq)))))))
 ;98
 
-(defn all-except i n
-  (my-filter (fn[j] (not (== i j))) (reverse (my-range (+ 1 n)))))
+(defn list-all-except [a-seq x]
+  (my-filter (fn[y] (not (== x y))) a-seq))
 
 (defn permutations [a-set]
-  (if (or (empty? a-set) (== 1 (count a-set)))
-    a-set
-    (map (fn[n] (cons (get a-set n) (permutations (map (f[pos] (get a-set pos) (all-except n (count a-set))) a-set)))))))
+  (if (empty? a-set)
+      '(())
+      (apply concat (map (fn[x] (map (fn[perm] (flatten (cons x perm))) (permutations (list-all-except a-set x)))) a-set))))
+;101
+
+; all subsets of a-set of size n
+(defn filter-set [a-set i]
+  (filter (fn[j] (== (bit-and i j) j)) a-set))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (let [pow (long (Math/pow 2 (count a-set)))]
+     (map (fn[i] (filter-set a-set i)) (my-range pow)))))
 
+;104
