@@ -115,7 +115,7 @@
 (defn tails [a-seq]
   (cond
    (empty? a-seq)
-   '([])
+   '(())
    :else
    (cons a-seq (tails (rest a-seq)))))
 
@@ -135,10 +135,17 @@
   (rot-helper 0 (count a-seq) a-seq))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [f (first a-seq)]
+    (cond
+     (empty? a-seq)
+       freqs
+     (not (contains? freqs f))
+       (my-frequencies-helper (assoc freqs f 1) (rest a-seq))
+     :else
+       (my-frequencies-helper (update-in freqs [f] inc) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
