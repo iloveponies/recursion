@@ -117,7 +117,7 @@
                    '()))))
               ]
     (if (= 0 c)
-      '()
+      '(())
       (sub sub x c))))
 
 (defn my-frequencies [a-seq]
@@ -236,7 +236,7 @@
 
 (defn permutations [a-set]
   (if (empty? a-set)
-    '()
+    '(())
     (let [
           c1 (first a-set)
           r1 (rest a-set)
