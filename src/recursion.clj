@@ -232,7 +232,7 @@
 ;; (permutations #{1 5 3})
 ;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
 
-The order of the permutations doesn’t matter. 
+;;The order of the permutations doesn’t matter. 
 
 (defn permutations [a-set]
   (if (empty? a-set)
