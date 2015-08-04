@@ -212,8 +212,13 @@
                       (helper (drop (count longest) a-seq) (conj mono longest)))))]
     (helper a-seq [])))
 
+(defn permutations-helper [a-set perm]
+  (if (empty? a-set)
+    perm
+    (first (map #(permutations-helper (disj a-set %) (conj perm %)) a-set))))
+
 (defn permutations [a-set]
-  [:-])
+  (permutations-helper a-set []))
 
 (defn powerset [a-set]
   [:-])
