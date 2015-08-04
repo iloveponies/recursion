@@ -225,6 +225,9 @@
     '(())
     (partition (count a-set) (flatten (permutations-helper a-set [])))))
 
-(defn powerset [a-set]
-  [:-])
 
+(defn powerset [a-set]
+  (if (empty? a-set)
+    #{#{}}
+    (let [acc (powerset (rest a-set))]
+      (concat acc (map #(conj % (first a-set)) acc)))))
