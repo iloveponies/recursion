@@ -205,7 +205,12 @@
      (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (letfn [(helper [a-seq mono]
+                  (if (empty? a-seq)
+                    mono
+                    (let [longest (last (take-while #(if (empty? %) true (or (apply < %) (apply > %))) (reverse (inits a-seq))))]
+                      (helper (drop (count longest) a-seq) (conj mono longest)))))]
+    (helper a-seq [])))
 
 (defn permutations [a-set]
   [:-])
