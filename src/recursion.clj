@@ -215,10 +215,15 @@
 (defn permutations-helper [a-set perm]
   (if (empty? a-set)
     perm
-    (map #(permutations-helper (disj a-set %) (conj perm %)) a-set)))
+    (map #(permutations-helper
+           (disj (set a-set) %)
+           (conj perm %))
+         a-set)))
 
 (defn permutations [a-set]
-  (permutations-helper a-set []))
+  (if (empty? a-set)
+    '(())
+    (partition (count a-set) (flatten (permutations-helper a-set [])))))
 
 (defn powerset [a-set]
   [:-])
