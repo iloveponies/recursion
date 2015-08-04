@@ -215,7 +215,7 @@
 (defn permutations-helper [a-set perm]
   (if (empty? a-set)
     perm
-    (first (map #(permutations-helper (disj a-set %) (conj perm %)) a-set))))
+    (map #(permutations-helper (disj a-set %) (conj perm %)) a-set)))
 
 (defn permutations [a-set]
   (permutations-helper a-set []))
