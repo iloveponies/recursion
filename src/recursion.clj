@@ -334,12 +334,123 @@
 
 (inits [1 2 3 4])
 
+(defn my-inits [a-seq]
+  (sort-by count (inits a-seq)))
+
+(my-inits [0 1 2 1 0])
+
+(defn ascending-descending-helper? [a-seq fn]
+  (cond
+   (>= 1 (count a-seq))
+   true
+   (fn (first a-seq) (first (rest a-seq)))
+   (ascending-descending-helper? (rest a-seq) fn)
+   :default
+   false))
+
+(defn descending? [a-seq]
+  (ascending-descending-helper? a-seq >))
+
+(defn ascending? [a-seq]
+  (ascending-descending-helper? a-seq <))
+
+(ascending? [])
+(ascending? [1])
+(ascending? [1 4 7 9])
+(ascending? [1 4 3 7 9])
+
+(descending? [])
+(descending? [1])
+(descending? [9 7 4 1])
+(descending? [9 7 4 3 4 1])
+
+(defn monotonic? [a-seq]
+  (or (ascending? a-seq)
+      (descending? a-seq)))
+
+(take-while monotonic? (my-inits [0 1 2 1 0]))
+
+(defn split-into-monotonics-helper [a-seq monotonics]
+  (if (empty? a-seq)
+    monotonics
+    (let [candidate (last (take-while monotonic? (my-inits a-seq)))]
+      (split-into-monotonics-helper (drop (count candidate) a-seq)
+                                    (concat (list candidate) monotonics))
+          )))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (sort-by #(count %) (split-into-monotonics-helper a-seq '())))
+
+(count (last (take-while monotonic? (my-inits [0 1 2 1 0]))))
+
+(drop 3 [0 1 2 1 0])
+
+(split-into-monotonics [0 1 2 1 0])
+(split-into-monotonics [0 5 4 7 1 3])
+
+(defn swap
+  [[x y]] [y x])
+
+(swap [ 1 2 ])
+
+(defn rotate [[x & xs]] (conj (vec xs) x))
+(rotate [1 2 3 4])
+
+(defn all-rotations
+  ([xs] (all-rotations [] xs))
+  ([acc xs] (if
+              (= (count acc) (count xs)) acc
+              (all-rotations (conj acc xs) (rotate xs)))))
+
+(set (cons 1 #{12} ))
+(cons #{1} #{12})
+(concat [12] [1])
 
 (defn permutations [a-set]
-  [:-])
+  (let [xs (vec a-set)]
+    (condp = (count xs)
+      0 '(())
+      1 xs
+      2 [xs (swap xs)]
+      (apply concat
+             (map
+              (fn [[y & ys]]
+                (map
+                 (fn [z] (concat (list y) z))
+                 (permutations ys)))
+              (all-rotations [] xs))))))
 
-(defn powerset [a-set]
-  [:-])
+(permutations #{})
+(permutations #{1 5 3})
+
+(defn powerset
+  ([a-set] (powerset (conj #{} (set a-set)) (all-rotations (vec a-set))))
+  ([power-set rotations]
+   (let [all-bar-first (map rest rotations)]
+     (if (zero? (count (first all-bar-first)))
+       (conj power-set #{})
+       (powerset (reduce conj power-set (map set all-bar-first)) all-bar-first)))))
+
+(powerset #{})
+(powerset #{1})
+(powerset #{1 2})
+(powerset #{1 2 4})
+(powerset #{1 2 4 8})
+
+
+;;(defn powerset2 [a-set]
+;;  (let [rotations (all-rotations a-set)]
+
+
+(powerset2 #{})
+(powerset2 #{ 1 2 4 })
+
+(def x (all-rotations (range 5)))
+(map rest x)
+(map all-rotations (map rest x))
+
+;;(reduce conj #{} (map rest (all-rotations (vec #{1 2 4}))))
+;;(conj #{} 1 2 3)
+;;(count (permutations (range 10)))
+(count (powerset (range 10)))
 
