@@ -375,11 +375,11 @@
     monotonics
     (let [candidate (last (take-while monotonic? (my-inits a-seq)))]
       (split-into-monotonics-helper (drop (count candidate) a-seq)
-                                    (concat (list candidate) monotonics))
+                                    (concat monotonics (list candidate)))
           )))
 
 (defn split-into-monotonics [a-seq]
-  (sort-by #(count %) (split-into-monotonics-helper a-seq '())))
+  (split-into-monotonics-helper a-seq '()))
 
 (count (last (take-while monotonic? (my-inits [0 1 2 1 0]))))
 
@@ -402,6 +402,8 @@
               (= (count acc) (count xs)) acc
               (all-rotations (conj acc xs) (rotate xs)))))
 
+(conj [12] 1)
+(conj [12 1] 3)
 (set (cons 1 #{12} ))
 (cons #{1} #{12})
 (concat [12] [1])
@@ -423,34 +425,19 @@
 (permutations #{})
 (permutations #{1 5 3})
 
-(defn powerset
-  ([a-set] (powerset (conj #{} (set a-set)) (all-rotations (vec a-set))))
-  ([power-set rotations]
-   (let [all-bar-first (map rest rotations)]
-     (if (zero? (count (first all-bar-first)))
-       (conj power-set #{})
-       (powerset (reduce conj power-set (map set all-bar-first)) all-bar-first)))))
+;; algorithm thanks to http://levinotik.com/powerset-recursive-algorithm-in-haskell/
+(defn powerset [a-seq]
+  (if (empty? a-seq)
+    #{#{}}
+    (let [[x xs] [(first a-seq) (rest a-seq)]]
+      (set (concat (powerset xs) (map #(set (cons x %)) (powerset xs)))))))
 
 (powerset #{})
 (powerset #{1})
 (powerset #{1 2})
 (powerset #{1 2 4})
 (powerset #{1 2 4 8})
-
-
-;;(defn powerset2 [a-set]
-;;  (let [rotations (all-rotations a-set)]
-
-
-(powerset2 #{})
-(powerset2 #{ 1 2 4 })
-
-(def x (all-rotations (range 5)))
-(map rest x)
-(map all-rotations (map rest x))
-
-;;(reduce conj #{} (map rest (all-rotations (vec #{1 2 4}))))
-;;(conj #{} 1 2 3)
-;;(count (permutations (range 10)))
 (count (powerset (range 10)))
 
+(cons 1 '(2 3) )
+(concat [1 2 3] [4 5 6])
