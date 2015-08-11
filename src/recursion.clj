@@ -1,7 +1,7 @@
 (ns recursion)
 
 (defn product [coll]
-  (if (empty? coll)
+  (if (clojure.core/empty? coll)
     1
     (* (first coll)
        (product (rest coll)))))
@@ -19,16 +19,16 @@
 
 (defn singleton? [coll]
   (and 
-    (empty? (rest coll)) 
-    (not (empty? coll))))
+    (clojure.core/empty? (rest coll)) 
+    (not (clojure.core/empty? coll))))
 
 (defn my-last [coll]
-  (if (or (singleton? coll) (empty? coll))
+  (if (or (singleton? coll) (clojure.core/empty? coll))
     (first coll)
     (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  (if (or (singleton? a-seq) (empty? a-seq))
+  (if (or (singleton? a-seq) (clojure.core/empty? a-seq))
     (first a-seq)
     (max (first a-seq) (max-element (rest a-seq)))))
 
@@ -38,12 +38,12 @@
     seq-1))
 
 (defn longest-sequence [a-seq]
-  (if (or (singleton? a-seq) (empty? a-seq))
+  (if (or (singleton? a-seq) (clojure.core/empty? a-seq))
     (first a-seq)
     (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  (if (empty? a-seq)
+  (if (clojure.core/empty? a-seq)
     a-seq 
     (if (pred? (first a-seq))
       (cons (first a-seq) (my-filter pred? (rest a-seq)))
@@ -51,33 +51,33 @@
 
 (defn sequence-contains? [elem a-seq]
   (cond
-    (empty? a-seq) false
+    (clojure.core/empty? a-seq) false
     (= elem (first a-seq)) true
     :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
   (cond
-    (empty? a-seq) a-seq 
+    (clojure.core/empty? a-seq) a-seq 
     (pred? (first a-seq)) 
       (cons (first a-seq) (my-take-while pred? (rest a-seq)))
     :else '()))
 
 (defn my-drop-while [pred? a-seq]
   (cond
-    (empty? a-seq) a-seq
+    (clojure.core/empty? a-seq) a-seq
     (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
     :else a-seq))
 
 (defn seq= [a-seq b-seq]
   (cond
-    (and (empty? a-seq) (empty? b-seq)) true
+    (and (clojure.core/empty? a-seq) (empty? b-seq)) true
     (not (= (count a-seq) (count b-seq))) false
     (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
     :else false))
 
 (defn my-map [f seq-1 seq-2]
   (cond
-    (empty? seq-2) seq-2
+    (clojure.core/empty? seq-2) seq-2
     :else (cons 
             (f (first seq-1) (first seq-2)) 
             (my-map f (rest seq-1) (rest seq-2))))) 
@@ -109,19 +109,19 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) ['()]
+  (if (clojure.core/empty? a-seq) ['()]
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  (if (empty? a-seq) 
+  (if (clojure.core/empty? a-seq) 
     '(())
     (rest (reverse (map concat (tails a-seq) (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  (if (empty? a-seq)
+  (if (clojure.core/empty? a-seq)
     freqs
     (let [item-count
           (get freqs (first a-seq))
@@ -133,7 +133,7 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  (if (empty? a-map)
+  (if (clojure.core/empty? a-map)
     '()
     (let [item-to-repeat (first (first a-map))
           times-to-repeat (last (first a-map))]
@@ -157,9 +157,9 @@
   (let [first-a (first a-seq)
         first-b (first b-seq)]
     (cond 
-      (and (empty? a-seq) (empty? b-seq)) '()
-      (and (empty? a-seq) (not (empty? b-seq))) b-seq
-      (and (not (empty? a-seq)) (empty? b-seq)) a-seq
+      (and (clojure.core/empty? a-seq) (empty? b-seq)) '()
+      (and (clojure.core/empty? a-seq) (not (empty? b-seq))) b-seq
+      (and (not (clojure.core/empty? a-seq)) (empty? b-seq)) a-seq
       (<= first-a first-b) (cons first-a (seq-merge (rest a-seq) b-seq))
       :else (cons first-b (seq-merge a-seq (rest b-seq))))))     
 
