@@ -164,14 +164,26 @@
     (seq-merge-helper s-seq a-seq b-seq)))
 
 (defn merge-sort [a-seq]
-
   (if (< (count a-seq) 2)
     a-seq
     (seq-merge (merge-sort (my-take (int (/ (count a-seq) 2)) a-seq)) (merge-sort (my-drop (int (/ (count a-seq) 2)) a-seq)))
 ))
 
+(defn monotonically-f [op a-seq]
+  (let [f (partial monotonically-f op)]
+    (if (< (count a-seq) 2)
+      true
+      (and (op (first a-seq) (first (rest a-seq))) (f (rest a-seq))))))
+
+(defn monotonic? [a-seq]
+  (or (monotonically-f < a-seq)
+      (monotonically-f > a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [longest-monotonic-seq (first (reverse (my-take-while monotonic? (inits a-seq))))]
+      (cons longest-monotonic-seq (split-into-monotonics (my-drop (count longest-monotonic-seq) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
