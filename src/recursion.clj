@@ -196,8 +196,18 @@
     (let [halves (halve a-seq)]
       (seq-merge (merge-sort (halves 0)) (merge-sort (halves 1))))))
 
+(defn split-into-monotonics-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [inits (rest (inits a-seq))
+          monotonic? (fn [x] (or (apply <= x) (apply >= x)))
+          monotonic-inits (take-while monotonic? inits)]
+      (split-into-monotonics-helper
+       (concat monotonics [(last monotonic-inits)])
+       (drop (count monotonic-inits) a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (split-into-monotonics-helper '() a-seq))
 
 (defn permutations [a-set]
   [:-])
