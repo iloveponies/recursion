@@ -15,10 +15,13 @@
 ))
 
 (defn my-last [coll]
-  :-)
+  (first (take-last 1 coll)))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+  (max (first a-seq) (my-last a-seq))))
+
 
 (defn seq-max [seq-1 seq-2]
   [:-])
