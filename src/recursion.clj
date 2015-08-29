@@ -24,7 +24,12 @@
 
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [eka (count seq-1)
+        toka (count seq-2)
+        returnValue (if(> eka toka)
+                      seq-1
+                      seq-2)]returnValue))
+
 
 (defn longest-sequence [a-seq]
   [:-])
