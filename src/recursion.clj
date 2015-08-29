@@ -7,7 +7,12 @@
        (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+  (let [loppu (rest coll)
+      loppuTyhja(empty? loppu)
+    ]loppuTyhja)
+))
 
 (defn my-last [coll]
   :-)
