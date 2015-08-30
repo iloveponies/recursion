@@ -42,7 +42,7 @@
     ))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (filter pred? a-seq))
 
 (defn sequence-contains? [elem a-seq]
   :-)
