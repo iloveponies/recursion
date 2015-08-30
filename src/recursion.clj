@@ -45,7 +45,7 @@
   (filter pred? a-seq))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (contains? (set a-seq) elem))
 
 (defn my-take-while [pred? a-seq]
   [:-])
