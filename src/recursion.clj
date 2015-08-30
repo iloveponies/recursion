@@ -31,8 +31,18 @@
                       seq-2)]returnValue))
 
 
+ (defn laske[x]
+  (count x))
+
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (let [summa(map laske a-seq)
+         maksimi(apply max summa)
+          indeksi(.indexOf (max summa) maksimi)
+        returnValue (get a-seq indeksi)
+          ]returnValue)
+    ))
 
 (defn my-filter [pred? a-seq]
   [:-])
