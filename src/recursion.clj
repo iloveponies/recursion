@@ -164,5 +164,10 @@
   [:-])
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [head (first a-set)
+          tail (rest a-set)
+          sets (powerset tail)]
+      (set (concat sets (map (fn [pset] (set (cons head pset))) sets))))))
 
