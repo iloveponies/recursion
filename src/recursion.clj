@@ -122,27 +122,22 @@
 
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
-;  (if (empty? a-seq)
-;    '(())
-;    (cons '()
-;          (map (fn [x] (cons (first a-seq) x))
-;               (inits (rest a-seq))))))
+
+; [] [1 2 3] -> [1 2 3] ++ [] -> [1 2 3]
+; [1] [2 3]  -> [1] ++ [2 3]  -> [2 3 1]
+; [2 1] [3]  -> [3] ++ [1 2]  -> [3 1 2]
+(defn rotations-helper [used a-seq]
+  (if (empty? a-seq)
+    nil
+    (cons (concat a-seq (reverse used))
+          (rotations-helper (cons (first a-seq)
+                                  used)
+                            (rest a-seq)))))
 
 (defn rotations [a-seq]
-  (cond
-    (empty? a-seq)
-      (seq (vector a-seq))
-    (singleton? a-seq)
-      (seq (vector a-seq))
-    :else
-      (let [head   (first a-seq)
-            insert (fn [n sequence]
-                     (concat (take n sequence)
-                             [head]
-                             (drop n sequence)))]
-        (map insert
-             (range (count a-seq))
-             (cycle (rotations (rest a-seq)))))))
+  (if (empty? a-seq)
+    (list '())
+    (rotations-helper [] a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [key (first a-seq)]
