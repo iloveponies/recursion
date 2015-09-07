@@ -12,7 +12,7 @@
        (empty? (rest coll))))
 
 (defn- recursion-fn [f g coll]
-  (when-not (empty? coll)
+  (when (not-empty coll)
     (if (singleton? coll)
       (first coll)
       (f (g coll)))))
@@ -126,12 +126,12 @@
 (defn my-take [n coll]
   (if (>= n (count coll))
     coll
-    (if (= n 0)
+    (if (zero? n)
       '()
       (cons (first coll) (my-take (dec n) (rest coll))))))
 
 (defn my-drop [n coll]
-  (if (= n 0)
+  (if (zero? n)
     coll
     (my-drop (dec n) (rest coll))))
 
