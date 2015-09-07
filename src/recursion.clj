@@ -154,10 +154,26 @@
     a-seq))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [s]
+                     (or (apply <= s)
+                         (apply >= s)))
+        last-monotonic (last (take-while monotonic? (filter #(> (count %) 1) (reverse (inits a-seq)))))]
+    (if last-monotonic
+      (cons last-monotonic (split-into-monotonics (drop (count last-monotonic) a-seq)))
+      '())))
+
+(defn perm-helper [set-1 set-2]
+  (if (empty? set-2)
+    set-1
+    (mapcat (fn [k] (perm-helper (conj set-1 k) (disj set-2 k))) set-2)))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (partition (count a-set) (perm-helper '() (set a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [true-set (set a-set)]
+      (set (cons true-set (mapcat #(powerset (disj true-set %)) true-set))))))
