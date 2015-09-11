@@ -102,7 +102,7 @@
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (reverse (map reverse (tails (reverse a-seq)))))
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
@@ -154,10 +154,13 @@
     (apply seq-merge (map merge-sort (halve a-seq)))
     a-seq))
 
+
+
 (defn split-into-monotonics [a-seq]
   (if (empty? a-seq)
     ()
-    (last (take-while #(seq= % (sort %)) (inits a-seq)))))
+    (let [mon (last (take-while #(or (seq= % (sort %)) (seq= % (reverse (sort %)))) (reverse (inits a-seq))))]
+      (cons mon (split-into-monotonics (drop (count mon) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
