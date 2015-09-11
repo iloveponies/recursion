@@ -39,7 +39,7 @@
   (cond
     (empty? a-seq) a-seq
     (pred? (first a-seq))
-      (cons (first a-seq) (my-filter pred? (rest a-seq)))
+    (cons (first a-seq) (my-filter pred? (rest a-seq)))
     :else (my-filter pred? (rest a-seq))))
 
 (defn sequence-contains? [elem a-seq]
@@ -64,8 +64,8 @@
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq)) true
-    (= (first a-seq) (first b-seq))
-      (seq= (rest a-seq) (rest b-seq))
+    (or (empty? a-seq) (empty? b-seq)) false
+    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
     :else false))
 
 (defn my-map [f seq-1 seq-2]
@@ -102,7 +102,7 @@
     (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
@@ -125,22 +125,39 @@
     (concat (apply repeat (reverse (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (empty? coll) coll
+    (< n 1) ()
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (< n 1) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [half (int (/ (count a-seq) 2))]
+      [(my-take half a-seq) (my-drop half a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and (empty? a-seq) (empty? b-seq)) ()
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+    :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (>= (count a-seq) 2)
+    (apply seq-merge (map merge-sort (halve a-seq)))
+    a-seq))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (last (take-while #(seq= % (sort %)) (inits a-seq)))))
 
 (defn permutations [a-set]
   [:-])
