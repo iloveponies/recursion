@@ -162,12 +162,34 @@
           seq-2 (second divided-seq)]
       (seq-merge (merge-sort seq-1) (merge-sort seq-2)))))
 
+(defn is-monotonic [initial]
+  (or (empty? initial) (apply <= initial) (apply >= initial)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [monotonics (take-while is-monotonic (inits a-seq))
+          longest-monotonic (last monotonics)
+          rest (drop (count longest-monotonic) a-seq)]
+      (cons longest-monotonic (split-into-monotonics rest)))))
+
 
 (defn permutations [a-set]
-  )
+  (cond
+    (empty? a-set) '(())
+    (singleton? a-set) (list (apply list a-set))
+    :else (let [drop-nth (fn [n] (concat (take n a-set) (drop (inc n) a-set)))
+                complements-of-a-set (map drop-nth (range (count a-set)))
+                sub-perms (map permutations complements-of-a-set)]
+            (apply concat
+              (map (fn [a a-sub-perms]
+                (map (fn [a-sub-perm]
+                  (cons a a-sub-perm)) a-sub-perms)) a-set sub-perms)))))
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+    (empty? a-set) #{#{}}
+    :else (let [super-set (set a-set)
+                subsets (map (fn [a] (disj super-set a)) super-set)]
+            (conj (apply clojure.set/union (map powerset subsets)) super-set))))
 
