@@ -87,8 +87,6 @@
   (cond
     (or (empty? seq-1) (empty? seq-2))
       ()
-    (and (singleton? seq-1) (singleton? seq-2))
-      (f (first seq-1) (first seq-2))
     :else
       (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2))))) 
       
