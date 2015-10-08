@@ -92,16 +92,26 @@
       
 
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+ (cond
+   (or (= n 0) (= n 1))
+     n
+   :else
+    (+ (fib (dec n)) (fib (dec (dec n))))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    ()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (<= up-to 0)
+    ()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   [:-])
