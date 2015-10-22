@@ -6,7 +6,7 @@
     (* (first coll) (product (rest coll)))) )
 
 (defn singleton? [coll]
-  (and (not (nil? (first coll))) (empty? (rest coll))) )
+  (and (not (empty? coll)) (empty? (rest coll))) )
 
 (defn e-or-s? [coll]
   (or (empty? coll)(singleton? coll)))
@@ -103,7 +103,9 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  (partition (count a-seq) 1 (concat (rest a-seq) a-seq)))
+  (if (not (empty? a-seq))
+    (partition (count a-seq) 1 (concat (rest a-seq) a-seq))
+    (cons '() '()) ))
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [fir (first a-seq)]
