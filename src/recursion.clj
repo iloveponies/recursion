@@ -7,7 +7,7 @@
        (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (= (count coll) 1))
 
 (defn my-last [coll]
   :-)
