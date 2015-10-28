@@ -10,7 +10,7 @@
   (= (count coll) 1))
 
 (defn my-last [coll]
-  :-)
+  (first (reverse coll)))
 
 (defn max-element [a-seq]
   :-)
