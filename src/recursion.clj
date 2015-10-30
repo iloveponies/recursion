@@ -223,26 +223,13 @@
         f-seq
         (split-into-monotonics (my-drop (count f-seq) a-seq))))))
 
-;; 3 points
-;;
-;; Given a sequence, return all permutations of that sequence.
-;;
-;; (permutations #{})
-;; ;=> (())
-;; (permutations #{1 5 3})
-;; ;=> ((1 5 3) (5 1 3) (5 3 1) (1 3 5) (3 1 5) (3 5 1))
-
-;;The order of the permutations doesn’t matter. 
-
 (defn permutations [a-set]
-  (if (empty? a-set)
-    ()
-    (map (fn [p s] 
-           (map (fn [z] concat p z) s))
-         (map (fn [y] 
-                [(first y)
-                 (permutations (rest y))])
-              (rotations a-set)))))
+  (cond
+    (empty? a-set) (list ())
+    (= (count a-set) 1) (list a-set)
+    :else (for [i a-set
+                r (permutations (remove #{i} a-set))]
+            (cons i r))))
 
 ;; 3 points
 ;;
@@ -251,6 +238,30 @@
 ;; (powerset #{})      ;=> #{#{}}
 ;; (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
 
+;; (defn powerset [a-set]
+;;   (let [helper (fn [xs]
+;;                  (if (= (count xs) 1) xs
+;;                    (cons xs (for [x xs] (helper (remove #{x} xs))))))]
+;;     (if (empty? a-set) (list ()) (helper a-set))))
+
+
+;; (defn powerset [xs]
+;;   #{
+;;     (if (= (count xs) 1) 
+;;       #{xs}
+;;       (#{xs} (for [x xs] (powerset (remove #{x} xs))))
+;;       )})
+
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set) '(())
+    (let [n (next a-set)]
+      (clojure.set/union (powerset n) (map #(conj % (first a-set)) (powerset n))))))
+
+;;                     a-set))))))
+;;
+;;
+;; (cond
+;;   (empty? a-set) (list ())
+;;   (= (count a-set) 1) a-set
+;;   :else (cons a-set (for [x a-set] (powerset (remove #{x} a-set))))))
 
