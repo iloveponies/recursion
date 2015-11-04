@@ -97,7 +97,10 @@
      (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (cond
+   (zero? up-to) '()
+   :else
+     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   [:-])
