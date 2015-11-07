@@ -1,61 +1,120 @@
-(ns recursion)
+(ns recursion
+  (:use clojure.repl))
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+;;   helper
+  (and
+   (boolean (first coll))
+   (empty? (rest coll))))
 
 (defn my-last [coll]
-  :-)
+  (if (or (singleton? coll) (empty? coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  :-)
+  (let [fst (first a-seq)
+        rst (rest a-seq)]
+    (if (empty? rst)
+      fst
+      (max fst (max-element rst)))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+;;   helper
+    (if (> (count seq-1) (count seq-2)) seq-1 seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (let [fst (first a-seq)
+        rst (rest a-seq)]
+    (if (empty? rst)
+      fst
+      (seq-max fst (longest-sequence rst)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [fst (first a-seq)
+        rst (rest a-seq)]
+    (if (empty? a-seq)
+    a-seq
+    (if (pred? fst)
+      (cons fst (my-filter pred? rst))
+      (my-filter pred? rst)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+   (empty? a-seq) false
+   (== elem (first a-seq)) true
+   :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) a-seq
+   (pred? (first a-seq)) (cons
+                          (first a-seq)
+                          (my-take-while pred? (rest a-seq)))
+   :else '()))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) a-seq
+   (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+   :else a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+   (and (empty? a-seq) (empty? b-seq)) true
+   (not= (first a-seq) (first b-seq)) false
+   :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    '()
+    (cons
+     (f (first seq-1) (first seq-2))
+     (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (cond
+   (zero? n) 0
+   (= n 1) 1
+   :else (+ (fib (dec n)) (fib (dec (dec n))))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (> 1 how-many-times)
+    '()
+    (cons
+     what-to-repeat
+     (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (zero? up-to)
+    '()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (let [drop-last (fn [s] (reverse (rest (reverse s))))]
+    (if (empty? a-seq)
+      (cons a-seq '())
+      (cons (seq a-seq) (inits (drop-last a-seq))))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (rest (map concat (reverse (tails a-seq))  (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
