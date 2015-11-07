@@ -257,25 +257,37 @@
     (helper [] [(first a-seq)] (rest a-seq))
 ))
 
-(defn spread [a-set]
-    (let [ pick (fn [a] (disj a-set a)) ]
-    (map pick a-set)))
 
-(defn inject [a sets]
-    (map (fn [curset] (conj curset a)) sets))
+
+(defn powerset [a-set]
+  (if
+     (empty? a-set) [a-set]
+     (let [pow-rest (powerset (rest a-set))]
+     (concat (map (fn [x] (conj x (first a-set))) pow-rest) pow-rest)))
+)
+
+
+
+(defn spread [a-set]
+  (map (fn [x] (disj (set a-set) x)) a-set))
+
+(defn sinject [el perms]
+      (map (fn [x] (conj x el)) perms))
+
+(defn inject [acc elements perms]
+  (if (empty? elements)  acc
+      (let [e-head (first elements)
+            p-head (first perms)
+            n-acc  (concat acc (sinject e-head p-head))]
+        (recur n-acc (rest elements) (rest perms)))))
 
 
 (defn permutations [a-set]
-  (if
-     (empty? a-set) a-set
-     (let [permutes (map permutations (spread a-set))]
-          (map inject a-set permutes)
-     )
-  )
-)
-
-(permutations #{1 2})
-
-(defn powerset [a-set]
-  [:-])
+    (cond
+     (empty? a-set) [[]]
+     (singleton? a-set) [(seq a-set)]
+     :else (let [spreads  (spread a-set)
+                 perms    (map permutations spreads) ]
+                 (inject  [] a-set perms)
+)))
 
