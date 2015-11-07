@@ -267,27 +267,15 @@
 )
 
 
-
 (defn spread [a-set]
-  (map (fn [x] (disj (set a-set) x)) a-set))
+  (map #(disj (set a-set) %) a-set))
 
-(defn sinject [el perms]
-      (map (fn [x] (conj x el)) perms))
-
-(defn inject [acc elements perms]
-  (if (empty? elements)  acc
-      (let [e-head (first elements)
-            p-head (first perms)
-            n-acc  (concat acc (sinject e-head p-head))]
-        (recur n-acc (rest elements) (rest perms)))))
-
+(defn inject [el perms]
+  (map #(cons el %) perms))
 
 (defn permutations [a-set]
-    (cond
-     (empty? a-set) [[]]
-     (singleton? a-set) [(seq a-set)]
-     :else (let [spreads  (spread a-set)
-                 perms    (map permutations spreads) ]
-                 (inject  [] a-set perms)
-)))
+    (if (empty? a-set)  [[]]
+        (let [spreads  (spread a-set)
+              perms    (map permutations spreads) ]
+         (reduce  concat (map inject a-set perms)))))
 
