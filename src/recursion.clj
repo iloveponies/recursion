@@ -172,7 +172,20 @@
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  (let [permut-helper (fn [a-seq]
+                        (map
+                         (fn [x] (cons (first a-seq) x))
+                         (permutations (rest a-seq))))]
+    (if (empty? a-set)
+      (list '())
+      (apply concat (map permut-helper (rotations a-set))))))
+
+;; (permutations [1 2 3 4])
+;; (map (fn [a-seq]
+;;        (map
+;;         (fn [x] (cons (first a-seq)))
+;;         (rotations (rest a-seq))))
+;;      (rotations [1 2 3 4])
 
 (defn powerset [a-set]
   [:-])
