@@ -119,7 +119,6 @@
     (list '())
     (rest (map concat (reverse (tails a-seq))  (inits a-seq)))))
 
-
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
     freqs
@@ -168,9 +167,7 @@
       (seq-merge (merge-sort part-1)
                  (merge-sort part-2)))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
-
+;; Extras
 (defn permutations [a-set]
   (let [permut-helper (fn [a-seq]
                         (map
@@ -180,12 +177,9 @@
       (list '())
       (apply concat (map permut-helper (rotations a-set))))))
 
-;; (permutations [1 2 3 4])
-;; (map (fn [a-seq]
-;;        (map
-;;         (fn [x] (cons (first a-seq)))
-;;         (rotations (rest a-seq))))
-;;      (rotations [1 2 3 4])
+
+(defn split-into-monotonics [a-seq]
+  [:-])
 
 (defn powerset [a-set]
   [:-])
