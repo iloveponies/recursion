@@ -174,11 +174,33 @@
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+      '()
+    (singleton? a-seq)
+      a-seq
+    :else
+      (let [monotonic-gt (last (take-while #(apply > %) (rest (inits a-seq))))
+            monotonic-lt (last (take-while #(apply < %) (rest (inits a-seq))))
+            monotonic (if (> (count monotonic-gt) (count monotonic-lt)) monotonic-gt monotonic-lt)]
+        (conj (split-into-monotonics (drop (count monotonic) a-seq)) monotonic))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond
+    (empty? a-set)
+      '(())
+    (singleton? a-set)
+      (list a-set)
+    :else
+      (apply concat
+        (map (fn [curr] (map #(conj % (first curr)) (permutations (rest curr))))
+        (rotations a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (conj
+      (apply clojure.set/union (map powerset
+        (map (fn [curr] (disj (set a-set) curr)) (set a-set))))
+    (set a-set))))
 
