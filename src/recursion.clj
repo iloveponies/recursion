@@ -116,6 +116,9 @@
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 
+(defn inits2 [a-seq]
+  (reverse (inits a-seq)))
+
 (defn rotations [a-seq]
   (if (empty? a-seq)
     (cons a-seq '())
@@ -183,17 +186,12 @@
 (defn seq-merge [a-seq b-seq]
   (seq-merge-helper '() a-seq b-seq))
 
-(defn merge-sort-helper [res-seq a-halve b-halve]
-  (cond
-    (empty? a-halve)
-      res-seq
-    (> (count a-halve) 1)
-      (merge-sort-helper res-seq (first (halve a-halve)) (nth (halve a-halve) 1))
-    (> (count b-halve) 1)
-      (merge-sort-helper res-seq (first (halve b-halve)) (nth (halve b-halve) 1))))
-
 (defn merge-sort [a-seq]
-  (merge-sort-helper '() (first (halve a-seq)) (nth (halve a-seq) 1) ))
+  (let [left  (nth (halve a-seq) 0)
+        right (nth (halve a-seq) 1)]
+    (if (>= 1 (count a-seq))
+      a-seq
+      (seq-merge (merge-sort left) (merge-sort right)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
