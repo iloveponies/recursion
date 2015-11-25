@@ -84,10 +84,8 @@
       false))
 
 (defn my-map [f seq-1 seq-2]
-  (cond
-    (or (empty? seq-1) (empty? seq-2))
+  (if (or (empty? seq-1) (empty? seq-2))
       ()
-    :else
       (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2))))) 
       
 
@@ -114,37 +112,61 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+      '(())
+      (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (map (fn [i] (let [splitted (split-at i a-seq)]
+                   (concat (get splitted 1) (get splitted 0))))
+         (range 0 (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          freqs-elem (get freqs elem)]
+     (my-frequencies-helper 
+      (assoc freqs elem 
+             (if (nil? freqs-elem) 1 (inc freqs-elem)))
+      (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (apply concat (map (fn [keyvalue] (repeat (second keyvalue) (first keyvalue))) a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (first (split-at n coll)))
 
 (defn my-drop [n coll]
-  [:-])
+  (second (split-at n coll)))
 
 (defn halve [a-seq]
-  [:-])
+  (split-at (int (/ (count a-seq ) 2)) a-seq))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (letfn [(merge-to [joined a b]
+          (cond
+            (and (empty? a) (empty? b))
+                 (reverse joined)
+            (or (empty? b) (and (not (empty? a)) (<= (first a) (first b))))
+                (merge-to (cons (first a) joined) (rest a) b)
+            :else
+                (merge-to (cons (first b) joined) (rest b) a)))]
+    (merge-to '() a-seq b-seq)))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+      a-seq
+      (seq-merge (merge-sort (first (halve a-seq)))
+                 (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
