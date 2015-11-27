@@ -193,11 +193,41 @@
       a-seq
       (seq-merge (merge-sort left) (merge-sort right)))))
 
+(defn monotonic? [a-seq]
+  (if (or (empty? a-seq) (apply >= a-seq) (apply <= a-seq))
+    true
+    false))
+
+(defn longest-mono-seq [a-seq longest]
+  (if (or (empty? a-seq) (not (monotonic? (first a-seq))))
+    longest
+    (longest-mono-seq (rest a-seq) (first a-seq))))
+
+(defn split-into-mono-helper [a-seq res-seq]
+  (let [longest-mono (longest-mono-seq (inits2 a-seq) '())]
+    (if
+     (empty? a-seq)
+       res-seq
+     (split-into-mono-helper
+      (drop (count longest-mono) a-seq)
+      (concat res-seq [longest-mono] )))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (split-into-mono-helper a-seq '()))
+
+(defn permutations-helper [suffix prefix res-seq]
+  (let [perm-help2 (fn [suf] (permutations-helper
+                               (rest suf)
+                               (concat prefix [(first suf)])
+                               res-seq))]
+    (if (empty? suffix)
+      (concat res-seq prefix)
+      (apply concat (map perm-help2 (rotations suffix))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (cons '() '())
+    (partition (count a-set) (permutations-helper a-set [] '() ))))
 
 (defn powerset [a-set]
   [:-])
