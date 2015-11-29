@@ -51,3 +51,12 @@
 (seq-max [1] [1 2])   ;=> [1 2]
 (seq-max [1 2] [3 4])
 (seq-max [1 2 5] [3 4])
+(defn longest-sequence [a-seq]
+  (if (empty? (rest a-seq))
+    (first a-seq)
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))
+    ))
+(longest-sequence [[1 2] [] [1 2 3]]) ;=> [1 2 3]
+(longest-sequence [[1 2]])            ;=> [1 2]
+(longest-sequence [])                 ;=> nil
+(longest-sequence [[1 2] [] [1 4 4 5 6] [1 2 3]]) ;=> [1 2 3]
