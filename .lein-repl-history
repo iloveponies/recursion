@@ -1,2 +1,28 @@
 (doc first)
 (doc rest)
+(defn announce-treasurelocation
+[{lat :lat lon :lon}]
+(prinln (str "Treasure lat:" lat))
+(println (str "Treasure lon:" lon)))
+(defn announce-treasurelocation
+[{lat :lat lon :lon}]
+(println (str "Treasure lat:" lat))
+(println (str "Treasure lon:" lon)))
+(announce-treasurelocation {:lat 28.22 :lon 81.33})
+(defn singleton? [coll]
+  (cond
+    (empty? coll) false
+    (empty? rest) true
+    :else false))
+(singleton? [1])     ;=> true
+(singleton? #{2})    ;=> true
+(singleton? [])      ;=> false
+(singleton? [1 2 3]) 
+(defn singleton? [coll]
+  (cond
+    (empty? coll) false
+    (empty? (rest coll)) true
+    :else false))
+(singleton? [1 2 3]) 
+(singleton? #{2})    ;=> true
+(singleton? [])
