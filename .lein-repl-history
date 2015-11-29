@@ -44,3 +44,10 @@
 (max-element [2 4 1 4]) ;=> 4
 (max-element [2])       ;=> 2
 (max-element [])    
+(defn seq-max [seq-1 seq-2]
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
+(seq-max [1] [1 2])   ;=> [1 2]
+(seq-max [1 2] [3 4])
+(seq-max [1 2 5] [3 4])
