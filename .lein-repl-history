@@ -36,3 +36,11 @@
 (my-last [])      ;=> nil
 (my-last [1 2 3]) ;=> 3
 (my-last [2 5])   ;=> 5
+(defn max-element [a-seq]
+  (if (empty? (rest a-seq))
+    (first a-seq)
+    (max (first a-seq) (max-element (rest a-seq)))
+    ))
+(max-element [2 4 1 4]) ;=> 4
+(max-element [2])       ;=> 2
+(max-element [])    
