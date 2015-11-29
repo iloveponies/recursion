@@ -26,3 +26,13 @@
 (singleton? [1 2 3]) 
 (singleton? #{2})    ;=> true
 (singleton? [])
+(empty? (rest []))
+(empty? (first []))
+(first [])
+(defn my-last [coll]
+  (if (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
+(my-last [])      ;=> nil
+(my-last [1 2 3]) ;=> 3
+(my-last [2 5])   ;=> 5
