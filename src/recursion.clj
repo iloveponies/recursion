@@ -71,7 +71,10 @@
     )) 
 
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond
+    (or (empty? seq-1) (empty? seq-2)) nil
+    :else (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))
+    ))
 
 (defn power [n k]
   :-)
