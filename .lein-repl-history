@@ -161,3 +161,12 @@
 (my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
 (my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
 (my-map + [1 2 3] [])        ;=> ()
+(defn power [n k]
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))
+    ))
+(power 2 3)
+(power 2 5)
+(power 5 5)
+(power 5 3)
