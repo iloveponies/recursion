@@ -170,3 +170,13 @@
 (power 2 5)
 (power 5 5)
 (power 5 3)
+(defn fib [n]
+  (cond
+    (= n 1) 1
+    (= n 2) 1
+    :else (+ (fib (dec n)) (fib (- n 2)))
+    ))
+(fib 5)
+(fib 3)
+(fib 8)
+(fib 10)
