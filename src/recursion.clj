@@ -100,12 +100,15 @@
   (cond
     (<= up-to 0) nil
     (= up-to 1) '(0)
-    :else (cons (dec up-to)(my-range (- up-to 2)))
+    :else (cons (dec up-to)(my-range (dec up-to)))
     ))
            
 
 (defn tails [a-seq]
-  [:-])
+  (cond
+    (empty? (rest a-seq)) (cons a-seq '())
+    :else (cons a-seq (tails (rest a-seq)))
+    ))
 
 (defn inits [a-seq]
   [:-])
