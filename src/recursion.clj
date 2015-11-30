@@ -111,7 +111,7 @@
     ))
 
 (defn inits [a-seq]
-  [:-])
+  (tails (reverse a-seq)))
 
 (defn rotations [a-seq]
   [:-])
