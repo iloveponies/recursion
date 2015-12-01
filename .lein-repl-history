@@ -325,3 +325,98 @@
 (tails [1 2 3 4])
 (map cons [1 2 3 4])
 (map cons [1 2 3 4] '())
+(list [1 2 3 4])
+(map list [1 2 3 4])
+(apply cons [1 2 3 4])
+(apply cons [1 2 3 4] '())
+(cons (first [1 2 3 4]) (rest [1 2 3 4]))
+(cons [1] (cons [2] (cons '())))
+(cons [1] (cons '()))
+(cons 1 (cons '()))
+(cons 1 (cons [] '()))
+(defn tails [a-seq]
+  (cond
+    (empty? (rest a-seq)) (cons a-seq (cons [] '()))
+    :else (cons a-seq (tails (rest a-seq)))
+    ))
+(tails [1 2 3 4])
+(def a (1 2 3 4))
+(def a '(1 2 3 4))
+a
+(concat a a)
+(take 4 (concat a a))
+(take 4 ( rest (concat a a)))
+(map inc a)
+(map count a)
+(get 2 a)
+(get a 2)
+(doc get)
+(pos 2 a)
+(pos? 2)
+(my-range 4)
+(take 3 a)
+(take 4 a)
+(take 4 (concat a a))
+(tails a)
+(inits a)
+(tails (reverse a))
+(defn inits [a-seq]
+  (tails (reverse a-seq)))
+(inits a)
+(defn rotations [a-seq]
+  ;; create a new array as concat of this array twice
+  ;; map accross each element in original array and take the original count of elements
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (cond
+        (= num (count b-seq)) b-seq
+        ;; recurse with helper fn here
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+(defn rotations [a-seq]
+  ;; create a new array as concat of this array twice
+  ;; map accross each element in original array and take the original count of elements
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (if
+          (= num (count b-seq))
+        b-seq
+        ;; recurse with helper fn here
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+(rotations [1 2 3])
+(defn rotations [a-seq]
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (if
+          (= num (count b-seq))
+        '(b-seq)
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+    
+(rotations '(1 2 3))
+(rotations [1 2 3])
+(defn rotations [a-seq]
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (if
+          (= num (count b-seq))
+        b-seq
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+(rotations [1 2 3])
+(defn rotations [a-seq]
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (if
+          (= num (count b-seq))
+        (list b-seq)
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+    
+(rotations [1 2 3 4])

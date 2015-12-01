@@ -106,7 +106,7 @@
 
 (defn tails [a-seq]
   (cond
-    (empty? (rest a-seq)) (cons a-seq '())
+    (empty? (rest a-seq)) (cons a-seq (cons [] '()))
     :else (cons a-seq (tails (rest a-seq)))
     ))
 
@@ -114,7 +114,15 @@
   (tails (reverse a-seq)))
 
 (defn rotations [a-seq]
-  [:-])
+  (let [double-seq (concat a-seq a-seq)
+        num (count a-seq)]
+    (defn rotations-helper [b-seq]
+      (if
+          (= num (count b-seq))
+        (list b-seq)
+        (cons (take num b-seq) (rotations-helper (rest b-seq)))))
+    (rotations-helper (rest double-seq))))
+    
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
