@@ -1,31 +1,3 @@
-(cons [1 2] (con [3 4] (cons '())))
-(cons ([1 2]) (con ([3 4]) (cons '())))
-(cons 1 (con 2 (cons '())))
-(cons ([1 2]) (cons ([3 4]) (cons '())))
-(cons [1 2] (cons [3 4] (cons '())))
-(cons 2 (cons 3  (cons '())))
- (cons 3  (cons '()))
- (cons 3 2)
- (doc cons )
- (cons  1 '())
- (cons  1 (cons 1 '())
-)
- (cons  [1] (cons [1] '()))
- (cons  [1 4] (cons [14 4] '()))
-(defn tails [a-seq]
-  (cond
-;;    (empty? (first a-seq)) '()
-    (empty? (rest a-seq)) (cons (first (a-seq)) '())
-    :else (cons a-seq (tails (rest a-seq)))
-    ))
-(tails [1 2 3])
-(tails [1])
-(empty? (rest [1]))
-(rest [1])
-(cons [1] '())
-(cons (first [1]) '())
-(defn tails [a-seq]
-  (cond
 ;;    (empty? (first a-seq)) '()
     (empty? (rest a-seq)) (cons (a-seq) '())
     :else (cons a-seq (tails (rest a-seq)))
@@ -498,3 +470,31 @@ f
     ))
 (halve g)
 (halve f)
+(first ('()))
+(defn seq-merge [a-seq b-seq]
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else
+    (let
+        [a-val (first a-seq)
+         b-val (first b-seq)]
+      (if (>= a-val b-val)
+        (cons a-val (seq-merge (rest a-seq) b-seq))
+        (cons b-val (seq-merge a-seq (rest b-seq)))
+        ))))
+(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+(seq-merge [1 5 7 9] [2 2 8 10]) 
+(defn seq-merge [a-seq b-seq]
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else
+    (let
+        [a-val (first a-seq)
+         b-val (first b-seq)]
+      (if (<= a-val b-val)
+        (cons a-val (seq-merge (rest a-seq) b-seq))
+        (cons b-val (seq-merge a-seq (rest b-seq)))
+        ))))
+(seq-merge [1 5 7 9] [2 2 8 10]) 
