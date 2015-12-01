@@ -1,15 +1,3 @@
-    (cons a-seq (tails (rest a-seq)))
-    ))
-(tails [1 2 3 4])
-(defn tails [a-seq]
-  (if (empty? (rest a-seq))
-    (first (a-seq))
-    (cons a-seq (tails (rest a-seq)))
-    ))
-(tails [1 2 3 4])
-(defn tails [a-seq]
-  (cond
-    (empty? (first a-seq) '()
     (empty? (rest a-seq)) (first (a-seq))
     (cons a-seq (tails (rest a-seq)))
     )))
@@ -498,3 +486,15 @@ f
     (concat (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
     ))
 (un-frequencies {:a 1, :b 3, :d 5})
+(defn my-take [n coll]
+  (if (= n 0)
+    coll
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    ))
+(my-take 3 f)
+(defn my-take [n coll]
+  (if (= n 0)
+    nil
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    ))
+(my-take 3 f)
