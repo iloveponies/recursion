@@ -2,7 +2,7 @@
 
 (defn product [coll]
   (if (empty? coll)
-    0
+    1
     (* (first coll)
        (product (rest coll)))))
 
@@ -105,13 +105,13 @@
            
 
 (defn tails [a-seq]
-  (cond
-    (empty? (rest a-seq)) (cons a-seq (cons [] '()))
-    :else (cons a-seq (tails (rest a-seq)))
+  (if (empty? a-seq)
+    (cons a-seq nil)
+    (cons a-seq (tails (rest a-seq)))
     ))
 
 (defn inits [a-seq]
-  (tails (reverse a-seq)))
+  (reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   (let [double-seq (concat a-seq a-seq)
