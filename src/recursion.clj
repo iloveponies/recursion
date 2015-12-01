@@ -176,7 +176,13 @@
         ))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (empty? (rest a-seq))
+    a-seq
+    (let [halves (halve a-seq)
+          firsthalf (first halves)
+          secondhalf (second halves)]
+      (seq-merge (merge-sort firsthalf) (merge-sort secondhalf))
+      )))
 
 (defn split-into-monotonics [a-seq]
   [:-])
