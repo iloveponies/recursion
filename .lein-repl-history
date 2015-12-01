@@ -1,110 +1,3 @@
-(my-take-while odd? [1 2 3 4])  ;=> (1)
-(my-take-while odd? [1 3 4 5])  ;=> (1 3)
-(my-take-while even? [1 3 4 5]) ;=> ()
-(my-take-while odd? [])         ;=> ()
-(defn my-drop-while [pred? a-seq]
-  (cond
-    (empty? (rest a-seq)) '()
-    (pred? (first a-seq)) (my-take-while pred? (rest a-seq))
-    :else a-seq
-    )) 
-(my-drop-while odd? [1 2 3 4])  ;=> (2 3 4)
-(my-drop-while odd? [1 3 4 5])  ;=> (4 5)
-(my-drop-while even? [1 3 4 5]) ;=> (1 3 4 5)
-(my-drop-while odd? [])         ;=> ()
-(defn seq= [a-seq b-seq]
-  (cond
-    (and (empty? a-seq) (empty? b-seq)) true
-    (or (empty? a-seq) (empty? b-seq)) false
-    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
-    :else false
-    )) 
-(seq= [1 2 4] '(1 2 4))  ;=> true
-(seq= [1 2 3] [1 2 3 4]) ;=> false
-(seq= [1 3 5] [])        ;=> false
-(defn my-map [f seq-1 seq-2]
-  (cond
-    (or (empty? seq-1) (empty? seq-2)) nil
-    :else (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))
-    ))
-(my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
-(my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
-(my-map + [1 2 3] [])        ;=> ()
-(defn power [n k]
-  (if (zero? k)
-    1
-    (* n (power n (dec k)))
-    ))
-(power 2 3)
-(power 2 5)
-(power 5 5)
-(power 5 3)
-(defn fib [n]
-  (cond
-    (= n 1) 1
-    (= n 2) 1
-    :else (+ (fib (dec n)) (fib (- n 2)))
-    ))
-(fib 5)
-(fib 3)
-(fib 8)
-(fib 10)
-(defn my-repeat [how-many-times what-to-repeat]
-  (if (= how-many-times 0)
-    nil
-    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
-    ))
-(my-repeat 2 :a)    ;=> (:a :a)
-(my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
-(my-repeat -1 :a)   ;=> ()
-(defn my-repeat [how-many-times what-to-repeat]
-  (if (<= how-many-times 0)
-    nil
-    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
-    ))
-(my-repeat -1 :a)   ;=> ()
-(defn my-repeat [how-many-times what-to-repeat]
-  (if (<= how-many-times 0)
-    nil
-    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
-    ))
-(defn my-range [up-to]
-  (if (= up-to 0)
-    0
-    (cons (dec up-to)(my-range (- up-to 2)))
-    ))
-(my-range 3)
-(defn my-range [up-to]
-  (cond
-    (<= up-to 0) nil
-    (= up-to 1) '(0)
-    :else (cons (dec up-to)(my-range (- up-to 2)))
-    ))
-(my-range 3)
-(defn my-range [up-to]
-  (cond
-    (<= up-to 0) nil
-    (= up-to 1) '(0)
-    :else (cons (dec up-to)(my-range (dec up-to)))
-    ))
-(my-range 3)
-(my-range 5)
-(my-range 1)
-(my-range 0)
-(defn tails [a-seq]
-  (cons a-seq (tails (rest a-seq))))
-(tails '(1 2 3))
-(tails [1 2 3])
-(rest [1 2 3 4])
-(defn tails [a-seq]
-  (if (empty? (rest a-seq))
-    nil
-    (cons a-seq (tails (rest a-seq)))
-    ))
-(tails [1 2 3 4])
-(defn tails [a-seq]
-  (if (empty? (rest a-seq))
-    (cons (first (a-seq) nil))
     (cons a-seq (tails (rest a-seq)))
     ))
 (tails [1 2 3 4])
@@ -498,3 +391,110 @@ f
             (my-frequencies-helper (assoc freqs key 1) rem-seq)
             ))))
 (my-frequencies-helper {} f)
+(my-repeat :a 3)
+(my-repeat 1 3)
+(my-repeat 3 :a)
+[:a 1]
+(first [:a 1])
+(second [:a 1])
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (let [tuple (first a-map)]
+      (cons (my-repeat (first tuple) (second tuple)) (rest a-map)))
+    ))
+(un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
+(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+(my-frequencies (un-frequencies {:a 100 :b 10})) ;=
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (let [tuple (first a-map)]
+      (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+    ))
+(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+(un-frequencies (my-frequencies [:a :b :c :a]))  
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (let [tuple (first a-map)]
+     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+      (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies [:a 3, :g 6])
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (cons 1 (un-frequencies a-map))
+   ;; (let [tuple (first a-map)]
+     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+     ;; (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies [1 1, 2 2])
+(un-frequencies {:a 1, :b 2})
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (cons 1 (un-frequencies (rest a-map)))
+   ;; (let [tuple (first a-map)]
+     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+     ;; (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies {:a 2 , :b 3, :c 1})
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    ;;(cons 1 (un-frequencies (rest a-map)))
+    (let [tuple (first a-map)]
+      (cons (first tuple) (un-frequencies (rest a-map))))
+    ;;(cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+     ;; (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies {:a 1, :b 2, :c 3})
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    ;;(cons 1 (un-frequencies (rest a-map)))
+    (let [tuple (first a-map)]
+      (cons (my-repeat (first tuple) 3) (un-frequencies (rest a-map))))
+    ;;(cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
+     ;; (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies {:a 2, :b 1, :d 4})
+(first {:a 2, :b 1, :d 4})
+(first (first {:a 2, :b 1, :d 4}))
+(let [tuple (first {:a 2, :b 1, :d 4})]
+(first tuple))
+(let [tuple (first {:a 2, :b 1, :d 4})]
+(second tuple))
+(let [tuple (first {:a 2, :b 1, :d 4})]
+(my-repeat (first tuple)(second tuple))
+)
+(my-repeat :a 3)
+(my-repeat 3 :a)
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    ;;(cons 1 (un-frequencies (rest a-map)))
+    (let [tuple (first a-map)]
+     ;; (cons (my-repeat (first tuple) 3) (un-frequencies (rest a-map))))
+    (cons (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
+     ;; (my-repeat (first tuple) (second tuple)))
+      ))
+(un-frequencies {:a 1, :b 3, :d 5})
+(defn my-frequencies [a-seq]
+   (my-frequencies-helper {} a-seq))
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (let [tuple (first a-map)]
+    (map cons (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
+    ))
+(un-frequencies {:a 1, :b 3, :d 5})
+(defn un-frequencies [a-map]
+  (if (empty? a-map)
+    nil
+    (let [tuple (first a-map)]
+    (concat (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
+    ))
+(un-frequencies {:a 1, :b 3, :d 5})
