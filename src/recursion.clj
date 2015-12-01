@@ -125,10 +125,28 @@
     
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [key (first a-seq)
+        val (get freqs key)
+        rem-seq (rest a-seq)]
+    (if (empty? a-seq)
+      freqs
+      (if val
+            (my-frequencies-helper (assoc freqs key (inc val)) rem-seq)
+            (my-frequencies-helper (assoc freqs key 1) rem-seq)
+            ))))
+
+
+(defn test1 [freqs a-seq]
+   (let [key (first a-seq)
+         val (get freqs key)
+         rem-seq (rest a-seq)]
+     (if val
+       (cons (assoc freqs key (inc val)) rem-seq)
+       (cons (assoc freqs key 1) rem-seq))) )
+
 
 (defn my-frequencies [a-seq]
-  [:-])
+   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
