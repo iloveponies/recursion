@@ -158,7 +158,9 @@
     ))
 
 (defn halve [a-seq]
-  [:-])
+  (let [splitpos (int (/ (count a-seq) 2))]
+    (cons (my-take splitpos a-seq) (cons (my-drop splitpos a-seq) nil))
+    ))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
