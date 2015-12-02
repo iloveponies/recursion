@@ -50,7 +50,7 @@
 
 (defn my-take-while [pred? a-seq]
   (cond
-    (empty? (rest a-seq)) '()
+    (empty? a-seq) '()
     (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
     :else '()
     ))
@@ -147,7 +147,7 @@
 
 (defn my-take [n coll]
   (if (or (empty? coll) (= n 0))
-    nil
+    '()
     (cons (first coll) (my-take (dec n) (rest coll)))
     ))
 
@@ -159,7 +159,7 @@
 
 (defn halve [a-seq]
   (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (cons (my-drop splitpos a-seq) nil))
+    (cons (my-take splitpos a-seq) (cons (my-drop splitpos a-seq) '()))
     ))
 
 (defn seq-merge [a-seq b-seq]
