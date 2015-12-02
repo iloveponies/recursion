@@ -92,7 +92,7 @@
 
 (defn my-repeat [how-many-times what-to-repeat]
   (if (<= how-many-times 0)
-    nil
+    '()
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
     ))
 
