@@ -98,7 +98,7 @@
 
 (defn my-range [up-to]
   (cond
-    (<= up-to 0) nil
+    (<= up-to 0) '()
     (= up-to 1) '(0)
     :else (cons (dec up-to)(my-range (dec up-to)))
     ))
@@ -146,7 +146,7 @@
     ))
 
 (defn my-take [n coll]
-  (if (= n 0)
+  (if (or (empty? coll) (= n 0))
     nil
     (cons (first coll) (my-take (dec n) (rest coll)))
     ))
