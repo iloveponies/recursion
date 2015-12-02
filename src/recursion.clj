@@ -57,8 +57,8 @@
 
 (defn my-drop-while [pred? a-seq]
   (cond
-    (empty? (rest a-seq)) '()
-    (pred? (first a-seq)) (my-take-while pred? (rest a-seq))
+    (empty?  a-seq) '()
+    (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
     :else a-seq
     )) 
 

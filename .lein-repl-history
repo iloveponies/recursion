@@ -1,11 +1,3 @@
-(rotations [1 2 3])
-(defn rotations [a-seq]
-  (let [double-seq (concat a-seq a-seq)
-        num (count a-seq)]
-    (defn rotations-helper [b-seq]
-      (if
-          (= num (count b-seq))
-        '(b-seq)
         (cons (take num b-seq) (rotations-helper (rest b-seq)))))
     (rotations-helper (rest double-seq))))
     
@@ -498,3 +490,11 @@ f
     ))
 (tails [1 2 3 4])
 (inits [1 2 3 4])
+(defn my-drop-while [pred? a-seq]
+  (cond
+    (empty?  a-seq) '()
+    (pred? (first a-seq)) (my-take-while pred? (rest a-seq))
+    :else a-seq
+    )) 
+(my-drop-while odd? [1 2 3 4])
+(my-drop-while even? [1 2 3 4])
