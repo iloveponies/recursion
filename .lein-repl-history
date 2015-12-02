@@ -1,27 +1,3 @@
-(get {} (first f))
-(def v (get {} (first f)))
-(if v (1) (2))
-(if v ("1") ("2"))
-(if (v) ("1") ("2"))
-v
-(if v (true) (false))
-(doc if)
-(if 1  2 3)
-(if nil 2 3)
-(if v 2 3)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs val)]
-    (if val
-      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq))
-      (my-frequencies-helper (assoc freqs key 1) (rest a-seq)))                 
-    ))
-(my-frequencies-helper {} f)
-(assoc {} :a 1)
-(get (assoc {} :a 1) :a)
-(def v1 (get (assoc {} :a 1) :a))
-(if v1 (assoc {:a 1} :a (inc v1)) 0)
-(def v1 (get (assoc {} :a 1) :b))
 (if v1 (assoc {:a 1} :a (inc v1)) 0)
 f
 (let [key (first f)
@@ -498,3 +474,27 @@ my-take 0 [1]
     ))
 (My-take 0 f)
 (My-take 0 [1])
+(defn my-take [n coll]
+  (if (or (empty? coll) (= n 0))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))
+    ))
+(halve [0])
+(halve [1])
+(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+(defn inits [a-seq]
+  (tails (reverse a-seq)))
+(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+(tails [1 2 3 4])
+(defn tails [a-seq]
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons a-seq (tails (rest a-seq)))
+    ))
+(defn inits [a-seq]
+  (tails (reverse a-seq)))
+(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+(tails [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+(defn inits [a-seq]
+  (map reverse (tails (reverse a-seq))))
+(inits [1 2 3 4])

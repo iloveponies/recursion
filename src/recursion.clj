@@ -106,12 +106,12 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    (cons a-seq nil)
+    (cons a-seq '())
     (cons a-seq (tails (rest a-seq)))
     ))
 
 (defn inits [a-seq]
-  (reverse (tails (reverse a-seq))))
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   (let [double-seq (concat a-seq a-seq)
