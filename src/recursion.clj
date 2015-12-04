@@ -189,14 +189,16 @@
        (loop [acc nil
               mon nil
               seq1 a-seq
+              dirup true
             ]
          (cond
            (empty? seq1) (cons mon acc)
-           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) 
-           (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
-           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1) dirup) 
+           (or (empty? (rest seq1)) (and dirup (< (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
+           (or (empty? (rest seq1)) (and (not dirup) (> (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1) (not dirup))
            )))))
-           
+
 (defn permutations [a-set]
 [:-])
 ;;  (loop [acc nil
