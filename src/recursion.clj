@@ -178,7 +178,7 @@
 (defn merge-sort [a-seq]
   (if (empty? (rest a-seq))
     a-seq
-    (let [halves (halve a-seq)
+   (let [halves (halve a-seq)
           firsthalf (first halves)
           secondhalf (second halves)]
       (seq-merge (merge-sort firsthalf) (merge-sort secondhalf))
@@ -188,16 +188,39 @@
   (reverse (map reverse
        (loop [acc nil
               mon nil
-              seq1 a-seq]
+              seq1 a-seq
+            ]
          (cond
            (empty? seq1) (cons mon acc)
-           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) 
            (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
            :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
            )))))
            
 (defn permutations [a-set]
-  [:-])
+[:-])
+;;  (loop [acc nil
+;;         perm a-set
+;;         elem (first a-set)
+;;         remset (disj a-set elem)]
+;;    (cond
+;;      (empty? remset) '()
+;;      (empty? mon) acc
+      ;;what is the end condition?
+;;      :else (recur (cons elem acc) (disj mon elem) (first remset) (disj remset elem))     
+;;      )))
+
+;;(defn permutations [a-set]
+;;  (defn perm-helper [elem set1]
+;;    (cons elem (permutations set1)))
+;;  (loop (if (empty? a-set)
+;;    '()
+;;    perm-helper (first set1) (disj set1 elem))))
+
+;; permutations : the head of the set with the permutations of the remainder until there are no more permutations in the remainder
+; permutation of a single element or empty set is that set
+;; (empty? (disj #{1} 1))
+
 
 (defn powerset [a-set]
   [:-])
