@@ -189,15 +189,18 @@
        (loop [acc nil
               mon nil
               seq1 a-seq
-              dirup true
+              dirup nil
             ]
          (cond
            (empty? seq1) (cons mon acc)
            (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1) dirup) 
-           (or (empty? (rest seq1)) (and dirup (< (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
-           (or (empty? (rest seq1)) (and (not dirup) (> (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
-           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1) (not dirup))
+           (or (empty? (rest seq1)) (and (not dirup) (< (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) "up")
+            (or (empty? (rest seq1)) (and (not dirup) (> (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) "down")
+           (or (empty? (rest seq1)) (and (= dirup "up") (< (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
+           (or (empty? (rest seq1)) (and (= dirup "down") (> (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1) nil)
            )))))
+;; at the end of a monotonic sequence the direction should be unset... perhaps it needs 3 states 0 1 2
 
 (defn permutations [a-set]
 [:-])
