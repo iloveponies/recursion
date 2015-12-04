@@ -237,15 +237,5 @@
       (seq (set splitted)))))
 
 (defn powerset [a-set]
-  (let [pmts (permutations a-set)
-        bgns (apply concat (for [pmt pmts]
-               (inits pmt)))
-        sets (loop [target #{}
-                    stuff  bgns]
-               (cond
-                (empty? stuff)
-                  target
-                :else
-                  (recur (conj target (set (first stuff))) (rest stuff))))]
-    sets))
+  #{})
 
