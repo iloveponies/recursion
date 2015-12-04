@@ -1,492 +1,3 @@
-(if v1 (assoc {:a 1} :a (inc v1)) 0)
-f
-(let [key (first f)
-val (get {:a 2, :b 2} key]
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)]
-    (if val
-      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq))
-      (my-frequencies-helper (assoc freqs key 1) (rest a-seq)))                 
-    ))
-(my-frequencies-helper {} f)
-(let [key (first f)
-val (get {:a 2, :b 3} key)]
-(if val val key))
-(assoc {} :a 3)
-(def g {})
-(assoc g :e 1)
-f
-(let [key (first f)
-val (get g key)]
-(if val
-(assoc g key (inc val))
-(assoc g key 1))
-)
-(let [key (first f)
-val (get {:a 1} key)]
-(if val
-(assoc (:a 1, :b 5}  key (inc val))
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)]
-    (if (nil? val)
-      (my-frequencies-helper (assoc freqs key 1) (rest a-seq))
-      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq)))                 
-    ))
-(my-frequencies-helper {} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)]
-    (if (nil? val)
-      (my-frequencies-helper (assoc freqs key 1) (rest a-seq))
-      ;;      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq)))
-            (my-frequencies-helper freqs (rest a-seq)))                 
-    ))
-(my-frequencies-helper {} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)]
-    (if (nil? val)
-      0 2
-)))
-(my-frequencies-helper {} f)
-(my-frequencies-helper {:a 1} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)]
-    (if (nil? val)
-      
-      (my-frequencies-helper (assoc freqs key 1) (rest a-seq))
-      2
-))
-)
-(my-frequencies-helper {:a 1} f)
-(my-frequencies-helper {} f)
-(get {} :a)
-(my-frequencies-helper {:a 1} f)
-f
-(let [key (first f) 
-val (get {:a 1} key]
-(defn test1 [freqs a-seq]
-(let [key (first a-seq)
-val (get freqs key)]
-(if val val key)))
-(test1 {} f)
-(test1 {:a 1} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)
-        rem-seq (rest a-seq)]
-    (if val
-            (my-frequencies-helper (assoc freqs key (inc val)) rem-seq)
-            (my-frequencies-helper (assoc freqs key 1) rem-seq)
-      
-      ;;      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq)))
-;;            (my-frequencies-helper freqs (rest a-seq)))                 
-    )))
-(my-frequencies-helper {} f)
-(my-frequencies-helper {:a 1} f)
-(test1 {} f)
-(test1 {:f 1} f)
-(defn test1 [freqs a-seq]
-   (let [key (first a-seq)
-   val (get freqs key)]
-     (if val
-       (assoc freqs key (inc val)
-       (assoc freqs key 1) ))))
-(test1 {} f)
-(test1 {:a 1} f)
-(test1 {:a 1} (rest f))
-(defn test1 [freqs a-seq]
-   (let [key (first a-seq)
-   val (get freqs key)]
-     (if val
-       (assoc freqs key (inc val))
-       (assoc freqs key 1) )))
-(test1 {:a 1} f)
-(test1 {} f)
-(defn test1 [freqs a-seq]
-   (let [key (first a-seq)
-         val (get freqs key)
-         rem-seq (rest a-seq)]
-     (if val
-       (cons (assoc freqs key (inc val)) rem-seq)
-       (cons (assoc freqs key 1) rem-a-seq))) )
-(defn test1 [freqs a-seq]
-   (let [key (first a-seq)
-         val (get freqs key)
-         rem-seq (rest a-seq)]
-     (if val
-       (cons (assoc freqs key (inc val)) rem-seq)
-       (cons (assoc freqs key 1) rem-seq))) )
-(test1 {} f)
-(test1 {:a 2} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)
-        rem-seq (rest a-seq)]
-    (if val
-            (my-frequencies-helper (assoc freqs key (inc val)) rem-seq)
-            (my-frequencies-helper (assoc freqs key 1) rem-seq)
-      
-      ;;      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq)))
-;;            (my-frequencies-helper freqs (rest a-seq)))                 
-            )))
-(my-frequencies-helper {:a 1} f)
-(my-frequencies-helper {} f)
-(test1 {:a 1} f)
-(test1 {} f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)
-        rem-seq (rest a-seq)]
-    (if (empty? a-seq)
-      nil
-      (if val
-            (my-frequencies-helper (assoc freqs key (inc val)) rem-seq)
-            (my-frequencies-helper (assoc freqs key 1) rem-seq)
-      
-      ;;      (my-frequencies-helper (assoc freqs key (inc val)) (rest a-seq)))
-;;            (my-frequencies-helper freqs (rest a-seq)))                 
-            ))))
-(my-frequencies-helper {} f)
-f
-(empty? f)
-(defn my-frequencies-helper [freqs a-seq]
-  (let [key (first a-seq)
-        val (get freqs key)
-        rem-seq (rest a-seq)]
-    (if (empty? a-seq)
-      freqs
-      (if val
-            (my-frequencies-helper (assoc freqs key (inc val)) rem-seq)
-            (my-frequencies-helper (assoc freqs key 1) rem-seq)
-            ))))
-(my-frequencies-helper {} f)
-(my-repeat :a 3)
-(my-repeat 1 3)
-(my-repeat 3 :a)
-[:a 1]
-(first [:a 1])
-(second [:a 1])
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (let [tuple (first a-map)]
-      (cons (my-repeat (first tuple) (second tuple)) (rest a-map)))
-    ))
-(un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
-(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
-(my-frequencies (un-frequencies {:a 100 :b 10})) ;=
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (let [tuple (first a-map)]
-      (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-    ))
-(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
-(un-frequencies (my-frequencies [:a :b :c :a]))  
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (let [tuple (first a-map)]
-     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-      (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies [:a 3, :g 6])
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (cons 1 (un-frequencies a-map))
-   ;; (let [tuple (first a-map)]
-     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-     ;; (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies [1 1, 2 2])
-(un-frequencies {:a 1, :b 2})
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (cons 1 (un-frequencies (rest a-map)))
-   ;; (let [tuple (first a-map)]
-     ;; (cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-     ;; (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies {:a 2 , :b 3, :c 1})
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    ;;(cons 1 (un-frequencies (rest a-map)))
-    (let [tuple (first a-map)]
-      (cons (first tuple) (un-frequencies (rest a-map))))
-    ;;(cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-     ;; (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies {:a 1, :b 2, :c 3})
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    ;;(cons 1 (un-frequencies (rest a-map)))
-    (let [tuple (first a-map)]
-      (cons (my-repeat (first tuple) 3) (un-frequencies (rest a-map))))
-    ;;(cons (my-repeat (first tuple) (second tuple)) (un-frequencies (rest a-map))))
-     ;; (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies {:a 2, :b 1, :d 4})
-(first {:a 2, :b 1, :d 4})
-(first (first {:a 2, :b 1, :d 4}))
-(let [tuple (first {:a 2, :b 1, :d 4})]
-(first tuple))
-(let [tuple (first {:a 2, :b 1, :d 4})]
-(second tuple))
-(let [tuple (first {:a 2, :b 1, :d 4})]
-(my-repeat (first tuple)(second tuple))
-)
-(my-repeat :a 3)
-(my-repeat 3 :a)
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    ;;(cons 1 (un-frequencies (rest a-map)))
-    (let [tuple (first a-map)]
-     ;; (cons (my-repeat (first tuple) 3) (un-frequencies (rest a-map))))
-    (cons (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
-     ;; (my-repeat (first tuple) (second tuple)))
-      ))
-(un-frequencies {:a 1, :b 3, :d 5})
-(defn my-frequencies [a-seq]
-   (my-frequencies-helper {} a-seq))
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (let [tuple (first a-map)]
-    (map cons (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
-    ))
-(un-frequencies {:a 1, :b 3, :d 5})
-(defn un-frequencies [a-map]
-  (if (empty? a-map)
-    nil
-    (let [tuple (first a-map)]
-    (concat (my-repeat (second tuple) (first tuple)) (un-frequencies (rest a-map))))
-    ))
-(un-frequencies {:a 1, :b 3, :d 5})
-(defn my-take [n coll]
-  (if (= n 0)
-    coll
-    (cons (first coll) (my-take (dec n) (rest coll)))
-    ))
-(my-take 3 f)
-(defn my-take [n coll]
-  (if (= n 0)
-    nil
-    (cons (first coll) (my-take (dec n) (rest coll)))
-    ))
-(my-take 3 f)
-(defn my-drop [n coll]
-  (if (= n 0)
-    coll
-    (my-drop (dec n) (rest coll))
-    ))
-(my-drop 2 f)
-(my-drop 4 f)
-(def g [1 2 3 4 5])
-(my-take 3 g)
-(my-drop 2 g)
-(my-drop 3 g)
-(def g [1 2 3 4 5 6])
-(my-drop 3 g)
-(my-take 3 g)
-(defn halve [a-seq]
-  (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (my-drop splitpos a-seqq))
-    ))
-(defn halve [a-seq]
-  (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (my-drop splitpos a-seqq))
-    ))
-(defn halve [a-seq]
-  (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (my-drop splitpos a-seq))
-    ))
-(halve g)
-(defn halve [a-seq]
-  (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (cons (my-drop splitpos a-seq) nil))
-    ))
-(halve g)
-(halve f)
-(first ('()))
-(defn seq-merge [a-seq b-seq]
-  (cond
-    (empty? a-seq) b-seq
-    (empty? b-seq) a-seq
-    :else
-    (let
-        [a-val (first a-seq)
-         b-val (first b-seq)]
-      (if (>= a-val b-val)
-        (cons a-val (seq-merge (rest a-seq) b-seq))
-        (cons b-val (seq-merge a-seq (rest b-seq)))
-        ))))
-(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
-(seq-merge [1 5 7 9] [2 2 8 10]) 
-(defn seq-merge [a-seq b-seq]
-  (cond
-    (empty? a-seq) b-seq
-    (empty? b-seq) a-seq
-    :else
-    (let
-        [a-val (first a-seq)
-         b-val (first b-seq)]
-      (if (<= a-val b-val)
-        (cons a-val (seq-merge (rest a-seq) b-seq))
-        (cons b-val (seq-merge a-seq (rest b-seq)))
-        ))))
-(seq-merge [1 5 7 9] [2 2 8 10]) 
-(empty? (rest '()))
-(empty? (first '()))
-(halve f)
-(halve g)
-(let [one two] (halve g)
-(cons two one))
-(let [one two (halve g)]
-(cons two one))
-(doc let )
-(defn merge-sort [a-seq]
-  (if (empty? (rest a-seq))
-    a-seq
-    (let [halves (halve a-seq)
-          firsthalf (first halves)
-          secondhalf (second halves)]
-      (seq-merge (merge-sort firsthalf) (merge-sort secondhalf))
-      )))
-(merge-sort [4 3 2 1])
-(merge-sort [4 3 2 1 5])
-(merge-sort [4 3 2 1 5 7 2])
-(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
-(sort (inits [1 2 3 4]))
-(reverse (inits [1 2 3 4]))
-(defn tails [a-seq]
-  (cond
-    (empty? (rest a-seq)) (cons a-seq (cons (()) nil))
-    :else (cons a-seq (tails (rest a-seq)))
-    ))
-(defn inits [a-seq]
-  (tails (reverse a-seq)))
-(inits [1 2 3 4])
-(defn tails [a-seq]
-  (cond
-    (empty? (rest a-seq)) (cons a-seq (cons (()) nil))
-    :else (cons a-seq (tails (rest a-seq)))
-    ))
-(defn inits [a-seq]
-  (tails (reverse a-seq)))
-(inits [1 2 3 4])
-(cons '() false)
-(cons 1 false)
-(cons 1 0)
-(cons 1 nil)
-(cons 1 (cons '() nil))
- (cons '() nil)
-(defn tails [a-seq]
-  (cond
-    (empty? (rest a-seq)) (cons a-seq (cons [] nil))
-    :else (cons a-seq (tails (rest a-seq)))
-    ))
-(inits [1 2 3 4])
-(tails [1 2 3 4])
-(defn tails [a-seq]
-  (if (empty? a-seq)
-    (cons a-seq nil)
-;;    (empty? (rest a-seq)) (cons a-seq (cons [] nil))
-    (cons a-seq (tails (rest a-seq)))
-    ))
-(tails [1 2 3 4])
-(inits [i 2 3 4])
-(inits [1 2 3 4])
-(list [ 1 2 3 4])
-(concat list [ 1 2 3 4])
-(map list [ 1 2 3 4])
-(concat (map list [ 1 2 3 4]))
-(str (map list [ 1 2 3 4]))
-(tails [1 2 3 4])
-(tails (list 1 2 3 4))
-(tails (list 1 2 3 y))
-(tails (list 1 2 3 "y"))
-(defn tails [a-seq]
-  (if (empty? a-seq)
-    (cons a-seq nil)
-    (cons (tails (rest a-seq)) a-seq)
-    ))
-(tails [1 2 3 4])
-(inits [1 2 3 4])
-(defn my-drop-while [pred? a-seq]
-  (cond
-    (empty?  a-seq) '()
-    (pred? (first a-seq)) (my-take-while pred? (rest a-seq))
-    :else a-seq
-    )) 
-(my-drop-while odd? [1 2 3 4])
-(my-drop-while even? [1 2 3 4])
-(my-take 2 [1 2 3 4]) ;=> (1 2)
-(my-take 4 [:a :b])   ;=> (:a :b)
-(my-range 0)  ;=> ()
-(my-range 1)  ;=> (0)
-(my-range 2)  ;=> (1 0)
-(my-range 3)  ;=> (2 1 0)
-(defn my-range [up-to]
-  (cond
-    (<= up-to 0) '()
-    (= up-to 1) '(0)
-    :else (cons (dec up-to)(my-range (dec up-to)))
-    ))
-(my-range 0)
-(my-repeat -1 :a)   ;=> ()
-(halve [1])
-(my-repeat -1 :a)   ;=> ()
-(defn halve [a-seq]
-  (let [splitpos (int (/ (count a-seq) 2))]
-    (cons (my-take splitpos a-seq) (cons (my-drop splitpos a-seq) '()))
-    ))
-(halve [1])
-(count [1])
-(int (/ 1 2))
-my-take 0 [1]
-(my-take 0 [1])
-(defn my-take-while [pred? a-seq]
-  (cond
-    (empty? a-seq) '()
-    (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
-    :else '()
-    ))
-(halve [1])
-((defn my-take [n coll]
-  (if (or (empty? coll) (= n 0))
-    '()
-    (cons (first coll) (my-take (dec n) (rest coll)))
-    ))
-)
-(defn my-take [n coll]
-  (if (or (empty? coll) (= n 0))
-    '()
-    (cons (first coll) (my-take (dec n) (rest coll)))
-    ))
-(My-take 0 f)
-(My-take 0 [1])
-(defn my-take [n coll]
-  (if (or (empty? coll) (= n 0))
-    '()
-    (cons (first coll) (my-take (dec n) (rest coll)))
-    ))
-(halve [0])
-(halve [1])
-(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
-(defn inits [a-seq]
-  (tails (reverse a-seq)))
-(inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
-(tails [1 2 3 4])
-(defn tails [a-seq]
   (if (empty? a-seq)
     (cons a-seq '())
     (cons a-seq (tails (rest a-seq)))
@@ -498,3 +9,492 @@ my-take 0 [1]
 (defn inits [a-seq]
   (map reverse (tails (reverse a-seq))))
 (inits [1 2 3 4])
+(inits [0 1 2 1 0])
+(reverse (inits [0 1 2 1 0]))
+(defn monotonic-split-helper [h-seq c]
+    (cond (empty? h-seq) '()
+          (>= (first h-seq) c) (cons (first h-seq) (monotonic-split-helper (rest h-seq) (first h-seq)))
+          :else '()))
+(monotonic-split-helper (0 1 2 4 2 1 4))
+(inits [0 5 4 7 1 3])
+(reverse (inits [0 5 4 7 1 3]))
+(map > (0 2 3 4 3 2))
+(reverse (inits [1 2 3 4])
+)
+(reverse (inits [1 2 3 4 3 7 2 3 5])
+)
+(> [1 2 3])
+(> [1 2 3 5])
+(map > (reverse (inits [1 2 3 4 3 7 2 3 5])))
+(filter > (reverse (inits [1 2 3 4 3 7 2 3 5])))
+(if (> [1 2 3 2]) 1 2)
+ (> [1 2 3 2])
+ (> [1 3 2])
+ (> [3 2])
+ (map > [3 2])
+(fn monotonic? [a-seq]
+(if (empty? a-seq) true
+2)
+)
+(fn monotonic? [a-seq]
+(if (empty? (rest a-seq)) 
+true
+(if (> (first a-seq) (second a-seq))
+(montonic? (rest a-seq))
+false)
+)
+(fn monotonic? [a-seq]
+  (if (empty? (rest a-seq)) 
+    true
+    (if (> (first a-seq) (second a-seq))
+      (monotonic? (rest a-seq))
+      false
+      )))
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (> (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else false
+      ))
+(monotonic? (1 2 3 4))
+(monotonic? (1 2))
+(monotonic? (1 2)
+(monotonic? [1 2])
+)
+(monotonic? [1 2 3])
+(monotonic? [1 2])
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else false
+      ))
+(monotonic? [1 2 3])
+(monotonic? [1 2 3 2])
+(inits [1 2 3 4])
+(inits [1 2 3 4 3])
+(reverse (inits [1 2 3 4 3]))
+(filter monotonic? (reverse (inits [1 2 3 4 3])))
+(filter monotonic? (reverse (inits [1 2 3 4 3 5 1 4])))
+(map monotonic? (reverse (inits [1 2 3 4 3 5 1 4])))
+(map monotonic? [1 2 3 4 3 5 1 4])
+(take-while odd? [1 3 5 6 3 ])
+(take-while monotonic (reverse (inits [1 3 5 2 3 4])))
+(take-while monotonic? (reverse (inits [1 3 5 2 3 4])))
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) 1
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else 0
+      ))
+(map monotonic? (reverse (inits [1 2 3 2 4 1 5])))
+(defn ascending? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) true
+    :else false))
+(ascending? [1 2 3])
+(ascending? [5 2 3])
+(ascending? [5 ])
+(defn power [base exp]
+  (let [helper (fn [acc base n]
+                 (if (zero? n)
+                   acc
+                   (recur (* acc base) (dec n))))]
+    (helper 1 base exp)))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred? (first seq1)) acc
+      (empty? seq1) nil
+      (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      :else (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      :else (recur (inc acc) (rest seq1)) 
+      )))
+(find-first-index odd? [2 4 6 7 3])
+(find-first-index odd? [2 4 6 2 4])
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (empty? seq1) nil
+      (pred (first seq1)) acc
+      :else (recur (inc acc) (rest seq1)) 
+      )))
+(find-first-index odd? [0 4 6])
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 0
+         seq1 a-seq]
+    (if (empty? a-seq)
+      (/ acc cnt)
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 2 3])
+(/ 1 2)
+(\ 1 2)
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 1
+         seq1 a-seq]
+    (if (empty? a-seq)
+      (/ acc (dec cnt))
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 1])
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 1
+         seq1 a-seq]
+    (if (empty? seq1)
+      (/ acc (dec cnt))
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 2 3])
+(def acc {})
+(get acc :a)
+(assoc acc :a)
+(defn parity [a-seq]
+  (loop [acc {}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (disj acc (first seq1))
+      (conj acc (first seq1))
+      )
+    (recur acc (rest seq1))
+    ))
+(parity [:a :a :a :b :b :c :c :c :c 1 1 1])
+(conj acc :a)
+(defn parity [a-seq]
+  (loop [acc {}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (recur (disj acc (first seq1))  (rest seq1))
+      (recur (conj acc (first seq1))  (rest seq1))
+      )))
+(parity [:a :a :A :b :b 1 2])
+{}
+#{}
+(conj #{} :a)
+(conj {} :a)
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (recur (disj acc (first seq1)) (rest seq1))
+      (recur (conj acc (first seq1)) (rest seq1))
+      )))
+  
+(parity [:a :a :b :c])
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (contains? acc (first seq1))
+      (recur (disj acc (first seq1)) (rest seq1))
+      (recur (conj acc (first seq1)) (rest seq1))
+      )))
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (contains? acc (first seq1)) (recur (disj acc (first seq1)) (rest seq1))
+      :else (recur (conj acc (first seq1)) (rest seq1))
+      )))
+(parity [:a :A :b :b 1])
+(parity [:a :a :b :b 1])
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (>= n 2) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 5)
+(fast-fibo 8)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (<= n 2) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 5)
+(fast-fibo 9)
+(fast-fibo 11)
+(fast-fibo 1104)
+(fast-fibo 110)
+(fast-fibo 19)
+(fast-fibo 29)
+(fast-fibo 50)
+(fast-fibo 100)
+(fast-fibo 800)
+(fast-fibo 80)
+(fast-fibo 3)
+(fast-fibo 2)
+(fast-fibo 4)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (= n 1) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 2)
+(fast-fibo 1)
+(fast-fibo 0)
+(fast-fibo 1)
+(fast-fibo 2)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (< n 3) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 2)
+(fast-fibo 3)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 3]
+    (cond
+      (= n 0) 0
+      (< n 3) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 3)
+(fast-fibo 4)
+(fast-fibo 5)
+(fast-fibo 6)
+(defn cut-at-repetition [a-seq]
+  (loop [priors #{}
+         seq1 a-seq
+         acc '()]
+    (if (contains? priors (first seq1))
+      acc
+      (recur (conj priors (first seq1)) (rest seq1) (cons (first seq1) acc))
+      )))
+(cut-at-repetition [:cat :dog :house :milk 1 :cat :dog])
+(cut-at-repetition [1 2 3 4 5])
+(cut-at-repetition [1 2 3 4 5 5])
+(defn cut-at-repetition [a-seq]
+   (reverse (loop [priors #{}
+         seq1 a-seq
+         acc nil]
+              (cond
+                (empty? seq1) acc
+                (contains? priors (first seq1)) acc
+                :else (recur (conj priors (first seq1)) (rest seq1) (cons (first seq1) acc))
+      ))))
+(cut-at-repetition [1 2 3 4 5])
+(inits [1 2 3 4])
+(reverse (inits [1 2 3 4]))
+(reverse (inits [1 2 3 4 2]))
+(filter monotonic? (reverse (inits [1 2 3 4 2])))
+(monotonic? (1 2 3 2)
+)
+(monotonic? [1 2 3 2])
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else false
+    ))
+(monotonic? [1 2 3 1])
+(monotonic? [1 2 3])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (>= (first seq1) (second seq1)) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2 1 4 5 2 3])
+(s-i-m [1 2 3])
+(s-i-m [1])
+(s-i-m [])
+(s-i-m [1 2])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (>= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(s-i-m [1 2 3 4])
+(s-i-m [1 2 3 2])
+(cons 2 nil)
+(s-i-m [1 4 5 2 1 3 5 6])
+(s-i-m [1])
+(s-i-m [])
+(empty? (rest [1]))
+(first [1])
+(cons (first [1]) nil)
+(let [acc nil
+mon nil
+seq1 [1]]
+(and (empty? (rest seq1)) (empty? mon))
+)
+(let [acc nil
+mon nil
+seq1 [1]]
+(cons (first seq1) nil))
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (>= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(s-i-m [1 2 3 2 5])
+(s-i-m [1 2 4 3 5])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons acc mon)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons acc mon) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 3 5])
+(s-i-m [1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [ 1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      ))))
+(s-i-m [1 3 5 2 4])
+(s-i-m [7 1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons (cons (first seq1 mon)) acc) nil (rest seq1))
+      ))))
+(s-i-m [7 3 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) mon) (rest seq1)) ;; seqeunce has broken monotonic pattern
+      ))))
+(s-i-m [1 3 5])
+(s-i-m [1 3 5 2])
+(s-i-m [5 1 2 3])
+(s-i-m [1 2 1 3])
+(s-i-m [1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse
+       (loop [acc nil
+              mon nil
+              seq1 a-seq]
+         (cond
+           (empty? seq1) (cons mon acc)
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+           (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
+)
+))
+)
+(s-i-m [1 2 3 2 4 1 5])
+(defn s-i-m [a-seq]
+  (reverse (map reverse
+       (loop [acc nil
+              mon nil
+              seq1 a-seq]
+         (cond
+           (empty? seq1) (cons mon acc)
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+           (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
+           )))))
+(s-i-m [1 3 5 3 4 6 1 3 6 7 3 4 1 5 4])
