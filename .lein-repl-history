@@ -1,0 +1,500 @@
+(monotonic? (1 2))
+(monotonic? (1 2)
+(monotonic? [1 2])
+)
+(monotonic? [1 2 3])
+(monotonic? [1 2])
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else false
+      ))
+(monotonic? [1 2 3])
+(monotonic? [1 2 3 2])
+(inits [1 2 3 4])
+(inits [1 2 3 4 3])
+(reverse (inits [1 2 3 4 3]))
+(filter monotonic? (reverse (inits [1 2 3 4 3])))
+(filter monotonic? (reverse (inits [1 2 3 4 3 5 1 4])))
+(map monotonic? (reverse (inits [1 2 3 4 3 5 1 4])))
+(map monotonic? [1 2 3 4 3 5 1 4])
+(take-while odd? [1 3 5 6 3 ])
+(take-while monotonic (reverse (inits [1 3 5 2 3 4])))
+(take-while monotonic? (reverse (inits [1 3 5 2 3 4])))
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) 1
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else 0
+      ))
+(map monotonic? (reverse (inits [1 2 3 2 4 1 5])))
+(defn ascending? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) true
+    :else false))
+(ascending? [1 2 3])
+(ascending? [5 2 3])
+(ascending? [5 ])
+(defn power [base exp]
+  (let [helper (fn [acc base n]
+                 (if (zero? n)
+                   acc
+                   (recur (* acc base) (dec n))))]
+    (helper 1 base exp)))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred? (first seq1)) acc
+      (empty? seq1) nil
+      (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      :else (recur ((inc acc) (rest seq1))) 
+      )))
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (pred (first seq1)) acc
+      (empty? seq1) nil
+      :else (recur (inc acc) (rest seq1)) 
+      )))
+(find-first-index odd? [2 4 6 7 3])
+(find-first-index odd? [2 4 6 2 4])
+(defn find-first-index [pred a-seq]
+  (loop [acc 0
+         seq1 a-seq]
+    (cond
+      (empty? seq1) nil
+      (pred (first seq1)) acc
+      :else (recur (inc acc) (rest seq1)) 
+      )))
+(find-first-index odd? [0 4 6])
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 0
+         seq1 a-seq]
+    (if (empty? a-seq)
+      (/ acc cnt)
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 2 3])
+(/ 1 2)
+(\ 1 2)
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 1
+         seq1 a-seq]
+    (if (empty? a-seq)
+      (/ acc (dec cnt))
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 1])
+(defn avg [a-seq]
+  (loop [acc 0
+         cnt 1
+         seq1 a-seq]
+    (if (empty? seq1)
+      (/ acc (dec cnt))
+      (recur (+ acc (first seq1)) (inc cnt) (rest seq1))
+    )))
+(avg [1 2 3])
+(def acc {})
+(get acc :a)
+(assoc acc :a)
+(defn parity [a-seq]
+  (loop [acc {}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (disj acc (first seq1))
+      (conj acc (first seq1))
+      )
+    (recur acc (rest seq1))
+    ))
+(parity [:a :a :a :b :b :c :c :c :c 1 1 1])
+(conj acc :a)
+(defn parity [a-seq]
+  (loop [acc {}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (recur (disj acc (first seq1))  (rest seq1))
+      (recur (conj acc (first seq1))  (rest seq1))
+      )))
+(parity [:a :a :A :b :b 1 2])
+{}
+#{}
+(conj #{} :a)
+(conj {} :a)
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (if (contains? acc (first seq1))
+      (recur (disj acc (first seq1)) (rest seq1))
+      (recur (conj acc (first seq1)) (rest seq1))
+      )))
+  
+(parity [:a :a :b :c])
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (contains? acc (first seq1))
+      (recur (disj acc (first seq1)) (rest seq1))
+      (recur (conj acc (first seq1)) (rest seq1))
+      )))
+(defn parity [a-seq]
+  (loop [acc #{}
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (contains? acc (first seq1)) (recur (disj acc (first seq1)) (rest seq1))
+      :else (recur (conj acc (first seq1)) (rest seq1))
+      )))
+(parity [:a :A :b :b 1])
+(parity [:a :a :b :b 1])
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (>= n 2) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 5)
+(fast-fibo 8)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (<= n 2) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 5)
+(fast-fibo 9)
+(fast-fibo 11)
+(fast-fibo 1104)
+(fast-fibo 110)
+(fast-fibo 19)
+(fast-fibo 29)
+(fast-fibo 50)
+(fast-fibo 100)
+(fast-fibo 800)
+(fast-fibo 80)
+(fast-fibo 3)
+(fast-fibo 2)
+(fast-fibo 4)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (= n 1) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 2)
+(fast-fibo 1)
+(fast-fibo 0)
+(fast-fibo 1)
+(fast-fibo 2)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 0]
+    (cond
+      (= n 0) 0
+      (< n 3) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 2)
+(fast-fibo 3)
+(defn fast-fibo [n]
+  (loop [fibn1 1
+         fibn 1
+         ind 3]
+    (cond
+      (= n 0) 0
+      (< n 3) 1
+      (= ind n) (+ fibn1 fibn)
+      :else (recur (+ fibn1 fibn) fibn1 (inc ind))
+      )))
+(fast-fibo 3)
+(fast-fibo 4)
+(fast-fibo 5)
+(fast-fibo 6)
+(defn cut-at-repetition [a-seq]
+  (loop [priors #{}
+         seq1 a-seq
+         acc '()]
+    (if (contains? priors (first seq1))
+      acc
+      (recur (conj priors (first seq1)) (rest seq1) (cons (first seq1) acc))
+      )))
+(cut-at-repetition [:cat :dog :house :milk 1 :cat :dog])
+(cut-at-repetition [1 2 3 4 5])
+(cut-at-repetition [1 2 3 4 5 5])
+(defn cut-at-repetition [a-seq]
+   (reverse (loop [priors #{}
+         seq1 a-seq
+         acc nil]
+              (cond
+                (empty? seq1) acc
+                (contains? priors (first seq1)) acc
+                :else (recur (conj priors (first seq1)) (rest seq1) (cons (first seq1) acc))
+      ))))
+(cut-at-repetition [1 2 3 4 5])
+(inits [1 2 3 4])
+(reverse (inits [1 2 3 4]))
+(reverse (inits [1 2 3 4 2]))
+(filter monotonic? (reverse (inits [1 2 3 4 2])))
+(monotonic? (1 2 3 2)
+)
+(monotonic? [1 2 3 2])
+(defn monotonic? [a-seq]
+  (cond
+    (empty? (rest a-seq)) true
+    (<= (first a-seq) (second a-seq)) (monotonic? (rest a-seq))
+    :else false
+    ))
+(monotonic? [1 2 3 1])
+(monotonic? [1 2 3])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (>= (first seq1) (second seq1)) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2 1 4 5 2 3])
+(s-i-m [1 2 3])
+(s-i-m [1])
+(s-i-m [])
+(s-i-m [1 2])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) acc
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (>= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(s-i-m [1 2 3 4])
+(s-i-m [1 2 3 2])
+(cons 2 nil)
+(s-i-m [1 4 5 2 1 3 5 6])
+(s-i-m [1])
+(s-i-m [])
+(empty? (rest [1]))
+(first [1])
+(cons (first [1]) nil)
+(let [acc nil
+mon nil
+seq1 [1]]
+(and (empty? (rest seq1)) (empty? mon))
+)
+(let [acc nil
+mon nil
+seq1 [1]]
+(cons (first seq1) nil))
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (>= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 2])
+(s-i-m [1 2 3])
+(s-i-m [1 2 3 2 5])
+(s-i-m [1 2 4 3 5])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons acc mon)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons acc mon) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [1 3 5])
+(s-i-m [1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      )))
+(s-i-m [ 1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) nil) (rest seq1))
+      ))))
+(s-i-m [1 3 5 2 4])
+(s-i-m [7 1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons (cons (first seq1 mon)) acc) nil (rest seq1))
+      ))))
+(s-i-m [7 3 4])
+(defn s-i-m [a-seq]
+  (map reverse (loop [acc nil
+         mon nil
+         seq1 a-seq]
+    (cond
+      (empty? seq1) (cons mon acc)
+      (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+      (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+      :else (recur (cons mon acc) (cons (first seq1) mon) (rest seq1)) ;; seqeunce has broken monotonic pattern
+      ))))
+(s-i-m [1 3 5])
+(s-i-m [1 3 5 2])
+(s-i-m [5 1 2 3])
+(s-i-m [1 2 1 3])
+(s-i-m [1 3 5 2 4])
+(defn s-i-m [a-seq]
+  (map reverse
+       (loop [acc nil
+              mon nil
+              seq1 a-seq]
+         (cond
+           (empty? seq1) (cons mon acc)
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+           (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
+)
+))
+)
+(s-i-m [1 2 3 2 4 1 5])
+(defn s-i-m [a-seq]
+  (reverse (map reverse
+       (loop [acc nil
+              mon nil
+              seq1 a-seq]
+         (cond
+           (empty? seq1) (cons mon acc)
+           (and (empty? (rest seq1)) (empty? mon)) (recur acc (cons (first seq1) nil) (rest seq1)) ;;put the last entry in its own list 
+           (or (empty? (rest seq1)) (<= (first seq1) (second seq1))) (recur acc (cons (first seq1) mon) (rest seq1))
+           :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1))
+           )))))
+(s-i-m [1 3 5 3 4 6 1 3 6 7 3 4 1 5 4])
+#{1}
+#{1 3}
+(first #{1 3})
+(defn permutations [a-set]
+  (loop [acc nil
+         elem (first a-set)
+         remset (disj a-set elem)]
+    (cond
+      (empty? remset) '()
+      ;;what is the end condition?
+      :else (recur (cons elem acc) (first remset) (disj remset elem))     
+      )))
+(permutations #{})
+(permutations #{1})
+(permutations #{1 2 3})
+(defn permutations [a-set]
+  (loop [acc nil
+         elem (first a-set)
+         remset (disj a-set elem)]
+    (cond
+      (empty? remset) acc ;'()
+      ;;what is the end condition?
+      :else (recur (cons elem acc) (first remset) (disj remset elem))     
+      )))
+(permutations #{1 2 3})
+(permutations #{1 2 3 4})
+(defn permutations [a-set]
+  (loop [acc nil
+         mon a-seq
+         elem (first a-set)
+         remset (disj a-set elem)]
+    (cond
+      (empty? remset) '()
+      (empty? mon) acc
+      ;;what is the end condition?
+      :else (recur (cons elem acc) (disj mon elem) (first remset) (disj remset elem))     
+      )))
+(defn permutations [a-set]
+  (loop [acc nil
+         mon a-set
+         elem (first a-set)
+         remset (disj a-set elem)]
+    (cond
+      (empty? remset) '()
+      (empty? mon) acc
+      ;;what is the end condition?
+      :else (recur (cons elem acc) (disj mon elem) (first remset) (disj remset elem))     
+      )))
+(permutations #{1 2 3})
+(permutations #{})
+(empty? #{})
+(empty? (disj #{1} 1)
+)
+(defn permutations [a-set]
+  (defn perm-helper [elem set1]
+    (cons elem (permutations set1)))
+  (loop (if (empty? a-set)
+    '()
+    perm-helper (first set1) (disj set1 elem))))
