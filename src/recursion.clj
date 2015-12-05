@@ -46,12 +46,12 @@
 
 (defn sequence-contains? [elem a-seq]
   (if (empty? a-seq)
-   false 
+   false
     (do
      (if (= elem (first a-seq))
        true
        (sequence-contains? elem (rest a-seq))
-       ) 
+       )
       )
     ))
 
@@ -59,7 +59,7 @@
   (if (empty? a-seq)
     []
     (do
-      (if (pred? (first a-seq)) 
+      (if (pred? (first a-seq))
                  (cons (first a-seq) (my-take-while pred? (rest a-seq)))
                  [])
       )
@@ -76,13 +76,12 @@
     )
 
 (defn seq= [a-seq b-seq]
-  (if 
-    (or (and (empty? a-seq) (empty? b-seq))
-        (= (first a-seq) (first b-seq))
-        (and true (seq= (rest a-seq) (rest b-seq)))
-        )
-    false
-    ))
+(cond
+  (not (= (count a-seq) (count b-seq))) false
+  (and (empty? a-seq) (empty? b-seq)) true
+  ;(= (first a-seq) (first b-seq)) true
+  (not (= (first a-seq) (first b-seq))) false
+    :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
