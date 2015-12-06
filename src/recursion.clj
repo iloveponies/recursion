@@ -88,13 +88,24 @@
     (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (cond
+    (= n 0) 0
+    (= k 0) 1
+    :else (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (cond
+    (= n 0) 0
+    (= n 1) 1
+    :else (+
+      (fib (- n 1))
+      (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (cond
+    (<= how-many-times 0) '()
+    :else (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
+    ))
 
 (defn my-range [up-to]
   [:-])
