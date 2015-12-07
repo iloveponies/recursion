@@ -194,7 +194,7 @@
 ))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  "TODO")
 
 (defn permutations [a-set]
   [:-])
