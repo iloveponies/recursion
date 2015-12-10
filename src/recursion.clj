@@ -157,17 +157,27 @@
     (conj (vector (my-take cnt a-seq)) (my-drop cnt a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond (and (empty? a-seq) (empty? b-seq)) '()
+        (empty? a-seq) b-seq
+        (empty? b-seq) a-seq
+        (< (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+        (>= (first a-seq) (first b-seq)) (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (= (count a-seq) 1)) 
+    a-seq
+    (let [firstHalf (first (halve a-seq))
+          secondHalf (second (halve a-seq))]
+      (seq-merge (merge-sort firstHalf) (merge-sort secondHalf)))))
 
+;; I'll do the rest later
 (defn split-into-monotonics [a-seq]
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  (cons (a-set) (rotations (rest a-set))))
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    #{#{}}
+    (set (cons (first a-set) (set (rotations (rest a-set)))))))
