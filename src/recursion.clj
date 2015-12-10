@@ -8,8 +8,8 @@
 
 (defn singleton? [coll]
   (and
-    (if (= nil (first coll)) false true)
-    (if (empty? (rest coll)) true false)))
+    (not (empty? coll))
+    (empty? (rest coll))))
 
 (defn my-last [coll]
   (if (empty? (rest coll))
@@ -60,8 +60,10 @@
 
 (defn seq= [a-seq b-seq]
  (cond
-    (and (empty? a-seq) (empty? b-seq)) true
-    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq)) :else false)) 
+  (and (empty? a-seq) (empty? b-seq)) true
+  (not (= (count a-seq) (count b-seq))) false
+  (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq)) 
+  :else false))
 
 (defn my-map [f seq-1 seq-2]
     (if (or (empty? seq-1) (empty? seq-2))
@@ -90,34 +92,69 @@
 
 (defn tails [a-seq]
   (if (>= 0 (count a-seq))
-  []
+  [()]
   (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (if (>= 0 (count a-seq))
+  [()]
+  (map reverse (tails (reverse a-seq)))))
+
+(defn rotate [a-seq n] 
+  (let [seqRotated (concat (rest a-seq) (vector (first a-seq)))]
+  (if (>= 0 n) 
   []
-  (cons (reverse (seq a-seq)) (inits (rest a-seq)))))
+  (cons seqRotated (rotate seqRotated (dec n))))))
 
 (defn rotations [a-seq]
-  [:-])
+    (if (empty? a-seq)
+    [()]
+    (rotate a-seq (count a-seq))))
+
+
+(defn get-frequency-of-a-key [freqs a-seq a-key]
+    (if (empty? a-seq)
+      freqs
+      (if (= a-key (first a-seq)) 
+          (get-frequency-of-a-key (inc freqs) (rest a-seq) a-key)
+          (get-frequency-of-a-key freqs (rest a-seq) a-key))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [a-key (first a-seq)
+          a-freqs (if (contains? freqs a-key)
+                      (assoc freqs a-key (inc (freqs a-key)))
+                      (assoc freqs a-key 1))]
+      (my-frequencies-helper a-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
+
+(defn un-frequencies-helper [components a-map]
+  (if (empty? a-map)
+    components
+    (let [a-val (first a-map)
+      a-components (concat components (repeat (second a-val) (first a-val)))]
+      (un-frequencies-helper a-components (rest a-map)))))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (un-frequencies-helper {} a-map))
+
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (= n 0))
+  []
+  (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (= n 0) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [cnt (int (/ (count a-seq) 2))]
+    (conj (vector (my-take cnt a-seq)) (my-drop cnt a-seq))))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
