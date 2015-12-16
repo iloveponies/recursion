@@ -184,6 +184,7 @@
       (seq-merge (merge-sort firsthalf) (merge-sort secondhalf))
       )))
 
+
 (defn split-into-monotonics [a-seq]
   (reverse (map reverse
        (loop [acc nil
@@ -200,33 +201,55 @@
            (or (empty? (rest seq1)) (and (= dirup "down") (> (first seq1) (second seq1)))) (recur acc (cons (first seq1) mon) (rest seq1) dirup)
            :else (recur (cons (cons (first seq1) mon) acc) nil (rest seq1) nil)
            )))))
-;; at the end of a monotonic sequence the direction should be unset... perhaps it needs 3 states 0 1 2
+
 
 (defn permutations [a-set]
-[:-])
-;;  (loop [acc nil
-;;         perm a-set
-;;         elem (first a-set)
-;;         remset (disj a-set elem)]
-;;    (cond
-;;      (empty? remset) '()
-;;      (empty? mon) acc
-      ;;what is the end condition?
-;;      :else (recur (cons elem acc) (disj mon elem) (first remset) (disj remset elem))     
-;;      )))
+  (if (empty? a-set)
+    '()
+   (reduce concat
+          (map (fn [x]
+         (let [remaining (disj a-set x)]
+           (map (fn [rem] (cons x rem )) (rotations remaining))
+           )) a-set )
+   )))
 
-;;(defn permutations [a-set]
-;;  (defn perm-helper [elem set1]
-;;    (cons elem (permutations set1)))
-;;  (loop (if (empty? a-set)
-;;    '()
-;;    perm-helper (first set1) (disj set1 elem))))
+;take each element in the set and concat it to the the rotations of what is left
+;(defn powerset [a-set]
+;  (defn powerset-helper [set acc]
+;   (if (empty? set)
+;    acc
+;    (powerset-helper (disj set (first set)) (conj (conj acc (first set)) (disj set (first set))))
+;    ))
+;  (reduce powerset-helper a-set #{a-set}))
+  ; define a helper which adds the first and rest of every elem into the acc set
 
-;; permutations : the head of the set with the permutations of the remainder until there are no more permutations in the remainder
-; permutation of a single element or empty set is that set
-;; (empty? (disj #{1} 1))
+;(defn powerset [a-set]
+;  (defn powerset-helper [elem set acc]
+;    (if (empty? set)
+;      acc
+;       (conj (conj (conj acc (set (list elem))) set) (map (fn [x] (powerset-helper x (disj set x) acc)) set))
+;      ))
+;  (concat (map (fn [x] (powerset-helper x (disj a-set x) #{a-set})) a-set )))
 
 
 (defn powerset [a-set]
-  [:-])
+  (defn powerset-helper-map [m-set acc]
+    (map (fn [x] (powerset-helper x (disj m-set x) acc)) m-set))
+  (defn powerset-helper [elem set1 acc]
+    (if (empty? set1)
+      acc
+      (let [newacc (conj (conj acc #{elem}) set1)]
+        (powerset-helper-map set1 newacc))))
+  (powerset-helper-map a-set #{a-set}))
 
+  
+(defn powerset [a-set]
+  (defn powerset-helper [elem set1 acc]
+    (if (empty? set1)
+      acc
+      (conj (conj acc #{elem}) set1)
+      ))
+  (let [sets (map (fn [x] (powerset-helper x (disj a-set x) #{a-set})) a-set)]
+                                        ;(reduce clojure.set/union (map (fn [x] (conj (second sets) x)) (first sets)))))
+    (reduce clojure.set/union sets)))
+;test this idea of how to combine down the sets
