@@ -184,13 +184,44 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq)
+      (list a-seq)
+
+    (singleton? a-seq)
+      (vector () a-seq)
+
+    :else
+      (let [half (int (/ (count a-seq) 2))]
+        (vector (my-take half a-seq)
+             (my-drop half a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and (empty? a-seq) (empty? b-seq))
+      ()
+
+    (empty? a-seq)
+      (cons (first b-seq)
+            (seq-merge a-seq (rest b-seq)))
+
+    (empty? b-seq)
+      (cons (first a-seq)
+            (seq-merge (rest a-seq) b-seq))
+
+    (< (first a-seq) (first b-seq))
+      (cons (first a-seq)
+            (seq-merge (rest a-seq) b-seq))
+
+    :else
+      (cons (first b-seq)
+            (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq)
+          (singleton? a-seq))
+    a-seq
+    (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
