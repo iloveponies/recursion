@@ -223,8 +223,50 @@
     a-seq
     (apply seq-merge (map merge-sort (halve a-seq)))))
 
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (def rising?
+    (fn [s] (or (singleton? s) (>= (first s) (second s)))))
+
+  (def asc-start
+    (fn [a-seq]
+      (cond
+       (empty? a-seq)
+       (vector)
+
+       (not (rising? a-seq))
+       (vector (first a-seq))
+
+       :else
+       (cons (first a-seq)
+             (asc-start (rest a-seq))))))
+
+  (def desc-start
+    (fn [a-seq]
+      (cond
+       (empty? a-seq)
+       (vector)
+
+       (rising? a-seq)
+       (vector (first a-seq))
+
+       :else
+       (cons (first a-seq)
+             (desc-start (rest a-seq))))))
+
+  (cond
+   (empty? a-seq)
+   nil
+
+   (rising? a-seq)
+   (let [rs (asc-start a-seq)]
+     (cons rs
+           (split-into-monotonics (my-drop (count rs) a-seq))))
+
+   :else
+   (let [ds (desc-start a-seq)]
+     (cons ds
+           (split-into-monotonics (my-drop (count ds) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
