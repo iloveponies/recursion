@@ -228,43 +228,30 @@
   (def rising?
     (fn [s] (or (singleton? s) (>= (first s) (second s)))))
 
-  (def asc-start
-    (fn [a-seq]
+  (def monotonic-start
+    (fn [pred a-seq]
       (cond
        (empty? a-seq)
        (vector)
 
-       (not (rising? a-seq))
+       (pred a-seq)
        (vector (first a-seq))
 
        :else
        (cons (first a-seq)
-             (asc-start (rest a-seq))))))
-
-  (def desc-start
-    (fn [a-seq]
-      (cond
-       (empty? a-seq)
-       (vector)
-
-       (rising? a-seq)
-       (vector (first a-seq))
-
-       :else
-       (cons (first a-seq)
-             (desc-start (rest a-seq))))))
+             (monotonic-start pred (rest a-seq))))))
 
   (cond
    (empty? a-seq)
    nil
 
    (rising? a-seq)
-   (let [rs (asc-start a-seq)]
+   (let [rs (monotonic-start (complement rising?) a-seq)]
      (cons rs
            (split-into-monotonics (my-drop (count rs) a-seq))))
 
    :else
-   (let [ds (desc-start a-seq)]
+   (let [ds (monotonic-start rising? a-seq)]
      (cons ds
            (split-into-monotonics (my-drop (count ds) a-seq))))))
 
