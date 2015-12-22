@@ -255,9 +255,21 @@
      (cons ds
            (split-into-monotonics (my-drop (count ds) a-seq))))))
 
+
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (apply concat
+           (map (fn [x] (rotations x))
+                (map (fn [x] (conj x (first a-set)))
+                     (permutations (rest a-set)))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [ps (powerset (rest a-set))]
+      (concat ps
+              (map (fn [x]
+                     (conj x (first a-set)))
+                   ps)))))
 
