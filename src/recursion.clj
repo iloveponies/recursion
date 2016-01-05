@@ -167,10 +167,34 @@
       (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (set a-seq)
+    (let [monotonic? (fn [a-seq] (or
+                                   (apply <= a-seq)
+                                   (apply >= a-seq)))
+          split-help (fn [prefix suffix]
+                       (if (monotonic? prefix)
+                         (list prefix suffix)
+                         (recur (butlast prefix)
+                                (cons (last prefix)
+                                      suffix))))
+          [prefix suffix] (split-help a-seq '())]
+      (cons prefix (split-into-monotonics suffix)))))
+
 
 (defn permutations [a-set]
-  [:-])
+  (let [ perms (fn [[f & r]]
+                 (map (fn [e] (cons f e)) (permutations r)))]
+    (cond
+      (empty? a-set)
+        (cons a-set a-set)
+      (= 1 (count a-set))
+        (list a-set)
+      :else
+      (apply concat (map perms (rotations a-set))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    (hash-set (hash-set))
+    (clojure.set/union (powerset (next a-set))
+           (map #(conj % (first a-set)) (powerset (next a-set))))))
