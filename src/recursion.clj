@@ -300,5 +300,8 @@
                 (first (rest loop-set)))))))
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+    (empty? a-set) #{#{}}
+    :else nil
+    ))
 
