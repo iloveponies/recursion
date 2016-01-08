@@ -302,6 +302,13 @@
 (defn powerset [a-set]
   (cond
     (empty? a-set) #{#{}}
-    :else nil
-    ))
+    :else (loop [loop-set (set a-set)
+                 acc (conj #{} (set a-set))]
+            (if (empty? loop-set)
+              (conj acc #{})
+              (recur
+                (rest loop-set)
+                (clojure.set/union (conj acc
+                            (conj #{} (first loop-set)))
+                      (powerset (disj (set a-set) (first loop-set)))))))))
 
