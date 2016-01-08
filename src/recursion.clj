@@ -101,26 +101,13 @@
     (empty? a-seq) '(())
     :else (cons a-seq (tails (rest a-seq)))))
 
-;(defn inits [a-seq]
-;  (defn inits-helper [a-seq]
-;    (cond
-;      (empty? a-seq) '(())
-;      :else (cons (seq a-seq) (inits-helper
-;                          (reverse (rest (reverse a-seq)))))))
-;  (reverse (inits-helper a-seq)))
-
 (defn inits [a-seq]
-  (defn inits-aide [a-seq]
-    (loop [inits-seq a-seq
-           acc []]
-      (cond
-        (empty? inits-seq) (conj acc [])
-        :else (recur (reverse (rest (reverse inits-seq)))
-                     (conj acc inits-seq)))))
-
-  (cond
-    (empty? a-seq) [[]]
-    :else (reverse (inits-aide a-seq))))
+  (defn inits-helper [a-seq]
+    (cond
+      (empty? a-seq) '(())
+      :else (cons (seq a-seq) (inits-helper
+                          (reverse (rest (reverse a-seq)))))))
+  (reverse (inits-helper a-seq)))
 
 (defn rotations [a-seq]
   (defn acc-rots [acc a-seq k]
@@ -289,7 +276,28 @@
                 (count (first (rest inits-seq)))))))))))
 
 (defn permutations [a-set]
-  [:-])
+  (defn add-permutated-tail [elem permutated-tail]
+    (loop [acc []
+           p-tail permutated-tail]
+      (if (empty? p-tail)
+        acc
+        (recur
+          (cons (cons elem (first p-tail)) acc)
+          (rest p-tail)))))
+  (cond
+    (empty? a-set) '(())
+    (singleton? a-set) (conj () (seq a-set))
+    :else (loop [loop-set a-set
+                 acc []
+                 elem (first loop-set)]
+            (if (empty? loop-set)
+              acc
+              (recur
+                (rest loop-set)
+                (concat (add-permutated-tail
+                        elem
+                        (permutations (disj (set a-set) elem))) acc)
+                (first (rest loop-set)))))))
 
 (defn powerset [a-set]
   [:-])
