@@ -102,12 +102,12 @@
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (map reverse (tails (reverse a-seq))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (cond
    (empty? a-seq) '(())
-   :else (rest (map concat (reverse (tails a-seq)) (inits a-seq)))))
+   :else (rest (map concat (tails a-seq) (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -155,12 +155,43 @@
    :else (let [[b-seq c-seq] (halve a-seq)]
            (seq-merge (merge-sort b-seq) (merge-sort c-seq)))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
 
-(defn permutations [a-set]
-  [:-])
+(defn monotonic? [a-seq]
+  (cond
+   (empty? a-seq) true
+   (singleton? a-seq) true
+   :else (or (apply <= a-seq) (apply >= a-seq))))
+
+(defn split-into-monotonics [a-seq]
+  (cond
+   (empty? a-seq) '()
+   :else (let [x (last (filter monotonic? (inits a-seq)))]
+          (cons x (split-into-monotonics (drop (count x) a-seq))))))
+
+(defn permutations [a-seq]
+  (cond
+   (empty? a-seq) '(())
+   :else (let [first-elem (first a-seq)
+               permutations-of-rest (permutations (rest a-seq))
+               permutations-seq (map (fn [x] (cons first-elem x)) permutations-of-rest)]
+           (apply concat (map rotations permutations-seq)))))
+
+
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+   (empty? a-set) #{#{}}
+   :else (let [first-elem (first a-set)
+               powerset-of-rest (powerset (rest a-set))
+               powerset-set (map (fn [x] (conj x first-elem)) powerset-of-rest)]
+            (concat powerset-of-rest powerset-set))))
+
+
+
+
+
+
+
+
+
 
