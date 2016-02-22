@@ -156,8 +156,7 @@
   (let [half (int (/ (count a-seq) 2))]
     (concat (list (my-take half a-seq)) (list (my-drop half a-seq)))))
 
-(defn seq-merge [a-seq b-seq]
-  (seq-merge-helper a-seq b-seq []))
+
 
 (defn my-lt
   "less-than operation that can compare nil without exploding"
@@ -176,6 +175,9 @@
             :else
             (seq-merge-helper a-seq (rest b-seq) (conj acc b))))))
 
+(defn seq-merge [a-seq b-seq]
+  (seq-merge-helper a-seq b-seq []))
+
 (defn merge-sort [a-seq]
   (let [half-a (first (halve a-seq))
         half-b (second (halve a-seq))]
@@ -187,9 +189,24 @@
        half-b
        (merge-sort half-b)))))
 
+(defn monotonic-head [a-seq]
+  (loop [head (first a-seq) tail (rest a-seq) acc []]
+    (if (or (nil? head) (and (not (nil? (last acc))) (< head (last acc))))
+      acc
+      (recur (first tail) (rest tail) (conj acc head)))))
+
+(defn monotonic-tail [a-seq]
+  (drop (count (monotonic-head a-seq)) a-seq))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (loop [head (monotonic-head a-seq)
+         tail (monotonic-tail a-seq)
+         acc []]
+    (if (empty? head)
+      acc
+      (recur (monotonic-head tail)
+             (monotonic-tail tail) 
+             (concat acc (list head))))))
 
 (defn permutations [a-set]
   [:-])
