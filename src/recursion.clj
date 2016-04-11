@@ -179,16 +179,12 @@
       (cons monotonic
             (split-into-monotonics (drop (count monotonic) a-seq))))))
 
-(defn flat-map [f a-seq]
-  (apply concat (map f a-seq)))
-
 (defn permutations [a-seq]
   (let [a-set (set a-seq)]
     (if (empty? a-set)
       '(())
-      (flat-map (fn [x] (map (fn [ps] (cons x ps))
-                                  (permutations (disj a-set x))))
-                a-set))))
+      (mapcat (fn [x] (map (fn [ps] (cons x ps)) (permutations (disj a-set x))))
+              a-set))))
 
 (defn powerset-helper [acc a-set]
   (if (empty? a-set)
