@@ -7,7 +7,7 @@
        (product (rest coll)))))
 
 (defn singleton? [coll]
-  (not (or (empty? coll) (second coll))))
+  (and (not (empty? coll)) (empty? (rest coll))))
 
 (defn my-last [coll]
   (if (or (singleton? coll) (empty? coll))
@@ -32,7 +32,7 @@
     nil
     (if (singleton? a-seq)
       (first a-seq)
-      (seq-max a-seq
+      (seq-max (first a-seq)
         (longest-sequence (rest a-seq))))))
 
 (defn my-filter [pred? a-seq]
@@ -64,7 +64,8 @@
 
 (defn seq= [a-seq b-seq]
   (cond
-    (and (empty? a-seq) (empty? b-seq)) true
+    (or (empty? a-seq) (empty? b-seq))
+      (and (empty? a-seq) (empty? b-seq))
     (= (first a-seq) (first b-seq))
       (seq= (rest a-seq) (rest b-seq))
     :else false))
@@ -108,7 +109,7 @@
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
-    ()
+    '(())
     (rest (map concat (tails a-seq) (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
@@ -164,11 +165,41 @@
       (seq-merge (merge-sort left) (merge-sort right)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (loop [acc []
+         b-seq a-seq]
+    (if (empty? b-seq)
+      acc
+      (let [monotonic? (fn [pred]
+                         (fn [sq]
+                           (if (or (empty? sq)
+                                   (singleton? sq))
+                             true
+                             (apply pred sq))))
+            inits-seq (inits b-seq)
+            inc-seq (longest-sequence
+                      (take-while (monotonic? <=)
+                                  inits-seq))
+            inc-seq-len (count inc-seq)
+            dec-seq (longest-sequence
+                      (take-while (monotonic? >=)
+                                  inits-seq))
+            dec-seq-len (count dec-seq)]
+        (if (> inc-seq-len
+               dec-seq-len)
+          (recur (conj acc inc-seq)
+                 (drop inc-seq-len b-seq))
+          (recur (conj acc dec-seq)
+                 (drop dec-seq-len b-seq)))))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond
+    (empty? a-set) (cons () ())
+    (= 1 (count a-set)) (list a-set)
+    :else (for [a a-set
+                b (permutations (disj (set a-set) a))]
+            (cons a b))))
 
+(use '[clojure.set :only [union]])
 (defn powerset [a-set]
-  [:-])
+  (apply union #{(set a-set)} (map #(powerset (disj (set a-set) %1)) (set a-set))))
 
