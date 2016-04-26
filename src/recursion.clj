@@ -180,8 +180,9 @@
                         (map (fn [p] (cons (first s) p)) (permutations (rest s))))
                       (rotations a-set)))))
 
-
-
 (defn powerset [a-set]
-  [:-])
+  (loop [res '(())
+         s a-set]
+    (if (empty? s) (set (map set res))
+      (recur (concat res (map (fn [r] (cons (first s) r)) res)) (rest s)))))
 
