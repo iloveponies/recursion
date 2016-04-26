@@ -126,17 +126,61 @@
         left (int (/ len 2))]
     (vector (take left a-seq) (drop left a-seq))))
 
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (loop [res '(), a a-seq, b b-seq]
+    (cond 
+      (and (empty? a) (empty? b)) (reverse res)
+
+      (and (not (empty? a)) (not (empty? b)))
+      (if (< (first a) (first b))
+        (recur (cons (first a) res) (rest a) b)
+        (recur (cons (first b) res) a (rest b)))
+
+      (not (empty? a)) (recur (cons (first a) res) (rest a) b)
+
+      (not (empty? b)) (recur (cons (first b) res) a (rest b)))))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq)) a-seq ;; already sorted
+    (let [[left right] (halve a-seq)]
+      (seq-merge (merge-sort left) (merge-sort right)))))
+
+(defn sign-of [n]
+  (cond (pos? n)  1
+        (neg? n) -1
+        :else     0))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (letfn [(head-tail [s]
+            (loop [head (list (first s)), sign 0, tail (rest s)]
+              (if (empty? tail) [(reverse head) tail]
+                (let [ff (first tail)
+                      ss (sign-of (- (first head) ff))]
+                  (cond (zero? sign) (recur (cons ff head) ss   (rest tail))
+                        (zero? ss)   (recur (cons ff head) sign (rest tail))
+                        (= sign ss)  (recur (cons ff head) sign (rest tail))
+                        :else [(reverse head) tail])))))]
+        (loop [res '(), s a-seq]
+          (if (empty? s) (reverse res)
+            (let [[head tail] (head-tail s)]
+              (recur (cons head res) tail))))))
+
+(defn two? [s]
+  (and (not (empty? s)) (singleton? (rest s))))
 
 (defn permutations [a-set]
-  [:-])
+  (cond (empty? a-set) '(())
+        (singleton? a-set) (list a-set)
+        (two? a-set) (list a-set (reverse a-set))
+        :else
+          (apply concat 
+                 (map (fn [s] 
+                        (map (fn [p] (cons (first s) p)) (permutations (rest s))))
+                      (rotations a-set)))))
+
+
 
 (defn powerset [a-set]
   [:-])
