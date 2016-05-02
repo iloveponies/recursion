@@ -6,11 +6,9 @@
     (* (first coll) (product (rest coll)))))
 
 (defn singleton? [coll]
-  (or
-    (nil? coll)
-    (and
-      (not (nil? (first coll)))
-      (empty? (rest coll)))))
+  (if (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
   (cond
@@ -31,12 +29,9 @@
     (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
-  (let [ largest
-         (cond
-           (empty? seq-1) 2
-           (empty? seq-2) 1
-           :else (seq-max (rest seq-1) (rest seq-2)))]
-    (if (= largest 1) seq-1 seq-2)))
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
   (if (empty? a-seq) nil
@@ -68,15 +63,13 @@
     (pred? (first a-seq))(my-drop-while pred? (rest a-seq))
     :else a-seq))
 
-	(defn seq= [a-seq b-seq]
-    (cond
-      (and
-        (empty? a-seq)
-        (empty? b-seq)) true
-      (or
-        (empty? a-seq)
-        (empty? b-seq)) false
-      :else (recur (rest a-seq) (rest b-seq))))
+(defn seq= [a-seq b-seq]
+  (cond
+    (and (empty? a-seq) (empty? b-seq)) true
+    (or (empty? a-seq) (empty? b-seq)) false
+    (= (first a-seq) (first b-seq))
+    (seq= (rest a-seq) (rest b-seq))
+    :else false))
 
 (defn my-map [f seq-1 seq-2]
   (cond
