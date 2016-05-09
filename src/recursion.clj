@@ -47,9 +47,15 @@
       (let [winner (seq-max (first a-seq) (first others))]
         (longest-sequence (cons winner (rest others)))))))
 
-
+;; done
 (defn my-filter [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [a (first a-seq)]
+      (cond
+        (pred? a) (cons a (my-filter pred? (rest a-seq)))
+        :else (my-filter pred? (rest a-seq))))))
+
 
 (defn sequence-contains? [elem a-seq]
   :-)
