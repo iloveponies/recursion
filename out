@@ -1,0 +1,1441 @@
+
+[31mFAIL[0m "max-element" at (recursion.clj:37)
+    Expected: nil
+      Actual: java.lang.StackOverflowError
+              recursion$singleton_QMARK_.invoke(recursion.clj:10)
+              recursion$max_element.invoke(recursion.clj:20)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+              recursion$max_element.invoke(recursion.clj:22)
+
+[31mFAIL[0m "seq-max" at (recursion.clj:41)
+    Expected: [1 2]
+      Actual: [:-]
+
+[31mFAIL[0m "seq-max" at (recursion.clj:42)
+    Expected: [1 2 3]
+      Actual: [:-]
+
+[31mFAIL[0m "seq-max" at (recursion.clj:43)
+    Expected: [3 4]
+      Actual: [:-]
+
+[31mFAIL[0m "longest-sequence" at (recursion.clj:47)
+    Expected: [1 2 3]
+      Actual: [:-]
+
+[31mFAIL[0m "longest-sequence" at (recursion.clj:48)
+    Expected: [1 2]
+      Actual: [:-]
+
+[31mFAIL[0m "longest-sequence" at (recursion.clj:49)
+    Expected: nil
+      Actual: [:-]
+
+[31mFAIL[0m "my-filter" at (recursion.clj:53)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just (quote (1 3)))
+    The checker said this about the reason:
+        Expected two elements. There was one.
+
+[31mFAIL[0m "my-filter" at (recursion.clj:54)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "my-filter" at (recursion.clj:55)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [nil])
+    The checker said this about the reason:
+        Best match found: []
+
+[31mFAIL[0m "my-filter" at (recursion.clj:56)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just (quote (9001)))
+    The checker said this about the reason:
+        Best match found: []
+
+[31mFAIL[0m "my-filter" at (recursion.clj:57)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "sequence-contains?" at (recursion.clj:61)
+    Expected: true
+      Actual: :-
+
+[31mFAIL[0m "sequence-contains?" at (recursion.clj:62)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "sequence-contains?" at (recursion.clj:63)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "my-take-while" at (recursion.clj:67)
+    Expected: (1)
+      Actual: [:-]
+
+[31mFAIL[0m "my-take-while" at (recursion.clj:68)
+    Expected: (1 3)
+      Actual: [:-]
+
+[31mFAIL[0m "my-take-while" at (recursion.clj:69)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "my-take-while" at (recursion.clj:70)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "my-drop-while" at (recursion.clj:74)
+    Expected: (2 3 4)
+      Actual: [:-]
+
+[31mFAIL[0m "my-drop-while" at (recursion.clj:75)
+    Expected: (4 5)
+      Actual: [:-]
+
+[31mFAIL[0m "my-drop-while" at (recursion.clj:76)
+    Expected: (1 3 4 5)
+      Actual: [:-]
+
+[31mFAIL[0m "my-drop-while" at (recursion.clj:77)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "seq=" at (recursion.clj:81)
+    Expected: true
+      Actual: :-
+
+[31mFAIL[0m "seq=" at (recursion.clj:82)
+    Expected: true
+      Actual: :-
+
+[31mFAIL[0m "seq=" at (recursion.clj:83)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "seq=" at (recursion.clj:84)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "seq=" at (recursion.clj:85)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "seq=" at (recursion.clj:86)
+    Expected: false
+      Actual: :-
+
+[31mFAIL[0m "my-map" at (recursion.clj:90)
+    Expected: (5 6 7)
+      Actual: [:-]
+
+[31mFAIL[0m "my-map" at (recursion.clj:91)
+    Expected: (1 2 3)
+      Actual: [:-]
+
+[31mFAIL[0m "my-map" at (recursion.clj:92)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "power" at (recursion.clj:96)
+    Expected: 4
+      Actual: :-
+
+[31mFAIL[0m "power" at (recursion.clj:97)
+    Expected: 125
+      Actual: :-
+
+[31mFAIL[0m "power" at (recursion.clj:98)
+    Expected: 1
+      Actual: :-
+
+[31mFAIL[0m "power" at (recursion.clj:99)
+    Expected: 0
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:103)
+    Expected: 0
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:104)
+    Expected: 1
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:105)
+    Expected: 1
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:106)
+    Expected: 2
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:107)
+    Expected: 3
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:108)
+    Expected: 5
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:109)
+    Expected: 8
+      Actual: :-
+
+[31mFAIL[0m "fib" at (recursion.clj:110)
+    Expected: 55
+      Actual: :-
+
+[31mFAIL[0m "my-repeat" at (recursion.clj:114)
+    Expected: (:a :a)
+      Actual: [:-]
+
+[31mFAIL[0m "my-repeat" at (recursion.clj:115)
+    Expected: ("lol" "lol" "lol")
+      Actual: [:-]
+
+[31mFAIL[0m "my-repeat" at (recursion.clj:116)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "my-range" at (recursion.clj:120)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "my-range" at (recursion.clj:121)
+    Expected: (0)
+      Actual: [:-]
+
+[31mFAIL[0m "my-range" at (recursion.clj:122)
+    Expected: (1 0)
+      Actual: [:-]
+
+[31mFAIL[0m "my-range" at (recursion.clj:123)
+    Expected: (2 1 0)
+      Actual: [:-]
+
+[31mFAIL[0m "tails" at (recursion.clj:128)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[1 2 3 4] [2 3 4] [3 4] [4] []] :in-any-order)
+    The checker said this about the reason:
+        Expected five elements. There was one.
+
+[31mFAIL[0m "tails" at (recursion.clj:129)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[]])
+    The checker said this about the reason:
+        Best match found: []
+
+[31mFAIL[0m "tails" at (recursion.clj:130)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[1] []] :in-any-order)
+    The checker said this about the reason:
+        Expected two elements. There was one.
+
+[31mFAIL[0m "inits" at (recursion.clj:133)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[] [1] [1 2] [1 2 3] [1 2 3 4]] :in-any-order)
+    The checker said this about the reason:
+        Expected five elements. There was one.
+
+[31mFAIL[0m "inits" at (recursion.clj:134)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[]])
+    The checker said this about the reason:
+        Best match found: []
+
+[31mFAIL[0m "inits" at (recursion.clj:135)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[] [1]] :in-any-order)
+    The checker said this about the reason:
+        Expected two elements. There was one.
+
+[31mFAIL[0m "rotations" at (recursion.clj:139)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just (quote (())))
+    The checker said this about the reason:
+        Best match found: []
+
+[31mFAIL[0m "rotations" at (recursion.clj:140)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[1 2 3] [2 3 1] [3 1 2]] :in-any-order)
+    The checker said this about the reason:
+        Expected three elements. There was one.
+
+[31mFAIL[0m "rotations" at (recursion.clj:141)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [[:a :b] [:b :a]] :in-any-order)
+    The checker said this about the reason:
+        Expected two elements. There was one.
+
+[31mFAIL[0m "rotations" at (recursion.clj:142)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just (quote (1 5 9 2)) (quote (2 1 5 9)) (quote (9 2 1 5)) (quote (5 9 2 1)) :in-any-order)
+    The checker said this about the reason:
+        Expected four elements. There was one.
+
+[31mFAIL[0m "rotations" at (recursion.clj:145)
+    Expected: 5
+      Actual: 1
+
+[31mFAIL[0m "my-frequencies" at (recursion.clj:149)
+    Expected: {}
+      Actual: [:-]
+
+[31mFAIL[0m "my-frequencies" at (recursion.clj:150)
+    Expected: {:D 3, 1 2, 2 2}
+      Actual: [:-]
+
+[31mFAIL[0m "my-frequencies" at (recursion.clj:151)
+    Expected: {:a 3, 1 1, "moi" 3}
+      Actual: [:-]
+
+[31mFAIL[0m "un-frequencies" at (recursion.clj:156)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [:a :a :a "^_^" :b :b] :in-any-order)
+    The checker said this about the reason:
+        Expected six elements. There was one.
+
+[31mFAIL[0m "un-frequencies" at (recursion.clj:158)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [:a :a :b :c] :in-any-order)
+    The checker said this about the reason:
+        Expected four elements. There was one.
+
+[31mFAIL[0m "un-frequencies" at (recursion.clj:160)
+    Expected: {:a 100, :b 10}
+      Actual: [:-]
+
+[31mFAIL[0m "my-take" at (recursion.clj:165)
+    Expected: (1 2)
+      Actual: [:-]
+
+[31mFAIL[0m "my-take" at (recursion.clj:166)
+    Expected: (:a :b)
+      Actual: [:-]
+
+[31mFAIL[0m "my-drop" at (recursion.clj:170)
+    Expected: (3 4)
+      Actual: [:-]
+
+[31mFAIL[0m "my-drop" at (recursion.clj:171)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "halve" at (recursion.clj:175)
+    Expected: [(1 2) (3 4)]
+      Actual: [:-]
+
+[31mFAIL[0m "halve" at (recursion.clj:176)
+    Expected: [(1 2) (3 4 5)]
+      Actual: [:-]
+
+[31mFAIL[0m "halve" at (recursion.clj:177)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just empty? (quote (1)))
+    The checker said this about the reason:
+        Expected two elements. There was one.
+
+[31mFAIL[0m "seq-merge" at (recursion.clj:181)
+    Expected: (1 2 4 6 7)
+      Actual: [:-]
+
+[31mFAIL[0m "seq-merge" at (recursion.clj:182)
+    Expected: (1 2 2 5 7 8 9 10)
+      Actual: [:-]
+
+[31mFAIL[0m "merge-sort" at (recursion.clj:186)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: empty?
+
+[31mFAIL[0m "merge-sort" at (recursion.clj:187)
+    Expected: (1 2 3)
+      Actual: [:-]
+
+[31mFAIL[0m "merge-sort" at (recursion.clj:188)
+    Expected: (1 2 3 4 5 17 100)
+      Actual: [:-]
+
+[31mFAIL[0m "split-into-monotonics" at (recursion.clj:192)
+    Expected: ((0 1 2) (1 0))
+      Actual: [:-]
+
+[31mFAIL[0m "split-into-monotonics" at (recursion.clj:193)
+    Expected: ((0 5) (4 7) (1 3))
+      Actual: [:-]
+
+[31mFAIL[0m "permutations" at (recursion.clj:197)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just empty?)
+    The checker said this about the reason:
+        Best match found: []
+              It matched: [] (in that order).
+
+[31mFAIL[0m "permutations" at (recursion.clj:198)
+    Expected: 120
+      Actual: 1
+
+[31mFAIL[0m "permutations" at (recursion.clj:199)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (just [1 5 3] [5 1 3] [5 3 1] [1 3 5] [3 1 5] [3 5 1] :in-any-order)
+    The checker said this about the reason:
+        Expected six elements. There was one.
+
+[31mFAIL[0m "powerset" at (recursion.clj:205)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (some-checker (just empty?) (just #{#{}}))
+
+[31mFAIL[0m "powerset" at (recursion.clj:206)
+Actual result did not agree with the checking function.
+        Actual result: [:-]
+    Checking function: (some-checker (just empty? (just 4 :in-any-order) (just 2 :in-any-order) (just 2 4 :in-any-order) (just 1 :in-any-order) (just 1 4 :in-any-order) (just 1 2 :in-any-order) (just 1 2 4 :in-any-order) :in-any-order) (just #{#{} #{1} #{2} #{1 2} #{4} #{1 4} #{2 4} #{1 2 4}}))
+
+[31mFAIL[0m "powerset" at (recursion.clj:216)
+    Expected: 1024
+      Actual: 1
+[31mFAILURE:[0m 88 checks failed.  (But 16 succeeded.)
+Subprocess failed
