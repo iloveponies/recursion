@@ -55,9 +55,17 @@
       seq-2
       seq-1)))
 
+;Ex7 Write the function (longest-sequence a-seq) that takes a sequence of sequences as a parameter and returns the longest one.
 (defn longest-sequence [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) nil
+    (singleton? a-seq) (first a-seq)
+    (= (count a-seq) 2) (seq-max (first a-seq) (second a-seq))
+    :else (longest-sequence (rest a-seq))
+    )
+  )
 
+;Ex8 Implement the function (my-filter pred? a-seq) that works just like the standard filter. Don’t use remove.
 (defn my-filter [pred? a-seq]
   [:-])
 
