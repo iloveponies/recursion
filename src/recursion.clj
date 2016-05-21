@@ -92,7 +92,11 @@
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (reverse (map sort (tails (reverse a-seq)))))
+  (reverse
+     (map
+       reverse
+         (tails
+           (reverse a-seq)))))
 
 (defn rotate-helper [sq rots]
   (if (= 0 rots)
@@ -163,10 +167,16 @@
                (merge-sort (last (halve a-seq))))))
 
 (defn monotonic? [a-seq]
-  (or (apply <= a-seq) (apply >= a-seq)))
+  (if (empty? a-seq) true
+  (or (apply <= a-seq) (apply >= a-seq))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [a-inits (inits a-seq)
+        a-monots (last (take-while monotonic? a-inits))]
+    (cond
+       (empty? a-seq) '(())
+       (= (count a-monots) (count a-seq)) (seq [(seq a-seq)])
+       :else (cons a-monots (split-into-monotonics (drop (count a-monots) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
