@@ -61,34 +61,67 @@
     (empty? a-seq) nil
     (singleton? a-seq) (first a-seq)
     (= (count a-seq) 2) (seq-max (first a-seq) (second a-seq))
-    :else (longest-sequence (rest a-seq))
-    )
-  )
+    :else (longest-sequence (rest a-seq))))
 
 ;Ex8 Implement the function (my-filter pred? a-seq) that works just like the standard filter. Don’t use remove.
 (defn my-filter [pred? a-seq]
-  [:-])
-
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
+    :else (my-filter pred? (rest a-seq))))
+;Ex9 Write the function (sequence-contains? elem a-seq) that returns true if the given sequence contains the given value, otherwise false.
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+    (empty? a-seq) false
+    (= elem (first a-seq)) true
+    :else (sequence-contains? elem (rest a-seq))))
 
+;Ex10 Write the function (my-take-while pred? a-seq) that returns the longest prefix of a-seq where pred? returns true for every element.
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+    :else ()))
 
+;Ex11 Write the function (my-drop-while pred? a-seq) that drops elements from a-seq until pred? returns false.
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) (sequence a-seq)
+    (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+    :else (sequence a-seq)))
 
+;Ex12 Write the function (seq= seq-1 seq-2) that compares two sequences for equality.
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+    (not= (count a-seq) (count b-seq)) false
+    (and (empty? a-seq) (empty? b-seq)) true
+    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+    :else false))
 
+;Ex13 Write the function (my-map f seq-1 seq-2) that returns a sequence of the following kind.
+; The first item is the return value of f called with the first values of seq-1 and seq-2.
+; The second item is the return value of f called with the second values of seq-1 and seq-2 and so forth until seq-1 or seq-2 ends.
+;This is actually exactly how map works when given two sequences, but for the sake of practice don’t use map when defining my-map.
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    ()
+    (cons
+      (f (first seq-1) (first seq-2))
+      (my-map f (rest seq-1) (rest seq-2)))))
 
+;Ex14 Write the function (power n k) that computes the mathematical expression n^k.
 (defn power [n k]
-  :-)
+  ;(apply * (repeat k n))
+  (if (zero? k)
+    1
+    (* n (power n (dec k)))))
 
+;Ex15 Write the function (fib n) which returns Fn.
 (defn fib [n]
-  :-)
+  (case n
+    0 0
+    1 1
+    (+ (fib (dec n)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
   [:-])
