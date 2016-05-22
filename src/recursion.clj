@@ -85,10 +85,16 @@
 
 ;Ex11 Write the function (my-drop-while pred? a-seq) that drops elements from a-seq until pred? returns false.
 (defn my-drop-while [pred? a-seq]
+  #_(cond
+      (empty? a-seq) (sequence a-seq)
+      (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+      :else (sequence a-seq))
   (cond
-    (empty? a-seq) (sequence a-seq)
+    (empty? a-seq) ()
     (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
-    :else (sequence a-seq)))
+    :else a-seq)
+
+  )
 
 ;Ex12 Write the function (seq= seq-1 seq-2) that compares two sequences for equality.
 (defn seq= [a-seq b-seq]
@@ -123,17 +129,33 @@
     1 1
     (+ (fib (dec n)) (fib (- n 2)))))
 
+;Ex16 Write the function (my-repeat how-many-times what-to-repeat) that generates a list with what-to-repeat repeated how-many-times number of times.
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (or (zero? how-many-times) (neg? how-many-times))
+    ()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
+;Ex17 Write the function (my-range up-to) that works like this:
+#_((my-range 0)                                             ;=> ()
+    (my-range 1)                                            ;=> (0)
+    (my-range 2)                                            ;=> (1 0)
+    (my-range 3)                                            ;=> (2 1 0)
+    )
 (defn my-range [up-to]
-  [:-])
+  (if (zero? up-to)
+    ()
+    (conj (my-range (dec up-to)) (dec up-to))))
 
+;Ex18 Write the functions tails and inits that return all the suffixes and prefixes of a sequence, respectively.
 (defn tails [a-seq]
-  [:-])
+ (if (empty? a-seq)
+   (list a-seq)
+   (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list a-seq)
+   (reverse (map reverse (tails (reverse a-seq)))) ) )
 
 (defn rotations [a-seq]
   [:-])
