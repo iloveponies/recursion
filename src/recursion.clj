@@ -148,18 +148,22 @@
 
 ;Ex18 Write the functions tails and inits that return all the suffixes and prefixes of a sequence, respectively.
 (defn tails [a-seq]
- (if (empty? a-seq)
-   (list a-seq)
-   (cons a-seq (tails (rest a-seq)))))
+  (if (empty? a-seq)
+    (list a-seq)
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (if (empty? a-seq)
     (list a-seq)
-   (reverse (map reverse (tails (reverse a-seq)))) ) )
+    (reverse (map reverse (tails (reverse a-seq))))))
 
+;Ex19 Write the function (rotations a-seq) that, when given a sequence, returns all the rotations of that sequence.
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list a-seq)
+    (rest (map concat (tails a-seq) (inits a-seq)))))
 
+;Ex20 Write the function (my-frequencies a-seq) that computes a map of how many times each element occurs in a sequence
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
 
