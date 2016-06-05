@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (:use clojure.set))
 
 (defn product [coll]
   (if (empty? coll)
@@ -182,8 +183,17 @@
   )
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    `(())
+    (for [head a-set
+          tail (permutations (disj (set a-set) head))]
+      (cons head tail))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [first-elem (first a-set)
+          powerset-of-rest-without-first (powerset (rest a-set))
+          powerset-of-rest-with-first (map #(conj %1 first-elem) powerset-of-rest-without-first)]
+      (union powerset-of-rest-without-first powerset-of-rest-with-first))))
 
