@@ -217,7 +217,7 @@
 
 (defn permutations [a-set]
   (cond
-    (empty? a-set) '()
+    (empty? a-set) '(())
     (= 1 (count a-set)) (list a-set)
     :else (for [elem1 a-set
                 rest-elem (permutations (disj (set a-set) elem1))]
