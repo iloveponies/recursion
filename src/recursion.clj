@@ -62,6 +62,11 @@
     (not (= (first a-seq) (first b-seq))) false
     :else (seq= (rest a-seq) (rest b-seq))))
 
+(seq= [1 2 4] '(1 2 4))  ;=> true
+(seq= [1 2 3] [1 2 3 4]) ;=> false
+(seq= [1 3 5] [])        ;=> false
+(seq= [] ())
+
 (defn my-map [f seq-1 seq-2]
   (cond
     (or (empty? seq-1) (empty? seq-2)) '()
@@ -103,7 +108,9 @@
 (defn rotations [a-seq]
   (let [tails (tails a-seq)
         inits (reverse (inits a-seq))]
-    (rest (map concat tails inits))))
+    (if (empty? a-seq)
+      '(())
+      (rest (map concat tails inits)))))
 
 (defn my-frequencies-helper [freq-map a-seq]
   (if (empty? a-seq)
@@ -178,8 +185,8 @@
 (count-monotonics [1 2 3 1]) ;=> 2
 (count-monotonics [-12 20 1 -3 2]) ;=> 3
 
-(defn get-nth-monotonic [n some-seq]
-  )
+(defn get-kth-monotonic [count-init k some-seq]
+ )
 
 (defn split-into-monotonics [a-seq]
   [:-])
