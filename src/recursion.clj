@@ -230,14 +230,78 @@
 (defn seq-merge [a-seq b-seq]
   (seq-merge-recur [] a-seq b-seq))
 
+(defn merge-sort-recur [a-seq b-seq]
+  (let [a-sorted? (>= 1 (count a-seq))
+        b-sorted? (>= 1 (count b-seq))
+        a-seq-sorted (if a-sorted?
+                       a-seq
+                       (apply merge-sort-recur (halve a-seq)))
+        b-seq-sorted (if b-sorted?
+                       b-seq
+                       (apply merge-sort-recur (halve b-seq)))]
+    (seq-merge a-seq-sorted b-seq-sorted)))
+
 (defn merge-sort [a-seq]
-  [:-])
+  (if (>= 1 (count a-seq))
+    a-seq
+    (apply merge-sort-recur (halve a-seq))))
+
+(defn monotonic-predicate [a-item b-item]
+  (if (>= a-item b-item) >= <=))
+
+(defn item-monotonic? [m-seq item]
+  (let [m-seq-first (first m-seq)
+        m-seq-last (last m-seq)
+        need-def? (== m-seq-first m-seq-last)
+        m-seq-pred (monotonic-predicate m-seq-first m-seq-last)]
+   (or need-def? (m-seq-pred m-seq-last item))))
+
+(defn split-into-monotonics-recur [res-seq cur-seq rest-seq]
+  (let [curr-item (first rest-seq)]
+    (cond
+      (empty? rest-seq) (conj res-seq cur-seq)
+      (item-monotonic? cur-seq curr-item) (recur res-seq (conj cur-seq curr-item) (rest rest-seq))
+      :else (recur (conj res-seq cur-seq) (vector curr-item) (rest rest-seq)))))
 
 (defn split-into-monotonics [a-seq]
+  (split-into-monotonics-recur [] [(first a-seq)] (next a-seq)))
+
+(defn combine-set [a-set with-set]
+  (map (fn [a-item] (cons a-item a-set)) with-set))
+
+(defn split-set-recur [res-first res-next done-set rest-set]
+  (if (empty? rest-set)
+    (list res-first res-next)
+    (recur
+      (cons (list (first rest-set)) res-first)
+      (cons (concat done-set (rest rest-set)) res-next)
+      (cons (first rest-set) done-set)
+      (rest rest-set))))
+
+(defn split-set [a-set]
+  (split-set-recur () () () a-set))
+
+(defn shuffle-two [a-set]
+  (let [a-set-count (count a-set)]
+    (cond 
+      (>= 0 a-set-count) `()
+      (== 1 a-set-count) a-set
+      :else (let [a-set-first (first a-set)
+                  a-set-second (second a-set)]
+              (list (list a-set-first a-set-second) (list a-set-second a-set-first))))))
+
+(defn permutations-recur [res-set first-set next-set]
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  (let [a-set-length (count a-set)]
+    (cond
+      (>= 0 a-set-length) (list ( list ))
+      (== 1 a-set-length) (list a-set)
+      (== 2 a-set-length) (shuffle-two a-set)
+      :else (let [splits (split-set a-set)]
+              (permutations-recur `() (first splits) (rest splits))))))
+
 
 (defn powerset [a-set]
   [:-])
