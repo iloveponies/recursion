@@ -267,13 +267,13 @@
   (split-into-monotonics-recur [] [(first a-seq)] (next a-seq)))
 
 (defn combine-set [a-set with-set]
-  (map (fn [a-item] (cons a-item a-set)) with-set))
+  (map (fn [with-item] (concat with-item a-set)) with-set))
 
 (defn split-set-recur [res-first res-next done-set rest-set]
   (if (empty? rest-set)
     (list res-first res-next)
     (recur
-      (cons (list (first rest-set)) res-first)
+      (cons (first rest-set) res-first)
       (cons (concat done-set (rest rest-set)) res-next)
       (cons (first rest-set) done-set)
       (rest rest-set))))
@@ -290,8 +290,39 @@
                   a-set-second (second a-set)]
               (list (list a-set-first a-set-second) (list a-set-second a-set-first))))))
 
+; Sample for [1 2 3 4 5]
+; Init:
+; - []
+; - [[5] [4] [3] [2] [1]]
+; - [[4 3 2 1] [5 3 2 1] [5 4 2 1] [5 4 3 1] [5 4 3 2]]
+; Recur 1:
+; - []
+; - [[1 5] [2 5] [3 5] [4 5] [4] [3] [2] [1]]
+; - [[2 3 4] [1 3 4] [1 2 4] [1 2 3] [5 3 2 1] [5 4 2 1] [5 4 3 1] [5 4 3 2]]
+; Recur 2:
+; - []
+; - [[4 1 5] [3 1 5] [2 1 5] [2 5] [3 5] [4 5] [4] [3] [2] [1]]
+; - [[3 2] [4 2] [4 3] [1 3 4] [1 2 4] [1 2 3] [5 3 2 1] [5 4 2 1] [5 4 3 1] [5 4 3 2]]
+; Recur 3:
+; - [[3 2 4 1 5] [2 3 4 1 5]]
+; - [[3 1 5] [2 1 5] [2 5] [3 5] [4 5] [4] [3] [2] [1]]
+; - [[4 2] [4 3] [1 3 4] [1 2 4] [1 2 3] [5 3 2 1] [5 4 2 1] [5 4 3 1] [5 4 3 2]]
 (defn permutations-recur [res-set first-set next-set]
-  [:-])
+  (if (empty? next-set)
+    res-set
+    (let [a-set (first first-set)
+          with-set (first next-set)
+          splits (split-set with-set)
+          firsts (map list (first splits))]
+      (if (>= 2 (count with-set))
+        (recur
+          (concat (combine-set a-set (shuffle-two with-set)) res-set)
+          (rest first-set)
+          (rest next-set))
+        (recur
+          res-set
+          (concat (combine-set a-set firsts) (rest first-set))
+          (concat (second splits) (rest next-set)))))))
 
 (defn permutations [a-set]
   (let [a-set-length (count a-set)]
@@ -299,8 +330,9 @@
       (>= 0 a-set-length) (list ( list ))
       (== 1 a-set-length) (list a-set)
       (== 2 a-set-length) (shuffle-two a-set)
-      :else (let [splits (split-set a-set)]
-              (permutations-recur `() (first splits) (rest splits))))))
+      :else (let [splits (split-set a-set)
+                  firsts (map list (first splits))]
+              (permutations-recur `() firsts (second splits))))))
 
 
 (defn powerset [a-set]
