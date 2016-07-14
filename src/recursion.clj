@@ -335,6 +335,29 @@
               (permutations-recur `() firsts (second splits))))))
 
 
+; Sample for [1 2 3 4]
+; Init:
+; - [[]]
+; - [1 2 3 4]
+; Step 1:
+; - [[] [1]]
+; - [2 3 4]
+; Step 2:
+; - [[] [1] [2] [1 2]]
+; - [3 4]
+; Step 3:
+; - [[] [1] [2] [1 2] [3] [1 3] [2 3] [1 2 3]]
+; - [4]
+; Step 4:
+; - [[] [1] [2] [1 2] [3] [1 3] [2 3] [1 2 3] [4] [1 4] [2 4] [1 2 4] [3 4] [1 3 4] [2 3 4] [1 2 3 4]]
+; - []
+(defn powerset-recur [res-sets a-set]
+  (if (empty? a-set)
+    res-sets
+    (let [item (first a-set)
+          items (map (fn [res-set] (conj res-set item)) res-sets)]
+      (recur (concat res-sets items) (rest a-set)))))
+
 (defn powerset [a-set]
-  [:-])
+  (powerset-recur [[]] a-set))
 
