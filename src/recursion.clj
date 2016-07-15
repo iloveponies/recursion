@@ -16,18 +16,20 @@
     (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  (if (singleton? a-seq)
-    (first a-seq)
-    (max (first a-seq) (max-element (rest a-seq)))))
+  (cond
+    (empty? a-seq) nil
+    (singleton? a-seq) (first a-seq)
+    :else (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2))
     seq-1 seq-2))
 
 (defn longest-sequence [coll]
-  (if (singleton? coll)
-    (first coll)
-    (seq-max (first coll) (longest-sequence (rest coll)))))
+  (cond
+    (empty? coll) nil
+    (singleton? coll) (first coll)
+    :else (seq-max (first coll) (longest-sequence (rest coll)))))
 
 (defn my-filter [pred? a-seq]
   (if (empty? a-seq)
@@ -62,9 +64,9 @@
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq)) true
+    (not (= (count a-seq) (count b-seq))) false
     (= (first a-seq) (first b-seq))     (seq= (rest a-seq) (rest b-seq))
     :else                               false))
-
 
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2))
