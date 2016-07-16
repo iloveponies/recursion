@@ -148,41 +148,88 @@
 
 ;Ex18 Write the functions tails and inits that return all the suffixes and prefixes of a sequence, respectively.
 (defn tails [a-seq]
- (if (empty? a-seq)
-   (list a-seq)
-   (cons a-seq (tails (rest a-seq)))))
+  (if (empty? a-seq)
+    (list a-seq)
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (if (empty? a-seq)
     (list a-seq)
-   (reverse (map reverse (tails (reverse a-seq)))) ) )
+    (reverse (map reverse (tails (reverse a-seq))))))
 
+;Ex19 Write the function (rotations a-seq) that, when given a sequence, returns all the rotations of that sequence.
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (rest (map concat (tails a-seq) (inits a-seq)))))
 
+;Ex20 Write the function (my-frequencies a-seq) that computes a map of how many times each element occurs in a sequence. E.g.:
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (if (find freqs (first a-seq))
+      (my-frequencies-helper (update-in freqs [(first a-seq)] inc) (rest a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq) 1) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
+;Ex21 Write the function (un-frequencies a-map) which takes a map produced by
+; my-frequencies and generates a sequence with the corresponding numbers of different elements.
 (defn un-frequencies [a-map]
-  [:-])
+  (flatten (map repeat (vals a-map) (keys a-map))))
 
+;Ex22 Implement (my-take n coll) that returns n first items of coll.
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (> n (count coll)) coll
+    (empty? coll) coll
+    (= n 0) '()
+    :else (cons (first coll) (my-take (dec n) (rest coll)))))
 
+;Ex33 Implement (my-drop n coll) that returns all but the n first items of coll.
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (>= n (count coll)) '()
+    (empty? coll) coll
+    (= n 0) coll
+    :else (cons (get coll n) (my-drop (inc n) coll))))
 
+
+
+;Ex24 Implement the function (halve a-seq) that takes a sequence and returns one vector with two elements.
+;The first element is the first half of a-seq and the second element is the second half of a-seq.
 (defn halve [a-seq]
-  [:-])
+  (let [half-len (int (/ (count a-seq) 2))
+        first-part (into [] (my-take half-len a-seq))
+        second-part (into [] (my-drop half-len a-seq))]
+    (vector first-part second-part)))
+
+;Write the function (seq-merge a-seq b-seq) that takes two (low to high) sorted number sequences and combines them into one sorted sequence.
+; Don’t use sort (nor implement it yourself, yet).
+
+(defn seq-merge-helper [a-seq b-seq sorted-seq]
+  (let [[a _] a-seq
+        [b _] b-seq]
+    (cond
+      (empty? a-seq) (concat sorted-seq b-seq)
+      (empty? b-seq) (concat sorted-seq a-seq)
+      (< a b) (seq-merge-helper (rest a-seq) b-seq (concat sorted-seq [a]))
+      :else (seq-merge-helper a-seq (rest b-seq) (concat sorted-seq [b])))))
+
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper a-seq b-seq '()))
 
+
+;Ex26 Write the function (merge-sort a-seq) that implements merge sort.
+;The idea of merge sort is to divide the input into subsequences using halve,
+; sort the subsequences recursively and use the seq-merge function to merge the sorted subsequences back together.
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [[a b] (into [] (halve a-seq))]
+      (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
