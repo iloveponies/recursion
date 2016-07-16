@@ -228,15 +228,36 @@
 (defn merge-sort [a-seq]
   (if (<= (count a-seq) 1)
     a-seq
-    (let [[a b] (into [] (halve a-seq))]
+    (let [[a b] (halve a-seq)]
       (seq-merge (merge-sort a) (merge-sort b)))))
 
+;Ex27 Write the function split-into-monotonics that takes a sequence and returns the sequence split into monotonic pieces
+(defn monotonic? [a-seq]
+  (let [partitions (partition-all 2 1 a-seq)]
+    (or (every? #(apply <= %) partitions)
+        (every? #(apply >= %) partitions))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (let [a (last (take-while monotonic? (inits a-seq)))
+          b (drop (count a) a-seq)]
+      (cons a (split-into-monotonics b)))))
 
+
+;Ex28 Given a sequence, return all permutations of that sequence.
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (list '())
+    (for [head a-set
+          tail (permutations (disj (set a-set) head))]
+      (cons head tail))))
 
+;Ex29 Given a set, return the powerset of that set.
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    (hash-set #{})
+    (let [head (first a-set)
+          sub-set (powerset (next a-set))]
+      (clojure.set/union sub-set (map #(conj % head) sub-set)))))
 
