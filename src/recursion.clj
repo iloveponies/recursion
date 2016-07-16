@@ -195,8 +195,6 @@
     (= n 0) coll
     :else (cons (get coll n) (my-drop (inc n) coll))))
 
-
-
 ;Ex24 Implement the function (halve a-seq) that takes a sequence and returns one vector with two elements.
 ;The first element is the first half of a-seq and the second element is the second half of a-seq.
 (defn halve [a-seq]
