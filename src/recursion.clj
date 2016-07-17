@@ -94,16 +94,55 @@
 (defn my-repeat [how-many-times what-to-repeat]
   (my-repeat-r `() how-many-times what-to-repeat))
 
-(my-repeat 3 "lol")
+(defn my-range-r [seq-r countDown]
+  (let [bah (dec countDown)]
+    (if (> 0 countDown)
+      seq-r
+      (recur (conj seq-r countDown) bah))))
 
-(defn my-range [up-to]
-  [:-])
+(defn my-range [countDown]
+  (reverse (my-range-r `() (dec countDown))))
+
+(my-range 4)
+
+
+(defn my-range-meh [seq-r curr up-to]
+  (let [next-curr (inc curr)]
+    (if (>= curr up-to)
+      seq-r
+      (recur (cons curr seq-r) next-curr up-to))))
+
+(defn my-rangeG [up-to]
+  (my-range-meh `() 0 up-to))
+
+(defn my-rangeB [up-to]
+  (my-range-meh `() 1 up-to))
+
+(defn tails-r [a-list a-seq]
+  (if (empty? a-seq)
+    a-list
+    (recur (cons a-seq a-list) (rest a-seq))))
 
 (defn tails [a-seq]
-  [:-])
+  (conj (tails-r `() (seq a-seq)) `()))
+
+(tails ["a" "b" "c" "d"])
+
+(defn prefix-r [a-list countDown a-seq]
+  (if (zero? countDown)
+    a-list
+    (recur (cons countDown a-list) (dec countDown) a-seq)))
+
+(defn prefix [countDown a-seq]
+  (prefix-r `() countDown a-seq))
+
+(defn inits-r [a-list countDown a-seq]
+  (if (zero? countDown)
+    a-list
+    (recur (cons (prefix countDown a-list) a-list) (dec countDown) (rest a-seq))))
 
 (defn inits [a-seq]
-  [:-])
+  (conj (inits-r `() (count a-seq) a-seq) `()))
 
 (defn rotations [a-seq]
   [:-])
