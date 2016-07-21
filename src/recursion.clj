@@ -149,13 +149,15 @@
     (conj `() `())
     (rotations-r `() (vec a-seq) (dec (count a-seq)))))
 
-(rotations [])
-
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (recur (merge-with + freqs {(first a-seq) 1}) (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
+
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
 
 (defn un-frequencies [a-map]
   [:-])
