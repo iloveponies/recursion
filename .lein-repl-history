@@ -1,0 +1,98 @@
+(defn sequence-contains? [elem a-seq]
+   (cond
+   (empty? a-seq)
+     false
+   (= elem (first a-seq))
+     true
+   :else
+     (sequence-contains? elem (disj (into #{} a-seq) (first a-seq)) ) ))
+(defn fib [n]
+ (cond
+    (= n 1) 1
+    (= n 0) 0
+    (< n 0) -1
+    (= n 2) 1
+    :else (+ (fib (- n 1)) (- n 2)) ))
+(fib 1)
+(fib 2)
+(fib 3)
+(fib 4)
+(defn fib [n]
+ (cond
+    (= n 1) 1
+    (= n 0) 0
+    (< n 0) -1
+    (= n 2) 1
+    :else (+ (fib (- n 1)) (fib (- n 2))) ))
+(fib 4)
+quit()
+(defn rotations-helper [rotationslist currentrotation]
+  (if (= (length currentrotation) (count rotationslist)) rotationslist (rotations-helper (conj rotationslist currentrotation) (concat (last currentrotation) (drop-last currentrotation)) )))
+  (if (= (count currentrotation) (count rotationslist)) rotationslist (rotations-helper (conj rotationslist currentrotation) (concat (last currentrotation) (drop-last currentrotation)) )))
+(defn rotations-helper [rotationslist currentrotation]
+  (if (= (length currentrotation) (count rotationslist)) rotationslist (rotations-helper (conj rotationslist currentrotation) (concat (last currentrotation) (drop-last currentrotation)) )))
+(defn rotations-helper [rotationslist currentrotation]
+  (if (= (count currentrotation) (count rotationslist)) rotationslist (rotations-helper (conj rotationslist currentrotation) (concat (last currentrotation) (drop-last currentrotation)) )))
+(defn rotations [a-seq]
+  (rotations-helper [[]] a-seq))
+(rotations [1 2 3])
+(defn rotations [a-seq]
+  (rotations-helper () a-seq))
+(defn rotations [a-seq]
+(rotations [1 2 3])
+quit()
+(defn rotations-helper [rotationslist currentrotation]
+  (if (= (count currentrotation) (count rotationslist)) rotationslist (rotations-helper (conj rotationslist currentrotation) (concat [(last currentrotation)] (drop-last currentrotation)) )))
+(defn rotations [a-seq]
+ (if (empty? a-seq) (()) (rotations-helper () a-seq)))
+(rotations [])
+(rotations [1 2 3])
+(defn rotations [a-seq]
+ (if (empty? a-seq) (conj [] []) (rotations-helper () a-seq)))
+(rotations [1 2 3])
+(rotations [])
+quit()
+(count {:asd "moi", :asd2 "moi3"}
+(count {:asd "moi", :asd2 "moi3"})
+quit()
+(rest {:asd "as", :moi "mo"})
+(first {:asd "as", :moi "mo"})
+( get 0 (first {:asd "as", :moi "mo"}))
+( get 1 (first {:asd "as", :moi "mo"}))
+(first {:asd "as", :moi "mo"})
+(map key (first {:asd "as", :moi "mo"}))
+(get-in (first {:asd "as", :moi "mo"}))
+quit()
+(defn my-take [n coll]
+  (drop-last (- (length coll) n) coll))
+(defn my-take [n coll]
+  (drop-last (- (count coll) n) coll))
+(defn my-drop [n coll]
+  (reverse (my-take n (reverse coll))))
+(my-drop [:a :b])
+(my-drop 4 [:a :b])
+quit()
+(defn my-take [n coll]
+  (drop-last (- (count coll) n) coll))
+(defn my-drop [n coll]
+  (if (< (count coll) n) []
+  (reverse (my-take n (reverse coll)))))
+(defn halve [a-seq]
+  (conj (conj [] (my-take (/ (count a-seq) 2) a-seq)) (my-drop  (- (count a-seq) (/ (count a-seq) 2)) a-seq) ))
+(halve [1 2 3 4 5])
+(defn halve [a-seq]
+  (conj (conj [] (my-take (/ (count a-seq) 2) a-seq)) (my-drop  (/ (count a-seq) 2)) a-seq) )
+(halve [1 2 3 4 5])
+(defn halve [a-seq]
+  (conj (conj [] (my-take (/ (count a-seq) 2) a-seq)) (my-drop  (/ (count a-seq) 2)) a-seq) )
+(halve [1 2 3 4 5])
+quit()
+(defn my-take [n coll]
+  (drop-last (- (count coll) n) coll))
+(defn my-drop [n coll]
+  (if (< (count coll) n) []
+  (reverse (my-take n (reverse coll))))) 
+(defn halve [a-seq]
+  (conj (conj [] (my-take (/ (count a-seq) 2) a-seq)) (my-drop  (int (Math/ceil (/ (count a-seq) 2))) a-seq)) )
+(halve [1]) 
+quit()
