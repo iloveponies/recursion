@@ -103,9 +103,6 @@
 (defn my-range [countDown]
   (reverse (my-range-r `() (dec countDown))))
 
-(my-range 4)
-
-
 (defn my-range-meh [seq-r curr up-to]
   (let [next-curr (inc curr)]
     (if (>= curr up-to)
@@ -126,8 +123,6 @@
 (defn tails [a-seq]
   (conj (tails-r `() (seq a-seq)) `()))
 
-(tails ["a" "b" "c" "d"])
-
 (defn prefix-r [a-list countDown a-seq]
   (if (zero? countDown)
     a-list
@@ -144,8 +139,17 @@
 (defn inits [a-seq]
   (conj (inits-r `() (count a-seq) a-seq) `()))
 
+(defn rotations-r [a-list-of-lists a-vec index]
+ (if (zero? index)
+   (conj a-list-of-lists (reverse (into `() a-vec)))
+   (recur (conj a-list-of-lists (concat (subvec a-vec index) (subvec a-vec 0 index))) a-vec (dec index))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (conj `() `())
+    (rotations-r `() (vec a-seq) (dec (count a-seq)))))
+
+(rotations [])
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
