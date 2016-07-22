@@ -181,11 +181,20 @@
 
 (defn my-drop [n coll]
   (if (or (zero? n) (empty? coll))
-    (seq coll)
+    (concat `() coll)
     (my-drop (dec n) (rest coll))))
 
+(my-drop 0 [:a :b])
+
 (defn halve [a-seq]
-  [:-])
+  (let [i (+
+        (int
+          (/(count a-seq) 2)) 1)]
+    (vec (concat
+           (seq (subvec (vec a-seq) 0 i))
+           (seq (subvec (vec a-seq) i))))))
+
+(halve [5, 8, 4, 9])
 
 (defn seq-merge [a-seq b-seq]
   [:-])
