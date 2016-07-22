@@ -160,7 +160,18 @@
 (my-frequencies [:a "moi" :a "moi" "moi" :a 1])
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (= 1 (count a-map))
+    (repeat (second (first a-map)) (first (first a-map)))
+    (concat
+      (repeat
+        (second (first a-map))
+        (first (first a-map)))
+      (un-frequencies
+        (dissoc
+          a-map
+          (first (first a-map)))))))
+
+(second (first {:a 1 :b 2}))
 
 (defn my-take [n coll]
   [:-])
