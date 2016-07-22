@@ -192,8 +192,21 @@
            (concat `() (seq (subvec (vec a-seq) 0 i)))
            (concat `() (seq (subvec (vec a-seq) i)))))))
 
+(defn seq-merge-r [output a-seq b-seq]
+  (cond (and
+          (empty? a-seq)
+          (empty? b-seq)) output
+        (empty? a-seq) (concat output b-seq)
+        (empty? b-seq) (concat output a-seq)
+        (<
+          (first a-seq)
+          (first b-seq)) (seq-merge-r (conj output (first a-seq)) (rest a-seq) b-seq)
+        :else            (seq-merge-r (conj output (first b-seq)) a-seq (rest b-seq))))
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-r [] (seq a-seq) (seq b-seq)))
+
+(seq-merge [] [])
 
 (defn merge-sort [a-seq]
   [:-])
