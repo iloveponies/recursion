@@ -206,10 +206,13 @@
 (defn seq-merge [a-seq b-seq]
   (seq-merge-r [] (seq a-seq) (seq b-seq)))
 
-(seq-merge [] [])
-
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (singleton? a-seq) a-seq
+    :else (seq-merge
+            (merge-sort (first  (halve a-seq)))
+            (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
