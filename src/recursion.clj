@@ -180,7 +180,9 @@
     (my-take-r `() n coll)))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    (seq coll)
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
