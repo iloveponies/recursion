@@ -157,8 +157,6 @@
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
-(my-frequencies [:a "moi" :a "moi" "moi" :a 1])
-
 (defn un-frequencies [a-map]
   (if (= 1 (count a-map))
     (repeat (second (first a-map)) (first (first a-map)))
@@ -171,10 +169,15 @@
           a-map
           (first (first a-map)))))))
 
-(second (first {:a 1 :b 2}))
+(defn my-take-r [a-list n coll]
+  (if (or (= 1 n) (singleton? coll))
+    (concat a-list (list (first coll)))
+    (recur (concat a-list (list (first coll))) (dec n) (rest coll))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (empty? coll)
+    `()
+    (my-take-r `() n coll)))
 
 (defn my-drop [n coll]
   [:-])
