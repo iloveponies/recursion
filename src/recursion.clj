@@ -254,8 +254,28 @@
 (defn split-into-monotonics [a-seq]
   (helper [] a-seq))
 
+(defn perm-r [allPerms currentPerm input i]
+  (cond
+    (empty? input) (conj allPerms currentPerm)
+    (< i 0) allPerms
+    :else (perm-r
+            (perm-r
+              allPerms
+              (conj currentPerm (nth input i))
+              (remove (fn [x] (= x (nth input i))) input)
+              (dec
+                (count
+                  (remove
+                    (fn [x] (= x (nth input i)))
+                    input))))
+            currentPerm
+            input
+            (dec i))))
+
 (defn permutations [a-set]
-  [:-])
+  (perm-r `() `() (seq a-set) (dec (count a-set))))
+
+(permutations #{})
 
 (defn powerset [a-set]
   [:-])
