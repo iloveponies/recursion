@@ -1,3 +1,5 @@
+
+
 (ns recursion)
 
 (defn product [coll]
@@ -170,9 +172,16 @@
           (first (first a-map)))))))
 
 (defn my-take-r [a-list n coll]
-  (if (or (= 1 n) (singleton? coll))
-    (concat a-list (list (first coll)))
-    (recur (concat a-list (list (first coll))) (dec n) (rest coll))))
+  (if (or
+        (= 1 n)
+        (singleton? coll))
+    (concat
+      a-list
+      (list (first coll)))
+    (recur
+      (concat a-list (list (first coll)))
+      (dec n)
+      (rest coll))))
 
 (defn my-take [n coll]
   (if (empty? coll)
@@ -185,9 +194,7 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  (let [i
-        (int
-          (/(count a-seq) 2))]
+  (let [i (int (/(count a-seq) 2))]
     (vec (list
            (concat `() (seq (subvec (vec a-seq) 0 i)))
            (concat `() (seq (subvec (vec a-seq) i)))))))
@@ -214,12 +221,46 @@
             (merge-sort (first  (halve a-seq)))
             (merge-sort (second (halve a-seq))))))
 
+(defn ascending [out seq prev]
+  (cond
+    (empty? seq) (reverse out)
+    (> (first seq) prev) (ascending (conj out (first seq)) (rest seq) (first seq))
+    :else (reverse out)))
+
+(defn descending [out seq prev]
+  (cond
+    (empty? seq) (reverse out)
+    (< (first seq) prev) (descending (conj out (first seq)) (rest seq) (first seq))
+    :else (reverse out)))
+
+(defn either [out seq prev]
+  (cond
+    (empty? seq) (reverse out)
+    (< (first seq) prev) (descending (conj out (first seq)) (rest seq) (first seq))
+    (> (first seq) prev) (ascending (conj out (first seq)) (rest seq) (first seq))
+    :else (either (conj out (first seq)) (rest seq) (first seq))
+    ))
+
+(defn sub-helper [vec]
+  (either `() (seq vec) (first vec)))
+
+(defn helper [out in]
+  (if (empty? in)
+    (seq out)
+    (helper
+      (conj out (sub-helper in))
+      (subvec in (count (sub-helper in))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (helper [] a-seq))
 
 (defn permutations [a-set]
   [:-])
 
 (defn powerset [a-set]
   [:-])
+
+
+
+
 
