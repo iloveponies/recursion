@@ -1,5 +1,3 @@
-
-
 (ns recursion)
 
 (defn product [coll]
@@ -275,12 +273,17 @@
 (defn permutations [a-set]
   (perm-r `() `() (seq a-set) (dec (count a-set))))
 
-(permutations #{})
+(permutations #{1 4 5})
+
+
+(defn pow-r [allSets currentSet input]
+  (cond
+    (empty? input) (conj allSets currentSet)
+    :else (clojure.set/union
+            (pow-r allSets currentSet (rest input))
+            (pow-r allSets (conj currentSet (first input)) (rest input)))))
 
 (defn powerset [a-set]
-  [:-])
-
-
-
+  (pow-r #{} #{} a-set))
 
 
