@@ -48,13 +48,13 @@
     :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  (cond 
+  (cond
     (empty? a-seq) a-seq
     (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
     :else ()))
 
 (defn my-drop-while [pred? a-seq]
-  (cond 
+  (cond
     (empty? a-seq) a-seq
     (false? (pred? (first a-seq))) a-seq
     :else (my-drop-while pred? (rest a-seq))))
@@ -94,7 +94,7 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (empty? a-seq) 
+  (if (empty? a-seq)
     '(())
     (cons a-seq (tails (rest a-seq)))))
 
@@ -107,13 +107,19 @@
   (distinct (map concat (tails a-seq) (reverse (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [new-freqs-value (if (contains? freqs (first a-seq))
+      (inc (freqs (first a-seq)))
+      1)]
+      (my-frequencies-helper (assoc freqs (first a-seq) new-freqs-value) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [freq-stringer (fn [x] (repeat (val x) (key x)))]
+    (apply concat (map freq-stringer a-map))))
 
 (defn my-take [n coll]
   [:-])
