@@ -132,7 +132,8 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half-count (int (/ (count a-seq) 2))]
+    [(my-take half-count a-seq) (my-drop half-count a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
