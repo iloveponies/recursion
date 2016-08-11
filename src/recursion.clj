@@ -360,7 +360,7 @@
 ;; (merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
 
 
-(defn sorted? [liste]
+(defn my-sorted? [liste]
   (let [list-iter (map vector liste (rest liste))]
   (reduce (fn [acc pair]
             (and (<= (first pair)  (second pair))
@@ -374,7 +374,7 @@
 
 (defn prefix-valid-max [listes]
 (last
-    (take-while  #(sorted? %) listes)))
+    (take-while  #(my-sorted? %) listes)))
 
 
 ;; (prefix-valid-max [[ 0 ] [ 0  1] [ 0 1 2]]) ;=>[0 1 2]
@@ -382,7 +382,7 @@
 
 (defn prefix-valid-max-reverse [listes]
   (last
-    (take-while  #(sorted? (reverse %)) listes)))
+    (take-while  #(my-sorted? (reverse %)) listes)))
 
 ;;(prefix-valid-max-reverse (inits [ 2 1 0]));=>(2 1 0)
 
@@ -394,11 +394,11 @@
     (< p l) (prefix-valid-max-reverse liste)
     :else ())))
 
-(prefix [[0 1] [0 1 2]]);=>[0 1 2]
+;(prefix [[0 1] [0 1 2]]);=>[0 1 2]
 ;(prefix [[2 1] [2 1 0]]);=>[2 1 0]
 ;(prefix [[]]);=>()
 
-(prefix ['() '(1) '(1 0)])
+;(prefix ['() '(1) '(1 0)])
 
 (defn not-singleton? [liste]
   (< 1 (count liste)))
@@ -421,11 +421,41 @@
 ;; (split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
 ;; (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
 
+;(rotations [1 2 3])
+
+(defn add-elt [liste x]
+  (map #(conj %  x) liste))
+
+;;(= (add-elt [[1 2 3] [1 5 6] ]4) [[1 2 3 4 ] [1 5 6 4] ])
+
+(defn rotation-liste [listes]
+  (apply concat (map #(rotations %) listes)))
+;;(rotation-liste [[1 2] [2 3]])
+
+
+(defn helper-permut [a-seq]
+  (cond
+    (singleton? a-seq)  [ [a-seq] ]
+    :else (let [ [ x & arg ] a-seq]
+                  (for [ solution (helper-permut (into [] arg))]
+                      (apply concat (map #(rotations %) (add-elt solution x)))))))
+
+
 (defn permutations [a-set]
-  [:-] )
+  (cond
+    (empty? a-set) (list '())
+    :else (apply concat (helper-permut (into '() a-set)))))
 
 
-(defn powerset [a-set]
-  [:-])
+
+
+(defn powerset [a-set ]
+ (set (map set (apply concat  (map #(inits % ) (permutations a-set))))))
+
+
+
+ (powerset #{})      ;=> #{#{}}
+ (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+
 
 
