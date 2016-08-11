@@ -421,7 +421,6 @@
 ;; (split-into-monotonics [0 1 2 1 0])   ;=> ((0 1 2) (1 0))
 ;; (split-into-monotonics [0 5 4 7 1 3]) ;=> ((0 5) (4 7) (1 3))
 
-;(rotations [1 2 3])
 
 (defn add-elt [liste x]
   (map #(conj %  x) liste))
@@ -430,6 +429,7 @@
 
 (defn rotation-liste [listes]
   (apply concat (map #(rotations %) listes)))
+
 ;;(rotation-liste [[1 2] [2 3]])
 
 
@@ -450,12 +450,14 @@
 
 
 (defn powerset [a-set ]
- (set (map set (apply concat  (map #(inits % ) (permutations a-set))))))
+ (set
+   (map set (apply concat
+                      (map #(inits % ) (permutations a-set))))))
 
 
 
- (powerset #{})      ;=> #{#{}}
- (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
+;;  (powerset #{})      ;=> #{#{}}
+;;  (powerset #{1 2 4}) ;=> #{#{} #{4} #{2} #{2 4} #{1} #{1 4} #{1 2} #{1 2 4}}
 
 
 
