@@ -199,6 +199,7 @@
     a-seq
     (apply merge-sort-recur (halve a-seq))))
 
+
 (defn split-into-monotonics [a-seq]
   [:-])
 
