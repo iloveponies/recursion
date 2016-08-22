@@ -79,7 +79,7 @@
    (empty? b-seq)
      false
    (= (first a-seq) (first b-seq))
-     (h12 (rest a-seq) (rest b-seq))
+     (seq= (rest a-seq) (rest b-seq))
    :else
      false))
 
