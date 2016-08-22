@@ -33,7 +33,7 @@
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
   '()
-  (seq-max (first a-seq) (ls (rest a-seq)))))
+  (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
   (let [eka (first a-seq)]
