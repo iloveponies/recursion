@@ -32,7 +32,7 @@
 
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
-  '()
+  nil
   (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
@@ -74,8 +74,12 @@
   (cond
    (and (empty? a-seq) (empty? b-seq))
      true
+   (empty? a-seq)
+     false
+   (empty? b-seq)
+     false
    (= (first a-seq) (first b-seq))
-     (seq= (rest a-seq) (rest b-seq))
+     (h12 (rest a-seq) (rest b-seq))
    :else
      false))
 
@@ -125,7 +129,7 @@
         apu (fn [x] (concat x [eka]))]
     (cond
      (empty? a-seq)
-      '()
+      (seq ['()])
      :else
       (cons (seq a-seq)
             (map apu (seq (rotations (rest a-seq))))))))
