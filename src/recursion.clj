@@ -155,14 +155,14 @@
 
 
 (defn split-into-monotonics [a-seq]
-	(let [monotonic? (fn mono-req[x](
-										if (>= 2 (count x))
-										true
-										(let [[a b c] x]
-											(if (< 0 (* (- a b) (- b c)))
-												(mono-req (rest x))
-												false
-												))))
+	(let [monotonic? (fn mono-req[x]
+						 (if (>= 2 (count x))
+							 true
+							 (let [[a b c] x]
+								 (if (< 0 (* (- a b) (- b c)))
+									 (mono-req (rest x))
+									 false
+									 ))))
 		  start (last (take-while monotonic? (inits a-seq)))]
 		(if (empty? a-seq)
 			'()
@@ -171,7 +171,7 @@
 (defn permutations [a-set]
 	(cond
 		(empty? a-set) '(())
-		(= 1 (count a-set)) (vector (seq a-set))
+		(= 1 (count a-set)) (vector a-set)
 		:else (let [join (fn [x y] (map #(cons x %) y))]
 				  (->> a-set
 					   (rotations)
@@ -183,8 +183,8 @@
 (defn powerset [a-set]
 	(if (empty? a-set)
 		#{#{}}
-		(let [a (first a-set)
-			  s (powerset (disj a-set a))]
-			(clojure.set/union s (map #(conj % a) s)))
-			))
+		(let [actually-a-set (set a-set)
+			  a (first actually-a-set)
+			  s (powerset (disj actually-a-set a))]
+			(clojure.set/union s (map #(conj % a) s)))))
 
