@@ -163,11 +163,34 @@
           half2 (last (halve a-seq))]
       (seq-merge (merge-sort half1) (merge-sort half2)))))
 
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    false
+    (boolean (or (and (apply <= a-seq)) (and (apply >= a-seq))))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (let [monotonic-inits (rest (reverse (inits a-seq)))
+          last-monotonic  (last (take-while monotonic? monotonic-inits))]
+      (cons last-monotonic (split-into-monotonics (drop (count last-monotonic) a-seq))))))
+
+(defn swap [v index1 index2]
+  (let [temp (get v index1)]
+    (-> (assoc v index1 (get v index2))
+        (assoc index2 temp))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (list ())
+    (apply concat (map (fn [[f & r]] (map #(cons f %) (permutations r))) (rotations a-set)))))
+
+(defn add-to-all [item coll-of-sets]
+  (map #(conj % item) coll-of-sets))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [e (first a-set)
+          c (rest a-set)]
+      (clojure.set/union (powerset c) (add-to-all e (powerset c))))))
