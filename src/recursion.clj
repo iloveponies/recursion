@@ -183,12 +183,12 @@
         (apply >= a-seq))))
 
 (defn split-into-monotonics [a-seq]
-  (if (empty? a-seq)
-    ()
-    (let [i (inits a-seq)
-          tw (take-while monotonic? i)
-          d (drop (- (count tw) 1) a-seq)]
-      (cons (last tw) (split-into-monotonics d)))))
+  (cond (empty? a-seq) ()
+        (singleton? a-seq) (list a-seq)
+        :else (let [monotonic (first (filter monotonic? (inits a-seq)))
+                    n (count monotonic)]
+                (cons monotonic (split-into-monotonics (drop n a-seq))))))
+
 
 (defn permutations [a-set]
   (if (or (empty? a-set) (= (count a-set) 1))
