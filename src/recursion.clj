@@ -175,12 +175,32 @@
     (let [[half-seq1 half-seq2] (halve a-seq)]
       (seq-merge (merge-sort half-seq1) (merge-sort half-seq2)))))
 
+(defn monotonic? [a-seq]
+  (cond
+    (empty? a-seq) true
+    :else
+    (or (apply <= a-seq)
+        (apply >= a-seq))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (let [i (inits a-seq)
+          tw (take-while monotonic? i)
+          d (drop (- (count tw) 1) a-seq)]
+      (cons (last tw) (split-into-monotonics d)))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (or (empty? a-set) (= (count a-set) 1))
+    (list a-set)
+    (for [k a-set
+          v (permutations (disj (set a-set) k))]
+      (cons k v))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    [#{}]
+    (concat (powerset (rest a-set))
+            (map (fn [k] (conj k (first a-set)))
+                 (powerset (rest a-set))))))
 
