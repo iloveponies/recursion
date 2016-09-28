@@ -192,7 +192,17 @@
       (cons longest (split-into-monotonics tail)))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (zero? (count a-set))
+    '(())
+    (let [n (count a-set)
+          ns (range 0 n)
+          pick (fn [i] (first (drop i a-set)))
+          others (fn [i] (concat (take i a-set) (drop (inc i) a-set)))
+          pair (fn [i] [(pick i) (others i)])
+          pairs (map pair ns)
+          prepend (fn [num] (fn [xs] (cons num xs)))
+          pair->perms (fn [[num rst]] (map (prepend num) (permutations rst)))]
+      (apply concat (map pair->perms pairs)))))
 
 (defn powerset [a-set]
   [:-])
