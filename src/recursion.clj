@@ -9,7 +9,7 @@
 (defn singleton? [coll]
   (and (not (empty? coll))
        (empty? (rest coll))))
-       
+
 
 (defn my-last [coll]
   (cond
@@ -37,7 +37,7 @@
   (if (empty? a-seq)
     a-seq
     (let [fst (first a-seq)
-          rst (rest a-seq)] 
+          rst (rest a-seq)]
       (if (pred? fst)
         (cons fst (my-filter pred? rst))
         (my-filter pred? rst)))))
@@ -64,7 +64,7 @@
       a-seq)))
 
 (defn seq= [a-seq b-seq]
-  (cond 
+  (cond
     (and (empty? a-seq) (empty? b-seq)) true
     (or (empty? a-seq) (empty? b-seq)) false
     (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
@@ -133,11 +133,11 @@
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  (reduce concat 
-    (map (fn [[val n]] 
+  (reduce concat
+    (map (fn [[val n]]
            (repeat n val))
       a-map)))
-                       
+
 
 (defn my-take [n coll]
   (if (or (= n 0) (empty? coll))
@@ -168,8 +168,8 @@
                 (concat out [y])
                 xs
                 (rest ys))))))
-                                  
-            
+
+
 (defn seq-merge [a-seq b-seq]
   (seq-merge-helper '() a-seq b-seq))
 
@@ -204,6 +204,12 @@
           pair->perms (fn [[num rst]] (map (prepend num) (permutations rst)))]
       (apply concat (map pair->perms pairs)))))
 
-(defn powerset [a-set]
-  [:-])
-
+(defn powerset [a-seq]
+  (let [a-set (set a-seq)]
+    (if (empty? a-set)
+      #{#{}}
+      (apply clojure.set/union
+             (cons #{a-set}
+                   (for [pick a-set
+                         :let [rst (disj a-set pick)]]
+                     (powerset rst)))))))
