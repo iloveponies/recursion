@@ -147,11 +147,24 @@
     ()
     (cons (take half a-seq) (list (drop half a-seq))))))
 
+(defn insert-in [elem a-seq]
+  (cond
+    (empty? a-seq)          (cons elem a-seq)
+    (<= elem (first a-seq)) (cons elem a-seq)
+    :else (cons (first a-seq) (insert-in elem (rest a-seq)))))
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a-fst (first a-seq)
+        a-rest (rest a-seq)]
+    (cond
+      (or (empty? a-seq) (empty? b-seq)) (concat a-seq b-seq)
+      :else (insert-in a-fst (seq-merge a-rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[fst snd] (halve a-seq)]
+    (if (and (<= (count fst) 1) (<= (count snd) 1))
+      (seq-merge fst snd)
+      (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
