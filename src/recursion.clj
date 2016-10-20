@@ -126,7 +126,9 @@
     (concat (repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+   []
+   (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
   [:-])
