@@ -155,8 +155,14 @@
    (let [[a b] (halve a-seq)]
     (seq-merge (merge-sort a) (merge-sort b)))))
 
+(defn monotonic? [a-seq]
+  (or (empty? a-seq) (apply <= a-seq) (apply >= a-seq)))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+   []
+   (let [longest (last (take-while monotonic? (inits a-seq)))]
+    (cons longest (split-into-monotonics (drop (count longest) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
