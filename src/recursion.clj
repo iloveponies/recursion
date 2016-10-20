@@ -77,7 +77,9 @@
      (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (zero? k)
+   1
+   (* n (power n (dec k)))))
 
 (defn fib [n]
   :-)
