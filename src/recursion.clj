@@ -48,7 +48,11 @@
     (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+   []
+   (if (pred? (first a-seq))
+    (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+    [])))
 
 (defn my-drop-while [pred? a-seq]
   [:-])
