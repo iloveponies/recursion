@@ -108,13 +108,22 @@
   (distinct (map concat (tails a-seq) (inits a-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+   freqs
+   (my-frequencies-helper
+    (if (contains? freqs (first a-seq))
+     (update-in freqs [(first a-seq)] inc)
+     (assoc freqs (first a-seq) 1))
+     (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [[k v] (first a-map)]
+   (if (empty? a-map)
+    []
+    (concat (repeat v k) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
