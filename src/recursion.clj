@@ -56,12 +56,11 @@
     :else                 a-seq))
 
 (defn seq= [a-seq b-seq]
-  (let [sorted-a (sort a-seq)
-        sorted-b (sort b-seq)]
-    (cond
-      (and (empty? sorted-a) (empty? sorted-b))  true
-      (not= (first sorted-a) (first  sorted-b))  false
-      :else (seq= (rest sorted-a) (rest sorted-b)))))
+  (cond
+      (not= (count a-seq) (count b-seq)) false
+      (and (empty? a-seq) (empty? b-seq))  true
+      (not= (first a-seq) (first  b-seq))  false
+      :else (seq= (rest a-seq) (rest b-seq))))
 
 (defn my-map [f seq-1 seq-2]
   (cond
@@ -98,14 +97,11 @@
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (let [rev-rest-rev (apply comp [reverse rest reverse])]
-    (if (empty? a-seq)
-      (cons () a-seq)
-      (cons (seq a-seq) (inits (rev-rest-rev a-seq))))))
+  (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
   (let [tail (tails a-seq)
-        init (reverse (inits a-seq))]
+        init (inits a-seq)]
     (distinct (map concat tail init))))
 
 (defn my-frequencies-helper [freqs a-seq]
@@ -161,16 +157,23 @@
       :else (insert-in a-fst (seq-merge a-rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  (let [[fst snd] (halve a-seq)]
-    (if (and (<= (count fst) 1) (<= (count snd) 1))
-      (seq-merge fst snd)
-      (seq-merge (merge-sort fst) (merge-sort snd)))))
+  (if (empty? (rest a-seq))
+      a-seq
+      (apply seq-merge (map merge-sort (halve a-seq)))))
+
+(defn monotonic? [a-seq]
+  (or (apply <= a-seq) (apply >= a-seq)))
 
 (defn split-into-monotonics [a-seq]
   [:-])
 
 (defn permutations [a-set]
-  [:-])
+  (let [rep-fst (comp repeat first)
+        perm-rest (comp permutations rest)
+        partial-perms (fn [x] (map cons (rep-fst x) (perm-rest x)))]
+    (if (empty? a-set)
+      (list ())
+      (mapcat partial-perms (rotations a-set)))))
 
 (defn powerset [a-set]
   [:-])
