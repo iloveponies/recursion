@@ -139,22 +139,16 @@
 
 (defn halve [a-seq]
   (let [half (int (/ (count a-seq) 2))]
-    (if (empty? a-seq)
-    ()
-    (cons (take half a-seq) (list (drop half a-seq))))))
-
-(defn insert-in [elem a-seq]
-  (cond
-    (empty? a-seq)          (cons elem a-seq)
-    (<= elem (first a-seq)) (cons elem a-seq)
-    :else (cons (first a-seq) (insert-in elem (rest a-seq)))))
+    [(take half a-seq) (drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
   (let [a-fst (first a-seq)
         a-rest (rest a-seq)]
     (cond
       (or (empty? a-seq) (empty? b-seq)) (concat a-seq b-seq)
-      :else (insert-in a-fst (seq-merge a-rest b-seq)))))
+      (<= (first a-seq) (first b-seq)) (cons (first a-seq)
+                                             (seq-merge (rest a-seq) b-seq))
+      :else (cons (first b-seq) (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
   (if (empty? (rest a-seq))
