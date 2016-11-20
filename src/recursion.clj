@@ -164,17 +164,44 @@
     (let [[a b] (halve a-seq)]
       (seq-merge (merge-sort a) (merge-sort b)))))
 
+(defn inits2 [coll]
+  (let [n (count coll)
+        go (fn [m] (take m coll))]
+    (map go (range (inc n)))))
+
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    true
+    (or (apply <= a-seq) (apply >= a-seq))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (let [first-monos (take-while monotonic? (inits2 a-seq))
+          len-first-monos (count first-monos)
+          longest-mono (first (drop (dec len-first-monos) first-monos))]
+      (cons longest-mono (split-into-monotonics (drop (dec len-first-monos) a-seq))))))
 
 (defn permutations [a-set]
-  (if (empty? a-set)
-    #{}
-    (let [rots (rotations a-set)
-          go (fn [coll]
-               (concat [(first coll)] (permutations (rest coll))))]
-      (map go rots))))
+  (cond
+   (empty? a-set) [[]]
+   (singleton? a-set) [a-set]
+   (singleton? (rest a-set)) (let [[a b] a-set]
+                               [[a b] [b a]])
+   :else (let [add-to-front (fn [elem list-of-lists]
+                              (map #(cons elem %) list-of-lists))
+               go (fn [[head tail]]
+                    (add-to-front head (permutations tail)))
+               rots (rotations a-set)
+               headtail (fn [coll] [(first coll) (rest coll)])]
+           (mapcat go (map headtail rots)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [head (first a-set)
+          tail (rest a-set)
+          tail-powerset (powerset tail)
+          tail-powerset-with-head (map #(conj % head) tail-powerset)]
+      (concat tail-powerset tail-powerset-with-head))))
 
