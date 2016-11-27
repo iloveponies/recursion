@@ -193,8 +193,12 @@
             (cons start (split-into-monotonics end)))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (list ())
+    (apply concat (map
+                    (fn [[x & xs]] (map (fn [y] (cons x y)) (permutations xs)))
+                    (rotations a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (set (map set (distinct (map merge-sort (apply concat (map inits (permutations a-set))))))))
 
