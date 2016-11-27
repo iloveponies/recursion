@@ -170,7 +170,27 @@
             (seq-merge (merge-sort (get halves 0)) (merge-sort (get halves 1))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) '()
+    (= 1 (count a-seq)) (seq a-seq)
+    :else (let [increasing? (if (>= (second a-seq) (first a-seq))
+                              true
+                              false)
+                pos-dir? (fn [x] (cond
+                                   (empty? x) true
+                                   (= 1 (count x)) true
+                                   :else (if (> (last x) (last (butlast x)))
+                                           true
+                                           false)))
+                neg-dir? (fn [x] (cond
+                                   (empty? x) true
+                                   (= 1 (count x)) true
+                                   :else (not (pos-dir? x))))
+                start (if increasing?
+                        (last (take-while pos-dir? (inits a-seq)))
+                        (last (take-while neg-dir? (inits a-seq))))
+                end (seq (drop (count start) a-seq))]
+            (cons start (split-into-monotonics end)))))
 
 (defn permutations [a-set]
   [:-])
