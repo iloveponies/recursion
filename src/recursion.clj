@@ -129,9 +129,10 @@
 
 (defn my-range [up-to]
   (let [ num (dec up-to) ]
-    (if (<= num 0)
-      (list num)
-      (cons num (my-range num)))))
+    (cond 
+      (< num 0) ()
+      (= num 0) (list num)
+      :else (cons num (my-range num)))))
 
 (defn tails [a-seq]
   [:-])
