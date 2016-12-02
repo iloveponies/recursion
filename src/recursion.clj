@@ -115,10 +115,16 @@
 
 
 (defn fib [n]
-  :-)
+  (if ( < n 2) 
+  n
+  (+ (fib (dec n)) (fib(dec(dec n))))))
+
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (= how-many-times 1)
+    (list what-to-repeat)
+    (do
+      (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat)))))
 
 (defn my-range [up-to]
   [:-])
