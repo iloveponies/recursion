@@ -70,21 +70,49 @@
     :else
     (sequence-contains? elem (rest a-seq))))
     
+(defn my-take-while-helper [pred? a-seq coll]
+  (let [a-first (first a-seq) ]
+    (cond
+      (empty? a-seq) coll
+      (pred? a-first) (my-take-while-helper pred? 
+                                            (rest a-seq) 
+                                            (conj coll a-first))
+    :else  coll )))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq) 
+    a-seq
+    (my-take-while-helper pred? a-seq [])))
+
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq)) 
+      (my-drop-while pred? (rest a-seq))
+      a-seq)))
+
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond 
+    (not (= (count a-seq) (count b-seq))) false
+    (and (empty? a-seq) (empty? a-seq)) true
+    (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
+    :else false ))
 
+            
 (defn my-map [f seq-1 seq-2]
-  [:-])
+  (cond 
+    (empty? seq-1) seq-1
+    (empty? seq-2) seq-2
+    :else
+    (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  :-)
+  (if (= k 0) 
+    1
+    (* n (power n (dec k)))))
+
 
 (defn fib [n]
   :-)
