@@ -134,11 +134,21 @@
       (= num 0) (list num)
       :else (cons num (my-range num)))))
 
+;(tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
+;(inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
+
 (defn tails [a-seq]
-  [:-])
+  (let [ my-list (reverse (reverse a-seq))]
+  (if (empty? my-list)
+    (list ())
+    (conj (tails(rest a-seq)) my-list ))))
 
 (defn inits [a-seq]
   [:-])
+;  (if (empty? a-seq)
+;    (list ())
+;    (cons (
+    
 
 (defn rotations [a-seq]
   [:-])
