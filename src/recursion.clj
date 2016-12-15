@@ -6,10 +6,14 @@
     (* (first coll) (product (rest coll)))))
 
 
-(defn singleton? [coll]
-  (if (and (not (nil? (first coll))) (empty? (rest coll)))
-    true
-    false ))
+(defn singleton? [coll]  
+  (if (empty? coll)
+    false
+    (do 
+      (if (empty? (rest coll))
+        true
+        false ))))
+
 
 (defn my-last [coll]
   (if (empty? coll)
@@ -164,15 +168,32 @@
     (list ())
     (left-rotate a-seq (count a-seq))))
 
-
+; (my-frequencies [:a "moi" :a "moi" "moi" :a 1]) 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [ elem (first a-seq) ] 
+      (if (contains? freqs elem)
+        (my-frequencies-helper (assoc freqs elem (inc (get freqs elem))) (rest a-seq))
+        (my-frequencies-helper (assoc freqs elem 1) (rest a-seq))))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    {}
+    (my-frequencies-helper {} a-seq)))
 
+(defn un-frequencies-helper [a-seq a-map]
+  (if (empty? a-map)
+    a-seq
+    (do 
+      (let [ elem (first a-map) ]
+        (un-frequencies-helper (concat a-seq (repeat (nth elem 1) (first elem))) (rest a-map))))))
+
+; (un-frequencies {:a 3 :b 2 "^_^" 1})  
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    ()
+    (un-frequencies-helper [] a-map)))
 
 (defn my-take [n coll]
   [:-])
