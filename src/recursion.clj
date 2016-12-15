@@ -144,14 +144,26 @@
     (conj (tails(rest a-seq)) my-list ))))
 
 (defn inits [a-seq]
-  [:-])
-;  (if (empty? a-seq)
-;    (list ())
-;    (cons (
+  (let [ tmp-list (tails (reverse a-seq)) ]
+    (map reverse tmp-list)))
     
+; (rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
+
+(defn rotate [a-seq]  
+  (rest (conj a-seq (first a-seq))))
+
+
+(defn left-rotate [a-seq size]
+  (let [ tmp-seq (rotate a-seq) ]
+    (if (= size 0) 
+      ()
+      (conj (left-rotate (vec tmp-seq) (dec size)) a-seq ))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (= (count a-seq )0)
+    (list ())
+    (left-rotate a-seq (count a-seq))))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
