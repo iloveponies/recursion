@@ -196,19 +196,49 @@
     (un-frequencies-helper [] a-map)))
 
 (defn my-take [n coll]
-  [:-])
+  (if (empty? coll)
+    ()
+    (do 
+      (let [ num (if (< n (count coll))
+                   n
+                   (count coll)) ]
+        (if ( = n 0) 
+          ()
+          (conj (my-take (dec n) (rest coll)) (first coll)))))))
+
 
 (defn my-drop [n coll]
-  [:-])
+  (let [ num (if (> n (count coll))
+               (count coll)
+               n) ]
+    (if (= num 0)
+      coll
+      (my-drop (dec num) (rest coll)))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [ dividor (int (/ (count a-seq) 2)) ]
+    [(my-take dividor a-seq) (my-drop dividor a-seq)]))
 
+(defn seq-merge-helper [ a-seq b-seq sorted ]
+  (cond 
+    (and (empty? a-seq) (empty? b-seq)) (reverse sorted)
+    (empty? a-seq) (seq-merge-helper () (rest b-seq)  (conj sorted (first b-seq)))
+    (empty? b-seq) (seq-merge-helper (rest a-seq) ()  (conj sorted (first a-seq)))
+    :else
+    (if (< (first a-seq) (first b-seq))
+      (seq-merge-helper (rest a-seq) b-seq  (conj sorted (first a-seq)))
+      (seq-merge-helper a-seq (rest b-seq)  (conj sorted (first b-seq))))))
+        
+  
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper a-seq b-seq ()))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (= (count a-seq) 1))
+    a-seq
+    (do
+      (let [ [ left right ] (halve a-seq) ]
+        (seq-merge (merge-sort left) (merge-sort right))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
