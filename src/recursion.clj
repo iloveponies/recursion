@@ -199,6 +199,7 @@
                     (fn [[x & xs]] (map (fn [y] (cons x y)) (permutations xs)))
                     (rotations a-set)))))
 
+
 (defn powerset [a-set]
   (set (map set (distinct (map merge-sort (apply concat (map inits (permutations a-set))))))))
 
