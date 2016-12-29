@@ -116,40 +116,80 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list a-seq)
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list a-seq)
+    (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
 
 (defn rotations [a-seq]
   [:-])
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [cur (first a-seq)
+         newval (if (contains? freqs cur)
+                   (inc (get freqs cur))
+                   1)]
+   (cond 
+    (empty? a-seq)
+      freqs
+    :else
+      (my-frequencies-helper 
+        (assoc freqs cur newval) 
+        (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+ (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+ (if (empty? a-map)
+   nil ;(list a-map)
+   (let [a-key (first (first a-map))
+         times (second (first a-map))]
+     (concat (repeat times a-key) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (empty? coll) (zero? n))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [seq-size (count a-seq)
+        first-half-size (int (/ seq-size 2))]
+    (concat (list (my-take first-half-size a-seq)) (list (my-drop first-half-size a-seq)))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond 
+    (and (empty? a-seq) (empty? b-seq))
+      '()
+    (empty? a-seq)
+      b-seq
+    (empty? b-seq)
+      a-seq
+    :else
+      (let [nextval (min (first a-seq) (first b-seq))]
+        (if (= nextval (first a-seq))
+           (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+           (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond 
+    (or (empty? a-seq) (= 1 (count a-seq)))
+      a-seq
+    :else
+      (let [halfs (halve a-seq)]
+      (seq-merge (merge-sort (first halfs)) (merge-sort (second halfs))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+ [:-])
 
 (defn permutations [a-set]
   [:-])
