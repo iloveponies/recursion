@@ -26,8 +26,6 @@
     seq-1
     seq-2))
 
-(seq-max [1 2 5] [1 4 7 1 4])
-
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
     nil
@@ -104,7 +102,11 @@
             (my-repeat (dec how-many-times) what-to-repeat)))))
 
 (defn my-range [up-to]
-  [:-])
+  (if (>= 0 up-to)
+    ()
+    (if (= 1 up-to)
+      '(0)
+      (cons (dec up-to) (my-range (dec up-to))))))
 
 (defn tails [a-seq]
   [:-])
