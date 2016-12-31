@@ -109,13 +109,18 @@
       (cons (dec up-to) (my-range (dec up-to))))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list ())
+    (cons (apply list a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (let [r-seq (reverse a-seq)]
+    (map reverse (tails r-seq))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list ())
+    (distinct (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
