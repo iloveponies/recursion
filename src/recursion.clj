@@ -122,14 +122,26 @@
     (list ())
     (distinct (map concat (tails a-seq) (reverse (inits a-seq))))))
 
+
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [next (first a-seq)]
+      (let [new-freqs (if (= nil (get freqs next))
+                        (assoc freqs next 1)
+                        (assoc freqs next (inc (get freqs next))))]
+        (my-frequencies-helper new-freqs
+                               (rest a-seq))))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    ()
+    (let [[map-key map-val] (first a-map)]
+      (concat (repeat map-val map-key) 
+              (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
   [:-])
