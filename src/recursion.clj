@@ -141,10 +141,15 @@
       (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if
+    (empty? a-seq)
+    '(())
+    (cons
+      a-seq
+      (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
   [:-])
