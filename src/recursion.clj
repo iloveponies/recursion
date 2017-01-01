@@ -162,10 +162,20 @@
       a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+   (if
+     (empty? a-seq)
+     freqs
+     (let
+       [elem (first a-seq)
+        freq (get freqs elem 0)]
+     (my-frequencies-helper
+       (assoc
+         freqs
+         elem (inc freq))
+       (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
