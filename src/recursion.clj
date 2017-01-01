@@ -133,7 +133,12 @@
         what-to-repeat))))
 
 (defn my-range [up-to]
-  [:-])
+  (if
+    (zero? up-to)
+    '()
+    (cons
+      (- up-to 1)
+      (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   [:-])
