@@ -211,10 +211,33 @@
       (my-drop half a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (and
+      (empty? a-seq)
+      (empty? b-seq))
+    '()
+    (empty? a-seq)
+    b-seq
+    (empty? b-seq)
+    a-seq
+  :else
+    (let [a (first a-seq)
+          b (first b-seq)
+          minimum (min a b)
+          arest (if (< a b)
+                  (rest a-seq)
+                  a-seq)
+          brest (if (< a b)
+                  b-seq
+                  (rest b-seq))]
+      (cons minimum (seq-merge arest brest)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (let [[left right] (halve a-seq)]
+      (seq-merge (merge-sort left)
+                 (merge-sort right)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
