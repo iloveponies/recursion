@@ -170,7 +170,11 @@
    (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (< (count a-seq) 2)
+    a-seq
+    (seq-merge
+     (merge-sort (first (halve a-seq)))
+     (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
