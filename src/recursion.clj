@@ -125,8 +125,18 @@
     (list a-seq)
     (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
 
+(defn rotations-helper [len items]
+  (if (or (zero? len)(empty? items))
+    nil
+    (let [new-items (concat (rest items) [(first items)])]
+      (concat 
+        [new-items]
+        (rotations-helper (dec len) new-items)))))
+
 (defn rotations [a-seq]
-  [:-])
+    (if (empty? a-seq)
+      '(())
+      (rotations-helper (count a-seq) a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [cur (first a-seq)
