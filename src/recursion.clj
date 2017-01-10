@@ -169,7 +169,15 @@
       (seq-merge sortFirst sortSecond))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [splits (rest (reverse (inits a-seq)))
+        monotonics? (fn [seq1] (or (apply < seq1) (apply > seq1)))
+        part1 (take-while monotonics? splits)
+        part2 (drop (count part1) a-seq)
+        current (last part1)]
+        (cond (empty? part2)
+          (cons current ())
+          :else
+          (cons current (split-into-monotonics part2)))))
 
 (defn permutations [a-set]
   [:-])
