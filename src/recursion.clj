@@ -132,6 +132,8 @@
 
 
 
+
+
 (defn rotations [a-seq]
   (let [alut-laskeva-pituus (inits a-seq)
         loput-laskeva-pituus (tails a-seq)
@@ -231,11 +233,53 @@
 
 
 
+;Helpful functions used in split-into-monotonics
+(defn ascending? [a-seq]
+  (loop [current nil
+         x-seq a-seq]
+    (cond
+      (empty? x-seq)
+        true
+      (or (= nil current) (>= (first x-seq) current))
+        (recur (first x-seq) (rest x-seq))
+      :else
+        false)))
+
+(defn descending? [a-seq]
+  (loop [current nil
+         x-seq a-seq]
+    (cond
+      (empty? x-seq)
+        true
+      (or (= nil current) (<= (first x-seq) current))
+        (recur (first x-seq) (rest x-seq))
+      :else
+        false)))
+
+(defn monotonic?  [a-seq]
+  (or (ascending? a-seq) (descending? a-seq)))
+
+
+
+
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '()
+    (let [alut (inits a-seq)
+          alut-jarjestyksessa (reverse alut)  ;inits muokkaamattomana antaa pisimmästä lyhimpään
+          monotoniset-alut (take-while monotonic? alut-jarjestyksessa)
+          pisin-monotoninen-alku (last monotoniset-alut)
+          alun-pituus (count pisin-monotoninen-alku)]
+
+      (cons pisin-monotoninen-alku (split-into-monotonics (drop alun-pituus a-seq))))))
+
 
 (defn permutations [a-set]
   [:-])
+
+
+
 
 (defn powerset [a-set]
 )
@@ -243,7 +287,3 @@
 
 
 
- (my-drop-while odd? [1 2 3 4])  ;=> '(2 3 4)
-  (my-drop-while odd? [1 3 4 5])  ;=> '(4 5)
-  (my-drop-while even? [1 3 4 5]) ;=> '(1 3 4 5)
-  (my-drop-while odd? [])        ;=> empty?)
