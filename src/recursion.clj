@@ -1,7 +1,23 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll) (product (rest coll)))))
+
+
+;; (product '(1 2 4))
+;;-> (product (cons 1 (cons 2 (cons 4 '()))))
+
+;; (* 1 (product (cons 2 (cons 4 '()))))
+;; (* 1 (* 2 (product (cons 4 '()))))
+;; (* 1 (* 2 (* 4 (product'()))))
+
+;;-> (* 1 (* 2 (* 4 1)))
+;; (* 1 (* 2 4))
+;; (* 1 8)
+;; 8
+
 
 (defn singleton? [coll]
   :-)
