@@ -78,11 +78,14 @@
   (cond
    (or (empty? a-seq) (empty? b-seq)) '()
 
-   (or (singleton? a-seq) (singleton? b-seq)) (cons (funk (first a-seq) (first b-seq)) '())
+   (or (singleton? a-seq) (singleton? b-seq)) (cons (funk (first a-seq)
+                                                         (first b-seq))
+                                                   '())
 
-   :else (cons (funk (first a-seq) (first b-seq))
-               (my-map funk (rest a-seq) (rest b-seq)))))
-
+   :else (cons (funk (first a-seq)
+                     (first b-seq))
+               (my-map funk (rest a-seq)
+                            (rest b-seq)))))
 (defn power [n k]
   (cond
     (= k 0) 1
