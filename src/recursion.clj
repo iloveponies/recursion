@@ -101,10 +101,10 @@
 
 (defn inits [a-seq]
     (if (empty? a-seq) (cons [] [])
-    (cons a-seq (inits (butlast a-seq)))))
+    (reverse (cons a-seq (reverse (inits (butlast a-seq)))))))
 
 (defn rotations [a-seq]
-    (let [res-seq (my-map concat (tails a-seq) (reverse (inits a-seq)))]
+    (let [res-seq (my-map concat (tails a-seq) (inits a-seq))]
     (if (= 1 (count res-seq)) res-seq (rest res-seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
@@ -168,9 +168,13 @@
   (cond
     (empty? a-seq) []
     (= 1 (count a-seq)) a-seq
-    (< (first a-seq) (get a-seq 1)) []
-    (> (first a-seq) (get a-seq 1)) []
-  ))
+    :else (let [longest (longest-sequence (my-filter monotonic? (inits a-seq)))]
+            (cons longest (split-into-monotonics (drop (count longest) a-seq))))))
+
+(defn monotonic? [a-seq]
+  (if (empty? a-seq) false
+  (or (apply <= a-seq) (apply >= a-seq))))
+
 
 (defn permutations [a-set]
   [:-])
