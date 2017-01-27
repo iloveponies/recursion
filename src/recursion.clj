@@ -168,12 +168,11 @@
   (cond
     (empty? a-seq) []
     (= 1 (count a-seq)) a-seq
-    :else (let [longest (longest-sequence (my-filter monotonic? (inits a-seq)))]
+    :else (let [monotonic? (fn [a] (if (empty? a) false
+                                      (or (apply <= a) (apply >= a))))
+                 longest (longest-sequence (my-filter monotonic? (inits a-seq)))]
             (cons longest (split-into-monotonics (drop (count longest) a-seq))))))
 
-(defn monotonic? [a-seq]
-  (if (empty? a-seq) false
-  (or (apply <= a-seq) (apply >= a-seq))))
 
 
 (defn permutations [a-set]
