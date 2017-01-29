@@ -202,4 +202,11 @@
     (flatten-levels (dec (count a-set)) (perm-helper [] a-set))))
 
 (defn powerset [a-set]
-  [:-])
+  (reduce
+    (fn [acc x-set]
+      (set
+        (concat acc
+          (map
+            (fn [x] (set (concat #{x-set} x)))
+            acc))))
+    #{#{}} a-set))
