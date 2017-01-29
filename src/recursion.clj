@@ -95,43 +95,111 @@
       (cons current (my-range current)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons '() a-seq)
+    (cons a-seq (tails (rest a-seq)))))
+
+(defn inits-helper [a-seq]
+  (if (empty? a-seq)
+    (cons '() a-seq)
+    (conj (inits-helper (rest a-seq)) (reverse a-seq))))
 
 (defn inits [a-seq]
-  [:-])
+  (inits-helper (reverse a-seq)))
+
+(defn rotations-helper [a-seq rotations]
+  (if (= (count a-seq) (count rotations))
+    rotations
+    (rotations-helper (concat (rest a-seq) (conj [] (first a-seq))) (cons a-seq rotations))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    [[]]
+    (rotations-helper a-seq [])))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          elem-count (if (contains? freqs elem)
+                  (inc (get freqs elem))
+                  1)]
+      (my-frequencies-helper (assoc freqs elem elem-count) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [freq->vector
+        (fn [[elem freq]] (repeat freq elem))]
+    (if (empty? a-map)
+    []
+    (concat (freq->vector (first a-map)) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    []
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [n (int (/ (count a-seq) 2))]
+    [(my-take n a-seq) (my-drop n a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (if (<= (first a-seq) (first b-seq))
+            (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+            (cons (first b-seq) (seq-merge a-seq (rest b-seq))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (singleton? a-seq) (empty? a-seq))
+    a-seq
+    (let [[halve-1 halve-2] (halve a-seq)]
+      (seq-merge (merge-sort halve-1) (merge-sort halve-2)))))
+
+(defn dir-fn [dir val]
+  (fn [x] (dir val x)))
+
+(defn mon-helper [dir prev a-seq]
+  (if (empty? a-seq)
+    '()
+    (let [elem (first a-seq)]
+      (if (dir prev elem)
+        (concat [elem] (mon-helper dir elem (rest a-seq)))
+        '()))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (singleton? a-seq))
+    a-seq
+    (let [elem (first a-seq)
+          a-seq-tail (rest a-seq)
+          rising (cons elem (mon-helper < elem a-seq-tail))
+          falling (cons elem (mon-helper > elem a-seq-tail))]
+      (if (singleton? rising)
+        (cons falling (split-into-monotonics (drop (count falling) a-seq)))
+        (cons rising (split-into-monotonics (drop (count rising) a-seq)))))))
+
+(defn flatten-levels [levels a-seq]
+  (if (zero? levels)
+    a-seq
+    (flatten-levels (dec levels) (apply concat a-seq))))
+
+(defn perm-helper [perm a-set]
+  (if (empty? a-set)
+    perm
+    (map (fn [a] (perm-helper (conj perm a) (remove #{a} a-set))) a-set)))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '([])
+    (flatten-levels (dec (count a-set)) (perm-helper [] a-set))))
 
 (defn powerset [a-set]
   [:-])
