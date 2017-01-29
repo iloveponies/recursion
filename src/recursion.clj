@@ -8,19 +8,36 @@
 )
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll) false
+    (if (empty?(rest coll)) true false)
+  )
+)
 
 (defn my-last [coll]
-  :-)
+  (last coll)
+)
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq) nil
+    (apply max a-seq)
+  )
+)
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [eka (count seq-1)
+       toka (count seq-2)]
+  (if (> eka toka) seq-1 seq-2)
+
+  )
+)
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (cond
+   (empty? a-seq) nil
+   (singleton? a-seq) (first a-seq)
+   :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))
+  )
+)
 
 (defn my-filter [pred? a-seq]
   [:-])
