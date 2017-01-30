@@ -40,19 +40,36 @@
 )
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
+    :else (my-filter pred? (rest a-seq))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+(cond
+  (empty? a-seq) false
+  (= elem (first a-seq)) true
+  :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
+    :else ()))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) a-seq
+    (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
+    :else a-seq))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (cond
+  (and (empty? a-seq)
+       (empty? b-seq)) true
+  (= a-seq b-seq) (seq= (rest a-seq)
+                        (rest b-seq))
+   :else false))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
