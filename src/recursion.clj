@@ -116,8 +116,16 @@
 (defn inits [a-seq]
 (map reverse (tails (reverse a-seq))))
 
+(defn rotations-apu [a-seq nro]
+  (if (> nro 1)
+    (cons a-seq (rotations-apu (concat (rest a-seq) (take 1 a-seq)) (dec nro)))
+    [a-seq]
+  )
+)
+
 (defn rotations [a-seq]
-  [:-])
+  (rotations-apu a-seq (count a-seq))
+)
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
