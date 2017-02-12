@@ -129,10 +129,18 @@
            (vector (my-take seq a-seq) (my-drop seq a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+      (let [a (first a-seq)
+            b (first b-seq)]
+           (cond
+             (nil? a) b-seq
+             (nil? b) a-seq
+             (< a b) (cons a (seq-merge (rest a-seq) b-seq))
+             :else (cons b (seq-merge a-seq (rest b-seq))))))
+
 
 (defn merge-sort [a-seq]
-  [:-])
+      (if (or (singleton? a-seq) (empty? a-seq)) a-seq
+        (apply seq-merge (map merge-sort (halve a-seq)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
