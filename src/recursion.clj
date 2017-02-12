@@ -128,22 +128,44 @@
 )
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [rfregs (my-frequencies-helper freqs (rest a-seq))]
+    (assoc rfregs (first a-seq) (inc (get rfregs (first a-seq) 0)))
+    )
+  )
+)
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+   a-map
+    (let [[value i] (first a-map)]
+    (concat (repeat i value) (un-frequencies (rest a-map))))
+  )
+)
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (zero? n) (empty? coll))
+   ()
+    (cons (first coll) (my-take (dec n) (rest coll)))
+  )
+)
 
 (defn my-drop [n coll]
-  [:-])
+  (if (pos? n)
+    (my-drop (dec n) (rest coll))
+    coll
+  )
+)
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq) (my-drop half a-seq)]
+  )
+)
 
 (defn seq-merge [a-seq b-seq]
   [:-])
@@ -158,5 +180,12 @@
   [:-])
 
 (defn powerset [a-set]
-  [:-])
+  (apply clojure.set/union
+        #{(set a-set)}
+         (map (fn [a] (powerset (disj (set a-set) a))) (set a-set))
+  )
+  ; disj[oin]. Returns a new set of the same (hashed/sorted) type, that
+  ;does not contain key(s).
+  ;set returns a set of the distinct elements of coll.
+)
 
