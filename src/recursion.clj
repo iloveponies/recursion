@@ -171,7 +171,11 @@
   [:-])
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (or (empty? a-seq) (= 1 (count a-seq)))
+    a-seq
+    (apply seq-merge (map merge-sort (halve a-seq)))
+  )
+)
 
 (defn split-into-monotonics [a-seq]
   [:-])
