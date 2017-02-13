@@ -167,8 +167,17 @@
   )
 )
 
+
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [start (take-while (fn [x] (< x (first a-seq))) b-seq)
+                end (drop (count start) b-seq)]
+            (concat start (take 1 a-seq) (seq-merge (rest a-seq) end))
+          )
+  )
+)
 
 (defn merge-sort [a-seq]
   (if (or (empty? a-seq) (= 1 (count a-seq)))
