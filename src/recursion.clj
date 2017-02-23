@@ -100,40 +100,69 @@
   (map reverse (tails (reverse a-seq))))
 
 (defn rotations [a-seq]
-  (if (sequence-contains? a-seq (rotations (concat (rest a-seq) [(first a-seq)])))
-    '()
-    (cons (seq a-seq) (rotations (concat (rest a-seq) [(first a-seq)])))))
+  (set (map concat (tails a-seq) (reverse (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [new-freqs (if (contains? freqs (first a-seq))
+                      (assoc freqs (first a-seq) (inc (get freqs (first a-seq))))
+                      (assoc freqs (first a-seq) 1))]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
+
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    '()
+    (concat (my-repeat (last (first a-map)) (first (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (>= n (count coll))
+    coll
+    (if (== n 0)
+      '()
+      (cons (first coll) (my-take (dec n) (rest coll))))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (== n 0)
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [n (int (/ (count a-seq) 2))]
+    (list (my-take n a-seq) (my-drop n a-seq))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (if (> (first a-seq) (first b-seq))
+      (concat [(first b-seq)] (seq-merge a-seq (rest b-seq)))
+      (concat [(first a-seq)] (seq-merge (rest a-seq) b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (last (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (let [monotonics (take-while (fn [x] (or (seq= x (sort x)) (seq= x (reverse (sort x))))) (reverse (inits a-seq)))]
+      (cons (last monotonics) (split-into-monotonics (drop (dec (count monotonics)) a-seq))))))
+
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    (list [])
+    (let [my-concat (fn [x] (concat x [(first a-set)]))]
+      (set (mapcat rotations (cons (seq a-set) (map my-concat (permutations (rest a-set)))))))))
+
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set)
+    (list [])
+    (set (map set (mapcat inits (permutations a-set))))))
