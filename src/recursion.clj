@@ -1,18 +1,16 @@
 (ns recursion)
 
-
 (defn product [coll]
   (if (empty? coll)
     1
     (* (first coll)
        (product (rest coll)))))
 
-
 (defn singleton? [coll]
-  (let [x (vec coll)]
+  (let [vector-of-collection (vec coll)]
     (cond
-      (empty? x) false
-      (empty? (drop 1 x)) true
+      (empty? vector-of-collection) false
+      (empty? (drop 1 vector-of-collection)) true
       :else false)))
 
 (defn my-last [coll]
@@ -22,47 +20,41 @@
       (first coll)
       (my-last (rest coll)))))
 
-
 (defn max-element [a-seq]
   (if (empty? a-seq)
     nil
-    (apply max a-seq)))
+    (if (singleton? a-seq)
+      (first a-seq)
+      (max-element (cons (max (first a-seq) (second a-seq)) (drop 2 a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-    (let [x (count seq-1)
-          xx (count seq-2)]
-            (if (> x xx) seq-1 seq-2)))
+    (let [length-of-seq-1 (count seq-1)
+          length-of-seq-2 (count seq-2)]
+            (if (> length-of-seq-1 length-of-seq-2)
+              seq-1
+              seq-2)))
 
  (defn longest-sequence [a-seq]
-   (let [aa (count a-seq)
-         bb (first a-seq)
-         cc (second a-seq)
-         dd (seq-max bb cc)
-         ff (filter (fn [x](> (count x) 0)) a-seq)
-         hh (fn e [seq-x]
-              (if (= 2 (count seq-x))
-                (seq-max (first seq-x) (second seq-x))
-                (e (assoc (into [] (rest seq-x)) 0 (seq-max (first seq-x) (second seq-x))))))]
-                  (cond
-                    (= 0 aa) nil
-                    (= 1 aa) bb
-                    (= 2 aa) dd
-                    (< 2 aa) (hh a-seq))))
+   (let [length-of-coll (count a-seq)
+         longer-of-first-two (seq-max (first a-seq) (second a-seq))
+         hh (fn find-longest [seq-a]
+              (if (= 2 (count seq-a))
+                (seq-max (first seq-a) (second seq-a))
+                (find-longest (assoc (into [] (rest seq-a)) 0 (seq-max (first seq-a) (second seq-a))))))]
+     (cond
+       (= 0 length-of-coll) nil
+       (= 1 length-of-coll) (first a-seq)
+       (= 2 length-of-coll) longer-of-first-two
+       (< 2 length-of-coll) (hh a-seq))))
 
  (defn my-filter [pred? a-seq]
-    (let [x (first a-seq)
-          xx (rest a-seq)
-          xxx (fn [p? s]
-                  (if (p? s)
-                    s
-                    ))]
-
-            (if (empty? a-seq)
-              a-seq
-              (if (pred? x)
-                (cons (xxx pred? x) (my-filter pred? xx))
-                (my-filter pred? xx)))))
-
+      (if (empty? a-seq)
+        a-seq
+        (if (pred? (first a-seq))
+          (cons (if pred? (first a-seq)
+                  (first a-seq))
+                (my-filter pred? (rest a-seq)))
+          (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
   (if (empty? a-seq)
@@ -72,32 +64,43 @@
         (sequence-contains? elem (rest a-seq)))))
 
 (defn my-take-while [pred? a-seq]
-  (let [newlist ()
-        megafun (fn mega [seqway list-of-succesfuls]
-                    (if (pred? (first seqway))
-                       (mega (rest seqway) (conj list-of-succesfuls (first seqway)))
-                       (reverse list-of-succesfuls)))]
-                         (if (empty? a-seq)
-                           ()
-                           (megafun a-seq newlist))))
-
+  (let [recurse (fn list-where-true [seq-a list-of-succesfuls]
+                    (if (pred? (first seq-a))
+                      (list-where-true (rest seq-a) (conj list-of-succesfuls (first seq-a)))
+                      (reverse list-of-succesfuls)))]
+    (if (empty? a-seq)
+      ()
+      (recurse a-seq ()))))
 
 (defn my-drop-while [pred? a-seq]
-  (let [x (my-take-while pred? a-seq)
-        y (count x)]
-          (drop y a-seq)))
-
+   (let [drop-until (fn list-undropped [seq-a undropped]
+                      (if (pred? (first seq-a))
+                        (list-undropped (rest seq-a) (rest undropped))
+                        undropped))]
+     (if (empty? a-seq)
+       ()
+       (drop-until a-seq a-seq))))
 
 (defn seq= [a-seq b-seq]
-  (= a-seq b-seq))
+  (if (and (empty? a-seq) (empty? b-seq))
+    true
+    (cond
+      (or (and (empty? a-seq) (not (empty? b-seq) )) (and (empty? b-seq) (not (empty? a-seq)))) false
+      (and (= (first a-seq) (first b-seq))) (seq= (rest a-seq) (rest b-seq))
+      :else false)))
 
 (defn my-map [f seq-1 seq-2]
-  (let [newlist ()
-         xl (fn xxl [fun seqa seqb lista]
-              (if (or (empty? seqa) (empty? seqb))
-                (reverse lista)
-                (xxl fun (rest seqa) (rest seqb) (conj lista (fun (first seqa) (first seqb))))))]
-                  (xl f seq-1 seq-2 newlist)))
+  (let [map-f-over-seqs-1-and-2 (fn mapping-function
+                                  [function-to-be-mapped seq-a seq-b return-list]
+                                  (if (or (empty? seq-a) (empty? seq-b))
+                                    (reverse return-list)
+                                    (mapping-function
+                                     function-to-be-mapped
+                                     (rest seq-a)
+                                     (rest seq-b)
+                                     (conj return-list (function-to-be-mapped (first seq-a) (first seq-b))))))]
+
+    (map-f-over-seqs-1-and-2 f seq-1 seq-2 ())))
 
 (defn power [n k]
   (if (zero? k)
@@ -109,126 +112,168 @@
     n
     (+ (fib (- n 1)) (fib (- n 2)))))
 
+
 (defn my-repeat [how-many-times what-to-repeat]
-  (let [a how-many-times
-        b what-to-repeat
-        g ()
-        c (fn d [e f h] (cond
-                          (< e 0) ()
-                          (= e 0) h
-                          :else (d (dec e) b (conj h b))))]
-                              (c a b g)))
+  (let [repeat-this (fn repeating-function [repeats-left f collection-of-repeated-things] (cond
+                          (< repeats-left 0) ()
+                          (= repeats-left 0) collection-of-repeated-things
+                          :else (repeating-function
+                                  (dec repeats-left)
+                                  what-to-repeat
+                                  (conj collection-of-repeated-things what-to-repeat))))]
+
+    (repeat-this how-many-times what-to-repeat ())))
 
 (defn my-range [up-to]
-  (let [a up-to]
-    (if (= a 0)
+    (if (= up-to 0)
       ()
-      (cons (dec a) (my-range (dec a))))))
+      (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-   (let [a  a-seq
-         b  (count a-seq)
-         c  0
-         d  ()
-         e  (fn fun [f g h i] (cond
-                              (empty? f) 0
-                              (= g h) i
-                              :else (fun f g (inc h) (cons (drop h f) i))))]
+   (let [tail-function (fn tails-f
+                         [sequence-to-tail
+                          length-of-seq
+                          iteration-counter
+                          tail]
+                           (cond
+                             (empty? sequence-to-tail) 0
+                               (= length-of-seq iteration-counter) tail
+                               :else (tails-f
+                                       sequence-to-tail
+                                       length-of-seq
+                                       (inc iteration-counter)
+                                       (cons (drop iteration-counter sequence-to-tail) tail))))]
      (if (empty? a-seq)
        [a-seq]
-       (reverse (cons () (e a b c d))))))
-
-
+       (reverse (cons () (tail-function a-seq (count a-seq) 0 ()))))))
 
 (defn inits [a-seq]
-  (reverse (map reverse (tails (reverse a-seq)))))
-
+   (let [init-function (fn init-f
+                         [sequence-to-init
+                          length-of-seq
+                          iteration-counter
+                          init]
+                           (cond
+                             (empty? sequence-to-init) 0
+                               (= length-of-seq iteration-counter) init
+                               :else (init-f
+                                       sequence-to-init
+                                       length-of-seq
+                                       (inc iteration-counter)
+                                       (cons (drop-last iteration-counter sequence-to-init) init))))]
+     (if (empty? a-seq)
+       [a-seq]
+         (cons () (init-function a-seq (count a-seq) 0 ())))))
 
 (defn rotations [a-seq]
-    (let [a  a-seq
-         b  (count a-seq)
-         c  0
-         d  ()
-         e  (fn fun [f g h i] (cond
-                              (empty? f) (into () (vector ()))
-                              (=  g h) i
-                              :else (fun (cons (last f) (take (dec g) f)) g (inc h) (cons (cons (last f) (take (dec g) f)) i))))]
-                                 (e a b c d)))
+    (let [get-rotations (fn rot
+                          [sequence-to-rotate
+                           length-of-seq
+                           counter-of-iterations
+                           collection-of-rotations]
+                           (cond
+                             (empty? sequence-to-rotate) (into () (vector ()))
+                             (=  length-of-seq counter-of-iterations) collection-of-rotations
+                             :else (rot
+                                      (cons
+                                        (last sequence-to-rotate)
+                                        (take (dec length-of-seq)
+                                              sequence-to-rotate))
+                                      length-of-seq
+                                      (inc counter-of-iterations)
+                                      (cons (cons (last sequence-to-rotate) (take (dec length-of-seq) sequence-to-rotate)) collection-of-rotations))))]
 
+      (get-rotations a-seq (count a-seq) 0 ())))
 
 (defn my-frequencies-helper [freqs a-seq]
-  (let [a freqs
-        b (into () (set a-seq))
-        c (count b)
-        z (fn rcrs [counteri iteraattori seqway erilaiset] (if (= counteri iteraattori)
-                                            seqway
-                                            (rcrs counteri (inc iteraattori) (assoc seqway (nth erilaiset iteraattori) 0) erilaiset)))
-        x (z c 0 a b)
-        y (fn uudestaan [counteri iteraattori seqway erilaiset mappi] (if (= counteri iteraattori)
-                                                            mappi
-                                                            (uudestaan counteri (inc iteraattori) seqway erilaiset
-                                                                       (assoc mappi (nth erilaiset iteraattori)
-                                                                         (count
-                                                                           (filter
-                                                                             (fn [x] (= x (nth erilaiset iteraattori))) a-seq))))))
-        d   (y c 0 a-seq b x)]
-          d))
 
+  (let [different-items (into () (set a-seq))
+        amount-of-differents (count different-items)
+        get-list-of-differents (fn get-list [amount-of-differents
+                                             iterator
+                                             seq-a
+                                             collection-of-differents]
+                                               (if (= amount-of-differents iterator)
+                                                 seq-a
+                                                 (get-list
+                                                   amount-of-differents
+                                                   (inc iterator)
+                                                   (assoc seq-a (nth different-items iterator) 0)
+                                                    different-items)))
+
+        list-of-different-items (get-list-of-differents
+                                    amount-of-differents
+                                    0
+                                    freqs
+                                    different-items)
+
+        get-frequencies (fn recourse [number-of-differents
+                                      iterator
+                                      seq-1
+                                      list-of-differents
+                                      collection-of-freq-pairs]
+                                       (if (= number-of-differents iterator)
+                                         collection-of-freq-pairs
+                                         (recourse
+                                           number-of-differents
+                                           (inc iterator)
+                                           seq-1
+                                           list-of-differents
+                                           (assoc
+                                             collection-of-freq-pairs
+                                             (nth list-of-differents iterator)
+                                             (count (filter (fn [x] (= x (nth list-of-differents iterator))) a-seq))))))]
+
+    (get-frequencies amount-of-differents 0 a-seq different-items list-of-different-items)))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  (let [a (keys a-map)
-        b (vals a-map)
-        d (count a)
-        e ()
-        c (fn rpt [counteri iteraattori lista valus kees] (if (= counteri iteraattori)
-                                            lista
-                                            (rpt counteri (inc iteraattori) (conj lista (repeat (nth valus iteraattori) (nth kees iteraattori))) valus kees)))
-        f (flatten  (c d 0 e b a))
-        ]
-    f))
+  (let [de-freq (fn recourse [counter
+                              iterator
+                              lista
+                              numbers
+                              items]
+                                (if (= counter iterator)
+                                  lista
+                                  (recourse
+                                    counter
+                                    (inc iterator)
+                                    (conj lista
+                                      (repeat
+                                        (nth numbers iterator)
+                                        (nth items iterator)))
+                                      numbers
+                                      items)))]
+
+    (flatten (de-freq (count (keys a-map)) 0 () (vals a-map) (keys a-map)))))
 
 (defn my-take [n coll]
-  (let [a (count coll)
-        c (- a n)
-        b (drop-last c coll)
-       ] b))
+  (drop-last (- (count coll) n) coll))
 
 (defn my-drop [n coll]
-  (let [a (count coll)
-        c (- a n)
-        b (if (<= c 0)
-            ()
-            (take-last c coll))
-         ]b))
+  (if (<= (- (count coll) n) 0)
+    ()
+    (take-last (- (count coll) n) coll)))
 
 (defn halve [a-seq]
-  (let [a (int (/ (count a-seq) 2))
-        b (my-take a a-seq)
-        c (my-drop a a-seq)
-        d (vector b c)
-        ]
-          d))
+  (let [half-of-seq-length (int (/ (count a-seq) 2))
+        first-half (my-take half-of-seq-length a-seq)
+        last-half (my-drop half-of-seq-length a-seq)]
+    (vector first-half last-half)))
 
 (defn seq-merge [a-seq b-seq]
-  (let [ e (concat a-seq b-seq)
-         a (count e)
-         c (fn again [counteri iteraattori lista seqway] (cond
-                                                           (= counteri iteraattori) lista
-                                                           :else (again counteri
-                                                                        (inc iteraattori)
-                                                                        (conj lista (apply min seqway))
-                                                                        (concat
-                                                                          (subvec (vec seqway) 0
-                                                                                  (.indexOf seqway
-                                                                                            (apply min seqway)))
-                                                                          (subvec (vec seqway)
-                                                                                  (inc
-                                                                                    (.indexOf seqway (apply min seqway))))))))]
-                                                                                        (reverse (c a 0 () e))))
+  (let [combine (fn [acc a-seq b-seq]
+                  (if (and (empty? b-seq) (empty? a-seq))
+                    acc
+                    (cond
+                      (empty? a-seq) (recur (conj acc (first b-seq)) a-seq (rest b-seq))
+                      (empty? b-seq) (recur (conj acc (first a-seq)) (rest a-seq) b-seq)
+                      (<= (first a-seq) (first b-seq)) (recur (conj acc (first a-seq)) (rest a-seq) b-seq)
+                      (>= (first a-seq) (first b-seq)) (recur (conj acc (first b-seq)) a-seq (rest b-seq)))))]
 
+    (reverse (combine () a-seq b-seq))))
 
 (defn merge-sort [a-seq]
   (cond
@@ -246,4 +291,3 @@
 
 (defn powerset [a-set]
   [:-])
-
