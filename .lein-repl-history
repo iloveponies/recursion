@@ -1,0 +1,7 @@
+(defn singleton? [coll]
+  (empty? (rest coll)))
+(singleton? [1])     ;=> true
+(singleton? #{2})    ;=> true
+(singleton? [])      ;=> false
+(singleton? [1 2 3]) ;=> false
+quit
