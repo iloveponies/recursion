@@ -4,7 +4,7 @@
 
 (defn product [coll]
   (if (empty? coll)
-    0
+    1
     (* (first coll)
       (product (rest coll)))))
 
@@ -21,7 +21,9 @@
 (defn max-element [a-seq]
   (if (empty? a-seq)
     nil
-    (max (first a-seq) (max-element (rest a-seq)))))
+    (if (singleton? a-seq)
+      (first a-seq)
+      (max (first a-seq) (max-element (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2))
@@ -75,16 +77,14 @@
 
 (defn seq= [a-seq b-seq]
   (cond
-    (and (empty? a-seq) (empty? a-seq))
+    (and (empty? a-seq) (empty? b-seq))
       true
     (or (empty? a-seq) (empty? b-seq))
       false
     :else
-      (cond
+      (and
         (== (first a-seq) (first b-seq))
-          (seq= (rest a-seq) (rest b-seq))
-        :else
-          false)))
+          (seq= (rest a-seq) (rest b-seq)))))
 
 (defn my-map [f seq-1 seq-2]
   (cond
@@ -98,13 +98,9 @@
           (my-map f (rest seq-1) (rest seq-2)))))
 
 (defn power [n k]
-  (cond
-    (== n 0)
-      0
-    (== k 1)
-      1
-    :else
-      (* n (power n (dec k)))))
+  (if (zero? k)
+    1
+    (* n (power n (- k 1)))))
 
 (defn fib [n]
   (cond
@@ -125,8 +121,8 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    '())
-    (cons a-seq (tails (rest a-seq))))
+    '(())
+    (cons (sequence a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
@@ -134,7 +130,7 @@
 (defn rotations [a-seq]
   (if (empty? a-seq)
     '(())
-    (map concat (rest (tails a-seq)) (rest (inits a-seq)))))
+    (map (fn [n] (concat (drop n a-seq) (take n a-seq))) (range 0 (count a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
