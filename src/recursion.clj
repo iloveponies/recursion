@@ -8,8 +8,15 @@
 (defn singleton? [coll]
   (and (not (empty? coll)) (empty? (rest coll))))
 
+(defn my-last-not-empty [coll]
+  (if (singleton? coll)
+    (first coll)
+    (my-last-not-empty (rest coll))))
+
 (defn my-last [coll]
-  :-)
+  (if (empty? coll)
+    nil
+    (my-last-not-empty coll)))
 
 (defn max-element [a-seq]
   :-)
