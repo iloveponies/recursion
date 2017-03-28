@@ -8,41 +8,25 @@
 (defn singleton? [coll]
   (and (not (empty? coll)) (empty? (rest coll))))
 
-(defn my-last-not-empty [coll]
-  (if (singleton? coll)
-    (first coll)
-    (my-last-not-empty (rest coll))))
-
 (defn my-last [coll]
-  (if (empty? coll)
-    nil
-    (my-last-not-empty coll)))
-
-(defn max-element-not-empty [a-seq]
-  (let [first-elem (first a-seq)]
-    (if (singleton? a-seq)
-      (first a-seq)
-      (max (first a-seq) (max-element-not-empty (rest a-seq))))))
+  (if (or (empty? coll) (singleton? coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
-  (if (empty? a-seq)
-    nil
-    (max-element-not-empty a-seq)))
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (first a-seq)
+    (max (first a-seq) (max-element (rest a-seq)))))
 
 (defn seq-max [seq-1 seq-2]
   (let [count1 (count seq-1)
         count2 (count seq-2)]
     (if (> count1 count2) seq-1 seq-2)))
 
-(defn longest-sequence-not-empty [a-seq]
-  (if (singleton? a-seq)
-    (first a-seq)
-    (seq-max (first a-seq) (longest-sequence-not-empty (rest a-seq)))))
-
 (defn longest-sequence [a-seq]
-  (if (empty? a-seq)
-    nil
-    (longest-sequence-not-empty a-seq)))
+  (if (or (empty? a-seq) (singleton? a-seq))
+    (first a-seq)
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
   [:-])
