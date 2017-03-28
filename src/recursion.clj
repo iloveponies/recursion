@@ -29,10 +29,17 @@
     (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (let [first-elem (first a-seq)]
+    (cond
+      (empty? a-seq) a-seq
+      (pred? first-elem) (cons first-elem (my-filter pred? (rest a-seq)))
+      :else (my-filter pred? (rest a-seq)))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+    (empty? a-seq) false
+    (= (first a-seq) elem) true
+    :else (sequence-contains? elem (rest a-seq))))
 
 (defn my-take-while [pred? a-seq]
   [:-])
