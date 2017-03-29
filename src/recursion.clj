@@ -179,8 +179,27 @@
       a-seq
       (seq-merge (merge-sort half-1) (merge-sort half-2)))))
 
+(defn longest-increasing-seq-from-start [a-seq]
+  (cond
+    (or (empty? a-seq) (singleton? a-seq)) a-seq
+    (> (nth a-seq 0) (nth a-seq 1)) [(nth a-seq 0)]
+    :else (cons (nth a-seq 0) (longest-increasing-seq-from-start (rest a-seq)))))
+
+(defn longest-decreasing-seq-from-start [a-seq]
+  (cond
+    (or (empty? a-seq) (singleton? a-seq)) a-seq
+    (< (nth a-seq 0) (nth a-seq 1)) [(nth a-seq 0)]
+    :else (cons (nth a-seq 0) (longest-decreasing-seq-from-start (rest a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [inc-seq (longest-increasing-seq-from-start a-seq)
+        dec-seq (longest-decreasing-seq-from-start a-seq)
+        inc-seq-len (count inc-seq)
+        dec-seq-len (count dec-seq)]
+  (cond
+    (empty? a-seq) '()
+    (> inc-seq-len dec-seq-len) (cons inc-seq (split-into-monotonics (drop inc-seq-len a-seq)))
+    :else (cons dec-seq (split-into-monotonics (drop dec-seq-len a-seq))))))
 
 (defn permutations [a-set]
   [:-])
