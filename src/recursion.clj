@@ -135,10 +135,14 @@
       (concat (repeat (get first-elem 1) (get first-elem 0)) (un-frequencies (rest a-map))))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    '()
+    (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (<= n 0) (empty? coll))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
