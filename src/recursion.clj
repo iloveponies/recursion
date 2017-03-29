@@ -149,7 +149,27 @@
     (concat [(my-take index a-seq)] [(my-drop index a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [both-empty (and (empty? a-seq) (empty? b-seq))
+        decr-a-seq (cond
+                     (empty? b-seq) true
+                     (empty? a-seq) false
+                     :else (< (first a-seq) (first b-seq)))
+        next-elem (cond
+                    both-empty nil
+                    (empty? a-seq) (first b-seq)
+                    (empty? b-seq) (first a-seq)
+                    :else (min (first a-seq) (first b-seq)))
+        new-a-seq (cond
+                    (empty? a-seq) a-seq
+                    decr-a-seq (rest a-seq)
+                    :else a-seq)
+        new-b-seq (cond
+                    (empty? b-seq) b-seq
+                    decr-a-seq b-seq
+                    :else (rest b-seq))]
+    (if both-empty
+      []
+      (cons next-elem (seq-merge new-a-seq new-b-seq)))))
 
 (defn merge-sort [a-seq]
   [:-])
