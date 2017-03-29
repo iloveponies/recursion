@@ -172,7 +172,12 @@
       (cons next-elem (seq-merge new-a-seq new-b-seq)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [halved-seq (halve a-seq)
+        half-1 (nth halved-seq 0)
+        half-2 (nth halved-seq 1)]
+    (if (or (empty? a-seq) (singleton? a-seq))
+      a-seq
+      (seq-merge (merge-sort half-1) (merge-sort half-2)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
