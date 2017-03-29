@@ -88,8 +88,15 @@
     '()
     (cons (dec up-to) (my-range (dec up-to)))))
 
+(defn tails-old [a-seq]
+  (if (or (empty? a-seq) (and (singleton? a-seq) (empty? (first a-seq))))
+    ['()]
+    (cons a-seq (tails (rest a-seq)))))
+
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ['()]
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   [:-])
