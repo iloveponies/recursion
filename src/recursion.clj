@@ -103,8 +103,16 @@
     ['()]
     (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
 
+(defn rotations-helper [seq-1 seq-2]
+  (let [new-rotation (concat seq-2 seq-1)]
+    (if (empty? seq-2)
+      '()
+      (cons new-rotation (rotations-helper (concat seq-1 [(first seq-2)]) (rest seq-2))))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ['()]
+    (rotations-helper '() a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
