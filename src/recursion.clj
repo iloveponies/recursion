@@ -201,8 +201,50 @@
     (> inc-seq-len dec-seq-len) (cons inc-seq (split-into-monotonics (drop inc-seq-len a-seq)))
     :else (cons dec-seq (split-into-monotonics (drop dec-seq-len a-seq))))))
 
+(defn drop-nth-element [n a-seq]
+  (concat (take n a-seq) (drop (inc n) a-seq)))
+
+(defn element-to-rest-of-seq
+  "Creates map (actually list of two element sequences) that maps an element to the rest of the sequence."
+  [a-seq n seq-len]
+  (if (= n seq-len)
+    '()
+    (cons [(nth a-seq n) (drop-nth-element n a-seq)]
+          (element-and-rest-of-seq a-seq (inc n) seq-len))))
+
+(defn concat-elem-to-seqs
+  "Returns list of sequences where the element given is put at the start of each of the given sequences"
+  [elem seqs]
+  (if (empty? seqs)
+    '()
+    (cons (cons elem (first seqs)) (concat-elem-to-seqs elem (rest seqs)))))
+
+(declare permutations-seq)
+
+(defn permutations-helper-loop
+  "Loops through the result of the function element-to-rest-of-seq and creates permutations"
+  [elem-to-seqs]
+  (let [first-elem-to-seq (first elem-to-seqs)
+        first-elem (get first-elem-to-seq 0)
+        first-seq (get first-elem-to-seq 1)]
+    (if (empty? elem-to-seqs)
+      '()
+      (concat (permutations-helper first-elem first-seq) (permutations-helper-loop (rest elem-to-seqs))))))
+
+(defn permutations-helper
+  "Creates all permutations where first-elem is the first element"
+  [first-elem rest-seq]
+    (concat-elem-to-seqs first-elem (permutations-seq rest-seq)))
+
+(defn permutations-seq [a-seq]
+  (let [elem-to-seqs (element-to-rest-of-seq a-seq 0 (count a-seq))]
+    (cond
+      (empty? a-seq) [()]
+      (singleton? a-seq) [a-seq]
+      :else (permutations-helper-loop elem-to-seqs))))
+
 (defn permutations [a-set]
-  [:-])
+  (permutations-seq (seq a-set)))
 
 (defn powerset [a-set]
   [:-])
