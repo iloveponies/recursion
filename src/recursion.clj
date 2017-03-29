@@ -115,10 +115,18 @@
     (rotations-helper '() a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [first-value (first a-seq)
+        freq-first-temp (get freqs first-value)
+        freq-first (cond
+                     (nil? first-value) -1
+                     (nil? freq-first-temp) 0
+                     :else freq-first-temp)]
+  (if (empty? a-seq)
+    freqs
+    (my-frequencies-helper (assoc freqs first-value (inc freq-first)) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
