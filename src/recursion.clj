@@ -241,25 +241,24 @@
 (defn permutations [a-set]
   (permutations-seq (seq a-set)))
 
-(declare powerset-seq)
+(declare powerset)
+
+(defn drop-nth-element-of-set [n a-set]
+  (set (concat (take n a-set) (drop (inc n) a-set))))
 
 (defn drop-each-element-once
-  "Returns a sequence of sets where each sequence is missing one of the elements"
-  [a-seq n seq-len]
+  "Returns a set of sets where each set is missing one of the elements"
+  [a-set n seq-len]
     (if (= n seq-len)
-    '()
-      (cons (drop-nth-element n a-seq) (drop-each-element-once a-seq (inc n) seq-len))))
+    #{}
+    (clojure.set/union #{(drop-nth-element-of-set n a-set)} (drop-each-element-once a-set (inc n) seq-len))))
 
-(defn powerset-helper-loop [seqs]
-  (if (empty? seqs)
-    '()
-    (concat (powerset-seq (first seqs)) (powerset-helper-loop (rest seqs)))))
-
-(defn powerset-seq [a-seq]
-  (if (empty? a-seq)
-    [#{}]
-    (cons #{a-seq} (powerset-helper-loop (drop-each-element-once a-seq 0 (count a-seq))))))
+(defn powerset-helper-loop [sets]
+  (if (empty? sets)
+    #{}
+    (clojure.set/union (powerset (first sets)) (powerset-helper-loop (rest sets)))))
 
 (defn powerset [a-set]
-  (set (powerset-seq (seq a-set))))
-
+  (if (empty? a-set)
+    #{#{}}
+    (clojure.set/union #{(set a-set)} (powerset-helper-loop (drop-each-element-once a-set 0 (count a-set))))))
