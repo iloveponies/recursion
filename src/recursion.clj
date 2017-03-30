@@ -161,8 +161,8 @@
     (let [my-concat (fn [x] (concat x [(first a-set)]))]
       (set (mapcat rotations (cons (seq a-set) (map my-concat (permutations (rest a-set)))))))))
 
+(defn ps1 [a-set]
+  (cons a-set (map set (mapcat (fn [x] (ps1 (remove #{x} a-set))) a-set))))
 
 (defn powerset [a-set]
-  (if (empty? a-set)
-    (list [])
-    (set (map set (mapcat inits (permutations a-set))))))
+  (set (ps1 (set a-set))))
