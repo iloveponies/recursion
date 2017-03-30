@@ -82,16 +82,10 @@
     '()
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
-
 (defn my-range [up-to]
   (if (zero? up-to)
     '()
     (cons (dec up-to) (my-range (dec up-to)))))
-
-(defn tails-old [a-seq]
-  (if (or (empty? a-seq) (and (singleton? a-seq) (empty? (first a-seq))))
-    ['()]
-    (cons a-seq (tails (rest a-seq)))))
 
 (defn tails [a-seq]
   (if (empty? a-seq)
@@ -191,7 +185,9 @@
     (< (nth a-seq 0) (nth a-seq 1)) [(nth a-seq 0)]
     :else (cons (nth a-seq 0) (longest-decreasing-seq-from-start (rest a-seq)))))
 
-(defn split-into-monotonics [a-seq]
+(defn split-into-monotonics
+  "test"
+  [a-seq]
   (let [inc-seq (longest-increasing-seq-from-start a-seq)
         dec-seq (longest-decreasing-seq-from-start a-seq)
         inc-seq-len (count inc-seq)
@@ -210,7 +206,7 @@
   (if (= n seq-len)
     '()
     (cons [(nth a-seq n) (drop-nth-element n a-seq)]
-          (element-and-rest-of-seq a-seq (inc n) seq-len))))
+          (element-to-rest-of-seq a-seq (inc n) seq-len))))
 
 (defn concat-elem-to-seqs
   "Returns list of sequences where the element given is put at the start of each of the given sequences"
@@ -220,10 +216,10 @@
     (cons (cons elem (first seqs)) (concat-elem-to-seqs elem (rest seqs)))))
 
 (declare permutations-seq)
+(declare permutations-helper)
 
-(defn permutations-helper-loop
+(defn permutations-helper-loop [elem-to-seqs]
   "Loops through the result of the function element-to-rest-of-seq and creates permutations"
-  [elem-to-seqs]
   (let [first-elem-to-seq (first elem-to-seqs)
         first-elem (get first-elem-to-seq 0)
         first-seq (get first-elem-to-seq 1)]
@@ -231,9 +227,8 @@
       '()
       (concat (permutations-helper first-elem first-seq) (permutations-helper-loop (rest elem-to-seqs))))))
 
-(defn permutations-helper
+(defn permutations-helper [first-elem rest-seq]
   "Creates all permutations where first-elem is the first element"
-  [first-elem rest-seq]
     (concat-elem-to-seqs first-elem (permutations-seq rest-seq)))
 
 (defn permutations-seq [a-seq]
