@@ -241,6 +241,25 @@
 (defn permutations [a-set]
   (permutations-seq (seq a-set)))
 
+(declare powerset-seq)
+
+(defn drop-each-element-once
+  "Returns a sequence of sets where each sequence is missing one of the elements"
+  [a-seq n seq-len]
+    (if (= n seq-len)
+    '()
+      (cons (drop-nth-element n a-seq) (drop-each-element-once a-seq (inc n) seq-len))))
+
+(defn powerset-helper-loop [seqs]
+  (if (empty? seqs)
+    '()
+    (concat (powerset-seq (first seqs)) (powerset-helper-loop (rest seqs)))))
+
+(defn powerset-seq [a-seq]
+  (if (empty? a-seq)
+    [#{}]
+    (cons #{a-seq} (powerset-helper-loop (drop-each-element-once a-seq 0 (count a-seq))))))
+
 (defn powerset [a-set]
-  [:-])
+  (set (powerset-seq (seq a-set))))
 
