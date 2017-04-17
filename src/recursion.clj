@@ -54,9 +54,11 @@
     ))
 
 (defn my-drop-while [pred? a-seq]
-  (if (pred? (first a-seq))
-    (my-drop-while pred? (rest a-seq))
-    a-seq))
+  (if (empty? a-seq)
+    '()
+    (if (pred? (first a-seq))
+      (my-drop-while pred? (rest a-seq))
+      (seq a-seq))))
 
 (defn seq= [a-seq b-seq]
   (cond
@@ -92,14 +94,16 @@
 
 (defn tails [a-seq]
   (if (empty? a-seq)
-    '()
+    (cons '() a-seq)
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (cons '() (map reverse (reverse (tails (reverse a-seq))))))
+  (map reverse (reverse (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  (map concat (tails a-seq) (inits a-seq)))
+  (if (empty? a-seq)
+    (cons '() a-seq)
+    (map concat (rest (tails a-seq)) (rest (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
