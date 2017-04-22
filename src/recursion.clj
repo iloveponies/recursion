@@ -10,10 +10,7 @@
   (and (not (empty? coll)) (empty? (rest coll))))
 
 (defn my-last [coll]
-  (cond
-    (empty? coll) nil
-    (singleton? coll) (first coll)
-    :else (my-last (rest coll))))
+  (nth coll (dec (count coll)) nil))
 
 (defn max-element [a-seq]
   (cond
