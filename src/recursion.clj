@@ -95,14 +95,10 @@
     '()
     (cons (dec up-to) (my-range (dec up-to)))))
 
-(defn tails-rec [a-seq]
-  (if (empty? a-seq)
-    '()
-    (cons a-seq (tails-rec (rest a-seq)))))
-
 (defn tails [a-seq]
-  ;; How to append '() with cons..
-  (conj (tails-rec a-seq) '()))
+  (if (empty? a-seq)
+    (vector '())
+    (concat (vector a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   ;; Not quite sure about this..
