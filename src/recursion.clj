@@ -30,12 +30,18 @@
 
 (defn seq-max [seq-1 seq-2]
   "Exercise 6"
-  (if (> (max-element seq-1) (max-element seq-2))
-    seq-1 seq-2))
+  (if (<= (count seq-1) (count seq-2))
+    seq-2
+    seq-1))
 
 
 (defn longest-sequence [a-seq]
-  [:-])
+  "Exercise 7"
+  (if (not (empty? a-seq))
+    (if (empty? (rest a-seq))
+      (seq-max (first a-seq) (rest a-seq))
+      (seq-max (first a-seq) (longest-sequence (rest a-seq))))))
+
 
 (defn my-filter [pred? a-seq]
   [:-])
