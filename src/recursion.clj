@@ -9,7 +9,9 @@
 
 
 (defn singleton? [coll]
-  :-)
+  "Exercise 2"
+  (boolean (and (seq coll)
+                (empty? (rest coll)))))
 
 (defn my-last [coll]
   :-)
