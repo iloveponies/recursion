@@ -30,7 +30,9 @@
 
 (defn seq-max [seq-1 seq-2]
   "Exercise 6"
-  [:-])
+  (if (> (max-element seq-1) (max-element seq-2))
+    seq-1 seq-2))
+
 
 (defn longest-sequence [a-seq]
   [:-])
