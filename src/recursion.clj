@@ -15,7 +15,11 @@
 
 
 (defn my-last [coll]
-  :-)
+  "Exercise 4"
+  (if (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
+
 
 (defn max-element [a-seq]
   :-)
