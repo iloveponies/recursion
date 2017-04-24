@@ -22,9 +22,14 @@
 
 
 (defn max-element [a-seq]
-  :-)
+  "Exercise 5"
+  (if (empty? (rest a-seq))
+    (first a-seq)
+    (max (first a-seq) (max-element (rest a-seq)))))
+
 
 (defn seq-max [seq-1 seq-2]
+  "Exercise 6"
   [:-])
 
 (defn longest-sequence [a-seq]
