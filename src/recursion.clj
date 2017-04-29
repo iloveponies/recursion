@@ -194,9 +194,27 @@
       (concat (vector monotonic-part)
               (split-into-monotonics (drop (count monotonic-part) a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn powerset-adder [to-add a-set]
+  (if (contains? a-set to-add)
+    #{}
+    (conj a-set to-add)))
+
+(defn powerset-helper [res a-set]
+  (if (empty? a-set)
+    res
+    (let [f (fn [x] (powerset-adder (first a-set) x))]
+      (powerset-helper (set (clojure.set/union (map f res) res)) (rest a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (one-or-less? a-set)
+    #{a-set}
+    (powerset-helper (conj (set (map set (partition 1 a-set))) #{})
+                     a-set)))
+
+;; TODO: not done
+(defn permutations [a-set]
+  (let [a-seq (vector a-set)]
+    (if (one-or-less? a-seq)
+      a-seq
+      nil)))
 
