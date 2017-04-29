@@ -181,17 +181,16 @@
       (seq-merge (merge-sort a)
                  (merge-sort b)))))
 
-(defn sorted-inits [a-seq]
-  (sort-by count (inits a-seq)))
+(defn inits-for-monotonics [a-seq]
+  (rest (sort-by count (inits a-seq))))
 
 (defn is-monotonic [a-seq]
-  ;; How to make this handle '()?
   (or (apply >= a-seq) (apply <= a-seq)))
 
 (defn split-into-monotonics [a-seq]
   (if (one-or-less? a-seq)
     a-seq
-    (let [monotonic-part (last (take-while is-monotonic (rest (sorted-inits a-seq))))]
+    (let [monotonic-part (last (take-while is-monotonic (inits-for-monotonics a-seq)))]
       (concat (vector monotonic-part)
               (split-into-monotonics (drop (count monotonic-part) a-seq))))))
 
