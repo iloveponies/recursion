@@ -188,13 +188,12 @@
   ;; How to make this handle '()?
   (or (apply >= a-seq) (apply <= a-seq)))
 
-;; TODO: doesn't work.
 (defn split-into-monotonics [a-seq]
   (if (one-or-less? a-seq)
     a-seq
     (let [monotonic-part (last (take-while is-monotonic (rest (sorted-inits a-seq))))]
       (concat (vector monotonic-part)
-              (split-into-monotonics (drop (inc (count monotonic-part)) a-seq))))))
+              (split-into-monotonics (drop (count monotonic-part) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
