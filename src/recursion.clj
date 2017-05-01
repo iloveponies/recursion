@@ -211,10 +211,46 @@
     (powerset-helper (conj (set (map set (partition 1 a-set))) #{})
                      a-set)))
 
-;; TODO: not done
+;; Find the largest index k such that a[k] < a[k + 1]
+(defn largest [i a-vec]
+  (cond
+    (< i 0) nil
+    (< (a-vec i) (a-vec (inc i))) i
+    :else (largest (dec i) a-vec)))
+
+;; Find the largest index l greater than k such that a[k] < a[l]
+(defn greatest [k i a-vec]
+  (cond
+    (or (< i 0) (not k)) nil
+    (and (< k i) (< (a-vec k) (a-vec i))) i
+    :else (greatest k (dec i) a-vec)))
+
+;; Swap elements k l in a-vec
+(defn swap [k l a-vec]
+  (assoc a-vec k (a-vec l) l (a-vec k)))
+
+;; Reverse a-vec after element j (inclusive)
+(defn reverse-after [j a-vec]
+  (concat (take j a-vec) (reverse (drop j a-vec))))
+
+;; Implement
+;; https://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order. There probably
+;; are more clojure-like ways to do it.
+(defn permutations-helper [perms a-vec]
+  (let [k (largest (- (count a-vec) 2) a-vec)
+        l (greatest k (dec (count a-vec)) a-vec)]
+    (if (not k)
+      perms
+      (let [perm (vec (reverse-after (inc k) (swap k l a-vec)))]
+        (permutations-helper (concat perms (vector perm)) perm)))))
+
 (defn permutations [a-set]
-  (let [a-seq (vector a-set)]
-    (if (one-or-less? a-seq)
-      a-seq
-      nil)))
+  (let [a-vec (vec (sort a-set))]
+    (if (one-or-less? a-vec)
+      ;; There ought to be a better way to put seq into seq..
+      (cons (lazy-seq a-vec) '())
+      ;; How to get rid of this..
+      (let [tolist (fn [x] (lazy-seq x))]
+        (map tolist (permutations-helper (cons a-vec '()) a-vec))))))
+
 
