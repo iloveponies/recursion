@@ -45,7 +45,15 @@
       (seq-max a (longest-sequence rest))
       a)))
 
-(defn my-filter [pred? a-seq])
+(defn my-filter [pred? a-seq]
+  (into (empty a-seq)
+        (let [a (first a-seq)
+              rest (rest a-seq)]
+          (if (empty? rest)
+            (if (pred? a) (list a) '())
+            (if (pred? a)
+              (cons a (my-filter pred? rest))
+              (my-filter pred? rest))))))
 
 (defn sequence-contains? [elem a-seq]
   :-)
