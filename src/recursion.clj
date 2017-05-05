@@ -1,35 +1,49 @@
 (ns recursion)
 
 (defn product [coll]
-  (reduce (fn [a b] (* a b)) 1 coll))
+  ;; more concise
+  ;;   (reduce (fn [a b] (* a b)) 1 coll))
+  (if (empty? coll)
+    1
+    (let [a (first coll)
+          rest (rest coll)]
+      (if rest
+        (* a (product rest))
+        a))))
 
 (defn singleton? [coll]
-  (= 1 (reduce (fn [a b] (inc a)) 0 coll)))
+  ;; more complexity just for the sake of reduce
+  ;; (simpler would be better)
+  ;; (= 1 (reduce (fn [a b] (inc a)) 0 coll))
+  (if (empty? coll)
+    false
+    (empty? (rest coll))))
 
 (defn my-last [coll]
-  (loop [[val & rest] coll]
+  ;; using loop-recur
+  ;; (loop [[val & rest] coll]
+  ;;  (if rest
+  ;;    (recur rest)
+  ;;    val))
+  (let [[a & rest] coll]
     (if rest
-      (recur rest)
-      val)))
+      (my-last rest)
+      a)))
 
 (defn max-element [a-seq]
-  (loop [[val & rest] a-seq
-         highest val]
+  (let [[a & rest] a-seq]
     (if rest
-      (if (> val highest)
-        (recur rest val)
-        (recur rest highest))
-      highest)))
+      (max a (max-element rest))
+      a)))
 
 (defn seq-max [seq-1 seq-2]
   (first (sort-by count #(>= %1 %2) [seq-1 seq-2])))
 
 (defn longest-sequence [a-seq]
-  (loop [[val & rest] a-seq
-         longest val]
+  (let [[a & rest] a-seq]
     (if rest
-      (recur rest (seq-max val longest))
-      longest)))
+      (seq-max a (longest-sequence rest))
+      a)))
 
 (defn my-filter [pred? a-seq])
 
