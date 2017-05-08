@@ -139,10 +139,14 @@
         (cons n (my-range n))))))
 
 (defn tails [a-seq]
-  [:-])
+  (let [[_ & rest] a-seq]
+    (if (nil? rest)
+      (if (empty? a-seq)
+        '()
+        (list (seq a-seq) '()))
+      (cons (seq a-seq) (tails rest)))))
 
-(defn inits [a-seq]
-  [:-])
+(defn inits [a-seq])
 
 (defn rotations [a-seq]
   [:-])
