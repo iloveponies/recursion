@@ -56,16 +56,54 @@
               (my-filter pred? rest))))))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (let [a (first a-seq)
+        rest (rest a-seq)]
+    (if (empty? rest)
+      (= a elem)
+      (if (= a elem)
+        true
+        (sequence-contains? elem rest)))))
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  (try
+    (let [a (first a-seq)
+             rest (rest a-seq)]
+         (if (empty? rest)
+           (if (pred? a) (list a) '())
+           (if (pred? a)
+             (if (pred? (first rest))
+               (cons a (my-take-while pred? rest))
+               (list a))
+             '())))
+    (catch Exception e '())))
 
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  ;; compositional solution
+  ;;(keep-indexed
+  ;;  (fn [a b] (when (> a (dec (count (my-take-while pred? a-seq)))) b))
+  ;;  a-seq)
+
+  ;; basic recursion
+  (let [a (first a-seq)
+        rest (rest a-seq)
+        try-pred? #(try (pred? %) (catch Exception e false))]
+    (if (empty? rest)
+      (if (try-pred? a) '() (list a))
+      (if (try-pred? a)
+        (my-drop-while pred? rest)
+        a-seq))))
 
 (defn seq= [a-seq b-seq]
-  :-)
+  (let [[a & a-rest] a-seq
+        [b & b-rest] b-seq]
+    (if (= (count a-seq) (count b-seq))
+      (if (and (empty? a-rest)
+               (empty? b-rest))
+        (= a b)
+        (if (= a b)
+          (seq= a-rest b-rest)
+          false))
+      false)))
 
 (defn my-map [f seq-1 seq-2]
   [:-])
