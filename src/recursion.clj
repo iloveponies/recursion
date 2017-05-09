@@ -159,7 +159,11 @@
 
 (defn rotations [a-seq]
   "Exercise 19"
-  [:-])
+  (let [init (inits a-seq)
+        tail (reverse (tails a-seq))
+        init-tail (map vector tail init)]
+    (distinct (map (fn [x] (apply concat x)) init-tail))))
+
 
 (defn my-frequencies-helper [freqs a-seq]
   "Exercise 20"
