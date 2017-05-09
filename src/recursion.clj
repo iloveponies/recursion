@@ -57,15 +57,24 @@
   "Exercise 9"
   (cond
     (empty? a-seq)
-      false
+    false
     (= elem (first a-seq))
-      true
+    true
     :else
     (sequence-contains? elem (rest a-seq))))
 
 
 (defn my-take-while [pred? a-seq]
-  [:-])
+  "Exercise 10"
+  (let [first-elem (first a-seq)
+        empty-coll '()]
+    (cond
+      (empty? a-seq) empty-coll
+      (pred? first-elem) (cons first-elem (my-take-while pred? (rest a-seq)))
+      :else
+      empty-coll)))
+
+
 
 (defn my-drop-while [pred? a-seq]
   [:-])
