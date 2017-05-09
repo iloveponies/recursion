@@ -143,35 +143,42 @@
 
 
 (defn tails [a-seq]
-  "Exercise 16"
-  [:-])
+  "Exercise 18"
+  (let [empty-coll ['()]]
+    (if (empty? a-seq)
+      empty-coll
+      (cons
+        (seq a-seq)
+        (tails (rest a-seq))))))
+
 
 (defn inits [a-seq]
-  "Exercise 17"
-  [:-])
+  "Exercise 18"
+  (map reverse (tails (reverse a-seq))))
+
 
 (defn rotations [a-seq]
-  "Exercise 18"
-  [:-])
-
-(defn my-frequencies-helper [freqs a-seq]
   "Exercise 19"
   [:-])
 
-(defn my-frequencies [a-seq]
+(defn my-frequencies-helper [freqs a-seq]
   "Exercise 20"
   [:-])
 
-(defn un-frequencies [a-map]
+(defn my-frequencies [a-seq]
   "Exercise 21"
   [:-])
 
-(defn my-take [n coll]
+(defn un-frequencies [a-map]
   "Exercise 22"
   [:-])
 
-(defn my-drop [n coll]
+(defn my-take [n coll]
   "Exercise 23"
+  [:-])
+
+(defn my-drop [n coll]
+  "Exercise 24"
   [:-])
 
 (defn halve [a-seq]
