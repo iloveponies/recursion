@@ -134,7 +134,13 @@
 
 (defn my-range [up-to]
   "Exercise 17"
-  [:-])
+  (let [empty-coll '()]
+    (if (== up-to 0)
+      empty-coll
+      (cons
+        (dec up-to)
+        (my-range (dec up-to))))))
+
 
 (defn tails [a-seq]
   "Exercise 16"
