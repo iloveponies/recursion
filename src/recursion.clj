@@ -75,9 +75,17 @@
       empty-coll)))
 
 
-
 (defn my-drop-while [pred? a-seq]
-  [:-])
+  "Exercise 11"
+  (let [first-elem (first a-seq)
+        rest-of-elems (rest a-seq)]
+    (if (empty? a-seq)
+      a-seq
+      (if (pred? first-elem)
+        (my-drop-while pred? rest-of-elems)
+        (cons first-elem rest-of-elems)))))
+
+
 
 (defn seq= [a-seq b-seq]
   :-)
