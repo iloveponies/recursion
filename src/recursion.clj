@@ -146,19 +146,41 @@
         (list (seq a-seq) '()))
       (cons (seq a-seq) (tails rest)))))
 
-(defn inits [a-seq])
+(defn inits [a-seq]
+  (let [rest (pop a-seq)]
+    (if (empty? rest)
+      (list (seq a-seq) '())
+      (cons (seq a-seq) (inits rest)))))
 
 (defn rotations [a-seq]
-  [:-])
+  ;; composing with core fns
+  ;; (I gave up :p)
+  (if (empty? a-seq)
+    (list '())
+    (let [n (count a-seq)]
+      (-> (partition n 1 (apply concat (repeat n a-seq)))
+        set
+        seq))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [[a & rest] a-seq]
+    (if (empty? a-seq)
+      freqs
+      (my-frequencies-helper
+        (update-in freqs [a] #(if (nil? %) 1 (inc %)))
+        rest))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [map-entry (first a-map)
+        rest (rest a-map)
+        v (key map-entry)
+        n (val map-entry)]
+    (if (empty? rest)
+      (repeat n v)
+      (concat (repeat n v) (un-frequencies rest)))))
 
 (defn my-take [n coll]
   [:-])
