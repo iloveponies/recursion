@@ -110,72 +110,76 @@
 
 (defn power [n k]
   "Exercise 14"
-  :-)
+  (if (== k 0)
+    1
+    (* n (power n (dec k)))))
+
 
 (defn fib [n]
-  "Exercise 14"
+  "Exercise 15"
   :-)
 
 (defn my-repeat [how-many-times what-to-repeat]
-  "Exercise 15"
-  [:-])
-
-(defn my-range [up-to]
   "Exercise 16"
   [:-])
 
-(defn tails [a-seq]
+(defn my-range [up-to]
   "Exercise 17"
   [:-])
 
+(defn tails [a-seq]
+  "Exercise 16"
+  [:-])
+
 (defn inits [a-seq]
-  "Exercise 18"
+  "Exercise 17"
   [:-])
 
 (defn rotations [a-seq]
-  "Exercise 19"
+  "Exercise 18"
   [:-])
 
 (defn my-frequencies-helper [freqs a-seq]
-  "Exercise 20"
+  "Exercise 19"
   [:-])
 
 (defn my-frequencies [a-seq]
-  "Exercise 21"
+  "Exercise 20"
   [:-])
 
 (defn un-frequencies [a-map]
-  "Exercise 22"
+  "Exercise 21"
   [:-])
 
 (defn my-take [n coll]
-  "Exercise 23"
+  "Exercise 22"
   [:-])
 
 (defn my-drop [n coll]
-  "Exercise 24"
+  "Exercise 23"
   [:-])
 
 (defn halve [a-seq]
-  "Exercise 25"
+  "Exercise 24"
   [:-])
 
 (defn seq-merge [a-seq b-seq]
-  "Exercise 26 "
+  "Exercise 25 "
   [:-])
 
 (defn merge-sort [a-seq]
-  "Exercise 27"
+  "Exercise 26"
   [:-])
 
 (defn split-into-monotonics [a-seq]
-  "Exercise 28"
+  "Exercise 27"
   [:-])
 
 (defn permutations [a-set]
-  "Exercise 29"
+  "Exercise 28"
   [:-])
 
 (defn powerset [a-set]
+  "Exercise 29"
   [:-])
 
