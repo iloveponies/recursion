@@ -98,7 +98,15 @@
 
 (defn my-map [f seq-1 seq-2]
   "Exercise 13"
-  [:-])
+  (if (or (empty? seq-1) (empty? seq-2))
+    '()
+    (let [first-elem-1 (first seq-1)
+          first-elem-2 (first seq-2)
+          rest-1 (rest seq-1)
+          rest-2 (rest seq-2)]
+      (let [value (f first-elem-1 first-elem-2)]
+        (cons value (my-map f rest-1 rest-2))))))
+
 
 (defn power [n k]
   "Exercise 14"
