@@ -44,7 +44,14 @@
 
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  "Exercise 8"
+  (if (empty? a-seq)
+    a-seq
+    (if (pred? (first a-seq))
+      (cons (first a-seq)
+            (my-filter pred? (rest a-seq)))
+      (my-filter pred? (rest a-seq)))))
+
 
 (defn sequence-contains? [elem a-seq]
   :-)
