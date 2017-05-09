@@ -124,7 +124,13 @@
 
 (defn my-repeat [how-many-times what-to-repeat]
   "Exercise 16"
-  [:-])
+  (let [empty-coll '()]
+    (if (<= how-many-times 0)
+      empty-coll
+      (cons
+        what-to-repeat
+        (my-repeat (dec how-many-times) what-to-repeat)))))
+
 
 (defn my-range [up-to]
   "Exercise 17"
