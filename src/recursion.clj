@@ -117,7 +117,10 @@
 
 (defn fib [n]
   "Exercise 15"
-  :-)
+  (if (or (== n 0) (== n 1))
+    n
+    (+ (fib (dec n)) (fib (- n 2)))))
+
 
 (defn my-repeat [how-many-times what-to-repeat]
   "Exercise 16"
