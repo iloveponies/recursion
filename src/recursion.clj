@@ -54,7 +54,15 @@
 
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  "Exercise 9"
+  (cond
+    (empty? a-seq)
+      false
+    (= elem (first a-seq))
+      true
+    :else
+    (sequence-contains? elem (rest a-seq))))
+
 
 (defn my-take-while [pred? a-seq]
   [:-])
