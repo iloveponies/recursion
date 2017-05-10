@@ -213,7 +213,9 @@
 
 (defn halve [a-seq]
   "Exercise 24"
-  [:-])
+  (let [middle-point (int (/ (count a-seq) 2))]
+    (concat [(my-take middle-point a-seq)] [(my-drop middle-point a-seq)])))
+
 
 (defn seq-merge [a-seq b-seq]
   "Exercise 25 "
