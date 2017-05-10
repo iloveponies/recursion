@@ -192,10 +192,16 @@
       (concat repeated-elems (un-frequencies (rest a-map))))))
 
 
-
 (defn my-take [n coll]
   "Exercise 22"
-  [:-])
+  (let [nothing-to-return (or (empty? coll) (< n 1))
+        empty-coll '()]
+    (if nothing-to-return
+      empty-coll
+      (concat [(first coll)] (my-take (dec n) (rest coll))))))
+
+
+
 
 (defn my-drop [n coll]
   "Exercise 23"
