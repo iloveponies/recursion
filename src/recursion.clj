@@ -219,7 +219,21 @@
 
 (defn seq-merge [a-seq b-seq]
   "Exercise 25 "
-  [:-])
+  (let [no-a-seq (empty? a-seq)
+        no-b-seq (empty? b-seq)
+        a-seq-first-elem (first a-seq)
+        b-seq-first-elem (first b-seq)
+        empty-seq '()
+        rest-a-seq-elems (rest a-seq)
+        rest-b-seq-elems (rest b-seq)]
+    (cond
+      no-a-seq b-seq
+      no-b-seq a-seq
+      (<= a-seq-first-elem b-seq-first-elem)
+      (concat (cons a-seq-first-elem empty-seq) (seq-merge rest-a-seq-elems b-seq))
+      :else
+      (concat (cons b-seq-first-elem empty-seq) (seq-merge a-seq rest-b-seq-elems)))))
+
 
 (defn merge-sort [a-seq]
   "Exercise 26"
