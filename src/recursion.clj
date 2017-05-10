@@ -244,7 +244,7 @@
         (seq-merge (merge-sort first-half) (merge-sort second-half))))))
 
 
-
+; the extras
 
 (defn split-into-monotonics [a-seq]
   "Exercise 27"
