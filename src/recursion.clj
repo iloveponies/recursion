@@ -201,11 +201,15 @@
       (concat [(first coll)] (my-take (dec n) (rest coll))))))
 
 
-
-
 (defn my-drop [n coll]
   "Exercise 23"
-  [:-])
+  (let [no-dropped-elems (< n 1)
+        empty-coll (empty? coll)]
+    (cond
+      empty-coll coll
+      no-dropped-elems coll
+      :else (my-drop (dec n) (rest coll)))))
+
 
 (defn halve [a-seq]
   "Exercise 24"
