@@ -165,24 +165,33 @@
     (distinct (map (fn [x] (apply concat x)) init-tail))))
 
 
-(defn my-frequencies-helper [freqs a-seq]
+(defn frequencies-helper [freqs a-seq]
   "Exercise 20"
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [first-elem (first a-seq)
+          rest-elems (rest a-seq)
+          the-count (inc (if (contains? freqs first-elem)
+                           (get freqs first-elem)           ;Returns the value mapped to the key
+                           0))]
+      (frequencies-helper (assoc freqs first-elem the-count) rest-elems)))) ; assoc new count to the element
 
 (defn my-frequencies [a-seq]
+  "Exercise 20"
+  (frequencies-helper {} a-seq))
+
+
+
+(defn un-frequencies [a-map]
   "Exercise 21"
   [:-])
 
-(defn un-frequencies [a-map]
+(defn my-take [n coll]
   "Exercise 22"
   [:-])
 
-(defn my-take [n coll]
-  "Exercise 23"
-  [:-])
-
 (defn my-drop [n coll]
-  "Exercise 24"
+  "Exercise 23"
   [:-])
 
 (defn halve [a-seq]
