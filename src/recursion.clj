@@ -181,10 +181,17 @@
   (frequencies-helper {} a-seq))
 
 
-
 (defn un-frequencies [a-map]
   "Exercise 21"
-  [:-])
+  (let [first-elem (first a-map)
+        elem-val (first first-elem)
+        elem-count (second first-elem)
+        repeated-elems (repeat elem-count elem-val)]
+    (if (== 1 (count a-map))
+      repeated-elems
+      (concat repeated-elems (un-frequencies (rest a-map))))))
+
+
 
 (defn my-take [n coll]
   "Exercise 22"
