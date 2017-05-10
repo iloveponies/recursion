@@ -237,7 +237,14 @@
 
 (defn merge-sort [a-seq]
   "Exercise 26"
-  [:-])
+  (let [number-of-elements (count a-seq)]
+    (if (< number-of-elements 2)                            ;If the sequence is 0 or 1 elements long, it is already sorted
+      a-seq
+      (let [[first-half second-half] (halve a-seq)]
+        (seq-merge (merge-sort first-half) (merge-sort second-half))))))
+
+
+
 
 (defn split-into-monotonics [a-seq]
   "Exercise 27"
