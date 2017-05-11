@@ -183,16 +183,36 @@
       (concat (repeat n v) (un-frequencies rest)))))
 
 (defn my-take [n coll]
-  [:-])
+  (let [[a & rest] coll]
+    (cond (<= n 0) '()
+          (not rest) (list a)
+          :else (cons a (my-take (dec n) rest)))))
+
 
 (defn my-drop [n coll]
-  [:-])
+  (let [[_ & rest] coll]
+    (cond (<= n 0) coll
+          (not rest) '()
+          :else (my-drop (dec n) rest))))
 
 (defn halve [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    []
+    (let [n (int (/ (count a-seq) 2))]
+      [(my-take n a-seq) (my-drop n a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [[b & rest-b] b-seq]
+    (cond
+      (empty? b-seq) a-seq
+      (empty? a-seq) b-seq
+      :else (let [index (.lastIndexOf a-seq b)]
+              (if (= -1 index)
+                  ;; not found
+                  (let [prefix-coll (my-take-while #(< % b) a-seq)]
+                    (seq-merge (concat prefix-coll (list b) (my-drop (count prefix-coll) a-seq)) rest-b))
+                  ;; found
+                  (seq-merge (concat (my-take index a-seq) (list b) (my-drop index a-seq)) rest-b))))))
 
 (defn merge-sort [a-seq]
   [:-])
