@@ -107,7 +107,9 @@
      (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list a-seq)
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
   [:-])
