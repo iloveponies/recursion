@@ -221,7 +221,10 @@
                 (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) (do (prn a-seq) a-seq)
+    :else (let [monotonic-coll (vec (last (filter #(or (apply < %) (apply > %)) (filter not-empty (sort-by count (inits a-seq))))))]
+            (cons monotonic-coll (split-into-monotonics (vec (drop (count monotonic-coll) a-seq)))))))
 
 (defn permutations [a-set]
   [:-])
