@@ -215,7 +215,10 @@
                   (seq-merge (concat (my-take index a-seq) (list b) (my-drop index a-seq)) rest-b))))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond (empty? a-seq) a-seq
+        (= 1 (count a-seq)) a-seq
+        :else (let [[a b] (halve a-seq)]
+                (seq-merge (merge-sort a) (merge-sort b)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
