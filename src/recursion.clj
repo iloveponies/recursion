@@ -1,8 +1,8 @@
 (ns recursion)
 
 (defn product [coll]
-  ;; more concise
-  ;;   (reduce (fn [a b] (* a b)) 1 coll))
+  ;; with reduce
+  ;; (reduce (fn [a b] (* a b)) 1 coll))
   (if (empty? coll)
     1
     (let [a (first coll)
@@ -12,19 +12,13 @@
         a))))
 
 (defn singleton? [coll]
-  ;; more complexity just for the sake of reduce
-  ;; (simpler would be better)
+  ;; with reduce
   ;; (= 1 (reduce (fn [a b] (inc a)) 0 coll))
   (if (empty? coll)
     false
     (empty? (rest coll))))
 
 (defn my-last [coll]
-  ;; using loop-recur
-  ;; (loop [[val & rest] coll]
-  ;;  (if rest
-  ;;    (recur rest)
-  ;;    val))
   (let [[a & rest] coll]
     (if rest
       (my-last rest)
@@ -78,18 +72,11 @@
     (catch Exception e '())))
 
 (defn my-drop-while [pred? a-seq]
-  ;; compositional solution
-  ;;(keep-indexed
-  ;;  (fn [a b] (when (> a (dec (count (my-take-while pred? a-seq)))) b))
-  ;;  a-seq)
-
-  ;; basic recursion
   (let [a (first a-seq)
-        rest (rest a-seq)
-        try-pred? #(try (pred? %) (catch Exception e false))]
+        rest (rest a-seq)]
     (if (empty? rest)
-      (if (try-pred? a) '() (list a))
-      (if (try-pred? a)
+      (if (and a (pred? a)) (list a) '())
+      (if (and a (pred? a))
         (my-drop-while pred? rest)
         a-seq))))
 
