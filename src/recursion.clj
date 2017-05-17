@@ -234,5 +234,9 @@
   [:-])
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (seq (rest a-set))
+    (set (apply concat
+           (for [x a-set]
+             (concat [#{}] [#{x}]
+                     (map set (map #(cons x %) (powerset (remove #{x} a-set))))))))
+    #{a-set}))
