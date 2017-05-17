@@ -129,15 +129,18 @@
   (let [[_ & rest] a-seq]
     (if (nil? rest)
       (if (empty? a-seq)
-        '()
+        (list '())
         (list (seq a-seq) '()))
       (cons (seq a-seq) (tails rest)))))
 
 (defn inits [a-seq]
-  (let [rest (pop a-seq)]
-    (if (empty? rest)
-      (list (seq a-seq) '())
-      (cons (seq a-seq) (inits rest)))))
+  (let [rest (butlast a-seq)
+        c (seq a-seq)]
+    (if rest
+      (cons c (inits rest))
+      (if c
+        (list c '())
+        (list '())))))
 
 (defn rotations [a-seq]
   ;; composing with core fns
