@@ -222,7 +222,7 @@
 
 (defn split-into-monotonics [a-seq]
   (cond
-    (empty? a-seq) (do (prn a-seq) a-seq)
+    (empty? a-seq) a-seq
     :else (let [monotonic-coll (vec (last
                                       (filter #(or (apply < %) (apply > %))
                                         (filter not-empty (sort-by count (inits a-seq))))))]
@@ -231,6 +231,13 @@
                                      (drop (count monotonic-coll) a-seq)))))))
 
 (defn permutations [a-set]
+  ;; with thanks to http://stackoverflow.com/a/26076145
+  (if (seq (rest a-set))
+    (apply concat (for [x a-set]
+                    (map #(cons x %) (permutations (remove #{x} a-set)))))
+    [a-set])
+
+  ;; zero points for cheating :)
   [:-])
 
 (defn powerset [a-set]
