@@ -116,8 +116,15 @@
     (list a-seq)
     (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
 
+(defn rotate-n [n a-seq]
+  (if (< n (count a-seq))
+    (cons a-seq
+          (rotate-n (inc n) (concat (rest a-seq) (list (first a-seq)))))))
+
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list '())
+    (rotate-n 0 a-seq)))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
