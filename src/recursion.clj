@@ -193,8 +193,18 @@
   (let [n (int (/ (count a-seq) 2))]
     (cons (my-take n a-seq) (cons (my-drop n a-seq) '()))))
 
-(defn seq-merge [a-seq b-seq]
-  [:-])
+(defn
+  seq-merge
+  [a-seq b-seq]
+  (cond (empty? a-seq) b-seq
+        (empty? b-seq) a-seq
+        :else (let [ha (first a-seq)
+                    hb (first b-seq)
+                    ta (rest a-seq)
+                    tb (rest b-seq)]
+                (if (<= ha hb)
+                  (cons ha (seq-merge ta b-seq))            ; if the head of a is smaller than b, then it's the first value
+                  (cons hb (seq-merge a-seq tb))))))        ; otherwise the first value is head of b and the rest are larger
 
 (defn merge-sort [a-seq]
   [:-])
