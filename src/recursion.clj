@@ -169,8 +169,16 @@
               (repeat c v))]
       (apply concat (map f a-map)))))
 
-(defn my-take [n coll]
-  [:-])
+(defn
+  my-take
+  [n coll]
+  (if (or (= 0 n) (empty? coll))
+    '()
+    (cons
+      (first coll)
+      (my-take
+        (dec n)
+        (rest coll)))))
 
 (defn my-drop [n coll]
   [:-])
