@@ -206,8 +206,24 @@
                   (cons ha (seq-merge ta b-seq))            ; if the head of a is smaller than b, then it's the first value
                   (cons hb (seq-merge a-seq tb))))))        ; otherwise the first value is head of b and the rest are larger
 
-(defn merge-sort [a-seq]
-  [:-])
+; EXERCISE 26
+;
+; Conceptually:
+;
+; If the sequence is 0 or 1 elements long, it is already sorted.
+; Otherwise, divide the sequence into two subsequences.
+; Sort each subsequence recursively.
+; Merge the two subsequences back into one sorted sequence.
+
+(defn
+  merge-sort
+  [a-seq]
+  (if (or
+        (empty? a-seq)
+        (singleton? a-seq))
+    a-seq
+    (let [[l, r] (halve a-seq)]
+      (seq-merge (merge-sort l) (merge-sort r)))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
