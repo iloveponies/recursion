@@ -180,8 +180,12 @@
         (dec n)
         (rest coll)))))
 
-(defn my-drop [n coll]
-  [:-])
+(defn
+  my-drop
+  [n coll]
+  (if (or (empty? coll) (<= n 0))
+    coll
+    (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
   [:-])
