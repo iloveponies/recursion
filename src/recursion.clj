@@ -135,8 +135,12 @@
   [a-seq]
   (map reverse (tails (reverse a-seq))))
 
-(defn rotations [a-seq]
-  [:-])
+(defn
+  rotations
+  [a-seq]
+  (if (empty? a-seq)
+    '(())
+    (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
