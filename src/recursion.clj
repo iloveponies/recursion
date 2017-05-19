@@ -116,8 +116,12 @@
     '()
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
-(defn my-range [up-to]
-  [:-])
+(defn
+  my-range
+  [up-to]
+  (if (<= up-to 0)
+    '()
+    (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
   [:-])
