@@ -140,13 +140,24 @@
   [a-seq]
   (if (empty? a-seq)
     '(())
-    (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
+    (rest (my-map concat (tails a-seq) (reverse (inits a-seq))))))
 
-(defn my-frequencies-helper [freqs a-seq]
-  [:-])
+(defn
+  my-frequencies-helper
+  [freqs a-seq]
+  (if (empty? a-seq)
+    freqs                                                   ; Sequence has been parsed through
+    (let [h (first a-seq)                                   ; Holds the first value in the sequence
+          t (rest a-seq)                                    ; Holds the rest of the values in the map
+          c (or (freqs h) 0)]                               ; Return either old count or start a new with or
+      (my-frequencies-helper
+        (assoc freqs h (inc c))                             ; Add or modify key value with new count
+        t))))                                               ; The rest of the sequence elements
 
-(defn my-frequencies [a-seq]
-  [:-])
+(defn
+  my-frequencies
+  [a-seq]
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
