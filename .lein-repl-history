@@ -1,0 +1,274 @@
+(use 'recursion)
+(singleton? [1])
+(singleton? #{2})
+(singleton? [1 2 3])
+(singleton? #{2 4})
+(singleton? [])
+(empty? [])
+q
+quit
+(max 4 4 4)
+(max 4 4 4 2 1 1)
+exit
+(max 4 [4 5]
+)
+(max [4] [4 5])
+quit
+(defn singleton? [coll]
+  (if (empty? coll) 
+    false
+    (empty? (rest coll))))
+(singleton? (rest [2 4 1 4]))
+(singleton? (rest [2 4]))
+(max [2 4])
+(map [2 4])
+(set [2 4])
+(set [2 4 5 5 8 1 1 4 0])
+(seq (set [2 4 5 5 8 1 1 4 0]))
+(sort (seq (set [2 4 5 5 8 1 1 4 0])))
+(sort [1 4 7 3 2])
+((complement sort) [1 4 7 3 2])
+exit
+(use 'recursion)
+(longest-sequence [1 2 3])
+(longest-sequence [])
+(longest-sequence [[1 2])
+(longest-sequence [[1 2]])
+(longest-sequence [[1 2] [1 2 3]])
+(longest-sequence [[1 2] [1]])
+(longest-sequence [[1] [1 2]])
+quit
+(use 'recursion)
+(longest-sequence [[1 2]])
+(longest-sequence [])
+(longest-sequence [[1 2] [] [1 2 3]])
+[1 2 3]
+[[1 2] [] [1 2 3]]
+(first [[1 2] [] [1 2 3]])
+(rest [[1 2] [] [1 2 3]])
+(first (rest [[1 2] [] [1 2 3]]))
+(first [[1 2] [1 2 3]])
+(rest [[1 2] [1 2 3]])
+(first (rest [[1 2] [1 2 3]]))
+(defn longest-sequence [a-seq]
+  (if (empty? a-seq)
+    nil
+    (if (singleton? a-seq)
+      (first a-seq)
+      (if (singleton? (first (rest a-seq)))
+        (seq-max (first a-seq) (first (rest a-seq)))
+        (seq-max (first a-seq (longest-sequence (rest a-seq))))))))
+exit
+(use 'recursion)
+(longest-sequence [[1 2] [] [1 2 3]])
+exit
+(use 'recursion)
+(longest-sequence [[1 2] [] [1 2 3]])
+exit
+(use 'recursion)
+(longest-sequence [])  
+(longest-sequence [[1 2]])     
+(longest-sequence [[1 2] [] [1 2 3]])
+(longest-sequence [[1 2] [1 2 3]])
+(longest-sequence [[1 2] []])
+(longest-sequence [[] [1 2 3]])
+(first [[1 2] [1 2 3]])
+(rest [[1 2] [1 2 3]])
+exit
+(use 'recursion)
+(rest [[1 2] [1 2 3]])
+(first (rest [[1 2] [1 2 3]]))
+(longest-sequence [[1 2] [] [1 2 3]])
+exit
+(use 'recursion)
+(my-take-while odd? [1 2 3 4])
+(odd? [1 2 3 4])
+(odd? (first [1 2 3 4]))
+(cons (first [1 2 3 4]) [2 3 4])
+(cons (first [1 2 3 4]) [])
+exit
+(cons (first [1 2 3 4]) [])
+(use 'recursion)
+(my-take-while odd? [])
+quit
+(rest [1])
+(rest [])
+(odd? [])
+quit
+(seq a a a)
+(conj a a a)
+(seq "a" "a" "b")
+(conj "a" "b" "g")
+(concat "t" "y" "u")
+(conj "Aa" "b")
+(str "a" "b" "c")
+(str 5 "a" "b" "c")
+exit(str "a" "b" "c")
+( 1 2 )
+exit
+(use 'recursion)
+(my-repeat 2 :a)
+(my-repeat 3 "lol")
+(my-repeat -1 :a)
+exit
+(conj (dec 1) (dec 4))
+(conj [1] [2 3 34])
+(conj [1] (seq [2 3 34]))
+(apply conj [1] (seq [2 3 34]))
+quit
+(use 'recursion)
+(my-range 0)
+(my-range 1)
+(apply conj [0] [])
+quit
+(use 'recursion)
+(my-range 0)
+(apply conj [0] [1 2 3 4])
+(apply conj [3] (apply conj [2]))
+quit
+(use 'recursion)
+(my-range 0)
+(my-range 1)
+exit
+(use 'recursion)
+(my-range 0)
+(my-range 1)
+exit
+(rest [1 2 3 4])
+(conj [1 2 3 4] (rest [1 2 3 4]))
+(map [1 2 3 4])
+(conj [[1 2 3 4]] (rest [1 2 3 4]))
+(seq [1 2 3 4])
+q
+quit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+(cons [1 2 3] [4 5])
+(apply conj [1 2 3] [4 5])
+(conj [1 2 3] [4 5])
+(conj [[1 2 3]] [4 5])
+(conj [[1 2]] [3])
+(conj [[1 2]] [[3]])
+(conj [[1 2]] (first [[3]]))
+exit
+(use 'recursion)
+(tails [1])
+(first [[1 2]])
+(rest (first [[1 2]]))
+(seq (rest (first [[1 2]])))
+(conj [[1 2]] [3])
+(tails [1 2])
+exit(seq (rest (first [[1 2]])))
+(conj [1 2 3 4] (rest (first [1 2 3 4[)))
+(conj [1 2 3 4] (rest (first [1 2 3 4])))
+(conj [1 2 3 4] (seq (rest (first [1 2 3 4]))))
+(conj [[1 2 3 4]] (rest (first [1 2 3 4])))
+(conj [[1 2 3 4]] (rest (first [[1 2 3 ]4])))
+(conj [[1 2 3 4]] (rest (first [[1 2 3 4]])))
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+(conj [1 2 3 4] (tails [1 2 3 4]))
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1])
+(tails [1 2])
+(conj [1 2] [[2]])
+exit
+(use 'recursion)
+(tails [1 2])
+(tails [1 2 3])
+(tails [1 2 3 4])
+exit
+(use 'recursion)
+(tails [1 2 3 4])
+(tails [1 2])
+(seq [1 2])
+(conj [[1 2]] [1])
+(conj [[1 2 3]] (conj [[1 2]] [1]))
+(concat [[1 2 3]] (conj [[1 2]] [1]))
+exit
+(use 'recursion)
+exit
+(use 'recursion)
+(tails [])
+(tails [1])
+(tails [1 2])
+(tails [1 2 3])
+exit
+(use 'recursion)
+(tails [])
+(tails [1])
+(tails [1 2])
+(tails [1 2 3])
+(tails [1 2 3 4])
+exit
+(map reverse (tails [1 2 3 4]))
+(reverse (tails [1 2 3 4]))
+(use 'recursion)
+(map reverse (tails [1 2 3 4]))
+(map reverse (tails (reverse [1 2 3 4])))
+(tails (reverse [1 2 3 4]))
+quit
+(use 'recursion)
+(rotations [])
+(rotations [1])
+(rotations [2 1])
+(concat (rest [1 2 3]) (first [1 2 3]))
+(rest [1 2 3])
+(first [1 2 3])
+(concat (rest [1 2 3]) [(first [1 2 3])])
+exit
+(use 'recursion)
+(rotations [1])
+(rotations [1 2])
+exit
+(use 'recursion)
+(rotations [1])
+(rotations [1 2])
+(rotations [1 2 3])
+(rotations [1 2 3 4 5])
+(concat [1 2 3] [(first [1 2 3])])
+(concat [1 2 3] [(concat (rest [1 2 3]) [(first [1 2 3])])])
+(concat [[1 2 3]] [(concat (rest [1 2 3]) [(first [1 2 3])])])
+(contains? [1 2 3] (concat [[1 2 3]] [(concat (rest [1 2 3]) [(first [1 2 3])])]))
+(contains? [[1 2 3]] (concat [[1 2 3]] [(concat (rest [1 2 3]) [(first [1 2 3])])]))
+(contains? [1 2] [1 2 3])
+(contains? [1 2] [1 2])
+(contains? [1 2] [[1 2]])
+(contains? [[1 2]] [1 2])
+(sequence-contains? [1 2] [[1 2]])
+(sequence-contains? [1 2 3] (concat [[1 2 3]] [(concat (rest [1 2 3]) [(first [1 2 3])])]))
+exit
+(use 'recursion)
+exit
+(use 'recursion)
+exit
+(use 'recursion)
+(my-frequencies [])
+(my-frequencies [44 5 7 7])
+exit
+(conj 1 [ 2 3])
+(conj [2 3] 4)
+exit
