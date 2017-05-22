@@ -126,11 +126,28 @@
     (list '())
     (rotate-n 0 a-seq)))
 
+
+(defn count-elem-helper [n elem coll]
+  (if (empty? coll)
+    n
+    (let [new-count (if (= elem (first coll))
+                      (inc n)
+                      n)]
+      (count-elem-helper new-count
+                         elem
+                         (rest coll)))))
+
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [elem (first a-seq)
+          new-freqs (if (nil? (get freqs elem))
+                      (assoc-in freqs [elem] 1)
+                      (update-in freqs [elem] inc))]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
