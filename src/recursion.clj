@@ -155,7 +155,7 @@
     (concat (repeat (second (first a-map)) (first (first a-map))) (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (take n coll))
 
 (defn my-drop [n coll]
   [:-])
