@@ -161,7 +161,8 @@
   (drop n coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [the-middle (int (/ (count a-seq) 2))]
+    (into [] [(my-take the-middle a-seq) (my-drop the-middle a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
