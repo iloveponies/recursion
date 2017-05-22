@@ -158,7 +158,7 @@
   (take n coll))
 
 (defn my-drop [n coll]
-  [:-])
+  (drop n coll))
 
 (defn halve [a-seq]
   [:-])
