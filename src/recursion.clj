@@ -217,7 +217,7 @@
   (if (seq (rest a-set))
     (apply concat (for [x a-set]
                     (map #(cons x %) (permutations (remove #{x} a-set)))))
-    [a-set])
+    (list a-set))
 
   ;; zero points for cheating :)
   [:-])
@@ -228,4 +228,4 @@
            (for [x a-set]
              (concat [#{}] [#{x}]
                      (map set (map #(cons x %) (powerset (remove #{x} a-set))))))))
-    #{a-set}))
+    (list a-set)))
