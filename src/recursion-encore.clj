@@ -1,6 +1,7 @@
 (use 'recursion)
 (use 'midje.repl)
 (require 'recursion :reload)
+(use 'spyscope.core)
 (use 'spyscope.repl)
 
 ;; split-into-monotonics, explained
@@ -10,28 +11,27 @@
 
 (inits a-seq)
 (into () (inits a-seq)) ;; clojure way of reordering
-(rest (into () (inits a-seq))) ;; filter empty in constant time
+(rest (into () (inits a-seq))) ;; filter empty
 
 ;; collect all strictly monotonic seqs
 
 (def monotonic-coll (take-while #(or (apply < %) (apply > %))
                                 (rest (into () (inits a-seq)))))
 
-;; take only the longest sequence available (in linear time)
+;; take only the longest sequence available
 
 (last monotonic-coll)
 
-;; drop coll from a-seq
+;; drop coll from a-seq (linear time)
 
 (drop (count monotonic-coll) a-seq)
 
-;; the above form recurs until (empty? a-seq)
 ;; recursion exhaustively
 
 (cons '(0 1)
       (cons '(1 2)
             (cons '(1 0)
-                  (cons '(1) nil ;; base case returns a-seq, which is nil
+                  (cons '(1) '() ;; base case returns a-seq, ie. empty coll
                         ))))
 
 
