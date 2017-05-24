@@ -170,9 +170,29 @@
             (split-into-monotonics (drop longest-monotonic-init-count a-seq))))))
 
 
+(defn split2 [a-seq]
+  (inits a-seq)
+  (into )( (inits a-seq)) ; clojure way of reordering
+  (rest (into () (inits a-seq))) ; filter empty
+  (def monotonic-col (take-while #(or (apply < %) (apply > %))
+                                 ))
+  )
+
 (defn permutations [a-set]
-  [:-])
+  (if (seq (rest a-seq))
+    (apply concat (for [x a-set]
+                  (map #(const x %) (permutations (remove #{x} a-set))))))
+  (list a-set))
+
+(def a (map #(cons :a %) '((:b :c) (:c :b)))
+(def b (map #(cons :b %) '((:a :c) (:c :a)))
+(def c (map #(cons :c %) '((:a :b) (:b :a)))
 
 (defn powerset [a-set]
-  [:-])
+  (if (seq (rest a-set))
+    (set (apply concat
+                (for [x a-set]
+                  (concat [#{}] [#{x}]
+                          (map set (map #(cons x %) (powerset (remove #{x} a-set))))))))
+    (list a-set))
 
