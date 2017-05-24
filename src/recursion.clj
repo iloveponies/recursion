@@ -196,13 +196,8 @@
     (cond
       (empty? b-seq) a-seq
       (empty? a-seq) b-seq
-      :else (let [index (.lastIndexOf a-seq b)]
-              (if (= -1 index)
-                  ;; not found
-                  (let [prefix-coll (my-take-while #(< % b) a-seq)]
-                    (seq-merge (concat prefix-coll (list b) (my-drop (count prefix-coll) a-seq)) rest-b))
-                  ;; found
-                  (seq-merge (concat (my-take index a-seq) (list b) (my-drop index a-seq)) rest-b))))))
+      :else (let [prefix-coll (my-take-while #(< % b) a-seq)]
+              (seq-merge (concat prefix-coll (list b) (my-drop (count prefix-coll) a-seq)) rest-b)))))
 
 (defn merge-sort [a-seq]
   (cond (empty? a-seq) a-seq
