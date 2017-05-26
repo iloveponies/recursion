@@ -256,6 +256,18 @@
             (permutations (rest b-set))))
         (rotations a-set)))))
 
-(defn powerset [a-set]
-  [:-])
+(defn
+  powerset
+  [a-set]
+  (let [length (count a-set)]
+    (cond (== length 0) #{#{}}
+          (== length 1) #{#{} #{(first a-set)}}
+          :else (let [sub (powerset (rest a-set))
+                      union (fn
+                              [x-set v]
+                              (map
+                                (fn [x] (clojure.set/union x #{v}))
+                                x-set))
+                      concat-sub (union sub (first a-set))]
+                  (clojure.set/union sub concat-sub)))))
 
