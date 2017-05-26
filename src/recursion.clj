@@ -140,7 +140,7 @@
   [a-seq]
   (if (empty? a-seq)
     '(())
-    (rest (my-map concat (tails a-seq) (reverse (inits a-seq))))))
+    (rest (my-map concat (tails a-seq) (inits a-seq)))))
 
 (defn
   my-frequencies-helper
@@ -206,15 +206,6 @@
                   (cons ha (seq-merge ta b-seq))            ; if the head of a is smaller than b, then it's the first value
                   (cons hb (seq-merge a-seq tb))))))        ; otherwise the first value is head of b and the rest are larger
 
-; EXERCISE 26
-;
-; Conceptually:
-;
-; If the sequence is 0 or 1 elements long, it is already sorted.
-; Otherwise, divide the sequence into two subsequences.
-; Sort each subsequence recursively.
-; Merge the two subsequences back into one sorted sequence.
-
 (defn
   merge-sort
   [a-seq]
@@ -231,11 +222,39 @@
   (if (empty? a-seq)
     '()
     (let [monotonic? (fn [seq] (or (apply <= seq) (apply >= seq)))
-          mon-seq (first (reverse (take-while monotonic? (rest (inits a-seq)))))]
-      (cons mon-seq (split-into-monotonics (drop (count mon-seq) a-seq))))))
+          ; check monotonicy from inits of the sequence (leave out the empty seq)
+          ; then reverse the passed sequences of inits, so that the longest seq is the first
+          mon-seq (first
+                    (reverse
+                      (take-while
+                        monotonic?
+                        (rest (inits a-seq)))))]
+      ; create a sequence of monotonic sequences
+      ; after every monotonic sequence from input seq, check how many numbers were taken
+      ;   and then drop them out of the checks. repeats until the function returns empty seq
+      (cons
+        mon-seq
+        (split-into-monotonics
+          (drop
+            (count mon-seq)
+            a-seq))))))
 
-(defn permutations [a-set]
-  [:-])
+(defn
+  permutations
+  [a-set]
+  (if (empty? a-set)
+    [()]
+    (apply
+      concat
+      (map
+        (fn [b-set]
+          (map
+            cons
+            ; map repeats the given function on multiple collections at the same time
+            ; checks all the variations per rotation based on the first number
+            (repeat (first b-set))
+            (permutations (rest b-set))))
+        (rotations a-set)))))
 
 (defn powerset [a-set]
   [:-])
