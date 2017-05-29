@@ -66,6 +66,7 @@
 
 (defn seq= [a-seq b-seq]
   (cond
+    (not (= (count a-seq) (count b-seq))) false
     (and (empty? a-seq) (empty? b-seq)) true
     (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq))
     :else false))
@@ -141,7 +142,7 @@
     (my-take-helper (dec n) (rest coll) (conj res (first coll)))))
 
 (defn my-take [n coll]
-  (my-take-helper n coll ()))
+  (my-take-helper n coll []))
 
 (defn my-drop [n coll]
   (if (or (= n 0) (empty? coll))
