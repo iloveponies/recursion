@@ -43,7 +43,8 @@
 
 (defn seq= [a-seq b-seq]
   (if (and (empty? a-seq) (empty? b-seq)) true
-    (if (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq)) false)))
+    (if (not (= (count a-seq) (count b-seq))) false
+      (if (= (first a-seq) (first b-seq)) (seq= (rest a-seq) (rest b-seq)) false))))
 
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2)) '()
@@ -68,8 +69,9 @@
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  (if (singleton? a-seq) (seq [a-seq '()])
-    (cons (seq a-seq) (tails (rest a-seq)))))
+  (if (empty? a-seq) '(())
+    (if (singleton? a-seq) (seq [a-seq '()])
+      (cons (seq a-seq) (tails (rest a-seq))))))
 
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
@@ -97,7 +99,8 @@
 
 (defn my-take [n coll]
   (if (<= n 0) '()
-    (cons (first coll) (my-take (dec n) (rest coll)))))
+    (if (> n (count coll)) coll
+    (cons (first coll) (my-take (dec n) (rest coll))))))
 
 (defn my-drop [n coll]
   (reverse (my-take (- (count coll) n) (reverse coll))))
