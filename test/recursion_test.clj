@@ -1,2 +1,4 @@
 (ns recursion-test
-  (:use iloveponies.tests.recursion))
+  (:require [recursion :refer :all]))
+
+(require 'iloveponies.tests.recursion :reload)
