@@ -1,6 +1,8 @@
 (ns recursion)
 
-; This is linear reursion !!
+
+;; Ex 1
+;; Write the function (product coll) that computes the product of a collection of values. The product of aa, bb and cc is a∗b∗ca∗b∗c.
 
 (defn product [coll]
   (if (empty? coll)
@@ -8,28 +10,23 @@
     (* (first coll)
        (product (rest coll)))))
 
-;; (product [])        ;=> 1  ; special case
-;; (product [1 2 3])   ;=> 6
-;; (product [1 2 3 4]) ;=> 24
-;; (product [0 1 2])   ;=> 0
-;; (product #{2 3 4})  ;=> 24 ; works for sets too!
+
+;; Ex 2 (not submitted)
+;; Write down the evaluation of (product [1 2 4]) like we did for sum above. This exercise does not give any points and you do not need to return it.
+
+
+;; Ex 3
+;; Write the function (singleton? coll) which returns true if the collection has only one element in it and false otherwise. This is a very useful helper function in the remainder of this chapter.
+;; Do not use count as it can be expensive on long sequences. This function is not recursive.
 
 (defn singleton? [coll]
   (if (empty? coll)
     false
     (empty? (rest coll))))
 
-;; (singleton? [1])     ;=> true
-;; (singleton? #{2})    ;=> true
-;; (singleton? [])      ;=> false
-;; (singleton? [1 2 3]) ;=> false
 
-;;   (singleton? [1])     ;=> true
-;;   (singleton? #{2})    ;=> true
-;;   (singleton? [nil])   ;=> true
-;;   (singleton? [1 nil]) ;=> false
-;;   (singleton? [])      ;=> false
-;;   (singleton? [1 2 3]) ;=> false
+;; Ex 4
+;; Write (my-last a-seq) that computes the last element of a sequence.
 
 (defn my-last [coll]
   (cond
@@ -37,9 +34,10 @@
     (singleton? coll) (first coll)
     :else (my-last (rest coll))))
 
-;; (my-last [])      ;=> nil
-;; (my-last [1 2 3]) ;=> 3
-;; (my-last [2 5])   ;=> 5
+
+;; Ex 5
+;; Write the function (max-element a-seq) that computes returns the maximum element in a-seq or nil if a-seq is empty?
+;; You can use the function (max a b) that returns the greater of a and b.
 
 (defn max-element [a-seq]
   (cond
@@ -47,17 +45,18 @@
     (singleton? a-seq) (first a-seq)
     :else (max (first a-seq) (max-element (rest a-seq)))))
 
-;; (max-element [2 4 1 4]) ;=> 4
-;; (max-element [2])       ;=> 2
-;; (max-element [])        ;=> nil
+
+;; Ex 6
+;; Write the function (seq-max seq-1 seq-2) that returns the longer one of seq-1 and seq-2. This is a helper for the next exercise. You do not need to use recursion here. It is okay to use count.
 
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2))
     seq-1
     seq-2))
 
-;; (seq-max [1] [1 2])   ;=> [1 2]
-;; (seq-max [1 2] [3 4]) ;=> [3 4]
+
+;; Ex 7
+;; Write the function (longest-sequence a-seq) that takes a sequence of sequences as a parameter and returns the longest one.
 
 (defn longest-sequence [a-seq]
   (cond
@@ -65,9 +64,9 @@
     (singleton? a-seq) (first a-seq)
     :else (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
-;; (longest-sequence [[1 2] [] [1 2 3]]) ;=> [1 2 3]
-;; (longest-sequence [[1 2]])            ;=> [1 2]
-;; (longest-sequence [])                 ;=> nil
+
+;; Ex 8
+;; Implement the function (my-filter pred? a-seq) that works just like the standard filter. Don’t use remove.
 
 (defn my-filter [pred? a-seq]
   (cond
@@ -75,9 +74,9 @@
     (pred? (first a-seq)) (cons (first a-seq) (my-filter pred? (rest a-seq)))
     :else (my-filter pred? (rest a-seq))))
 
-;; (my-filter odd? [1 2 3 4]) ;=> (1 3)
-;; (my-filter (fn [x] (> x 9000)) [12 49 90 9001]) ;=> (9001)
-;; (my-filter even? [1 3 5 7]) ;=> ()
+
+;; Ex 9
+;; Write the function (sequence-contains? elem a-seq) that returns true if the given sequence contains the given value, otherwise false.
 
 (defn sequence-contains? [elem a-seq]
   (cond
@@ -85,9 +84,9 @@
     (= elem (first a-seq)) true
     :else (sequence-contains? elem (rest a-seq))))
 
-;; (sequence-contains? 3 [1 2 3]) ;=> true
-;; (sequence-contains? 3 [4 7 9]) ;=> false
-;; (sequence-contains? :pony [])  ;=> false
+
+;; Ex 10
+;; Write the function (my-take-while pred? a-seq) that returns the longest prefix of a-seq where pred? returns true for every element.
 
 (defn my-take-while [pred? a-seq]
   (cond
@@ -95,10 +94,9 @@
     (pred? (first a-seq)) (cons (first a-seq) (my-take-while pred? (rest a-seq)))
     :else ()))
 
-;; (my-take-while odd? [1 2 3 4])  ;=> (1)
-;; (my-take-while odd? [1 3 4 5])  ;=> (1 3)
-;; (my-take-while even? [1 3 4 5]) ;=> ()
-;; (my-take-while odd? [])         ;=> ()
+
+;; Ex 11
+;; Write the function (my-drop-while pred? a-seq) that drops elements from a-seq until pred? returns false.
 
 (defn my-drop-while [pred? a-seq]
   (cond
@@ -106,10 +104,9 @@
     (pred? (first a-seq)) (my-drop-while pred? (rest a-seq))
     :else a-seq))
 
-;; (my-drop-while odd? [1 2 3 4])  ;=> (2 3 4)
-;; (my-drop-while odd? [1 3 4 5])  ;=> (4 5)
-;; (my-drop-while even? [1 3 4 5]) ;=> (1 3 4 5)
-;; (my-drop-while odd? [])         ;=> ()
+
+;; Ex 12
+;; Write the function (seq= seq-1 seq-2) that compares two sequences for equality.
 
 (defn seq= [a-seq b-seq]
   (cond
@@ -118,28 +115,32 @@
     (and (= (first a-seq) (first b-seq))) (seq= (rest a-seq) (rest b-seq))
     :else false))
 
-;; (seq= [1 2 4] '(1 2 4))  ;=> true
-;; (seq= [1 2 3] [1 2 3 4]) ;=> false
-;; (seq= [1 3 5] [])        ;=> false
+
+;; Ex 13
+;; Write the function (my-map f seq-1 seq-2) that returns a sequence of the following kind . The first item is the return value of f called with the first values of seq-1 and seq-2. The second item is the return value of f called with the second values of seq-1 and seq-2 and so forth until seq-1 or seq-2 ends.
+;; This is actually exactly how map works when given two sequences, but for the sake of practice don’t use map when defining my-map.
 
 (defn my-map [f seq-1 seq-2]
   (if
     (or (empty? seq-1) (empty? seq-2)) ()
     (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2)))))
 
-;; (my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
-;; (my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
-;; (my-map + [1 2 3] [])        ;=> ()
+
+;; Ex 14
+;; Write the function (power n k) that computes the mathematical expression nknk.
 
 (defn power [n k]
   (if (= k 0)
     1
     (* n (power n (dec k)))))
 
-;; (power 2 2)  ;=> 4
-;; (power 5 3)  ;=> 125
-;; (power 7 0)  ;=> 1
-;; (power 0 10) ;=> 0
+
+;; Ex 15
+;; Compute the nnth Fibonacci number. The nnth Fibonacci number, FnFn, is defined as:
+;; F0=0F0=0
+;; F1=1F1=1
+;; Fn=Fn−1+Fn−2Fn=Fn−1+Fn−2
+;; Write the function (fib n) which returns FnFn.
 
 (def fib
   (memoize
@@ -149,41 +150,27 @@
         (= n 1) 1
         :else (+ (fib (- n 1)) (fib (- n 2)))))))
 
-;; (fib 0) ;=> 0
-;; (fib 1) ;=> 1
-;; (fib 2) ;=> 1
-;; (fib 3) ;=> 2
-;; (fib 4) ;=> 3
-;; (fib 5) ;=> 5
-;; (fib 6) ;=> 8
-;; (fib 10) ;=> 55
+
+;; Ex 16
+;; Write the function (my-repeat how-many-times what-to-repeat) that generates a list with what-to-repeat repeated how-many-times number of times.
 
 (defn my-repeat [how-many-times what-to-repeat]
   (if
     (<= how-many-times 0) ()
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
-;; (my-repeat 2 :a)    ;=> (:a :a)
-;; (my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
-;; (my-repeat -1 :a)   ;=> ()
 
-;; More correct, but not the answer!
-;; (defn my-range [up-to]
-;;   (defn inner[u]
-;;     (if (>= u up-to)
-;;       ()
-;;       (cons u (inner (inc u)))))
-;;   (inner 0))
+;; Ex 17
+;; Write the function (my-range up-to) that works like this:
 
 (defn my-range [up-to]
   (if (<= up-to 0)
     ()
     (cons (dec up-to) (my-range (dec up-to)))))
 
-;; (my-range 0)  ;=> ()
-;; (my-range 1)  ;=> (0)
-;; (my-range 2)  ;=> (1 0)
-;; (my-range 3)  ;=> (2 1 0)
+
+;; Ex 18
+;; Write the functions tails and inits that return all the suffixes and prefixes of a sequence, respectively.
 
 (defn tails [a-seq]
   (if (empty? a-seq)
@@ -193,10 +180,9 @@
 (defn inits [a-seq]
   (reverse (map reverse (tails (reverse a-seq)))))
 
-;; (tails [1 2 3 4]) ;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
-;; (inits [1 2 3 4]) ;=> (() (1) (1 2) (1 2 3) (1 2 3 4))
-;; ; You can output the tails and inits in any order you like.
-;; (inits [1 2 3 4]) ;=> ((1 2) () (1 2 3) (1) (1 2 3 4))
+
+;; Ex 19
+;; Write the function (rotations a-seq) that, when given a sequence, returns all the rotations of that sequence.
 
 (defn rotations [a-seq]
   (let [rot1 (fn [s]
@@ -210,13 +196,9 @@
       '(())
       (rotn (seq a-seq) (count a-seq)))))
 
-;; (rotations [])        ;=> (())
-;; (rotations [1 2 3])   ;=> ((1 2 3) (2 3 1) (3 1 2))
-;; (rotations [:a :b])   ;=> ((:a :b) (:b :a))
-;; ; The order of rotations does not matter.
-;; (rotations [:a :b])   ;=> ((:b :a) (:a :b))
-;; (rotations [1 5 9 2]) ;=> ((1 5 9 2) (2 1 5 9) (9 2 1 5) (5 9 2 1))
-;; (count (rotations [6 5 8 9 2])) ;=> 5
+
+;; Ex 20
+;; Write the function (my-frequencies a-seq) that computes a map of how many times each element occurs in a sequence. E.g.:
 
 (defn my-frequencies-helper [freqs a-seq]
   (let [addone (fn[x]
@@ -230,17 +212,18 @@
 (defn my-frequencies [a-seq]
  (my-frequencies-helper {} a-seq))
 
-;; (my-frequencies []) ;=> {}
-;; (my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
+
+;; Ex 21
+;; Write the function (un-frequencies a-map) which takes a map produced by my-frequencies and generates a sequence with the corresponding numbers of different elements.
 
 (defn un-frequencies [a-map]
   (if (empty? a-map)
     ()
     (concat (let [[k v] (first a-map)] (repeat v k)) (un-frequencies (rest a-map)))))
 
-;; (un-frequencies {:a 3 :b 2 "^_^" 1})             ;=> (:a :a :a "^_^" :b :b)
-;; (un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
-;; (my-frequencies (un-frequencies {:a 100 :b 10})) ;=> {:a 100 :b 10}
+
+;; Ex 22
+;; Implement (my-take n coll) that returns n first items of coll.
 
 (defn my-take [n coll]
   (let [my-take-inner (fn my-take-inner [accum n coll]
@@ -249,16 +232,19 @@
             (my-take-inner (concat accum (list (first coll))) (dec n) (rest coll))))]
    (my-take-inner '() n coll)))
 
-;; (my-take 2 [1 2 3 4]) ;=> (1 2)
-;; (my-take 4 [:a :b])   ;=> (:a :b)
+
+;; Ex 23
+;; Implement (my-drop n coll) that returns all but the n first items of coll.
 
 (defn my-drop [n coll]
   (if (or (<= n 0) (empty? coll))
     coll
     (my-drop (dec n) (rest coll))))
 
-;; (my-drop 2 [1 2 3 4]) ;=> (3 4)
-;; (my-drop 4 [:a :b])   ;=> ()
+
+;; Ex 24
+;; Implement the function (halve a-seq) that takes a sequence and returns one vector with two elements. The first element is the first half of a-seq and the second element is the second half of a-seq.
+;; To turn a result of division into an integer use int.
 
 (defn halve [a-seq]
   (let [split-seq (fn split-seq [accum a-seq n]
@@ -267,9 +253,9 @@
                       (split-seq (concat accum (list (first a-seq))) (rest a-seq) (dec n))))]
     (split-seq '() a-seq (quot (count a-seq) 2))))
 
-;; (halve [1 2 3 4])   ;=> [(1 2) (3 4)]
-;; (halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
-;; (halve [1])         ;=> [() (1)]
+
+;; Ex 25
+;; Write the function (seq-merge a-seq b-seq) that takes two (low to high) sorted number sequences and combines them into one sorted sequence. Don’t use sort (nor implement it yourself, yet).
 
 (defn seq-merge [a-seq b-seq]
   (let [seq-merge-inner (fn seq-merge-inner [accum a-seq b-seq]
@@ -283,9 +269,15 @@
                             ))]
   (seq-merge-inner '() a-seq b-seq)))
 
-;; (seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
-;; (seq-merge [1 2 6 7] [9])        ;=> (1 2 4 6 7)
-;; (seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+
+;; Ex 26
+;; Write the function (merge-sort a-seq) that implements merge sort.
+;; The idea of merge sort is to divide the input into subsequences using halve, sort the subsequences recursively and use the seq-merge function to merge the sorted subsequences back together.
+;; Conceptually:
+;; If the sequence is 0 or 1 elements long, it is already sorted.
+;; Otherwise, divide the sequence into two subsequences.
+;; Sort each subsequence recursively.
+;; Merge the two subsequences back into one sorted sequence.
 
 (defn merge-sort [a-seq]
   (let [[s1 s2] (halve a-seq)]
@@ -293,19 +285,45 @@
       (seq-merge s1 s2)
       (seq-merge (merge-sort s1) (merge-sort s2)))))
 
-;; (merge-sort [999 4 9 100 -2 2 3 1])
-;; (merge-sort [])                 ;=> empty?
-;; (merge-sort [1 2 3])            ;=> '(1 2 3)
-;; (merge-sort [5 3 4 17 2 100 1]) ;=> '(1 2 3 4 5 17 100))
+
+
+;; E N C O R E   S E C T I O N  ---  B O N U S   M A R K S   F O R   T H E S E   ! ! !
+
+
+
+;; Ex 27
+;; 2 points
+;; Write the function split-into-monotonics that takes a sequence and returns the sequence split into monotonic pieces
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  a-seq)
 
-(defn permutations [a-set]
-  [:-])
+
+;; Ex 28
+;; 3 points
+;; Given a sequence, return all permutations of that sequence.
+
+(defn all-rots [s]
+  (->>
+    (cycle s)
+    (partition (inc (count s)))
+    (map #(rest %))
+    (take (count s))))
+
+(defn permutations [s]
+  (if (empty? (rest s))
+    (lazy-seq (list s))
+    (for [ars (all-rots s)
+          prs (lazy-seq (permutations (rest ars)))]
+       (cons (first ars) prs))))
+
+
+;; Ex 29
+;; 3 points
+;; Given a set, return the powerset of that set.
 
 (defn powerset [a-set]
-  [:-])
-
+  (if (empty? a-set) #{#{}}
+    (clojure.set/union (powerset (rest a-set)) (map #(clojure.set/union #{(first a-set)} %) (powerset (rest a-set))))))
 
 
