@@ -106,42 +106,80 @@
 
 (defn my-range [up-to]
   (if (< 0 up-to)
-    (cons )
+    (cons (- up-to 1) (my-range (- up-to 1)))
     '()
     ))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons a-seq (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (cons a-seq '())
+    (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
+
+(defn rotate [counter a-seq]
+  (if (>= 1 counter)
+    (cons a-seq '())
+    (cons a-seq (rotate (- counter 1) (concat (rest a-seq) (cons (first a-seq) '()))))))
 
 (defn rotations [a-seq]
-  [:-])
+  (rotate (count a-seq) a-seq)
+)
+
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [new-freqs (if (contains? freqs (first a-seq))
+                      (assoc freqs (first a-seq) (+ (get freqs (first a-seq)) 1))
+                      (assoc freqs (first a-seq) 1))]
+      (my-frequencies-helper new-freqs (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [repeat-element (fn [[elem value]]
+                         (my-repeat value elem))]
+    (if (empty? a-map)
+      '(())
+      (apply concat (map repeat-element a-map)))))
 
 (defn my-take [n coll]
-  [:-])
+  (if (or (= 0 n) (empty? coll))
+    '()
+    (concat (cons (first coll) '()) (my-take (- n 1) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (if (or (= 0 n) (empty? coll))
+    coll
+    (my-drop
+      (- n 1)
+      (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [first-halve-size (int (/ (count a-seq) 2))]
+    (conj [(my-take first-halve-size a-seq)] (my-drop first-halve-size a-seq))))
+
+(defn seq-merge-helper [merged a-seq b-seq]
+  (if (empty? a-seq)
+    (concat merged b-seq)
+    (if (empty? b-seq)
+      (concat merged a-seq)
+      (if (< (first a-seq) (first b-seq))
+        (seq-merge-helper (concat merged (cons (first a-seq) '())) (rest a-seq) b-seq)
+        (seq-merge-helper (concat merged (cons (first b-seq) '())) a-seq (rest b-seq))))))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (seq-merge-helper '() a-seq b-seq))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (if (<= (count a-seq) 1)
+    a-seq
+    (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
