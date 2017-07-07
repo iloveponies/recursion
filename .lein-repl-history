@@ -1,0 +1,8 @@
+(use 'recursion)
+(use 'recursion :reload)
+(product [])        ;=> 1  ; special case
+(product [1 2 3])   ;=> 6
+(product [1 2 3 4]) ;=> 24
+(product [0 1 2])   ;=> 0
+(product #{2 3 4})  ;=> 24 ; works for sets too!
+quit
