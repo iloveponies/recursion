@@ -37,3 +37,10 @@ quit
 (my-last [3 2 1])
 (empty? (first []))
 (my-last [])
+(use 'recursion :reload)
+(max-element [2 4 1 4]) ;=> 4
+(max-element [2])       ;=> 2
+(max-element [])        ;=> nil
+(max-element [2 4])
+(max-element [2 []])
+(max-element [])
