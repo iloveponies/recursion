@@ -59,3 +59,9 @@ quit
 (seq-max [1 2] [3 4]) 
 (seq-max '(1 2))
 (seq-max '(1 2) '(1 2 3))
+(use 'recursion :reload)
+(longest-sequence [[1 2] [] [1 2 3]]) ;=> [1 2 3]
+(longest-sequence [[1 2]])            ;=> [1 2]
+(longest-sequence [])                 ;=> nil
+(longest-sequence [[1 2] [] [1 2 3] [1 2 3 4 5 6 7 8]])
+(longest-sequence [[1] [] [1 2] [1 2 3] [1 2 3 4 5 6 7 8] [1 2 3 4]])
