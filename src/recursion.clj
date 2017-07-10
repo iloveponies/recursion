@@ -98,10 +98,18 @@
     (* n (power n (dec k)))))
 
 (defn fib [n]
-  :-)
+  (cond
+    (= n 0)
+      0
+    (= n 1)
+      1
+    (>= n 2)
+      (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (< how-many-times 1)
+    ()
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
   [:-])
