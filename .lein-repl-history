@@ -241,3 +241,42 @@ quit
 (my-map + [1 2 3] [4 4 4])   ;=> (5 6 7)
 (my-map + [1 2 3 4] [0 0 0]) ;=> (1 2 3)
 (my-map + [1 2 3] [])        ;=> ()
+(use 'recursion :reload)
+(power 2 3)
+(power 2 0)
+(power 0 0)
+expt
+(expt 1 2)
+(use 'clojure.math.numeric-tower)
+(use 'clojure.math.*)
+exp
+pow
+math.pow
+(abs -1)
+(.abs -1)
+(def a = "a")
+(def a "a")
+(+ a 1)
+a
+(defn givenan [n]
+)
+(defn jaa [n d]
+(if (zero? d) Double/NaN
+(/ n d))
+)
+jaa
+(jaa 1 2)
+(jaa 1 0)
+(defn palautaNaN
+NaN)
+(use 'recursion :reload)
+(power 1 2)
+(power 2 3)
+(power 0 1)
+(power 0 0)
+(power 1 0)
+(power 2 0)
+(use 'recursion :reload)
+(power 1 0)
+(power 0 0)
+(power 2 3)
