@@ -32,14 +32,14 @@
              (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
-  (cond 
+  (cond
     (empty? a-seq)
-      a-seq
+      ()
     (pred? (first a-seq))
-      (cons ((first a-seq)
-            (my-filter pred? (rest a-seq))))
+      (cons (first a-seq)
+            (my-filter pred? (rest a-seq)))
     :else
-      (cons (my-filter pred? (rest a-seq)))))
+      (my-filter pred? (rest a-seq))))
       
 
             
