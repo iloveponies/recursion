@@ -123,8 +123,11 @@
     (cons a-seq (inits (reverse (rest (reverse a-seq)))))))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (my-map concat (rest (tails a-seq)) (rest (reverse (inits a-seq)))))) 
 
+  
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
 
