@@ -443,3 +443,42 @@ my-repeat
 (use 'recursion)
 (rotations [])
 (rotations [1 2 3])
+(use 'recursion)
+(use 'recursion :reload)
+(my-frequencies [])
+(use 'recursion :reload)
+(my-frequencies []) ;=> {}
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
+(def hm {})
+(hm)
+(assoc hm "a" 1)
+(hm)
+(println hm)
+(hm "a")
+("a" hm)
+(def hm {"a" 1})
+(hm)
+("a" hm)
+(get hm "a")
+(put hm "b" 2)
+(assoc hm "b" 2)
+(get hm "b")
+(get hm "a")
+(get hm "c")
+(get {} 1)
+(use 'recursion :reload)
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
+(my-frequencies []) ;=> {}
+(use 'recursion :reload)
+(my-frequencies []) ;=> {}
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}
+(assoc {} (first [:a "moi"]) 1)
+(empty? [:a "moi])
+")
+(empty? [:a "moi])
+)
+)))
+")
+(empty? [:a "moi"])
+(use 'recursion :reload)
+(my-frequencies [:a "moi" :a "moi" "moi" :a 1]) ;=> {:a 3, "moi" 3, 1 1}

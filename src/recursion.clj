@@ -126,13 +126,22 @@
   (if (empty? a-seq)
     '(())
     (my-map concat (rest (tails a-seq)) (rest (reverse (inits a-seq)))))) 
-
   
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (if (= (get freqs (first a-seq)) nil)
+      (my-frequencies-helper 
+        (assoc freqs (first a-seq) 1)
+        (rest a-seq))
+      (my-frequencies-helper
+        (assoc freqs 
+          (first a-seq) 
+          (inc (get freqs (first a-seq))))
+        (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
