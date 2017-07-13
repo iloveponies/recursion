@@ -116,25 +116,56 @@
                 suffixes)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (let [elem (first a-seq)
+        tail (rest a-seq)]
+    (cond
+      (empty? a-seq) freqs
+      (contains? freqs elem) (my-frequencies-helper (assoc freqs 
+                                                           elem 
+                                                           (+ 1 (get freqs elem)))
+                                                    tail)
+      :else (my-frequencies-helper (assoc freqs elem 1)
+                                   tail))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (let [elems (keys a-map)
+        amounts (vals a-map)]
+    (apply concat (map (fn [amount elem] (repeat amount elem))
+                       amounts
+                       elems))))
 
 (defn my-take [n coll]
-  [:-])
+  (cond
+    (zero? n) ()
+    (empty? coll) ()
+    :else (cons (first coll)
+                (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
-  [:-])
+  (cond
+    (empty? coll) ()
+    (zero? n) coll
+    :else (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (let [half (int (/ (count a-seq) 2))]
+    [(my-take half a-seq)
+     (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (let [a (first a-seq)
+        b (first b-seq)
+        cons-a (lazy-seq (cons a (seq-merge (rest a-seq) b-seq)))
+        cons-b (lazy-seq (cons b (seq-merge a-seq (rest b-seq))))]
+    (cond 
+      (and (empty? a-seq) (empty? b-seq)) ()
+      (empty? b-seq) cons-a
+      (empty? a-seq) cons-b
+      (<= a b) cons-a
+      :else cons-b)))
 
 (defn merge-sort [a-seq]
   [:-])
