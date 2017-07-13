@@ -150,7 +150,7 @@
       (concat
         (take (a-map first-key) (repeat first-key))
         (un-frequencies (dissoc a-map first-key))))))
- 
+
 (defn my-take [n coll]
   (if (or (empty? coll) (= n 0))
     ()
@@ -162,7 +162,9 @@
     (my-drop (dec n) (rest coll))))
 
 (defn halve [a-seq]
-  [:-])
+  (conj
+    (vector (my-take (int (/ (count a-seq) 2)) a-seq))
+    (my-drop (int (/ (count a-seq) 2)) a-seq)))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
