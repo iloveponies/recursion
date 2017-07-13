@@ -145,12 +145,12 @@
 
 (defn un-frequencies [a-map]
   (if (empty? a-map)
-    ()
-    (concat 
-      (take (a-map (first (first a-map))) 
-        (apply concat (repeat (first (first a-map)))))
-      (un-frequencies (rest a-map)))))
-
+    '()
+    (let [first-key (first (first a-map))]
+      (concat
+        (take (a-map first-key) (repeat first-key))
+        (un-frequencies (dissoc a-map first-key))))))
+ 
 (defn my-take [n coll]
   (if (or (empty? coll) (= n 0))
     ()
