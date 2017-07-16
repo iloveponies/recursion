@@ -128,7 +128,7 @@
       ) true
     (and
       (= (first a-seq) (first b-seq))
-      (and (= 1 (count a-seq)) (= 1(count b-seq)))
+      (and (= 1 (count a-seq)) (= 1 (count b-seq)))
       ) true
     (and
       (= (first a-seq) (first b-seq))
@@ -154,49 +154,149 @@
 
 
 (defn power [n k]
-  :-)
+  (if (= k 0)
+    1
+    (* n (power n (dec k)))))
+
+(power 2 2)  ;=> 4
+(power 5 3)  ;=> 125
+(power 7 0)  ;=> 1
+(power 0 10) ;=> 0
 
 (defn fib [n]
-  :-)
+  (cond
+    (= n 0) 0
+    (= n 1) 1
+    :else
+      (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (<= how-many-times 0)
+    '()
+    (concat
+      (vector what-to-repeat)
+      (my-repeat (dec how-many-times) what-to-repeat))))
+
+(my-repeat 3 "lol") ;=> ("lol" "lol" "lol")
+(my-repeat -1 :a)   ;=> ()
 
 (defn my-range [up-to]
-  [:-])
+  (if (<= up-to 0)
+    '()
+    (concat (vector (dec up-to)) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    (list '())
+    (cons
+      (seq a-seq)
+      (tails (rest a-seq)))))
+
+(tails [1 2 3 4])
+;=> ((1 2 3 4) (2 3 4) (3 4) (4) ())
 
 (defn inits [a-seq]
-  [:-])
+  (reverse (map reverse (tails (reverse a-seq)))))
+
+(inits [1 2 3])
 
 (defn rotations [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '(())
+    (rest (map concat
+               (reverse (tails a-seq))
+               (reverse (inits a-seq))))))
+
+(rotations [1 2 3])
+
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) freqs
+    (contains? freqs (first a-seq))
+      (my-frequencies-helper (assoc freqs (first a-seq)
+                               (+ (get freqs (first a-seq)) 1))
+                             (rest a-seq))
+    :else (my-frequencies-helper (assoc freqs (first a-seq) 1)
+                                 (rest a-seq))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
-  [:-])
+  (if (empty? a-map)
+    ()
+    (let [curr (first a-map)]
+      (concat
+        (repeat (last curr) (first curr))
+        (un-frequencies (rest a-map))))))
+
+(un-frequencies {:a 3 :b 2 :3 1})             ;=> (:a :a :a "^_^" :b :b)
+(un-frequencies (my-frequencies [:a :b :c :a]))  ;=> (:a :a :b :c)
+(my-frequencies (un-frequencies {:a 100 :b 10})) ;=> {:a 100 :b 10}
+
+(defn take-help [i n coll]
+  (if (or (<= n i) (empty? coll))
+    ()
+    (cons
+      (first coll)
+      (take-help (inc i) n (rest coll)))))
 
 (defn my-take [n coll]
-  [:-])
+  (take-help 0 n coll))
+
+(my-take 2 [1 2 3 4]) ;=> (1 2)
+(my-take 4 [:a :b])   ;=> (:a :b)
 
 (defn my-drop [n coll]
-  [:-])
+  (if (> n (count coll))
+    '()
+    (reverse (my-take n (reverse coll)))))
+
+(my-drop 2 [1 2 3 4]) ;=> (3 4)
+(my-drop 4 [:a :b])   ;=> ()
 
 (defn halve [a-seq]
-  [:-])
+  (let [idx (int (/ (count a-seq) 2))]
+    (concat
+      (vector (my-take idx a-seq))
+      (vector (my-drop (- (count a-seq) idx) a-seq)))))
+
+(halve [1 2 3 4])   ;=> [(1 2) (3 4)]
+(halve [1 2 3 4 5]) ;=> [(1 2) (3 4 5)]
+(halve [1])         ;=> [() (1)]
+
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    (< (first a-seq) (first b-seq))
+      (cons
+        (first a-seq)
+        (seq-merge (rest a-seq) b-seq))
+    (> (first a-seq) (first b-seq))
+      (cons
+        (first b-seq)
+        (seq-merge a-seq (rest b-seq)))))
+
+(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+
+(seq-merge '(3) [2])
 
 (defn merge-sort [a-seq]
-  [:-])
+  (cond
+    (empty? a-seq) '()
+    (= 1 (count a-seq)) a-seq
+    :else
+      (seq-merge
+        (merge-sort (first (halve a-seq)))
+        (merge-sort (last (halve a-seq))))))
+
+(merge-sort [])                 ;=> ()
+(merge-sort [1 2 3])            ;=> (1 2 3)
+(merge-sort [5 3 4 17 2 100 1]) ;=> (1 2 3 4 5 17 100)
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
