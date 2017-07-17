@@ -168,13 +168,35 @@
       :else cons-b)))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let [[fst snd] (halve a-seq)]
+    (cond
+      (empty? a-seq) ()
+      (singleton? a-seq) a-seq
+      :else (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [monotonic? (fn [b-seq] (cond
+                                 (empty? b-seq) true
+                                 (singleton? b-seq) true
+                                 (apply >= b-seq) true
+                                 (apply <= b-seq) true
+                                 :else false))
+        rev-inits (reverse (inits a-seq))
+        longest (last (take-while monotonic? rev-inits))]
+    (cond
+      (empty? a-seq) ()
+      :else (cons longest
+                    (split-into-monotonics (drop (count longest) a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (let [a-seq (seq a-set)
+        fst (first a-seq)
+        tail-perms (lazy-seq (permutations (rest a-seq)))]
+    (cond
+      (empty? a-seq) (cons () ())
+      (singleton? a-seq) a-seq
+      :else (map (fn [b-seq] (cons fst b-seq))
+                 tail-perms))))
 
 (defn powerset [a-set]
   [:-])
