@@ -200,5 +200,5 @@
   (let [a-set (set a-seq)]
     (apply clojure.set/union 
            #{a-set}
-           (map (fn [x] (powerset (disj a-set x)))
+           (map #(powerset (disj a-set %))
                 a-set))))
