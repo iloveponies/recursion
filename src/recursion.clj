@@ -175,29 +175,30 @@
       :else (seq-merge (merge-sort fst) (merge-sort snd)))))
 
 (defn split-into-monotonics [a-seq]
-  (let [monotonic? (fn [b-seq] (cond
-                                 (empty? b-seq) true
-                                 (singleton? b-seq) true
-                                 (apply >= b-seq) true
-                                 (apply <= b-seq) true
-                                 :else false))
+  (let [monotonic? (fn [b-seq] (or (empty? b-seq) 
+                                   (singleton? b-seq) 
+                                   (apply >= b-seq) 
+                                   (apply <= b-seq)))
         rev-inits (reverse (inits a-seq))
         longest (last (take-while monotonic? rev-inits))]
     (cond
       (empty? a-seq) ()
       :else (cons longest
-                    (split-into-monotonics (drop (count longest) a-seq))))))
+                  (split-into-monotonics (drop (count longest) a-seq))))))
 
 (defn permutations [a-set]
   (let [a-seq (seq a-set)
-        fst (first a-seq)
-        tail-perms (lazy-seq (permutations (rest a-seq)))]
+        rots (rotations a-seq)]
     (cond
       (empty? a-seq) (cons () ())
-      (singleton? a-seq) a-seq
-      :else (map (fn [b-seq] (cons fst b-seq))
-                 tail-perms))))
+      (singleton? a-seq) (cons a-seq ())
+      :else (mapcat (fn [rot] (map #(cons (first rot) %)
+                                   (permutations (rest rot))))
+                    rots))))
 
-(defn powerset [a-set]
-  [:-])
-
+(defn powerset [a-seq]
+  (let [a-set (set a-seq)]
+    (apply clojure.set/union 
+           #{a-set}
+           (map (fn [x] (powerset (disj a-set x)))
+                a-set))))
