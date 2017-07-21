@@ -8,27 +8,27 @@
 
 (defn singleton? [coll]
   (if (and
-        (not (empty? (first coll)))
+        (not (empty? coll))
         (empty? (rest coll)))
     true
     false))
 
-(defn my-last [a-seq]
-  (if (empty? (rest a-seq))
-    (first a-seq)
-    (my-last (rest a-seq))))
+(defn my-last [coll]
+  (if (empty? (rest coll))
+    (first coll)
+    (my-last (rest coll))))
 
 (defn max-element [a-seq]
   (if (empty? (rest a-seq))
-    first a-seq
+    (first a-seq)
     (max-element (cons
                    (max (first a-seq) (first (rest a-seq)))
                    (rest (rest a-seq))))))
 
 (defn seq-max [seq-1 seq-2]
-  (if (< (count seq-1) (count seq-2))
-        seq-2
-        seq-1))
+  (if (> (count seq-1) (count seq-2))
+        seq-1
+        seq-2))
 
 (defn longest-sequence [a-seq]
   (if (empty? (rest a-seq))
@@ -46,9 +46,9 @@
 
 (defn sequence-contains? [elem a-seq]
   (cond
-    (not (empty? a-seq))
-      true
-    (= elem (first a-seq))
+    (empty? a-seq)
+      false
+    (= (first a-seq) elem)
       true
     :else
       (sequence-contains? elem (rest a-seq))))
@@ -72,11 +72,10 @@
 
 (defn seq= [a-seq b-seq]
   (cond
-    
-    (or (empty? a-seq) (empty? b-seq))
-      false
     (and (empty? a-seq) (empty? b-seq))
       true
+    (or (empty? a-seq) (empty? b-seq))
+      false
     (= (first a-seq) (first b-seq))
       (seq= (rest a-seq) (rest b-seq))
     :else
@@ -105,13 +104,13 @@
     (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  (if (<= how-many-times 0)
+  (if (>= 0 how-many-times)
     '()
     (cons what-to-repeat
           (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
-  (if (<=  up-to 0)
+  (if (> 1 up-to)
     '()
     (cons (dec up-to) (my-range (dec up-to)))))
 
@@ -122,23 +121,23 @@
 
 (defn inits [a-seq]
   (reverse (map reverse
-             (tails (reverse a-seq)))))
+                (tails (reverse a-seq)))))
 
 (defn rotations [a-seq]
-  (let [rota
+  (let [temp
         (rest (map concat (tails a-seq) (inits a-seq)))]
-    (if (empty? rota)
+    (if (empty? temp)
       '(())
-      rota)))
+      temp)))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
     freqs
-    (let [freq1 (if (contains? freqs (first a-seq))
+    (let [new-freq (if (contains? freqs (first a-seq))
                      (inc (get freqs (first a-seq)))
                      1)]
       (my-frequencies-helper
-        (assoc freqs (first a-seq) freq1)
+        (assoc freqs (first a-seq) new-freq)
         (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
@@ -151,7 +150,7 @@
             (un-frequencies (rest a-map)))))
 
 (defn my-take [n coll]
-  (if (or (>= 0 n) (empty? coll))
+  (if (or (empty? coll) (>= 0 n))
     '()
     (cons (first coll) (my-take (dec n) (rest coll)))))
 
@@ -163,8 +162,8 @@
       (seq coll))))
 
 (defn halve [a-seq]
-  (let [hal (int (/ (count a-seq) 2))]
-    (seq [(my-take hal a-seq) (my-drop hal a-seq)])))
+  (let [pivot (int (/ (count a-seq) 2))]
+    (seq [(my-take pivot a-seq) (my-drop pivot a-seq)])))
 
 (defn seq-merge [a-seq b-seq]
   (cond
@@ -178,27 +177,41 @@
       (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  (if (< 2 (count a-seq))
+  (if (> 2 (count a-seq))
     (if (empty? a-seq)
       '()
       a-seq)
-    (let [seq1 (first (halve a-seq)) seq2 (second (halve a-seq))]
-      (seq-merge (merge-sort seq1) (merge-sort seq2)))))
+    (let [seq-1 (first (halve a-seq)) seq-2 (second (halve a-seq))]
+      (seq-merge (merge-sort seq-1) (merge-sort seq-2)))))
 
-(declare helper)
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    true
+    (or
+      (apply <= a-seq)
+      (apply >= a-seq))))
+
+(defn split-into-monotonics [a-seq]
+  (if (monotonic? a-seq)
+    (seq [a-seq])
+    (let [mono-seqs (take-while monotonic? (inits a-seq))
+          longest-mono (first (reverse mono-seqs))]
+      (cons longest-mono (split-into-monotonics (drop (count longest-mono) a-seq))))))
+
+(declare permutations-helper)
 (defn permutations [a-set]
   (cond
     (empty? a-set) '(())
     (singleton? a-set) (seq [a-set])
-    :else  (apply concat (map helper (rotations a-set)))))
+    :else  (apply concat (map permutations-helper (rotations a-set)))))
 
-(defn helper [a-seq]
-  (map (fn [next]
-         (concat [(first a-seq)] next))
+(defn permutations-helper [a-seq]
+  (map (fn [next-perms]
+         (concat [(first a-seq)] next-perms))
        (permutations (rest a-seq))))
 
 (defn powerset [a-set]
   (if (empty? a-set)
     #{#{}}
-    (let [pr (powerset (rest a-set))]
-      (clojure.set/union pr (map #(conj % (first a-set)) pr)))))
+    (let [pset-rest (powerset (rest a-set))]
+      (clojure.set/union pset-rest (map #(conj % (first a-set)) pset-rest)))))
