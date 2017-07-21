@@ -32,8 +32,8 @@
       <file leaf-file-name="recursion.clj" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/recursion.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="583">
-              <caret line="179" column="3" lean-forward="true" selection-start-line="179" selection-start-column="3" selection-end-line="179" selection-end-column="3" />
+            <state relative-caret-position="359">
+              <caret line="183" column="9" lean-forward="true" selection-start-line="183" selection-start-column="9" selection-end-line="183" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -593,12 +593,12 @@
       <workItem from="1499964536327" duration="14544000" />
       <workItem from="1500028239477" duration="3264000" />
       <workItem from="1500132012055" duration="373000" />
-      <workItem from="1500634043332" duration="3319000" />
+      <workItem from="1500634043332" duration="4291000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21500000" />
+    <option name="totallyTimeSpent" value="22472000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -689,8 +689,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/recursion.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="179" column="3" lean-forward="true" selection-start-line="179" selection-start-column="3" selection-end-line="179" selection-end-column="3" />
+        <state relative-caret-position="359">
+          <caret line="183" column="9" lean-forward="true" selection-start-line="183" selection-start-column="9" selection-end-line="183" selection-end-column="9" />
           <folding />
         </state>
       </provider>

@@ -1,7 +1,3 @@
-(jaa 1 0)
-(defn palautaNaN
-NaN)
-(use 'recursion :reload)
 (power 1 2)
 (power 2 3)
 (power 0 1)
@@ -498,3 +494,7 @@ a-seq
 (use 'recursion)
 (seq-merge [4] [1 2 6 7])
 (seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
+(use 'recursion :reload)
+(merge-sort [])                 ;=> ()
+(merge-sort [1 2 3])            ;=> (1 2 3)
+(merge-sort [5 3 4 17 2 100 1])
