@@ -1,6 +1,3 @@
-)
-jaa
-(jaa 1 2)
 (jaa 1 0)
 (defn palautaNaN
 NaN)
@@ -498,3 +495,6 @@ a-seq
 (my-take-while (filter (> x (first (rest a-seq)))) a-seq)
 (defn monotonic-sort? [a-seq] (> (first a-seq) (first (rest a-seq))))
 (my-take-while (monotonic-sort? a-seq) a-seq)
+(use 'recursion)
+(seq-merge [4] [1 2 6 7])
+(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
