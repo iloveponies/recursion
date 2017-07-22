@@ -193,13 +193,42 @@
     (= 1 cs) (seq-merge (merge-sort fh) sh)
     :else (seq-merge (merge-sort fh) (merge-sort sh)))))
   
-  
+
+
+
+
+(defn mon [pred a-seq]
+ (loop [seq a-seq
+        cur []]
+       (cond
+        (empty? seq) [seq cur]
+        (and (not(empty? cur)) (pred (last cur) (first seq))) [seq cur]
+        :else (recur (rest seq) (conj cur (first seq))))))
+   
+ 
+
+(defn next-monotonic [a-seq]
+ (let [[seq desc] (mon < a-seq)
+       [seq incr] (mon >= a-seq)
+       c1 (count desc)
+       c2 (count incr)]
+      (if (<= c1 c2)
+       [seq incr]
+       [seq desc])))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (loop [seq a-seq
+         mon []]
+        (cond 
+         (empty? seq) (if (> (apply + (mapv count mon)) (count a-seq))
+                       (reverse (drop 1 (reverse mon)))
+                       mon)        
+         :else (let [[new-seq mono] (next-monotonic seq)]
+                (recur new-seq (conj mon mono)))))) 
+         
+        
+(defn permutations [a-set])
 
-(defn permutations [a-set]
-  [:-])
 
 (defn powerset [a-set]
   [:-])
