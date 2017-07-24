@@ -97,9 +97,13 @@
     (cons (seq a-seq) (tails (rest a-seq)))))
 
 (defn inits [a-seq]
-  (reverse (tails a-seq)))
+   (reverse (map reverse (tails (reverse a-seq)))))
 
-
+(defn rotations [a-seq]
+  (if (empty? a-seq)
+    [[]]
+    (partition (count a-seq) 1 (rest (concat a-seq a-seq)))
+    ))
 
 (defn my-frequencies-helper [freqs a-seq]
   (if (empty? a-seq)
@@ -154,8 +158,6 @@
     (seq-merge (merge-sort m-seq) (merge-sort n-seq))
     )))
 
-(defn inits [a-seq]
-   (reverse (map reverse (tails (reverse a-seq)))))
 
 (defn split-into-monotonics [a-seq]
  (if (empty? a-seq) '()
@@ -163,11 +165,6 @@
          long-mon-seq (first (reverse (take-while monotonic? (rest (inits a-seq)))))]
      (cons long-mon-seq (split-into-monotonics (drop (count long-mon-seq) a-seq))))))
 
-(defn rotations [a-seq]
-  (if (empty? a-seq)
-    [[]]
-    (partition (count a-seq) 1 (rest (concat a-seq a-seq)))
-    ))
 
 (defn permuCount [n]
   (* n (permuCount (dec n))))
