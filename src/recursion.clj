@@ -30,7 +30,7 @@
 (defn my-filter [pred? a-seq]
   (let [[h & t] a-seq]
     (cond
-      (nil? a-seq) nil
+      (empty? a-seq) '()
       (pred? h) (cons h (my-filter pred? t))
       :else (my-filter pred? t))))
 
@@ -43,14 +43,14 @@
 (defn my-take-while [pred? a-seq]
   (let [[h & t] a-seq]
     (cond
-      (empty? a-seq) nil
+      (empty? a-seq) '()
       (pred? h) (cons h (my-take-while pred? t))
-      :else nil)))
+      :else '())))
 
 (defn my-drop-while [pred? a-seq]
   (let [[h & t] a-seq]
     (cond
-      (empty? a-seq) nil
+      (empty? a-seq) '()
       (pred? h) (my-drop-while pred? t)
       :else a-seq)))
 
@@ -58,6 +58,7 @@
   (let [[h1 & t1] a-seq
         [h2 & t2] b-seq]
     (cond
+      (not (= (count a-seq) (count b-seq))) false
       (and (empty? a-seq) (empty? b-seq)) true
       (= h1 h2) (seq= t1 t2)
       :else false)))
@@ -66,7 +67,7 @@
   (let [[h1 & t1] seq-1
         [h2 & t2] seq-2]
     (cond
-      (or (empty? seq-1) (empty? seq-2)) nil
+      (or (empty? seq-1) (empty? seq-2)) '()
       :else (cons (f h1 h2) (my-map f t1 t2)))))
 
 (defn power [n k]
@@ -79,11 +80,11 @@
 
 
 (defn my-repeat [how-many-times what-to-repeat]
-  (if (< how-many-times 1) nil (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
+  (if (< how-many-times 1) '() (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
 (defn my-range [up-to]
   (if (< up-to 1)
-    nil
+    '()
     (cons (dec up-to) (my-range (dec up-to)))))
 
 (defn tails [a-seq]
@@ -93,10 +94,11 @@
 
 (defn rotations [a-seq]
   (let [not-last (fn [s] (reverse (rest (reverse s))))]
-    (not-last
-      (map
-        (fn [t] (concat (first t) (last t)))
-        (zipmap (reverse (tails a-seq)) (inits a-seq))))))
+    (if (empty? a-seq) '(())
+                       (not-last
+                         (map
+                           (fn [t] (concat (first t) (last t)))
+                           (zipmap (reverse (tails a-seq)) (inits a-seq)))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   (cond
@@ -115,7 +117,7 @@
 (defn my-take [n coll]
   (if
     (or (zero? n) (empty? coll))
-    nil
+    '()
     (cons (first coll) (my-take (dec n) (rest coll)))))
 
 (defn my-drop [n coll]
@@ -131,14 +133,22 @@
 (defn seq-merge [a-seq b-seq]
   (let [[ha & ta] a-seq
         [hb & tb] b-seq]
-    (cond (and (empty? a-seq) (empty? b-seq)) nil
+    (cond (and (empty? a-seq) (empty? b-seq)) '()
           (nil? ha) b-seq
           (nil? hb) a-seq
           (<= ha hb) (cons ha (seq-merge ta b-seq))
           (<= hb ha) (cons hb (seq-merge a-seq tb)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let
+    [sp (fn [s] (if (<= (first s) (second s)) s (reverse s)))]
+    (cond
+      (empty? a-seq) a-seq
+      (= (count a-seq) 1) a-seq
+      (= (count a-seq) 2) (sp a-seq)
+      :else (seq-merge
+              (merge-sort (first (halve a-seq)))
+              (merge-sort (last (halve a-seq)))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
