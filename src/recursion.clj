@@ -152,8 +152,8 @@
 (defn monotonic-helper [result a-seq]
   (let [hjelp (longest-sequence (filter monotonic? (inits a-seq))) dropsize (count hjelp)]
   (cond
-     (empty? hjekp) result
-     :else (recur (cons x result) (drop dropsize a-seq)))))
+     (empty? hjelp) result
+     :else (recur (cons hjelp result) (drop dropsize a-seq)))))
 
 (defn split-into-monotonics [a-seq]
     (reverse (monotonic-helper '() a-seq)))
