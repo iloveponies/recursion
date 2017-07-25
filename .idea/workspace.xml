@@ -17,8 +17,8 @@
       <file leaf-file-name="recursion.clj" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/recursion.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3241">
-              <caret line="59" column="2" lean-forward="false" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
+            <state relative-caret-position="299">
+              <caret line="185" column="40" lean-forward="true" selection-start-line="185" selection-start-column="40" selection-end-line="185" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -581,12 +581,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1500992353397</updated>
-      <workItem from="1500992356750" duration="1636000" />
+      <workItem from="1500992356750" duration="2580000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1636000" />
+    <option name="totallyTimeSpent" value="2580000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="0" width="1368" height="743" extended-state="6" />
@@ -637,8 +637,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/recursion.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3241">
-          <caret line="59" column="2" lean-forward="false" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
+        <state relative-caret-position="299">
+          <caret line="185" column="40" lean-forward="true" selection-start-line="185" selection-start-column="40" selection-end-line="185" selection-end-column="40" />
           <folding />
         </state>
       </provider>
