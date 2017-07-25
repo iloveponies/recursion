@@ -4,12 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57f1f4dd-9c54-4ede-8472-d733e3aaef67" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.lein-repl-history" afterPath="$PROJECT_DIR$/.lein-repl-history" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.nrepl-port" afterPath="$PROJECT_DIR$/.nrepl-port" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/recursion.clj" afterPath="$PROJECT_DIR$/src/recursion.clj" />
-    </list>
+    <list default="true" id="57f1f4dd-9c54-4ede-8472-d733e3aaef67" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,8 +30,8 @@
       <file leaf-file-name="recursion.clj" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/recursion.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="213" column="39" lean-forward="false" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
+            <state relative-caret-position="575">
+              <caret line="44" column="7" lean-forward="true" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -598,12 +593,12 @@
       <workItem from="1500028239477" duration="3264000" />
       <workItem from="1500132012055" duration="373000" />
       <workItem from="1500634043332" duration="9123000" />
-      <workItem from="1500979878631" duration="7919000" />
+      <workItem from="1500979878631" duration="8271000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35223000" />
+    <option name="totallyTimeSpent" value="35575000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -702,8 +697,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/recursion.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="213" column="39" lean-forward="false" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
+        <state relative-caret-position="575">
+          <caret line="44" column="7" lean-forward="true" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
           <folding />
         </state>
       </provider>

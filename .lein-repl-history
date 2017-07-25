@@ -1,6 +1,4 @@
 (tails [1 2 3 4])
-(use 'recursion :reload)
-(tails [1 2 3 4])
 (cons () ())
 (cons ((1)) ())
 (cons () (1))
@@ -498,3 +496,5 @@ a-seq
 (split-into-monotonics [1])
 (split-into-monotonics [1 1 1])
 (split-into-monotonics [1 1 1 2 3 2 1 0])
+(use 'recursion :reload)
+(merge-sort [1 4 2 1 0])
