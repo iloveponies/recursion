@@ -2,7 +2,6 @@
 /lib
 /classes
 /checkouts
-/.idea
 pom.xml
 *.jar
 *.class
