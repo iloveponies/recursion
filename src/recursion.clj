@@ -138,7 +138,15 @@
           (<= hb ha) (cons hb (seq-merge a-seq tb)))))
 
 (defn merge-sort [a-seq]
-  [:-])
+  (let
+    [sp (fn [s] (if (<= (first s) (second s)) s (reverse s)))]
+    (cond
+      (empty? a-seq) a-seq
+      (= (count a-seq) 1) a-seq
+      (= (count a-seq) 2) (sp a-seq)
+      :else (seq-merge
+              (merge-sort (first (halve a-seq)))
+              (merge-sort (last (halve a-seq)))))))
 
 (defn split-into-monotonics [a-seq]
   [:-])
