@@ -185,8 +185,59 @@
     (seq-merge (merge-sort (first (halve a-seq)))
       (merge-sort (second (halve a-seq))))))
 
+(defn monotonically-increasing-counter [counter number a-seq]
+  (cond
+    (empty? a-seq)
+    counter
+    (singleton? a-seq)
+    (if (> (first a-seq) number)
+      (inc counter)
+      counter)
+    :else
+    (if (> (first a-seq) number)
+      (monotonically-increasing-counter
+        (inc counter)
+        (first a-seq)
+        (rest a-seq))
+      counter)))
+
+(defn monotonically-decreasing-counter [counter number a-seq]
+  (cond
+    (empty? a-seq)
+    counter
+    (singleton? a-seq)
+    (if (< (first a-seq) number)
+      (inc counter)
+      counter)
+    :else
+    (if (< (first a-seq) number)
+      (monotonically-decreasing-counter
+        (inc counter)
+        (first a-seq)
+        (rest a-seq))
+      counter)))
+
+(defn number-of-monotonic-elems [a-seq]
+  (let
+    [a (monotonically-increasing-counter
+         1
+         (first a-seq)
+         (rest a-seq))
+     b (monotonically-decreasing-counter
+         1
+         (first a-seq)
+         (rest a-seq))]
+    (if (> a b) a b)))
+
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    ()
+    (let [mono-seq
+          (take (number-of-monotonic-elems a-seq) a-seq)]
+      (cons
+        mono-seq
+        (split-into-monotonics (drop (count mono-seq) a-seq))))))
 
 (defn permutations [a-set]
   [:-])
