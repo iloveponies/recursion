@@ -132,20 +132,16 @@
     [(my-take half a-seq) (my-drop half a-seq)]))
 
 (defn seq-merge [a-seq b-seq]
-  (let [a (first a-seq)
-        b (first b-seq)]
-    (cond (and (nil? a) (nil? b)) '()
-          (nil? a) b-seq
-          (nil? b) a-seq
-          (< a b) (cons a (seq-merge (rest a-seq) b-seq))
-          (< b a) (cons b (seq-merge a-seq (rest b-seq))))))
+    (cond (and (nil? (first a-seq)) (nil? (first b-seq))) '()
+          (nil? (first a-seq)) b-seq
+          (nil? (first b-seq)) a-seq
+          (< (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
+          (< (first b-seq) (first a-seq)) (cons (first b-seq) (seq-merge a-seq (rest b-seq)))))
 
 (defn merge-sort [a-seq]
-  (cond (or  (= 1 (count a-seq))
-             (zero? (count a-seq))) (apply list a-seq)
-        :else
-        (seq-merge (merge-sort (first (halve a-seq)))
-                   (merge-sort (second (halve a-seq))))))
+  (cond
+    (or  (= 1 (count a-seq)) (zero? (count a-seq))) (apply list a-seq)
+    :else (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (second (halve a-seq))))))
 
 (defn monotonic? [a-seq]
   (if (empty? a-seq)
@@ -154,9 +150,9 @@
         (apply < a-seq))))
 
 (defn monotonic-helper [result a-seq]
-  (let [x (longest-sequence (filter monotonic? (inits a-seq))) dropsize (count x)]
+  (let [hjelp (longest-sequence (filter monotonic? (inits a-seq))) dropsize (count hjelp)]
   (cond
-     (empty? x) result
+     (empty? hjekp) result
      :else (recur (cons x result) (drop dropsize a-seq)))))
 
 (defn split-into-monotonics [a-seq]
