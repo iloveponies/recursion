@@ -188,34 +188,34 @@
 (defn monotonically-increasing-counter [counter number a-seq]
   (cond
     (empty? a-seq)
-    counter
+      counter
     (singleton? a-seq)
-    (if (> (first a-seq) number)
-      (inc counter)
-      counter)
-    :else
-    (if (> (first a-seq) number)
-      (monotonically-increasing-counter
+      (if (> (first a-seq) number)
         (inc counter)
-        (first a-seq)
-        (rest a-seq))
-      counter)))
+        counter)
+    :else
+      (if (> (first a-seq) number)
+        (monotonically-increasing-counter
+          (inc counter)
+          (first a-seq)
+          (rest a-seq))
+        counter)))
 
 (defn monotonically-decreasing-counter [counter number a-seq]
   (cond
     (empty? a-seq)
-    counter
+      counter
     (singleton? a-seq)
-    (if (< (first a-seq) number)
-      (inc counter)
-      counter)
-    :else
-    (if (< (first a-seq) number)
-      (monotonically-decreasing-counter
+      (if (< (first a-seq) number)
         (inc counter)
-        (first a-seq)
-        (rest a-seq))
-      counter)))
+        counter)
+    :else
+      (if (< (first a-seq) number)
+        (monotonically-decreasing-counter
+          (inc counter)
+          (first a-seq)
+          (rest a-seq))
+        counter)))
 
 (defn number-of-monotonic-elems [a-seq]
   (let
