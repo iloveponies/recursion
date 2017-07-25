@@ -2,10 +2,6 @@
 
 (defn product [coll]
   (if (empty? coll) 1 (* (first coll) (product (rest coll)))))
-; (product [1 2 4])
-; (product (cons 1 (cons 2 (cons 4 '())))
-; (* 1 2 4 1)
-; 8
 
 (defn singleton? [coll]
   (if (empty? coll) false (empty? (rest coll))))
