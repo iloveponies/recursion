@@ -166,8 +166,19 @@
     (let [[f s] (halve a-seq)]
     (seq-merge (merge-sort f) (merge-sort s)))))
 
+(defn monotonic? [a-seq]
+  (if (empty? a-seq)
+    true
+    (or (= a-seq (sort a-seq)) (= a-seq (sort > a-seq)))))
+
+(defn inits2 [a-seq]
+  (reverse (map reverse (tails (reverse a-seq)))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (monotonic? a-seq)
+    [a-seq]
+    (let [longest (first (reverse (take-while monotonic? (inits2 a-seq))))]
+    (cons longest (split-into-monotonics (drop (count longest) a-seq))))))
 
 (defn permutations [a-set]
   (if (empty? a-set)
