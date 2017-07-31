@@ -183,8 +183,12 @@
 (defn split-into-monotonics [a-seq]
   [:-])
 
-(defn permutations [a-set]
-  [:-])
+(defn permutations [colls]
+  (if (= 1 (count colls))
+    (list colls)
+    (for [head colls
+          tail (permutations (disj (set colls) head))]
+      (cons head tail))))
 
 (defn powerset [a-set]
   [:-])
