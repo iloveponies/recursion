@@ -1,10 +1,16 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+   (if (and (not (empty? coll))
+           (empty? (rest coll)))
+    true
+    false))
 
 (defn my-last [coll]
   :-)
