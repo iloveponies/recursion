@@ -193,5 +193,8 @@
         (cons head tail)))))
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+    (empty? a-set) (hash-set (hash-set))
+    :else (clojure.set/union (powerset (next a-set))
+           (map #(conj % (first a-set)) (powerset (next a-set))))))
 
