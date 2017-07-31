@@ -152,12 +152,23 @@
     (let [[k x] (halve a-seq)]
       (seq-merge (merge-sort k) (merge-sort x)))))
 
-(defn split-into-monotonics [a-seq]
-  [:-])
+(defn split-into-monotonics [a-sec]
+  "nil")
 
-(defn permutations [a-set]
-  [:-])
+(defn permutations [a-seq]
+	(cond
+    (empty? a-seq)     '(())
+    (singleton? a-seq) (cons a-seq '())
+    :else              (let [rots   (rotations a-seq)
+                             helper (fn [a-rot]
+                                      (map (fn [x] (cons (first a-rot) x)) (permutations (rest a-rot))))]
+                         (apply concat (map helper rots)))))
 
 (defn powerset [a-set]
-  [:-])
+   (if (empty? a-set)
+       #{#{}}
+       (let [without (powerset (set (rest a-set)))
+             add-in (fn [x-set] (conj x-set (first a-set)))
+             with (set (map add-in without))]
+         (clojure.set/union without with))))
 
