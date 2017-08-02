@@ -206,7 +206,7 @@
       (seq-merge (merge-sort (first (halve a-seq))) (merge-sort (last (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  [:])
 
 (defn permutations [a-set]
   [:-])
