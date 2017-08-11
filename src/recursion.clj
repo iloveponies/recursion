@@ -7,7 +7,9 @@
        (product (rest coll)))))
 
 (defn singleton? [coll]
-  (and (first coll) (not (second coll))))
+  (if (or (not (empty? (rest coll))) (empty? coll))
+    false
+    true))
 
 (defn my-last [coll]
   (if (empty? coll) nil
@@ -52,14 +54,19 @@
     :else (cons (first a-seq) (my-take-while pred? (rest a-seq)))))
 
 (defn my-drop-while [pred? a-seq]
-  (if (pred? (first a-seq))
-    (my-drop-while pred? (rest a-seq))
-    a-seq))
+  (cond
+    (empty? a-seq)
+      a-seq
+    (pred? (first a-seq))
+      (my-drop-while pred? (rest a-seq))
+    :else a-seq))
 
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq))
     true
+    (or (empty? a-seq) (empty? b-seq))
+    false
     (not (= (first a-seq) (first b-seq)))
     false
     :else (seq= (rest a-seq) (rest b-seq))))
@@ -87,7 +94,7 @@
     (+ (fib (- n 1)) (fib (- n 2)))))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  (if (== how-many-times 0)
+  (if (<= how-many-times 0)
     ()
     (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))))
 
