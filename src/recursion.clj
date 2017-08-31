@@ -273,10 +273,28 @@
                 (second (halve a-seq))))))
 
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (let [asc-pred (fn [seq] (apply < seq))
+        desc-pred (fn [seq] (apply > seq))
+        split-seq (drop 2 (inits a-seq))  ; drop empty () and singleton (x)
+        last-asc (last (take-while asc-pred split-seq))
+        count-asc (count last-asc)
+        last-desc (last (take-while desc-pred split-seq))
+        count-desc (count last-desc)]
+    (cond
+     (empty? a-seq) '()
+
+     (not (empty? last-asc))              ; make sure last-asc is not empty 
+     (cons last-asc 
+           (split-into-monotonics (drop count-asc a-seq)))
+     
+     :else
+     (cons last-desc 
+           (split-into-monotonics (drop count-desc a-seq))))))
 
 (defn permutations [a-set]
-  [:-])
+  (if (singleton? a-set)
+    (first a-set)
+    ))
 
 (defn powerset [a-set]
   [:-])
