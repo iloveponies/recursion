@@ -1,4 +1,5 @@
-(ns recursion)
+(ns recursion
+  (:require [clojure.set :as set]))
 
 (defn product [coll]
   (if (empty? coll)
@@ -176,15 +177,16 @@
           next (last (take-while monotonic? (inits a-seq)))]
       (cons next (split-into-monotonics (drop (count next) a-seq))))))
 
-
-(defn permutations-helper [hist a-set]
-  (if (empty? a-set)
-    hist
-    (mapcat #(permutations-helper (cons (first %) hist) (rest %)) (rotations a-set))))
-
 (defn permutations [a-set]
-  (partition (count a-set) (permutations-helper () a-set)))
+  (if (empty? a-set)
+    '(())
+    (mapcat rotations (map #(cons (first a-set) %) (permutations (rest a-set))))))
 
 (defn powerset [a-set]
-  [:-])
+  (if (empty? a-set)
+    #{#{}}
+    (let [add-ele (fn [ele comp] (map #(set/union #{ele} %) (powerset comp)))]
+      (set/union (powerset (rest a-set)) (add-ele (first a-set) (rest a-set))))))
+
+
 
