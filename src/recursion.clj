@@ -111,13 +111,19 @@
       (reverse)))
 
 (defn rotations [a-seq]
-  [:-])
+  (if (seq a-seq)
+    (my-map concat (drop-last (tails a-seq)) (inits a-seq))
+    '(())))
 
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+  (if (empty? a-seq)
+    freqs
+    (let [k (first a-seq)
+          v (inc (get freqs k 0))]
+      (my-frequencies-helper (assoc freqs k v) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies [a-map]
   [:-])
