@@ -162,8 +162,22 @@
     (let [[a b] (halve a-seq)]
       (seq-merge (merge-sort a) (merge-sort b)))))
 
+(defn mono-count
+  ([a-seq]
+   (->> [<= >=]
+        (map (partial mono-count a-seq))
+        (apply max)))
+  ([a-seq f]
+    (->> (map f a-seq (rest a-seq))
+         (take-while identity)
+         (count)
+         (inc))))
+
 (defn split-into-monotonics [a-seq]
-  [:-])
+  (if (seq a-seq)
+    (let [n (mono-count a-seq)]
+      (cons (take n a-seq) (split-into-monotonics (drop n a-seq))))
+    '()))
 
 (defn permutations [a-set]
   [:-])
