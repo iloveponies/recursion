@@ -190,5 +190,10 @@
            (rotations a-set)))))
 
 (defn powerset [a-set]
-  [:-])
+  (cond
+    (empty? a-set) #{#{}}
+    (not (set? a-set)) (powerset (set a-set))
+    :else (let [x a-set
+                xs (map (partial disj x) x)]
+            (set (cons x (apply concat (map powerset xs)))))))
 
