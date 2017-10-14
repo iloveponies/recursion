@@ -180,7 +180,14 @@
     '()))
 
 (defn permutations [a-set]
-  [:-])
+  (if (empty? a-set)
+    '(())
+    (apply concat
+      (map (fn [rot]
+             (let [x (first rot)
+                   xs (permutations (rest rot))]
+               (map (partial cons x) xs)))
+           (rotations a-set)))))
 
 (defn powerset [a-set]
   [:-])
