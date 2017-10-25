@@ -26,9 +26,9 @@
     seq-1))
 
 (defn longest-sequence [a-seq]
-    (if (empty? a-seq)
-      nil
-      (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
+  (if (empty? a-seq)
+    nil
+    (seq-max (first a-seq) (longest-sequence (rest a-seq)))))
 
 (defn my-filter [pred? a-seq]
   (let [first (first a-seq)
@@ -109,27 +109,27 @@
     (rest (map concat (tails a-seq) (inits a-seq)))))
 
 (defn my-frequencies-helper [freqs a-seq]
-   (if (empty? a-seq)
+  (if (empty? a-seq)
     freqs
     (let [first (first a-seq)
           freq (if (contains? freqs first)
-                  (inc (get freqs first))
-                  1)]
+                (inc (get freqs first))
+                1)]
       (my-frequencies-helper (assoc freqs first freq)
-                         (rest a-seq)))))
+                             (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
 
 (defn un-frequencies-helper [un-freqs a-map]
-   (if (empty? a-map)
+  (if (empty? a-map)
     un-freqs
     (let [first (first a-map)
           repeated (repeat (val first) (key first))]
       (un-frequencies-helper (concat un-freqs repeated) (rest a-map)))))
 
 (defn un-frequencies [a-map]
-   (un-frequencies-helper () a-map))
+  (un-frequencies-helper () a-map))
 
 (defn my-take [n coll]
   (if (or (empty? coll) (zero? n))
@@ -156,7 +156,8 @@
                 (cons b-first (seq-merge a-seq (rest b-seq)))))))
 
 (defn merge-sort [a-seq]
-  (if (or (empty? a-seq) (singleton? a-seq)) a-seq
+  (if (or (empty? a-seq) (singleton? a-seq))
+    a-seq
     (let [[first second] (halve a-seq)]
       (seq-merge (merge-sort first) (merge-sort second)))))
 
@@ -164,8 +165,7 @@
   )
 
 (defn permutations [a-set]
-  [:-])
+  )
 
 (defn powerset [a-set]
-  [:-])
-
+  )
