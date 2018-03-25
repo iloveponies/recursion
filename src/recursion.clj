@@ -52,7 +52,7 @@
 
 (defn my-take-while [pred? a-seq]
   (if (empty? a-seq)
-    []
+    '()
     (if (pred? (first a-seq))
       (cons (first a-seq) (my-take-while pred? (rest a-seq))))))
 
@@ -75,7 +75,8 @@
 (defn my-map [f seq-1 seq-2]
   (if (and (first seq-1) (first seq-2))
     (cons (f (first seq-1) (first seq-2)) 
-          (my-map f (rest seq-1) (rest seq-2)))))
+          (my-map f (rest seq-1) (rest seq-2)))
+    '()))
 
 (defn power [n k]
   (if (zero? k)
@@ -110,7 +111,7 @@
 
 (defn rotations [a-seq]
   (if (empty? a-seq)
-    (())
+    '(())
     (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
