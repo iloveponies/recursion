@@ -203,9 +203,9 @@
   (split-into-monotonics-helper a-seq '()))
 
 
-(defn permutations [a-set]
+(defn permutations [a-set])
 
 
-(defn powerset [a-set]
+(defn powerset [a-set])
 
 
