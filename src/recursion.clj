@@ -145,11 +145,19 @@
     (list ())
     (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
+
 (defn my-frequencies-helper [freqs a-seq]
-  [:-])
+   (if (empty? a-seq)
+    freqs
+    (let [new-count (if (contains? freqs (first a-seq))
+                      (inc (get freqs (first a-seq)))
+                      1)]
+      (my-frequencies-helper (assoc freqs (first a-seq) new-count) (rest a-seq)))))
 
 (defn my-frequencies [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    '{}
+    (my-frequencies-helper {} a-seq)))
 
 (defn un-frequencies [a-map]
   [:-])
