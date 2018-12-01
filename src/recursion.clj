@@ -143,7 +143,7 @@
 (defn rotations [a-seq]
   (if (empty? a-seq)
     (list ())
-    (concat (first (tails a-seq)) (rotations (inits (rest a-seq))))))
+    (rest (map concat (tails a-seq) (reverse (inits a-seq))))))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
