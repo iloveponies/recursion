@@ -171,22 +171,19 @@
           mono (take num-sorted a-seq)]
       (cons (take num-sorted a-seq) (split-into-monotonics (drop num-sorted a-seq))))))
 
-(defn perm-combine [elem seq-of-seqs]
-  (if (empty? seq-of-seqs)
-    []
-    (cons (cons elem (first seq-of-seqs)) (perm-combine elem (rest seq-of-seqs)))))
-
-(defn permutations [a-set]
-  (if (empty? a-set)
+(defn permutations [a-seq]
+  (if (empty? a-seq)
     [[]]
-    (let [rots (rotations a-set)
-          combine (fn [seq] (perm-combine (first seq) (permutations (rest seq))))]
-      (apply concat (map combine rots)))))
+    (let [rest-perms (permutations (rest a-seq))
+          mapped (map #(cons (first a-seq) %) rest-perms)]
+      (mapcat rotations mapped))))
+
 
 (defn powerset [a-set]
   (if (empty? a-set)
     #{#{}}
-    (let [sub-sets (map (fn [x] (disj a-set x)) a-set)
-          result (set (apply concat (map powerset sub-sets)))]
-      (conj result a-set))))
+    (let [rest-pset (powerset (rest a-set))
+          joined (set (map #(conj % (first a-set)) rest-pset))]
+      (clojure.set/union rest-pset joined))))
+
 
