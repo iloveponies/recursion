@@ -180,7 +180,11 @@
    (my-drop-helper (min n (count coll)) coll))
 
 (defn halve [a-seq]
-  [:-])
+  (let [n (int (/ (count a-seq) 2))
+        a (my-take n a-seq)
+        b (my-drop n a-seq)]
+      [(if (nil? a) '() a) b]
+    ))
 
 (defn seq-merge [a-seq b-seq]
   [:-])
