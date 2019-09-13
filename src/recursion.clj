@@ -192,28 +192,29 @@
     (empty? b-seq) a-seq
     :else (let [a (first a-seq)
                 b (first b-seq)]
-            (if (> a b)
-              (cons a (seq-merge (rest a-seq) b-seq))
-              (cons b (seq-merge a-seq (rest b-seq))))
-    )))
-
-(defn seq-merge [a-seq b-seq]
-  (cond
-    (empty? a-seq) b-seq
-    (empty? b-seq) a-seq
-    :else (let [a (first a-seq)
-                b (first b-seq)]
             (if (< a b)
               (cons a (seq-merge (rest a-seq) b-seq))
               (cons b (seq-merge a-seq (rest b-seq))))
     )))
 
 
-(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
-(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
-
 (defn merge-sort [a-seq]
-  [:-])
+  ;If the sequence is 0 or 1 elements long, it is already sorted.
+  (if (> 2 (count a-seq))
+    a-seq
+    ;Otherwise, divide the sequence into two subsequences.
+    (let [halves (halve a-seq)
+          left (first halves)
+          right (second halves)
+          ;Sort each subsequence recursively.
+          sorted-left (merge-sort left)
+          sorted-right (merge-sort right)
+          ]
+      ;Merge the two subsequences back into one sorted sequence.
+      (seq-merge sorted-left sorted-right)
+    )
+  ))
+
 
 (defn split-into-monotonics [a-seq]
   [:-])
