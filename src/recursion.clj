@@ -129,7 +129,10 @@
   )
 
 (defn rotations [a-seq]
-  [:-])
+  (map
+    #(concat (take-last (- (count a-seq) %) a-seq) (take % a-seq))
+    (my-range (count a-seq))
+    ))
 
 (defn my-frequencies-helper [freqs a-seq]
   [:-])
