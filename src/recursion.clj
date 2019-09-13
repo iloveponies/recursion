@@ -22,10 +22,19 @@
       )))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+    (if (empty? (rest a-seq))
+      (first a-seq)
+      (max-element (cons
+                   (max (first a-seq) (first (rest a-seq)))
+                   (rest (rest a-seq)))
+    ))))
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (if (> (count seq-1) (count seq-2))
+    seq-1
+    seq-2))
 
 (defn longest-sequence [a-seq]
   [:-])
