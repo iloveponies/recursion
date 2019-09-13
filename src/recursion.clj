@@ -55,7 +55,11 @@
     )))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (cond
+    (empty? a-seq) false
+    (= elem (first a-seq)) true
+    :else (sequence-contains? elem (rest a-seq))
+    ))
 
 (defn my-take-while [pred? a-seq]
   [:-])
