@@ -37,7 +37,14 @@
     seq-2))
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (if (empty? (rest a-seq))
+      (first a-seq)
+      (longest-sequence (cons
+                   (seq-max (first a-seq) (first (rest a-seq)))
+                   (rest (rest a-seq)))
+    ))))
 
 (defn my-filter [pred? a-seq]
   [:-])
