@@ -107,7 +107,10 @@
     ))
 
 (defn my-repeat [how-many-times what-to-repeat]
-  [:-])
+  (if (< 0 how-many-times)
+    (cons what-to-repeat (my-repeat (dec how-many-times) what-to-repeat))
+    '()
+    ))
 
 (defn my-range [up-to]
   [:-])
