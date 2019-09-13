@@ -187,7 +187,30 @@
     ))
 
 (defn seq-merge [a-seq b-seq]
-  [:-])
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [a (first a-seq)
+                b (first b-seq)]
+            (if (> a b)
+              (cons a (seq-merge (rest a-seq) b-seq))
+              (cons b (seq-merge a-seq (rest b-seq))))
+    )))
+
+(defn seq-merge [a-seq b-seq]
+  (cond
+    (empty? a-seq) b-seq
+    (empty? b-seq) a-seq
+    :else (let [a (first a-seq)
+                b (first b-seq)]
+            (if (< a b)
+              (cons a (seq-merge (rest a-seq) b-seq))
+              (cons b (seq-merge a-seq (rest b-seq))))
+    )))
+
+
+(seq-merge [4] [1 2 6 7])        ;=> (1 2 4 6 7)
+(seq-merge [1 5 7 9] [2 2 8 10]) ;=> (1 2 2 5 7 8 9 10)
 
 (defn merge-sort [a-seq]
   [:-])
