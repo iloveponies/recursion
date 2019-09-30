@@ -1,0 +1,213 @@
+(doc first)
+(doc rest)
+(max -1 nil)
+(seq)
+(defn fib [n]
+  (if (< n 2)
+    n
+    (+ (fib (- n 1)) (fib (- n 2)))))
+fib(4)
+(fib 4)
+(seq [1 2])
+'(())
+(defn tails [a-seq]
+  (if (empty? a-seq)
+    '(())
+    (cons a-seq (tails (rest a-seq)))))
+(defn inits [a-seq]
+  (map reverse (tails (reverse a-seq))))
+(inits [1 2 3 4])
+({:a 1} :a)
+({:a 1} :b)
+(:b {:b 2})
+(:b {:c 2})
+(repeat :a 3)
+(repeat 3 :a)
+(seq 1 2)
+(vec 1 2)
+(conj [1 2] 3)
+(conj '(1 2) 3)
+(cons 1 '(2 3))
+(cons 1 [2 3])
+(defn rotations-helper [acc rotated unrotated]
+  (if (empty? unrotated)
+    '()
+    (rotations-helper
+      (cons (concat unrotated rotated) acc)
+      (reverse (cons (first unrotated) (reverse rotated)))
+      (rest unrotated))))
+(defn rotations [a-seq]
+  (rotations-helper '() '() a-seq))
+(rotations [1 2 3])
+(rotations [])
+(defn rotations-helper [rotated unrotated]
+  (if (empty? unrotated)
+    '()
+    (cons
+      (concat unrotated rotated)
+      (rotations-helper 
+        (reverse (cons (first unrotated) (reverse rotated)))
+        (rest unrotated)))))
+(defn rotations [a-seq]
+  (rotations-helper '() '() a-seq))
+(rotations [1 2 3])
+(defn rotations [a-seq]
+  (rotations-helper '() a-seq))
+(rotations [1 2 3])
+(rotations [1 5 9 2])
+(rotations [])
+'(())
+(use 'recursion)
+(inits [1 2 3 4])
+(doc drop)
+(defn monotonic? [a-seq]
+  (or
+    (apply > a-seq)
+    (apply < a-seq)))
+(monotonic? [1 2 3 3])
+(defn monotonic? [a-seq]
+  (or
+    (apply >= a-seq)
+    (apply <= a-seq)))
+(monotonic? [1 2 3 3])
+(monotonic? [1 2 3 2])
+(monotonic? [2 2 1 1])
+(doc take-while)
+(doc last)
+(doc drop)
+(defn mono-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [init-seq (inits a-seq)
+          mono-inits (take-while monotonic? init-seq)
+          mono-count (count mono-inits)
+          mono-seq (last mono-inits)])
+    (mono-helper
+      (reverse (cons mono-seq (reverse monotonics)))
+      (drop (dec mono-count) a-seq))))
+(defn split-into-monotonics [a-seq]
+(defn mono-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [init-seq (inits a-seq)
+          mono-inits (take-while monotonic? init-seq)
+          mono-count (count mono-inits)
+          mono-seq (last mono-inits)]
+      (mono-helper
+        (reverse (cons mono-seq (reverse monotonics)))
+        (drop (dec mono-count) a-seq)))))
+(defn split-into-monotonics [a-seq]
+  (mono-helper '() a-seq))
+(
+)
+3
+(defn mono-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [init-seq (inits a-seq)
+          mono-inits (take-while monotonic? init-seq)
+          mono-count (count mono-inits)
+          mono-seq (last mono-inits)]
+      (mono-helper
+        (reverse (cons mono-seq (reverse monotonics)))
+        (drop (dec mono-count) a-seq)))))
+(defn split-into-monotonics [a-seq]
+  (mono-helper '() a-seq))
+(defn mono-helper [monotonics a-seq]
+  (if (empty? a-seq)
+    monotonics
+    (let [init-seq (inits a-seq)
+          mono-inits (take-while monotonic? init-seq)
+          mono-count (count mono-inits)
+          mono-seq (last mono-inits)]
+      (mono-helper
+        (reverse (cons mono-seq (reverse monotonics)))
+        (drop (dec mono-count) a-seq)))))
+(defn split-into-monotonics [a-seq]
+  (mono-helper '() a-seq))
+(use 'recursion)
+(split-into-monotonics [0 1 2 1 0])
+(split-into-monotonics [0])
+(split-into-monotonics [])
+(split-into-monotonics [0])
+(inits [0])
+(take-while monotonic? (inits [0]))
+(doc take-while
+)
+(map monotonic? '(()(0)))
+(map monotonic? [[][0]])
+(defn monotonic? [a-seq]
+  true)
+(use 'recursion)
+(map monotonic? [[][0]])
+(apply > [])
+(use 'recursion)
+(take-while monotonic? (inits [0]))
+(split-into-monotonics [0 1 2 1 0])
+(mono-helper '() [])
+(mono-helper '() [1])
+(inits [1])
+(take-while monotonic? (inits [1]))
+(last (take-while monotonic? (inits [1])))
+(use 'recursion)
+(mono-helper '() [1])
+(use 'recursion)
+(mono-helper '() [1])
+(split-into-monotonics [0 1 2 1 0])
+(split-into-monotonics [0 5 4 7 1 3])
+[1]
+(seq [1])
+(first #{2})
+(first #{2 3})
+(rest #{2 3})
+(list 1)
+(seq 1)
+(seq [1])
+(use 'recursion)
+(permutations #{})
+(permutations-helper #{})
+(permutations-helper #{1 5 3})
+(use 'recursion)
+(permutations #{})
+(permutations #{1})
+(permutations #{1 2})
+(permutations #{1 2 3})
+(permutations #{1 2})
+(combine-helper 1 '() [2])
+(use 'recursion)
+(combine-helper 1 '() [2])
+(use 'recursion)
+(combine-helper 1 '() [2])
+(combine-helper 1 [] [2])
+(combine-helper 1 [] [])
+(use 'recursion)
+(combine-helper 1 [] [])
+(combine-helper 1 [] [2])
+(permutations #{1 5 3})
+(permutations #{1 5})
+(combine-helper 1 [] [2 2])
+(combine-helper 1 '() [2 2])
+(combine-helper 1 '() [])
+(combine 2 ['(1 3) '(3 1)])
+(use 'recursion)
+(combine 2 ['(1 3) '(3 1)])
+(permutations #{1 5 3})
+(permutations #{1})
+(permutations #{})
+(permutations #{1})
+(permutations #{1 2})
+(use 'recursion)
+(permutations #{1 2})
+(permutations #{1 2 3})
+(permutations #{})
+(set #{ 2})
+(def a-set #{})
+#{#{}}
+(disj #{3 2} 2)
+(powerset #{1})
+(use 'recursion)
+(powerset #{1})
+(use 'recursion)
+(powerset #{1})
+(powerset #{1 2})
+(powerset #{1 2 4})
