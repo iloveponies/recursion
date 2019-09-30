@@ -1,0 +1,4 @@
+(map #(set %) [1 2 3])
+(singleton? #{:a})
+(def s #{1 2 3})
+s
