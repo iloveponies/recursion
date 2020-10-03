@@ -1,21 +1,91 @@
-(ns recursion)
-
+(defn my-range [up-to]
+  (if (= up-to 0)
+    '()
+    (conj (my-range (dec up-to)) (dec up-to))
+  )
+)
+(my-range 0)
+(my-range 1)
+(my-range 2)
+(my-range 3)
+(tail [1 2 3])
+(. System exit 0)
+(def test '(:a :b :c))
+(def teste '(:a :b :c))
+(concat teste teste)
+(take (count teste) (concat teste teste))
+(take (count teste) (drop 0(concat teste teste))
+)
+(take (count teste) (drop 0 (concat teste teste)))
+(take (count teste) (drop 1 (concat teste teste)))
+(take (count teste) (drop 2 (concat teste teste)))
+(def teste '(:a))
+(count teste)
+(count (first teste))
+(def teste '(:a :b))
+(count (first teste))
+(count teste)
+seq
+(seq)
+(. System exit 0)
+(defn count-elem-helper [n elem coll]
+  (if (empty? coll)
+    n
+    (let [new-count (if (= elem (first coll))
+                      (inc n)
+                      n)]
+      (count-elem-helper new-count
+                         elem
+                         (rest coll)))))
+(defn count-elem [elem coll]
+    (count-elem-helper 0 elem coll))
+(def mapa {})
+(:a mapa)
+{:a 3 :b 2 "^_^" 1}
+(repeat (val (first {:a 3 :b 2 "^_^" 1})) (key (first {:a 3 :b 2 "^_^" 1}))
+)
+(rest {:a 1 :b 2 :c 3})
+(apply hash-map (rest {:a 1 :b 2 :c 3}))
+(. System exit 0)
+(concat (repeat 3 :a) (repeat 4 :b)
+)
+(repeat )
+repeat
+(apply hash-map ())
+(first {:a 3})
+(key (first {:a 3}))
+(def teste [1 2 3 4 5])
+(concat (first teste) (first (rest teste)))
+(seq (first teste) (first (rest teste)))
+(seq 1 2)
+(list 1 2)
+(drop 1 (1))
+(drop 1 '(1))
+(conj '() 1)
+(conj '(1) 2)
+(cons '(1) 2)
+(cons 2 '(1))
+(conj 2 '(1))
+(cons '(1) 2)
+(cons 2 '(1))
+(conj  '(1) 2)
+(seq 2 '(1))
+(first '())
+(<= 1 nil)
+(. System exit 0)
 (defn product [coll]
   (if (empty? coll)
     1
     (* (first coll)
        (product (rest coll)))))
-
 (defn singleton? [coll]
   (if (= (count coll) 1)
     true
     false))
-
 (defn my-last [coll]
   (if (= (count (rest coll)) 0)
     (first coll)
     (my-last (rest coll))))
-
 (defn max-element [a-seq]
   (if (empty? a-seq)
     nil
@@ -24,14 +94,12 @@
       (max (first a-seq) (max-element (rest a-seq))))
     )
   )
-
 (defn seq-max [seq-1 seq-2]
   (if (> (count seq-1) (count seq-2))
     seq-1
     seq-2
     )
   )
-
 (defn longest-sequence [a-seq]
   (if (empty? a-seq)
     nil
@@ -41,7 +109,6 @@
       )
     )
   )
-
 (defn my-filter [pred? a-seq]
   (cond
     (empty? a-seq) '()
@@ -49,14 +116,12 @@
     :else (my-filter pred? (rest a-seq))
     )
   )
-
 (defn sequence-contains? [elem a-seq]
   (cond
     (empty? a-seq) false
     (= (first a-seq) elem ) true
     :else (sequence-contains? elem (rest a-seq)))
   )
-
 (defn my-take-while [pred? a-seq]
   (cond 
     (empty? a-seq) '()
@@ -64,7 +129,6 @@
     :else (my-take-while pred? '())                            
     )
   )
-
 (defn my-drop-while [pred? a-seq]                      
   (cond
     (empty? a-seq) '()
@@ -72,7 +136,6 @@
     :else a-seq
     )
   )
-
 (defn seq= [a-seq b-seq]
   (cond
     (and (empty? a-seq) (empty? b-seq)) true
@@ -82,19 +145,16 @@
     :else false
     )
   )
-
 (defn my-map [f seq-1 seq-2]
   (if (or (empty? seq-1) (empty? seq-2)) 
     '()
     (cons (f (first seq-1) (first seq-2)) (my-map f (rest seq-1) (rest seq-2))))
   )
-
 (defn power [n k]
   (if (= 0 k)
     1
     (* n (power n (dec k))))
   )
-
 (defn fib [n]
   (cond
     (= n 0) 0
@@ -102,7 +162,6 @@
     :else (+ (fib (dec n)) (fib (- n 2)) ) 
     ) 
   )
-
 (defn my-repeat [how-many-times what-to-repeat]
   (cond
     (<= how-many-times 0) '()
@@ -110,25 +169,21 @@
     :else (conj (my-repeat (dec how-many-times) what-to-repeat) what-to-repeat)
     ) 
   )
-
 (defn my-range [up-to]
   (if (= up-to 0)
     '()
     (conj (my-range (dec up-to)) (dec up-to)))
   )
-
 (defn tails [a-seq]
   (if (empty? a-seq) 
     ['()]
     (conj (tails (rest a-seq)) a-seq))
   )
-
 (defn inits [a-seq]
   (if (empty? a-seq) 
     ['()]
     (conj (inits (drop-last 1 a-seq)) a-seq))
   )
-
 (defn rotations [a-seq]
   (let [length (count a-seq)
         helper (fn [x]
@@ -137,7 +192,6 @@
            (list '())
             (map helper (range length))))
   )
-
 (defn my-frequencies-helper [freqs a-seq]
   (let [current (first a-seq)
         next-seq (rest a-seq)
@@ -145,7 +199,6 @@
     (if (empty? a-seq)
       freqs
       (my-frequencies-helper (assoc freqs current (inc current-count)) next-seq))))
-
 (defn my-frequencies [a-seq]
   (my-frequencies-helper {} a-seq))
  
@@ -159,23 +212,19 @@
         ))
     )
   )
-
 (defn my-take [n coll]
   (if (and (not (empty? coll)) (< 0 n))
     (cons (first coll) (my-take (dec n) (rest coll)))
     '()
   ))
-
 (defn my-drop [n coll]
   (if (or (>= 0 n) (empty? coll))
     coll
     (my-drop (dec n) (rest coll))
     ))
-
 (defn halve [a-seq]
   (let [mid (int (/ (count a-seq) 2))]
     (vector (take mid a-seq) (drop mid a-seq) )))
-
 (defn seq-merge [a-seq b-seq]
   (cond
     (empty? a-seq) b-seq
@@ -183,33 +232,32 @@
     (<= (first a-seq) (first b-seq)) (cons (first a-seq) (seq-merge (rest a-seq) b-seq))
     :else (cons (first b-seq) (seq-merge a-seq (rest b-seq)))
     ))
-
 (defn merge-sort [a-seq]
   (if
     (<= (count a-seq) 1) 
     a-seq
     (let [[first-half second-half] (halve a-seq) ]
       (seq-merge (merge-sort first-half) (merge-sort second-half)))))
-
 (defn split-into-monotonics [a-seq]
-  (let [monotonic? (fn [x]
-                     (or (empty? x) (apply <= x) (apply >= x)))
-        first-part (last (take-while monotonic? (inits a-seq)))
-        last-part (drop (count first-part) a-seq)]
-    (if (empty? a-seq)
-      '()
-      (cons first-part (split-into-monotonics last-part)))))
-
+  [:-])
 (defn permutations [a-set]
-  (if (or (singleton? a-set) (empty? a-set)) [a-set]
-    (let [rotated (rotations a-set)]
-      (apply concat (map (fn [r] (let [perms (permutations (rest r))]
-                     (map (fn [p] (cons (first r) p)) perms)))
-                     rotated)))))
-
+  [:-])
 (defn powerset [a-set]
-  (if (empty? a-set) #{#{}}
-    (let [fst (first a-set)
-          rst (powerset (rest a-set))
-          sets (set (map (fn [pset] (set (cons fst pset))) rst))]
-      (set (cons #{fst} (concat rst sets))))))
+  [:-])
+(inits [0 1 2 1 0])
+(rotations #{1 5 3})
+(reverse (rotations #{1 5 3}))
+(apply reverse (rotations #{1 5 3}))
+(rotations #{1 5 3}))
+(rotations #{1 5 3})
+(reverse (first (rotations #{1 5 3})))
+(defn permutations [a-set]
+  (loop [result (rotations a-set)
+         to-go (rotations a-set)]
+    (if
+      (empty? to-go) 
+      result
+      (recur (conj result (reverse (first to-go))) (rest to-go)))))
+(. System exit 0)
+(take-while (fn [x y] (< x y)) (1 2 3 2 5 6))
+(. System exit 0)
