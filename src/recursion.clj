@@ -1,28 +1,51 @@
 (ns recursion)
 
 (defn product [coll]
-  :-)
+  (if (empty? coll)
+    1
+    (* (first coll)
+       (product (rest coll)))))
 
 (defn singleton? [coll]
-  :-)
+  (if (empty? coll)
+    false
+  (let [loppu (rest coll)
+      loppuTyhja(empty? loppu)
+    ]loppuTyhja)
+))
 
 (defn my-last [coll]
-  :-)
+  (first (take-last 1 coll)))
 
 (defn max-element [a-seq]
-  :-)
+  (if (empty? a-seq)
+    nil
+  (max (first a-seq) (my-last a-seq))))
+
 
 (defn seq-max [seq-1 seq-2]
-  [:-])
+  (let [eka (count seq-1)
+        toka (count seq-2)
+        returnValue (if(> eka toka)
+                      seq-1
+                      seq-2)]returnValue))
+
 
 (defn longest-sequence [a-seq]
-  [:-])
+  (if (empty? a-seq)
+    nil
+    (let [summa(map (fn[x] (count x)) a-seq)
+         maksimi(apply max summa)
+          indeksi(.indexOf (max summa) maksimi)
+        returnValue (get a-seq indeksi)
+          ]returnValue)
+    ))
 
 (defn my-filter [pred? a-seq]
-  [:-])
+  (filter pred? a-seq))
 
 (defn sequence-contains? [elem a-seq]
-  :-)
+  (contains? (set a-seq) elem))
 
 (defn my-take-while [pred? a-seq]
   [:-])
